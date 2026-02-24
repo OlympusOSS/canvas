@@ -1,0 +1,84 @@
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 222.2 84% 4.9%;
+		--card: 0 0% 100%;
+		--card-foreground: 222.2 84% 4.9%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 222.2 84% 4.9%;
+		--primary: 239 84% 67%;
+		--primary-foreground: 0 0% 100%;
+		--secondary: 210 40% 96%;
+		--secondary-foreground: 222.2 47.4% 11.2%;
+		--muted: 210 40% 96%;
+		--muted-foreground: 215.4 16.3% 46.9%;
+		--accent: 210 40% 96%;
+		--accent-foreground: 222.2 47.4% 11.2%;
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 100%;
+		--success: 160 84% 39%;
+		--success-foreground: 152 81% 96%;
+		--amber: 38 92% 50%;
+		--amber-foreground: 0 0% 9%;
+		--border: 214.3 31.8% 91.4%;
+		--input: 214.3 31.8% 91.4%;
+		--ring: 239 84% 67%;
+		--radius: 0.5rem;
+
+		/* Glass surface tokens — solid in light mode */
+		--glass-bg: var(--card);
+		--glass-border: var(--border);
+		--glass-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+		--glass-shadow-lg: 0 4px 12px 0 rgb(0 0 0 / 0.08);
+		--glass-blur: 0px;
+		--glass-chrome-blur: 0px;
+		--glass-overlay-blur: 0px;
+	}
+
+	.dark {
+		--background: 222 47% 11%;
+		--foreground: 213 31% 91%;
+		--card: 217 33% 17%;
+		--card-foreground: 213 31% 91%;
+		--popover: 217 33% 17%;
+		--popover-foreground: 213 31% 91%;
+		--primary: 239 84% 67%;
+		--primary-foreground: 0 0% 100%;
+		--secondary: 217 33% 17%;
+		--secondary-foreground: 213 31% 91%;
+		--muted: 215 25% 27%;
+		--muted-foreground: 215 20% 65%;
+		--accent: 215 25% 27%;
+		--accent-foreground: 213 31% 91%;
+		--destructive: 0 72% 51%;
+		--destructive-foreground: 0 86% 97%;
+		--success: 160 84% 39%;
+		--success-foreground: 152 81% 96%;
+		--amber: 38 92% 50%;
+		--amber-foreground: 0 0% 9%;
+		--border: 215 25% 27%;
+		--input: 222 47% 11%;
+		--ring: 239 84% 67%;
+
+		/* Glass surface tokens — translucent in dark mode */
+		--glass-bg: 220 40% 13%;
+		--glass-border: 215 30% 50%;
+		--glass-shadow: 0 4px 24px 0 rgb(0 0 0 / 0.25), inset 0 0 0 1px rgb(255 255 255 / 0.03);
+		--glass-shadow-lg: 0 8px 32px 0 rgb(0 0 0 / 0.35), inset 0 0 0 1px rgb(255 255 255 / 0.05);
+		--glass-blur: 12px;
+		--glass-chrome-blur: 16px;
+		--glass-overlay-blur: 20px;
+	}
+
+	* {
+		border-color: hsl(var(--border));
+	}
+
+	body {
+		background: hsl(var(--background));
+		color: hsl(var(--foreground));
+		font-family: "Inter", system-ui, -apple-system, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+}
