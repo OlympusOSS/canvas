@@ -39,6 +39,13 @@ jobs:
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Make package public
+        run: |
+          curl -sf -X PATCH \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/orgs/OlympusOSS/packages/npm/canvas" \
+            -d '{"visibility":"public"}' || echo "Could not set package visibility — set manually in package settings"
 
   notify-downstream:
     needs: publish
