@@ -19,7 +19,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-      - run: bun install --frozen-lockfile
+      - run: bun install
       - run: bunx tsc --noEmit
 
   publish:
@@ -35,8 +35,8 @@ jobs:
         with:
           node-version: '22'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@olympus'
-      - run: npm publish
+          scope: '@olympusoss'
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
