@@ -83,8 +83,11 @@ export {
   TableCell,
   TableCaption,
 } from "./components/ui/table";
+export { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
 export { Textarea } from "./components/ui/textarea";
+export { Toast, Toaster, useToast, toastVariants, type ToastProps, type ToasterProps, type ToastState } from "./components/ui/toast";
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "./components/ui/tooltip";
+export { CodeBlock, type CodeBlockProps } from "./components/ui/code-block";
 
 // Icon
 export { Icon, iconNames, type IconName, type IconProps } from "./components/icon";
@@ -114,5 +117,7 @@ export { LoadingState, type LoadingStateProps } from "./components/feedback";
 // Shared
 export { AnimatedBackground } from "./components/shared";
 export { AuthCard, LoginButton, DemoStatusBadge } from "./components/shared";
+export { AuthFormCard, AuthFormHeader, AuthFormError, AuthFormField, AuthSubmitButton } from "./components/shared";
+export { AuthLayout } from "./components/shared";
 export { PageShell } from "./components/shared";
 export { SessionDisplay } from "./components/shared";

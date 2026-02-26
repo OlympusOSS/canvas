@@ -1,35 +1,42 @@
 @layer base {
 	:root {
-		--background: 0 0% 100%;
-		--foreground: 222.2 84% 4.9%;
-		--card: 0 0% 100%;
-		--card-foreground: 222.2 84% 4.9%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 222.2 84% 4.9%;
+		--background: 220 15% 78%;
+		--foreground: 222 30% 12%;
+		--card: 220 14% 84%;
+		--card-foreground: 222 30% 12%;
+		--popover: 220 14% 84%;
+		--popover-foreground: 222 30% 12%;
 		--primary: 239 84% 67%;
 		--primary-foreground: 0 0% 100%;
-		--secondary: 210 40% 96%;
-		--secondary-foreground: 222.2 47.4% 11.2%;
-		--muted: 210 40% 96%;
-		--muted-foreground: 215.4 16.3% 46.9%;
-		--accent: 210 40% 96%;
-		--accent-foreground: 222.2 47.4% 11.2%;
+		--secondary: 220 14% 80%;
+		--secondary-foreground: 222 30% 12%;
+		--muted: 220 14% 80%;
+		--muted-foreground: 215 12% 35%;
+		--accent: 220 14% 80%;
+		--accent-foreground: 222 30% 12%;
 		--destructive: 0 84% 60%;
 		--destructive-foreground: 0 0% 100%;
 		--success: 160 84% 39%;
 		--success-foreground: 152 81% 96%;
 		--amber: 38 92% 50%;
 		--amber-foreground: 0 0% 9%;
-		--border: 214.3 31.8% 91.4%;
-		--input: 214.3 31.8% 91.4%;
+		--border: 220 13% 72%;
+		--input: 220 13% 72%;
 		--ring: 239 84% 67%;
 		--radius: 0.5rem;
+
+		/* Chart palette — darker for light backgrounds */
+		--chart-1: 239 84% 55%;
+		--chart-2: 160 84% 32%;
+		--chart-3: 280 65% 48%;
+		--chart-4: 25 95% 45%;
+		--chart-5: 190 80% 38%;
 
 		/* Glass surface tokens — solid in light mode */
 		--glass-bg: var(--card);
 		--glass-border: var(--border);
-		--glass-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-		--glass-shadow-lg: 0 4px 12px 0 rgb(0 0 0 / 0.08);
+		--glass-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+		--glass-shadow-lg: 0 4px 16px 0 rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.06);
 		--glass-blur: 0px;
 		--glass-chrome-blur: 0px;
 		--glass-overlay-blur: 0px;
@@ -59,6 +66,13 @@
 		--border: 215 25% 27%;
 		--input: 222 47% 11%;
 		--ring: 239 84% 67%;
+
+		/* Chart palette — brighter for dark backgrounds */
+		--chart-1: 217 91% 70%;
+		--chart-2: 160 84% 55%;
+		--chart-3: 280 75% 70%;
+		--chart-4: 38 92% 60%;
+		--chart-5: 190 90% 60%;
 
 		/* Glass surface tokens — translucent in dark mode */
 		--glass-bg: 220 40% 13%;

@@ -33,6 +33,34 @@
 	}
 }
 
+/* ECG heartbeat monitor — scrolling waveform (3 cycles, shift by 1) */
+@keyframes ecg-scroll {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-33.333%);
+	}
+}
+
+/* ECG flatline — subtle pulse to show it's alive (monitoring) */
+@keyframes ecg-flatline {
+	0%, 100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.4;
+	}
+}
+
+.animate-ecg-scroll {
+	animation: ecg-scroll 1.8s linear infinite;
+}
+
+.animate-ecg-flatline {
+	animation: ecg-flatline 2s ease-in-out infinite;
+}
+
 /* Focus ring pulse */
 @keyframes ring-pulse {
 	0%, 100% {
