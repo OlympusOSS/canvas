@@ -34,7 +34,6 @@
 
 .dark .glass-surface {
 	background: hsl(var(--glass-bg) / 0.6);
-	backdrop-filter: blur(var(--glass-blur));
 	-webkit-backdrop-filter: blur(var(--glass-blur));
 	border-color: hsl(var(--glass-border) / 0.12);
 	box-shadow: var(--glass-shadow);
@@ -42,7 +41,6 @@
 
 .dark .glass-chrome {
 	background: hsl(var(--glass-bg) / 0.75);
-	backdrop-filter: blur(var(--glass-chrome-blur));
 	-webkit-backdrop-filter: blur(var(--glass-chrome-blur));
 	border-color: hsl(var(--glass-border) / 0.1);
 	box-shadow: var(--glass-shadow);
@@ -50,8 +48,21 @@
 
 .dark .glass-overlay {
 	background: hsl(var(--glass-bg) / 0.8);
-	backdrop-filter: blur(var(--glass-overlay-blur)) saturate(1.2);
 	-webkit-backdrop-filter: blur(var(--glass-overlay-blur)) saturate(1.2);
 	border-color: hsl(var(--glass-border) / 0.15);
 	box-shadow: var(--glass-shadow-lg);
+}
+
+/* Standard backdrop-filter — wrapped in @supports to prevent
+   PostCSS/Tailwind from stripping it as a duplicate of -webkit- */
+@supports (backdrop-filter: blur(1px)) {
+	.dark .glass-surface {
+		backdrop-filter: blur(var(--glass-blur));
+	}
+	.dark .glass-chrome {
+		backdrop-filter: blur(var(--glass-chrome-blur));
+	}
+	.dark .glass-overlay {
+		backdrop-filter: blur(var(--glass-overlay-blur)) saturate(1.2);
+	}
 }

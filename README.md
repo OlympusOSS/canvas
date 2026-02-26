@@ -4,6 +4,8 @@ Shared design system for the [OlympusOSS Identity Platform](https://github.com/O
 
 React component library + CSS design tokens consumed by [Athena](https://github.com/OlympusOSS/athena), [Hera](https://github.com/OlympusOSS/hera), and [Demo](https://github.com/OlympusOSS/demo).
 
+**[Storybook](https://olympusoss.github.io/canvas/)** — Browse and interact with all components live.
+
 ---
 
 ## Installation
@@ -28,7 +30,7 @@ Import the styles in your app's global CSS:
 
 Built on [Radix UI](https://www.radix-ui.com/) with Tailwind styling:
 
-`Button` · `Card` · `Dialog` · `DropdownMenu` · `Select` · `Input` · `Textarea` · `Checkbox` · `Switch` · `Label` · `Tooltip` · `Popover` · `Accordion` · `Avatar` · `Badge` · `Alert` · `Table` · `Separator` · `ScrollArea` · `Skeleton`
+`Button` · `Card` · `Dialog` · `DropdownMenu` · `Select` · `Input` · `Textarea` · `Checkbox` · `Switch` · `Label` · `Tooltip` · `Popover` · `Accordion` · `Avatar` · `Badge` · `Alert` · `Table` · `Tabs` · `Toast` · `CodeBlock` · `Separator` · `ScrollArea` · `Skeleton`
 
 ### Charts
 
@@ -54,10 +56,19 @@ Built on [Nivo](https://nivo.rocks/):
 - **ErrorState** — Error display with retry action
 - **EmptyState** — Empty content placeholder
 
+### Auth Components
+
+- **AuthLayout** — Full-screen centered layout with animated background
+- **AuthFormCard** — Glass card for login/registration forms
+- **AuthFormHeader** — Animated brand header (logo, title, subtitle)
+- **AuthFormError** — Animated error message
+- **AuthFormField** — Animated field wrapper
+- **AuthSubmitButton** — Gradient button with shimmer and loading state
+- **AuthCard** — Animated feature card with gradient hover effects
+- **LoginButton** — Branded CTA button with shimmer effect
+
 ### Shared
 
-- **AuthCard** — Animated login card with gradient hover effects
-- **LoginButton** — Branded button with shimmer effect
 - **PageShell** — App page layout wrapper
 - **SessionDisplay** — User session/token viewer
 - **AnimatedBackground** — Floating gradient orbs
@@ -114,6 +125,15 @@ bun install
 ```
 
 Canvas is consumed as source (not pre-built). Consuming apps transpile it via `transpilePackages: ["@olympusoss/canvas"]` in their Next.js config.
+
+### Storybook
+
+```bash
+bun run storybook        # Dev server on http://localhost:6006
+bun run build-storybook  # Static build to storybook-static/
+```
+
+Storybook is deployed to GitHub Pages automatically on push to `main`.
 
 ---
 
