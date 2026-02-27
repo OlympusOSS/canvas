@@ -2,7 +2,7 @@
 
 Shared design system for the [OlympusOSS Identity Platform](https://github.com/OlympusOSS/platform).
 
-React component library + CSS design tokens consumed by [Athena](https://github.com/OlympusOSS/athena), [Hera](https://github.com/OlympusOSS/hera), and [Demo](https://github.com/OlympusOSS/demo).
+React component library + CSS design tokens consumed by [Athena](https://github.com/OlympusOSS/athena), [Hera](https://github.com/OlympusOSS/hera), and [Site](https://github.com/OlympusOSS/site).
 
 **[Storybook](https://olympusoss.github.io/canvas/)** — Browse and interact with all components live.
 
@@ -120,11 +120,23 @@ Three tiers of frosted-glass surfaces for dark mode. Light mode renders as solid
 
 ## Development
 
+Canvas is part of the [OlympusOSS Identity Platform](https://github.com/OlympusOSS/platform). All repos should be cloned as siblings under a shared workspace:
+
+```
+Olympus/
+├── platform/    # Infrastructure & Docker Compose
+├── athena/      # Admin dashboard
+├── hera/        # Auth & consent UI
+├── site/        # Brochure site & OAuth2 playground
+├── canvas/      # Design system (this repo)
+└── octl/        # Deployment CLI
+```
+
+Canvas is consumed as **source** (not pre-built) — consuming apps transpile it via `transpilePackages: ["@olympusoss/canvas"]` in their Next.js config. Canvas does not run in Docker; it's referenced directly from the sibling directory.
+
 ```bash
 bun install
 ```
-
-Canvas is consumed as source (not pre-built). Consuming apps transpile it via `transpilePackages: ["@olympusoss/canvas"]` in their Next.js config.
 
 ### Storybook
 

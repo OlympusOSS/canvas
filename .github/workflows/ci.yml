@@ -68,10 +68,10 @@ jobs:
           repository: OlympusOSS/hera
           event-type: canvas-updated
           client-payload: '{"tag": "${{ github.ref_name }}"}'
-      - name: Trigger Demo rebuild
+      - name: Trigger Site rebuild
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.ORG_DISPATCH_TOKEN }}
-          repository: OlympusOSS/demo
+          repository: OlympusOSS/site
           event-type: canvas-updated
           client-payload: '{"tag": "${{ github.ref_name }}"}'
