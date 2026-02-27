@@ -12,42 +12,44 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Active: Story = {
-	args: { type: "active" },
+	args: { status: "active" },
 };
 
 export const Inactive: Story = {
-	args: { type: "inactive" },
+	args: { status: "inactive" },
 };
 
 export const Pending: Story = {
-	args: { type: "pending" },
+	args: { status: "pending" },
 };
 
 export const Error: Story = {
-	args: { type: "error" },
+	args: { status: "error" },
 };
 
 export const AllTypes: Story = {
+	args: { status: "active" },
 	render: () => (
 		<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-			<StatusBadge type="active" />
-			<StatusBadge type="inactive" />
-			<StatusBadge type="pending" />
-			<StatusBadge type="error" />
-			<StatusBadge type="success" />
-			<StatusBadge type="warning" />
-			<StatusBadge type="healthy" />
-			<StatusBadge type="unhealthy" />
+			<StatusBadge status="active" />
+			<StatusBadge status="inactive" />
+			<StatusBadge status="pending" />
+			<StatusBadge status="error" />
+			<StatusBadge status="success" />
+			<StatusBadge status="warning" />
+			<StatusBadge status="healthy" />
+			<StatusBadge status="unhealthy" />
 		</div>
 	),
 };
 
 export const Variants: Story = {
+	args: { status: "active" },
 	render: () => (
 		<div style={{ display: "flex", gap: "8px" }}>
-			<StatusBadge type="active" variant="filled" />
-			<StatusBadge type="active" variant="outlined" />
-			<StatusBadge type="active" variant="dot" />
+			<StatusBadge status="active" variant="filled" />
+			<StatusBadge status="active" variant="outlined" />
+			<StatusBadge status="active" variant="dot" />
 		</div>
 	),
 };

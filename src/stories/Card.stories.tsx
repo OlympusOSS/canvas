@@ -39,7 +39,7 @@ export const WithAction: Story = {
 				<CardDescription>Manage your identity records.</CardDescription>
 				<CardAction>
 					<Button size="sm" variant="outline">
-						<Icon name="plus" />
+						<Icon name="add" />
 						Add
 					</Button>
 				</CardAction>

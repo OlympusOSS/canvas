@@ -24,9 +24,9 @@ const toastVariants = cva(
 
 const iconMap = {
   default: "info" as const,
-  success: "check-circle" as const,
-  destructive: "alert-circle" as const,
-  warning: "alert-triangle" as const,
+  success: "success" as const,
+  destructive: "error" as const,
+  warning: "danger" as const,
 }
 
 /* ─── Toast ──────────────────────────────────────────────────────── */
@@ -58,7 +58,7 @@ function Toast({ message, visible, variant = "default", onClose, className }: To
           className="rounded-sm p-0.5 text-current opacity-60 transition-opacity hover:opacity-100"
           aria-label="Dismiss"
         >
-          <Icon name="x" className="h-4 w-4" />
+          <Icon name="close" className="h-4 w-4" />
         </button>
       )}
     </div>

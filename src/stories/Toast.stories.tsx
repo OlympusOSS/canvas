@@ -51,6 +51,10 @@ export const WithClose: Story = {
 };
 
 export const AllVariants: Story = {
+	args: {
+		message: "Notification",
+		visible: true,
+	},
 	render: () => (
 		<div style={{ display: "flex", flexDirection: "column", gap: "8px", width: 380 }}>
 			<Toast message="Default notification" variant="default" visible />
