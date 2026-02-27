@@ -121,3 +121,13 @@ export { AuthFormCard, AuthFormHeader, AuthFormError, AuthFormField, AuthSubmitB
 export { AuthLayout } from "./components/shared";
 export { PageShell } from "./components/shared";
 export { SessionDisplay } from "./components/shared";
+
+// Site brochure sections
+export { NavBar } from "./components/shared";
+export { HeroSection } from "./components/shared";
+export { FeaturesSection } from "./components/shared";
+export { ArchitectureSection } from "./components/shared";
+export { GettingStartedSection } from "./components/shared";
+export { PlaygroundSection } from "./components/shared";
+export { PlaygroundGrid, PlaygroundAdminSection, AuthStatusRow, AuthStatusBadgeRow, LogoutLink } from "./components/shared";
+export { SiteFooter } from "./components/shared";
