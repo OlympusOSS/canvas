@@ -34,7 +34,7 @@ export const Destructive: Story = {
 	render: () => (
 		<div style={{ width: 480 }}>
 			<Alert variant="destructive">
-				<Icon name="alert-circle" />
+				<Icon name="error" />
 				<AlertTitle>Error</AlertTitle>
 				<AlertDescription>Something went wrong. Please try again later.</AlertDescription>
 			</Alert>

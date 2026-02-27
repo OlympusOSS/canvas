@@ -46,7 +46,7 @@ export const WithIcon: Story = {
 	args: {
 		children: (
 			<>
-				<Icon name="plus" />
+				<Icon name="add" />
 				Create
 			</>
 		),

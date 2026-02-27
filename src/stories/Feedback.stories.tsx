@@ -26,8 +26,8 @@ export const ErrorExample: StoryObj = {
 		<div style={{ width: 480 }}>
 			<ErrorState
 				title="Failed to load identities"
-				description="There was an error connecting to the server. Please try again."
-				onRetry={() => {}}
+				message="There was an error connecting to the server. Please try again."
+				action={{ label: "Retry", onClick: () => {} }}
 			/>
 		</div>
 	),

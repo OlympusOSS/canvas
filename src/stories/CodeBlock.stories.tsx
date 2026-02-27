@@ -11,7 +11,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const sampleJSON = JSON.stringify(
+const sampleJson = JSON.stringify(
 	{
 		id: "abc-123-def-456",
 		schema_id: "default",
@@ -26,23 +26,26 @@ const sampleJSON = JSON.stringify(
 	2
 );
 
-export const JSON: Story = {
+export const JsonData: Story = {
+	args: { code: sampleJson, language: "json", title: "Identity Data" },
 	render: () => (
 		<div style={{ width: 520 }}>
-			<CodeBlock code={sampleJSON} language="json" title="Identity Data" />
+			<CodeBlock code={sampleJson} language="json" title="Identity Data" />
 		</div>
 	),
 };
 
 export const NoCopy: Story = {
+	args: { code: sampleJson, title: "Read-only", showCopy: false },
 	render: () => (
 		<div style={{ width: 520 }}>
-			<CodeBlock code={sampleJSON} title="Read-only" showCopy={false} />
+			<CodeBlock code={sampleJson} title="Read-only" showCopy={false} />
 		</div>
 	),
 };
 
 export const ShortCode: Story = {
+	args: { code: 'curl -X GET "https://api.olympus.dev/identities"', language: "bash" },
 	render: () => (
 		<div style={{ width: 400 }}>
 			<CodeBlock code='curl -X GET "https://api.olympus.dev/identities"' language="bash" />
