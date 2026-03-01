@@ -53,12 +53,26 @@
 	}
 }
 
+/* ECG scan-line — bright leading edge sweeping right */
+@keyframes ecg-scan {
+	0% {
+		left: 0%;
+	}
+	100% {
+		left: 100%;
+	}
+}
+
 .animate-ecg-scroll {
-	animation: ecg-scroll 1.8s linear infinite;
+	animation: ecg-scroll 2.5s linear infinite;
 }
 
 .animate-ecg-flatline {
 	animation: ecg-flatline 2s ease-in-out infinite;
+}
+
+.animate-ecg-scan {
+	animation: ecg-scan 2.5s linear infinite;
 }
 
 /* Focus ring pulse */

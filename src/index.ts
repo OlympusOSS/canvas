@@ -97,11 +97,24 @@ export { DataTable, type DataTableColumn, type DataTableProps } from "./componen
 export { SearchBar, type SearchBarProps } from "./components/data-table";
 
 // Charts
+export { ActivityFeed, type ActivityItem, type ActivityFeedProps } from "./components/charts";
 export { AnimatedAreaChart } from "./components/charts";
+export { AnimatedBarChart } from "./components/charts";
 export { AnimatedPieChart } from "./components/charts";
 export { ChartCard } from "./components/charts";
+export { Sparkline, type SparklineProps } from "./components/charts";
 export { StatCard, type StatCardProps } from "./components/charts";
 export { VerificationGauge } from "./components/charts";
+export { MultiSeriesAreaChart, type SeriesDefinition } from "./components/charts";
+export { ChartCardWithFilter, type ChartCardWithFilterProps } from "./components/charts";
+export { LocationList, type LocationItem, type LocationListProps } from "./components/charts";
+export { WorldHeatMap, type GeoPoint, type WorldHeatMapProps } from "./components/charts";
+export { YearlyBarChart, type YearlyBarChartProps } from "./components/charts";
+
+// Dashboard
+export { DashboardGrid, type DashboardGridProps, type Layout, type Layouts } from "./components/dashboard";
+export { WidgetShell, type WidgetShellProps } from "./components/dashboard";
+export { AddWidgetDialog, type AddWidgetDialogProps, type WidgetOption } from "./components/dashboard";
 
 // Display
 export { DataList, type DataListProps } from "./components/display";

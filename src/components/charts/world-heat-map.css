@@ -1,0 +1,80 @@
+/* ── WorldHeatMap — Leaflet style overrides ──────────
+   Match Canvas design tokens for consistent look.
+   ────────────────────────────────────────────────── */
+
+/* Tooltip styling */
+.whm-leaflet-tooltip {
+	background: hsl(var(--popover) / 0.92) !important;
+	color: hsl(var(--popover-foreground)) !important;
+	border: 1px solid hsl(var(--border) / 0.5) !important;
+	border-radius: 0.5rem !important;
+	padding: 0.5rem 0.75rem !important;
+	font-size: 0.75rem !important;
+	font-family: inherit !important;
+	box-shadow: 0 4px 12px rgb(0 0 0 / 0.15) !important;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+
+.whm-leaflet-tooltip::before {
+	border-top-color: hsl(var(--popover) / 0.92) !important;
+}
+
+.whm-tooltip-label {
+	font-weight: 600;
+	font-size: 13px;
+	line-height: 1.2;
+}
+
+.whm-tooltip-count {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 2px;
+	color: hsl(var(--muted-foreground));
+	font-variant-numeric: tabular-nums;
+	font-size: 12px;
+}
+
+.whm-tooltip-dot {
+	display: inline-block;
+	height: 8px;
+	width: 8px;
+	border-radius: 50%;
+}
+
+/* Ensure Leaflet container fills parent and inherits border radius */
+.world-heat-map .leaflet-container {
+	border-radius: inherit;
+	background: transparent;
+}
+
+/* Style Leaflet zoom controls */
+.world-heat-map .leaflet-control-zoom {
+	border: 1px solid hsl(var(--border) / 0.5) !important;
+	border-radius: 0.5rem !important;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgb(0 0 0 / 0.1) !important;
+}
+
+.world-heat-map .leaflet-control-zoom a {
+	background: hsl(var(--popover) / 0.85) !important;
+	color: hsl(var(--popover-foreground)) !important;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border-bottom-color: hsl(var(--border) / 0.3) !important;
+	width: 32px !important;
+	height: 32px !important;
+	line-height: 32px !important;
+	font-size: 16px !important;
+}
+
+.world-heat-map .leaflet-control-zoom a:hover {
+	background: hsl(var(--accent)) !important;
+	color: hsl(var(--accent-foreground)) !important;
+}
+
+/* Hide default Leaflet attribution */
+.world-heat-map .leaflet-control-attribution {
+	display: none;
+}
