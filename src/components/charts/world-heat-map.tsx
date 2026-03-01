@@ -136,8 +136,6 @@ export function WorldHeatMap({
 		// Dynamic import to avoid SSR issues
 		const init = async () => {
 			const L = (await import("leaflet")).default;
-			await import("leaflet/dist/leaflet.css");
-
 			// Default view — will be overridden by geolocation
 			const map = L.map(mapContainerRef.current!, {
 				center: [20, 20],
