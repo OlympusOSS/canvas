@@ -15,25 +15,19 @@ interface Step {
 const STEPS: Step[] = [
 	{
 		number: "01",
-		title: "Clone the repos",
+		title: "Clone the repository",
 		description:
-			"All OlympusOSS repos must be siblings under a shared workspace directory.",
-		code: `mkdir Olympus && cd Olympus
-git clone https://github.com/OlympusOSS/platform.git
-git clone https://github.com/OlympusOSS/athena.git
-git clone https://github.com/OlympusOSS/hera.git
-git clone https://github.com/OlympusOSS/site.git
-git clone https://github.com/OlympusOSS/canvas.git`,
+			"Single monorepo — platform, apps, and design system all in one place.",
+		code: `git clone git@github.com:bnannier/OlympusOSS.git
+cd OlympusOSS`,
 		language: "bash",
 	},
 	{
 		number: "02",
 		title: "Start the platform",
 		description:
-			"Docker Compose brings up all services — Kratos, Hydra, Hera, Athena, PostgreSQL, and the seed script.",
-		code: `cd platform/dev
-cp docker-compose.override.example.yml docker-compose.override.yml
-docker compose up -d`,
+			"Docker Compose brings up all 15 services — Kratos, Hydra, Hera, Athena, PostgreSQL, and seeds test data. First run takes a few minutes.",
+		code: `cd dev && docker compose up -d`,
 		language: "bash",
 	},
 	{
@@ -41,13 +35,12 @@ docker compose up -d`,
 		title: "Open the apps",
 		description:
 			"Once the seed completes, every service is ready. Edit app code locally — changes reflect immediately via live reload.",
-		code: `# Admin panels
-open http://localhost:4003  # IAM Athena
-open http://localhost:3003  # CIAM Athena
+		code: `# Site & OAuth2 playground
+open http://localhost:2000
 
-# Auth UIs
-open http://localhost:4001  # IAM Hera
-open http://localhost:3001  # CIAM Hera
+# Admin panels
+open http://localhost:4003  # Employee Identity Admin
+open http://localhost:3003  # Customer Identity Admin
 
 # Login: admin@athena.dev / admin123!`,
 		language: "bash",
