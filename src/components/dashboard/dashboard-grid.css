@@ -1,0 +1,19 @@
+/* Hide the default resize handle visual indicators from react-resizable
+   and react-grid-layout. The resize functionality still works — only
+   the dark chevron/border marks are removed. */
+.react-resizable-handle {
+	background-image: none;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+	display: none;
+}
+
+/* Edit mode — subtle dot-grid pattern on the grid container */
+.dashboard-grid-editing {
+	background-image: radial-gradient(circle, hsl(var(--border) / 0.15) 1px, transparent 1px);
+	background-size: 24px 24px;
+	border-radius: 0.75rem;
+	padding: 8px;
+	margin: -8px;
+}

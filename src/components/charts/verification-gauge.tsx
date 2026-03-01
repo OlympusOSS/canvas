@@ -47,36 +47,38 @@ export function VerificationGauge({
 	const valueDashOffset = arcLength - (Math.min(100, value) / 100) * arcLength;
 
 	return (
-		<div className="relative flex flex-col items-center">
-			<svg ref={ref} width={size} height={size}>
-				{/* Track */}
-				<path
-					d={pathD}
-					fill="none"
-					stroke="currentColor"
-					strokeWidth={strokeWidth}
-					strokeLinecap="round"
-					className="text-muted/30"
-				/>
+		<div className="relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden">
+			<div className="relative w-full max-w-[300px] max-h-full aspect-square shrink-0" style={{ maxHeight: 'calc(100% - 1.25rem)' }}>
+				<svg ref={ref} viewBox={`0 0 ${size} ${size}`} className="h-full w-full">
+					{/* Track */}
+					<path
+						d={pathD}
+						fill="none"
+						stroke="currentColor"
+						strokeWidth={strokeWidth}
+						strokeLinecap="round"
+						className="text-muted/30"
+					/>
 
-				{/* Value arc */}
-				<path
-					d={pathD}
-					fill="none"
-					stroke="currentColor"
-					strokeWidth={strokeWidth}
-					strokeLinecap="round"
-					strokeDasharray={arcLength}
-					strokeDashoffset={valueDashOffset}
-					className="text-primary transition-all duration-1000 ease-out"
-				/>
-			</svg>
+					{/* Value arc */}
+					<path
+						d={pathD}
+						fill="none"
+						stroke="currentColor"
+						strokeWidth={strokeWidth}
+						strokeLinecap="round"
+						strokeDasharray={arcLength}
+						strokeDashoffset={valueDashOffset}
+						className="text-primary transition-all duration-1000 ease-out"
+					/>
+				</svg>
 
-			{/* Center label */}
-			<div className="absolute inset-0 flex items-center justify-center">
-				<span className="text-3xl font-bold text-foreground">
-					{Math.round(value)}%
-				</span>
+				{/* Center label */}
+				<div className="absolute inset-0 flex items-center justify-center">
+					<span className="text-3xl font-bold text-foreground">
+						{Math.round(value)}%
+					</span>
+				</div>
 			</div>
 
 			{label && (

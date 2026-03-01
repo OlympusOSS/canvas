@@ -1,5 +1,13 @@
+export { ActivityFeed, type ActivityItem, type ActivityFeedProps } from "./activity-feed";
 export { AnimatedAreaChart } from "./animated-area-chart";
+export { AnimatedBarChart } from "./animated-bar-chart";
 export { AnimatedPieChart } from "./animated-pie-chart";
 export { ChartCard } from "./chart-card";
 export { StatCard, type StatCardProps } from "./stat-card";
+export { Sparkline, type SparklineProps } from "./sparkline";
 export { VerificationGauge } from "./verification-gauge";
+export { MultiSeriesAreaChart, type SeriesDefinition } from "./multi-series-area-chart";
+export { ChartCardWithFilter, type ChartCardWithFilterProps } from "./chart-card-with-filter";
+export { LocationList, type LocationItem, type LocationListProps } from "./location-list";
+export { WorldHeatMap, type GeoPoint, type WorldHeatMapProps } from "./world-heat-map";
+export { YearlyBarChart, type YearlyBarChartProps } from "./yearly-bar-chart";

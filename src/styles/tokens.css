@@ -96,3 +96,12 @@
 		-moz-osx-font-smoothing: grayscale;
 	}
 }
+
+/* ── Styled scrollbar ── */
+.styled-scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: hsl(var(--muted-foreground) / 0.6) transparent;
+}
+.styled-scrollbar:hover {
+	scrollbar-color: hsl(var(--muted-foreground) / 0.8) transparent;
+}

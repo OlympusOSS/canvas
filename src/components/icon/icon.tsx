@@ -55,6 +55,7 @@ import {
 	FileText,
 	Globe,
 	HeartPulse,
+	MapPin,
 	Key,
 	KeyRound,
 	Lock,
@@ -75,8 +76,16 @@ import {
 	Workflow,
 
 	// Data / Charts
+	Activity,
+	BarChart3,
 	TrendingDown,
 	TrendingUp,
+
+	// Drag / Layout
+	GripVertical,
+	Maximize2,
+	Move,
+	MoveDiagonal2,
 } from "lucide-react";
 
 /**
@@ -144,6 +153,7 @@ const iconMap = {
 	key: Key,
 	"key-round": KeyRound,
 	lock: Lock,
+	"map-pin": MapPin,
 	mail: Mail,
 	message: MessageSquare,
 	monitor: Monitor,
@@ -162,8 +172,16 @@ const iconMap = {
 	workflow: Workflow,
 
 	// ── Data / Charts ────────────────────────────────────
+	activity: Activity,
+	"bar-chart": BarChart3,
 	"trending-down": TrendingDown,
 	"trending-up": TrendingUp,
+
+	// ── Drag / Layout ────────────────────────────────────
+	grip: GripVertical,
+	move: Move,
+	resize: Maximize2,
+	"resize-handle": MoveDiagonal2,
 } as const;
 
 export type IconName = keyof typeof iconMap;

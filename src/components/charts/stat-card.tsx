@@ -41,100 +41,178 @@ function AnimatedValue({ value }: { value: string | number }) {
 	return <span ref={ref}>{displayValue}</span>;
 }
 
-/* ── Heartbeat ECG monitor ── */
+/* ── Neon ECG Monitor (Canvas 2D) ── */
 
-/** Build one realistic PQRST cycle as an SVG sub-path (cubic bezier curves). */
-function ecgCycle(offset: number): string {
-	const o = offset;
-	// Baseline y=20, viewBox height=40
-	return [
-		`L ${o},20`,
-		// ── flat baseline ──
-		`L ${o + 8},20`,
-		// ── P wave (gentle atrial bump) ──
-		`C ${o + 10},20 ${o + 12},14 ${o + 14},13`,
-		`C ${o + 16},12 ${o + 18},18 ${o + 20},20`,
-		// ── PR segment ──
-		`L ${o + 24},20`,
-		// ── QRS complex (sharp ventricular spike) ──
-		`L ${o + 25},23`,       // Q dip
-		`L ${o + 27},3`,        // R spike up
-		`L ${o + 29},36`,       // S dip down
-		`L ${o + 31},20`,       // return
-		// ── ST segment ──
-		`L ${o + 36},20`,
-		// ── T wave (broad repolarization bump) ──
-		`C ${o + 39},20 ${o + 42},10 ${o + 46},9`,
-		`C ${o + 50},8 ${o + 53},18 ${o + 56},20`,
-		// ── baseline to end of cycle ──
-		`L ${o + 70},20`,
-	].join(" ");
+/** PQRST waveform sampler. t in [0,1] = one cardiac cycle. Returns -1..1. */
+function ecgSample(t: number): number {
+	const f = ((t % 1) + 1) % 1;
+	// Baseline
+	if (f < 0.08) return 0;
+	// P wave — small atrial depolarisation bump
+	if (f < 0.19) return 0.12 * Math.sin(((f - 0.08) / 0.11) * Math.PI);
+	// PR segment
+	if (f < 0.23) return 0;
+	// Q dip
+	if (f < 0.27) return -0.10 * Math.sin(((f - 0.23) / 0.04) * Math.PI);
+	// R spike — sharp, tall
+	if (f < 0.34) return 1.0 * Math.sin(((f - 0.27) / 0.07) * Math.PI);
+	// S dip
+	if (f < 0.40) return -0.30 * Math.sin(((f - 0.34) / 0.06) * Math.PI);
+	// ST segment
+	if (f < 0.50) return 0;
+	// T wave — ventricular repolarisation
+	if (f < 0.68) return 0.25 * Math.sin(((f - 0.50) / 0.18) * Math.PI);
+	// Baseline
+	return 0;
 }
 
-function HeartbeatMonitor({ healthy }: { healthy: boolean }) {
-	// 3 full cycles (70 units each = 210 total), SVG is 3x container width.
-	// Animation translates SVG left by 1/3 (one cycle), creating seamless loop.
-	const pathD = healthy
-		? `M 0,20 ${ecgCycle(0)} ${ecgCycle(70)} ${ecgCycle(140)}`
-		: "M 0,20 L 210,20";
+const NEON_GREEN = "#39ff14";
+const NEON_RED = "#ff1744";
+const CYCLES_PER_SCREEN = 2.5;
+const DRAW_SPEED = 0.30; // fraction of width drawn per second
 
-	const strokeColor = healthy ? "hsl(var(--success))" : "hsl(var(--destructive))";
+function HeartbeatMonitor({ healthy }: { healthy: boolean }) {
+	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const animRef = useRef(0);
+	const t0Ref = useRef(0);
+
+	useEffect(() => {
+		const tick = (now: number) => {
+			if (!t0Ref.current) t0Ref.current = now;
+			const elapsed = (now - t0Ref.current) / 1000;
+			const canvas = canvasRef.current;
+			if (!canvas) { animRef.current = requestAnimationFrame(tick); return; }
+			const ctx = canvas.getContext("2d");
+			if (!ctx) { animRef.current = requestAnimationFrame(tick); return; }
+
+			const dpr = window.devicePixelRatio || 1;
+			const rect = canvas.getBoundingClientRect();
+			const w = Math.round(rect.width * dpr);
+			const h = Math.round(rect.height * dpr);
+			if (canvas.width !== w || canvas.height !== h) {
+				canvas.width = w;
+				canvas.height = h;
+			}
+
+			const color = healthy ? NEON_GREEN : NEON_RED;
+			const cursor = (elapsed * DRAW_SPEED) % 1; // 0→1 drawing position
+			const midY = h * 0.5;
+			const amp = h * 0.38;
+
+			// ── Clear (transparent background) ──
+			ctx.clearRect(0, 0, w, h);
+
+			// ── Waveform helper ──
+			const step = Math.max(1, Math.round(dpr));
+			const getY = (px: number): number => {
+				if (!healthy) return midY; // flatline
+				return midY - ecgSample((px / w) * CYCLES_PER_SCREEN) * amp;
+			};
+
+			// ── Draw the neon trace ──
+			const cursorPx = cursor * w;
+			const eraseWidth = w * 0.08; // blank gap ahead of cursor
+
+			// Pass 1: Outer neon glow
+			ctx.save();
+			ctx.strokeStyle = color;
+			ctx.lineWidth = 1.5 * dpr;
+			ctx.lineCap = "round";
+			ctx.lineJoin = "round";
+			ctx.globalAlpha = 0.15;
+			ctx.shadowColor = color;
+			ctx.shadowBlur = 6 * dpr;
+			ctx.beginPath();
+			let drawing = false;
+			for (let px = 0; px < w; px += step) {
+				// Determine if pixel is in the erased gap
+				let distBehind = cursorPx - px;
+				if (distBehind < 0) distBehind += w;
+				const distAhead = w - distBehind;
+				if (distAhead < eraseWidth && distAhead >= 0) {
+					if (drawing) ctx.stroke();
+					ctx.beginPath();
+					drawing = false;
+					continue;
+				}
+				const y = getY(px);
+				if (!drawing) { ctx.moveTo(px, y); drawing = true; }
+				else { ctx.lineTo(px, y); }
+			}
+			if (drawing) ctx.stroke();
+			ctx.restore();
+
+			// Pass 2: Core neon line
+			ctx.save();
+			ctx.strokeStyle = color;
+			ctx.lineWidth = 0.7 * dpr;
+			ctx.lineCap = "round";
+			ctx.lineJoin = "round";
+			ctx.shadowColor = color;
+			ctx.shadowBlur = 2 * dpr;
+			ctx.beginPath();
+			drawing = false;
+			for (let px = 0; px < w; px += step) {
+				let distBehind = cursorPx - px;
+				if (distBehind < 0) distBehind += w;
+				const distAhead = w - distBehind;
+				if (distAhead < eraseWidth && distAhead >= 0) {
+					if (drawing) ctx.stroke();
+					ctx.beginPath();
+					drawing = false;
+					continue;
+				}
+				// Fade: older parts of the trace dim slightly
+				const age = distBehind / w;
+				const fade = 0.4 + 0.6 * Math.exp(-age * 2.5);
+				if (drawing && age > 0.15) {
+					ctx.stroke();
+					ctx.beginPath();
+					ctx.globalAlpha = fade;
+					const y = getY(px);
+					ctx.moveTo(px, y);
+					drawing = true;
+					continue;
+				}
+				ctx.globalAlpha = fade;
+				const y = getY(px);
+				if (!drawing) { ctx.moveTo(px, y); drawing = true; }
+				else { ctx.lineTo(px, y); }
+			}
+			if (drawing) ctx.stroke();
+			ctx.restore();
+
+			// ── Bright dot at cursor ──
+			ctx.save();
+			const dotY = getY(cursorPx);
+			ctx.fillStyle = "#fff";
+			ctx.shadowColor = color;
+			ctx.shadowBlur = 5 * dpr;
+			ctx.globalAlpha = 1;
+			ctx.beginPath();
+			ctx.arc(cursorPx, dotY, 1.5 * dpr, 0, Math.PI * 2);
+			ctx.fill();
+			// Inner colored dot
+			ctx.fillStyle = color;
+			ctx.shadowBlur = 3 * dpr;
+			ctx.beginPath();
+			ctx.arc(cursorPx, dotY, 0.7 * dpr, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.restore();
+
+			animRef.current = requestAnimationFrame(tick);
+		};
+
+		animRef.current = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(animRef.current);
+	}, [healthy]);
 
 	return (
-		<div className="relative h-8 w-full overflow-hidden rounded">
-			{/* Grid background */}
-			<svg
-				viewBox="0 0 100 40"
-				preserveAspectRatio="none"
-				className="absolute inset-0 h-full w-full"
-			>
-				{[8, 16, 24, 32].map((y) => (
-					<line key={y} x1="0" y1={y} x2="100" y2={y} stroke="currentColor" strokeWidth="0.3" className="text-muted-foreground/20" />
-				))}
-				{[10, 20, 30, 40, 50, 60, 70, 80, 90].map((x) => (
-					<line key={x} x1={x} y1="0" x2={x} y2="40" stroke="currentColor" strokeWidth="0.3" className="text-muted-foreground/20" />
-				))}
-			</svg>
-
-			{/* ECG waveform — glow only in dark mode */}
-			<svg
-				viewBox="0 0 210 40"
-				preserveAspectRatio="none"
-				className={cn("relative h-full", healthy ? "animate-ecg-scroll" : "animate-ecg-flatline")}
-				style={{ width: "300%" }}
-			>
-				<defs>
-					<filter id="ecg-glow">
-						<feGaussianBlur stdDeviation="1.5" result="blur" />
-						<feMerge>
-							<feMergeNode in="blur" />
-							<feMergeNode in="SourceGraphic" />
-						</feMerge>
-					</filter>
-				</defs>
-				{/* Dark mode: glowing line */}
-				<path
-					d={pathD}
-					fill="none"
-					stroke={strokeColor}
-					strokeWidth={1.5}
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					filter="url(#ecg-glow)"
-					className="hidden dark:block"
-				/>
-				{/* Light mode: crisp solid line, thicker for contrast */}
-				<path
-					d={pathD}
-					fill="none"
-					stroke={strokeColor}
-					strokeWidth={2}
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					className="block dark:hidden"
-				/>
-			</svg>
-		</div>
+		<canvas
+			ref={canvasRef}
+			className="h-10 w-full rounded"
+			style={{ imageRendering: "auto" }}
+		/>
 	);
 }
 
@@ -151,6 +229,10 @@ export interface StatCardProps {
 		label?: string;
 		direction?: "up" | "down";
 	};
+	/** Optional sparkline rendered beside the value */
+	sparkline?: ReactNode;
+	/** Optional footer content rendered below the value row (takes precedence over subtitle) */
+	footer?: ReactNode;
 	loading?: boolean;
 }
 
@@ -173,6 +255,8 @@ export function StatCard({
 	index = 0,
 	colorVariant = "default",
 	trend,
+	sparkline,
+	footer,
 	loading = false,
 }: StatCardProps) {
 	const str = String(value);
@@ -197,6 +281,7 @@ export function StatCard({
 
 	return (
 		<motion.div
+			className="h-full"
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
@@ -206,7 +291,7 @@ export function StatCard({
 			}}
 			whileHover={{ y: -3, transition: { duration: 0.2 } }}
 		>
-			<Card className="group relative overflow-hidden transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20">
+			<Card className="group relative h-full overflow-hidden transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20">
 				{/* Accent bar */}
 				<div
 					className={cn(
@@ -216,14 +301,35 @@ export function StatCard({
 				/>
 
 				<CardContent>
-					<div className="flex items-center gap-2 text-muted-foreground">
-						{icon && (
-							<div className="relative">
-								<div className="absolute -inset-1.5 rounded-full bg-primary/5 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100 dark:bg-primary/10" />
-								<div className="relative h-4 w-4 shrink-0">{icon}</div>
-							</div>
+					<div className="flex items-center justify-between text-muted-foreground">
+						<div className="flex items-center gap-2">
+							{icon && (
+								<div className="relative">
+									<div className="absolute -inset-1.5 rounded-full bg-primary/5 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100 dark:bg-primary/10" />
+									<div className="relative h-4 w-4 shrink-0">{icon}</div>
+								</div>
+							)}
+							<span className="text-sm font-medium">{title}</span>
+						</div>
+
+						{!isHealthStatus && trend && (
+							<motion.span
+								initial={{ opacity: 0, x: -8 }}
+								animate={{ opacity: 1, x: 0 }}
+								transition={{ delay: 0.6 + index * 0.07, duration: 0.4 }}
+								className={cn(
+									"flex items-center gap-0.5 text-xs font-medium",
+									trend.direction === "up" ? "text-success" : "text-destructive",
+								)}
+							>
+								{trend.direction === "up" ? (
+									<Icon name="trending-up" className="h-3 w-3" />
+								) : (
+									<Icon name="trending-down" className="h-3 w-3" />
+								)}
+								{trend.value}%
+							</motion.span>
 						)}
-						<span className="text-sm font-medium">{title}</span>
 					</div>
 
 					{isHealthStatus ? (
@@ -231,42 +337,29 @@ export function StatCard({
 							<HeartbeatMonitor healthy={isHealthy} />
 							{subtitle && (
 								<p className={cn(
-									"text-xs font-medium",
+									"text-xs font-medium text-center",
 									isHealthy ? "text-success" : "text-destructive",
 								)}>{subtitle}</p>
 							)}
 						</>
 					) : (
-						<>
-							<div className="flex items-baseline gap-2">
+						<div>
+							<div className="flex items-center gap-3">
 								<span className="text-2xl font-bold tracking-tight text-foreground">
 									<AnimatedValue value={value} />
 								</span>
 
-								{trend && (
-									<motion.span
-										initial={{ opacity: 0, x: -8 }}
-										animate={{ opacity: 1, x: 0 }}
-										transition={{ delay: 0.6 + index * 0.07, duration: 0.4 }}
-										className={cn(
-											"flex items-center gap-0.5 text-xs font-medium",
-											trend.direction === "up" ? "text-success" : "text-destructive",
-										)}
-									>
-										{trend.direction === "up" ? (
-											<Icon name="trending-up" className="h-3 w-3" />
-										) : (
-											<Icon name="trending-down" className="h-3 w-3" />
-										)}
-										{trend.value}%
-									</motion.span>
+								{sparkline && (
+									<div className="ml-auto min-w-0 flex-1">{sparkline}</div>
 								)}
 							</div>
 
-							{(subtitle || trend?.label) && (
+							{footer ? (
+								<div className="mt-1">{footer}</div>
+							) : (subtitle || trend?.label) ? (
 								<p className="text-xs text-muted-foreground">{trend?.label || subtitle}</p>
-							)}
-						</>
+							) : null}
+						</div>
 					)}
 				</CardContent>
 			</Card>
