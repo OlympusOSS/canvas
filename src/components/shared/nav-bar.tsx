@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 
 const NAV_LINKS = [
+	{ label: "Playground", href: "#playground" },
 	{ label: "Features", href: "#features" },
 	{ label: "Architecture", href: "#architecture" },
-	{ label: "Playground", href: "#playground" },
 	{ label: "Get Started", href: "#get-started" },
 ];
 

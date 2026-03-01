@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { AnimatedBackground } from "./animated-background";
 import { Badge } from "../ui/badge";
 
-export function HeroSection({ logoSrc }: { logoSrc?: string }) {
+export function HeroSection() {
 	return (
-		<section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden px-6 pt-20">
+		<section className="relative flex items-center justify-center overflow-hidden px-6 pb-12 pt-32">
 			<AnimatedBackground />
 
 			<div className="relative z-10 mx-auto max-w-3xl text-center">
@@ -16,33 +16,16 @@ export function HeroSection({ logoSrc }: { logoSrc?: string }) {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.2 }}
 				>
-					<Badge variant="outline" className="mb-6 border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-indigo-300">
+					<Badge variant="outline" className="mb-4 border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-indigo-300">
 						Universal · Self-Hosted · Standards-Based
 					</Badge>
 				</motion.div>
-
-				{/* Logo */}
-				{logoSrc && (
-					<motion.div
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 0.6, delay: 0.3 }}
-						className="mb-8 flex justify-center"
-					>
-						<img
-							src={logoSrc}
-							alt="Olympus"
-							width={120}
-							height={120}
-						/>
-					</motion.div>
-				)}
 
 				{/* Title */}
 				<motion.h1
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.4 }}
+					transition={{ duration: 0.6, delay: 0.3 }}
 					className="mb-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
 				>
 					Identity Platform
@@ -56,12 +39,12 @@ export function HeroSection({ logoSrc }: { logoSrc?: string }) {
 				<motion.p
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.5 }}
-					className="mx-auto mb-8 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
+					transition={{ duration: 0.6, delay: 0.4 }}
+					className="mx-auto mb-6 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
 				>
 					Self-hosted authentication and authorization built on{" "}
-					<span className="text-white">Ory Kratos</span> and{" "}
-					<span className="text-white">Ory Hydra</span>. Dual-domain
+					<a href="https://github.com/ory/kratos" target="_blank" rel="noopener noreferrer" className="text-white no-underline">Ory Kratos</a> and{" "}
+					<a href="https://github.com/ory/hydra" target="_blank" rel="noopener noreferrer" className="text-white no-underline">Ory Hydra</a>. Dual-domain
 					architecture with no vendor lock-in — your users, your data,
 					standard protocols.
 				</motion.p>
@@ -70,7 +53,7 @@ export function HeroSection({ logoSrc }: { logoSrc?: string }) {
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.6 }}
+					transition={{ duration: 0.6, delay: 0.5 }}
 					className="flex flex-wrap items-center justify-center gap-4"
 				>
 					<a
