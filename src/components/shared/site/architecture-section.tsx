@@ -83,7 +83,7 @@ function PlatformIcon({ type }: { type: "phone" | "globe" }) {
  *  - Athena ↔ Kratos  — vertical right   (Athena admin manages Kratos identities)
  *  - Hydra ↔ Kratos   — horizontal bottom (Hydra uses Kratos for auth)
  */
-function ConnectionOverlay({ color }: { color: string }) {
+function ConnectionOverlay({ color, showAthenaToHera }: { color: string; showAthenaToHera?: boolean }) {
 	return (
 		<svg
 			className="pointer-events-none absolute inset-0 z-0 h-full w-full"
@@ -126,6 +126,20 @@ function ConnectionOverlay({ color }: { color: string }) {
 			>
 				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="1s" repeatCount="indefinite" />
 			</line>
+
+			{/* Athena (right≈55) → Hera (left≈45) — horizontal top (IAM only: Athena authenticates via Hera) */}
+			{showAthenaToHera && (
+				<line
+					x1="55" y1="30" x2="45" y2="30"
+					stroke={color}
+					strokeWidth="1.5"
+					strokeDasharray="4 3"
+					opacity="0.7"
+					vectorEffect="non-scaling-stroke"
+				>
+					<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.7s" repeatCount="indefinite" />
+				</line>
+			)}
 		</svg>
 	);
 }
@@ -139,12 +153,14 @@ function DomainColumn({
 	services,
 	borderColor,
 	lineColor,
+	showAthenaToHera,
 }: {
 	title: string;
 	subtitle: string;
 	services: ServiceBox[];
 	borderColor: string;
 	lineColor: string;
+	showAthenaToHera?: boolean;
 }) {
 	return (
 		<div
@@ -157,7 +173,7 @@ function DomainColumn({
 			</div>
 			<div className="relative">
 				{/* Connection lines behind the service boxes */}
-				<ConnectionOverlay color={lineColor} />
+				<ConnectionOverlay color={lineColor} showAthenaToHera={showAthenaToHera} />
 
 				<div className="relative z-10 grid grid-cols-2 gap-6">
 					{services.map((svc) => (
@@ -243,6 +259,7 @@ export function ArchitectureSection() {
 										services={IAM_SERVICES}
 										borderColor="#f59e0b"
 										lineColor="#fbbf24"
+										showAthenaToHera
 									/>
 									{/* Cross-domain: CIAM Athena → IAM Hera (admin SSO via IAM) */}
 									<svg
