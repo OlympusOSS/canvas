@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent } from "../ui/card";
-import { CodeBlock } from "../ui/code-block";
+import { Card, CardContent } from "../../ui/card";
+import { CodeBlock } from "../../ui/code-block";
 
 interface Step {
 	number: string;
@@ -129,13 +129,13 @@ export function GettingStartedSection() {
 					>
 						<Card className="glass-surface h-full border-white/5">
 							<CardContent className="p-6">
-								<div className="mb-6 flex items-center gap-2">
-									<span className="rounded-md bg-emerald-500/20 px-2 py-0.5 text-xs font-semibold text-emerald-400">
+								<div className="mb-8 text-center">
+									<h3 className="text-lg font-bold text-emerald-400">
 										Development
-									</span>
-									<span className="text-xs text-slate-500">
+									</h3>
+									<p className="mt-1 text-sm text-slate-500">
 										Docker + live reload
-									</span>
+									</p>
 								</div>
 								<div className="space-y-6">
 									{DEV_STEPS.map((step) => (
@@ -158,13 +158,13 @@ export function GettingStartedSection() {
 					>
 						<Card className="glass-surface h-full border-white/5">
 							<CardContent className="p-6">
-								<div className="mb-6 flex items-center gap-2">
-									<span className="rounded-md bg-indigo-500/20 px-2 py-0.5 text-xs font-semibold text-indigo-400">
+								<div className="mb-8 text-center">
+									<h3 className="text-lg font-bold text-indigo-400">
 										Production
-									</span>
-									<span className="text-xs text-slate-500">
+									</h3>
+									<p className="mt-1 text-sm text-slate-500">
 										octl CLI
-									</span>
+									</p>
 								</div>
 								<div className="space-y-6">
 									{PROD_STEPS.map((step) => (

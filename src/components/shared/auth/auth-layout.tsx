@@ -1,8 +1,8 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { AnimatedBackground } from "./animated-background"
-import { cn } from "../../lib/utils"
+import { AnimatedBackground } from "../site/animated-background"
+import { cn } from "../../../lib/utils"
 
 interface AuthLayoutProps {
   children: ReactNode

@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Icon, type IconName } from "../icon";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { Icon, type IconName } from "../../icon";
 
 interface Feature {
 	icon: IconName;
