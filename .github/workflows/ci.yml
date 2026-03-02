@@ -57,21 +57,21 @@ jobs:
       - name: Trigger Athena rebuild
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.ORG_DISPATCH_TOKEN }}
+          token: ${{ secrets.GHCR_PAT }}
           repository: OlympusOSS/athena
           event-type: canvas-updated
           client-payload: '{"tag": "${{ github.ref_name }}"}'
       - name: Trigger Hera rebuild
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.ORG_DISPATCH_TOKEN }}
+          token: ${{ secrets.GHCR_PAT }}
           repository: OlympusOSS/hera
           event-type: canvas-updated
           client-payload: '{"tag": "${{ github.ref_name }}"}'
       - name: Trigger Site rebuild
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.ORG_DISPATCH_TOKEN }}
+          token: ${{ secrets.GHCR_PAT }}
           repository: OlympusOSS/site
           event-type: canvas-updated
           client-payload: '{"tag": "${{ github.ref_name }}"}'
