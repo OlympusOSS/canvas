@@ -45,8 +45,8 @@ const CIAM_SERVICES: ServiceBox[] = [
 		color: "#c4b5fd",
 		platforms: [{ icon: "globe", label: "Web" }],
 	},
-	{ name: "Kratos", color: "#6366f1" },
 	{ name: "Hydra", color: "#8b5cf6" },
+	{ name: "Kratos", color: "#6366f1" },
 ];
 
 const IAM_SERVICES: ServiceBox[] = [
@@ -64,8 +64,8 @@ const IAM_SERVICES: ServiceBox[] = [
 		color: "#fcd34d",
 		platforms: [{ icon: "globe", label: "Web" }],
 	},
-	{ name: "Kratos", color: "#f59e0b" },
 	{ name: "Hydra", color: "#f97316" },
+	{ name: "Kratos", color: "#f59e0b" },
 ];
 
 function PlatformIcon({ type }: { type: "phone" | "globe" }) {
@@ -73,19 +73,15 @@ function PlatformIcon({ type }: { type: "phone" | "globe" }) {
 }
 
 /**
- * Animated dotted connection lines with 90° L-shaped routing.
- * Symmetrical about the horizontal centre line (y = 50).
+ * Animated dotted connection lines.
  *
- * Layout:  Hera (TL)   Athena (TR)
- *          Kratos (BL)  Hydra (BR)
+ * Layout:  Hera (TL)    Athena (TR)
+ *          Hydra (BL)   Kratos (BR)
  *
- * Connections:
- *  - Hera ↔ Kratos  — straight vertical (left)
- *  - Athena ↔ Hydra — straight vertical (right)
- *  - Hydra → Hera   — L: up right edge → left across top   (turn at TR)
- *  - Athena → Kratos — L: down right edge → left across bottom (turn at BR)
- *
- * The two L-paths mirror each other perfectly about y = 50.
+ * Connections (same for both CIAM and IAM):
+ *  - Hera ↔ Hydra    — vertical left    (Hera is the login/consent UI for Hydra)
+ *  - Athena ↔ Kratos  — vertical right   (Athena admin manages Kratos identities)
+ *  - Hydra ↔ Kratos   — horizontal bottom (Hydra uses Kratos for auth)
  */
 function ConnectionOverlay({ color }: { color: string }) {
 	return (
@@ -95,9 +91,9 @@ function ConnectionOverlay({ color }: { color: string }) {
 			preserveAspectRatio="none"
 			fill="none"
 		>
-			{/* Hera ↔ Kratos — vertical left */}
+			{/* Hera (cx=23, bot=47) ↔ Hydra (cx=23, top=68) — vertical left */}
 			<line
-				x1="25" y1="32" x2="25" y2="68"
+				x1="23" y1="47" x2="23" y2="68"
 				stroke={color}
 				strokeWidth="1.5"
 				strokeDasharray="4 3"
@@ -107,9 +103,9 @@ function ConnectionOverlay({ color }: { color: string }) {
 				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" repeatCount="indefinite" />
 			</line>
 
-			{/* Athena ↔ Hydra — vertical right */}
+			{/* Athena (cx=77, bot=47) ↔ Kratos (cx=77, top=68) — vertical right */}
 			<line
-				x1="75" y1="32" x2="75" y2="68"
+				x1="77" y1="47" x2="77" y2="68"
 				stroke={color}
 				strokeWidth="1.5"
 				strokeDasharray="4 3"
@@ -119,125 +115,23 @@ function ConnectionOverlay({ color }: { color: string }) {
 				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.5s" repeatCount="indefinite" />
 			</line>
 
-			{/* Hydra → Hera — L: up right edge, then left across top */}
-			<polyline
-				points="72,68 72,32 28,32"
+			{/* Hydra (right=47) ↔ Kratos (left=53) — horizontal bottom */}
+			<line
+				x1="47" y1="84" x2="53" y2="84"
 				stroke={color}
 				strokeWidth="1.5"
 				strokeDasharray="4 3"
-				opacity="0.5"
+				opacity="0.7"
 				vectorEffect="non-scaling-stroke"
-				strokeLinejoin="round"
-				fill="none"
 			>
-				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2.5s" begin="1s" repeatCount="indefinite" />
-			</polyline>
-
-			{/* Athena → Kratos — L: down right edge, then left across bottom (mirror of above) */}
-			<polyline
-				points="72,32 72,68 28,68"
-				stroke={color}
-				strokeWidth="1.5"
-				strokeDasharray="4 3"
-				opacity="0.5"
-				vectorEffect="non-scaling-stroke"
-				strokeLinejoin="round"
-				fill="none"
-			>
-				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2.5s" begin="1.5s" repeatCount="indefinite" />
-			</polyline>
+				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="1s" repeatCount="indefinite" />
+			</line>
 		</svg>
 	);
 }
 
-/**
- * Animated emerald lines from domain columns down to the shared
- * PostgreSQL / pgAdmin bar. L-shaped 90° routing — symmetrical.
- *
- * Outer lines (Kratos) bend at y=18, inner lines (Hydra) bend at y=12,
- * so they don't overlap. pgAdmin stays straight vertical (centre).
- */
-function DbConnectionLines() {
-	const dbColor = "#34d399";
-	return (
-		<div className="relative mx-auto h-6 w-full">
-			<svg
-				className="pointer-events-none absolute inset-0 h-full w-full"
-				viewBox="0 0 200 24"
-				preserveAspectRatio="none"
-				fill="none"
-			>
-				{/* CIAM Kratos → DB — L: down then right */}
-				<polyline
-					points="36,0 36,18 80,18 80,24"
-					stroke={dbColor}
-					strokeWidth="1.5"
-					strokeDasharray="4 3"
-					opacity="0.6"
-					vectorEffect="non-scaling-stroke"
-					strokeLinejoin="round"
-					fill="none"
-				>
-					<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" repeatCount="indefinite" />
-				</polyline>
-
-				{/* CIAM Hydra → DB — L: down then right */}
-				<polyline
-					points="64,0 64,12 90,12 90,24"
-					stroke={dbColor}
-					strokeWidth="1.5"
-					strokeDasharray="4 3"
-					opacity="0.6"
-					vectorEffect="non-scaling-stroke"
-					strokeLinejoin="round"
-					fill="none"
-				>
-					<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.3s" repeatCount="indefinite" />
-				</polyline>
-
-				{/* pgAdmin → DB (center) — straight vertical */}
-				<line
-					x1="100" y1="0" x2="100" y2="24"
-					stroke={dbColor}
-					strokeWidth="1.5"
-					strokeDasharray="4 3"
-					opacity="0.5"
-					vectorEffect="non-scaling-stroke"
-				>
-					<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.6s" repeatCount="indefinite" />
-				</line>
-
-				{/* IAM Kratos → DB — L: down then left (mirror of CIAM Kratos) */}
-				<polyline
-					points="136,0 136,12 110,12 110,24"
-					stroke={dbColor}
-					strokeWidth="1.5"
-					strokeDasharray="4 3"
-					opacity="0.6"
-					vectorEffect="non-scaling-stroke"
-					strokeLinejoin="round"
-					fill="none"
-				>
-					<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.9s" repeatCount="indefinite" />
-				</polyline>
-
-				{/* IAM Hydra → DB — L: down then left (mirror of CIAM Hydra) */}
-				<polyline
-					points="164,0 164,18 120,18 120,24"
-					stroke={dbColor}
-					strokeWidth="1.5"
-					strokeDasharray="4 3"
-					opacity="0.6"
-					vectorEffect="non-scaling-stroke"
-					strokeLinejoin="round"
-					fill="none"
-				>
-					<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="1.2s" repeatCount="indefinite" />
-				</polyline>
-			</svg>
-		</div>
-	);
-}
+/** DB connection line props for the absolute overlay */
+const DB_COLOR = "#34d399";
 
 function DomainColumn({
 	title,
@@ -323,38 +217,147 @@ export function ArchitectureSection() {
 				>
 					<Card className="glass-surface border-white/5">
 						<CardContent className="p-6">
-							{/* Two domains side by side */}
-							<div className="grid gap-4 sm:grid-cols-2">
-								<DomainColumn
-									title="CIAM"
-									subtitle="Customer Identity"
-									services={CIAM_SERVICES}
-									borderColor="#6366f1"
-									lineColor="#818cf8"
-								/>
-								<DomainColumn
-									title="IAM"
-									subtitle="Employee Identity"
-									services={IAM_SERVICES}
-									borderColor="#f59e0b"
-									lineColor="#fbbf24"
-								/>
-							</div>
+							{/*
+							 * Wrapper: relative container spanning domains → shared bar.
+							 * Green DB lines are an absolute overlay so they connect
+							 * directly from Hydra/Kratos boxes to the PostgreSQL pill.
+							 *
+							 * ViewBox 200×100 mapped to this wrapper:
+							 *   Bottom-row boxes bottom ≈ y67
+							 *   PostgreSQL pill center   ≈ y92, cx93
+							 *   pgAdmin pill center      ≈ y92, cx123
+							 */}
+							<div className="relative">
+								{/* Two domains side by side */}
+								<div className="relative grid gap-4 sm:grid-cols-2">
+									<DomainColumn
+										title="CIAM"
+										subtitle="Customer Identity"
+										services={CIAM_SERVICES}
+										borderColor="#6366f1"
+										lineColor="#818cf8"
+									/>
+									<DomainColumn
+										title="IAM"
+										subtitle="Employee Identity"
+										services={IAM_SERVICES}
+										borderColor="#f59e0b"
+										lineColor="#fbbf24"
+									/>
+									{/* Cross-domain: CIAM Athena → IAM Hera (admin SSO via IAM) */}
+									<svg
+										className="pointer-events-none absolute inset-0 z-20 hidden h-full w-full sm:block"
+										viewBox="0 0 200 100"
+										preserveAspectRatio="none"
+										fill="none"
+									>
+										{/* Inverted-U: CIAM Athena (cx=73,top=35) → up → across → IAM Hera (cx=127,top=35) */}
+										<polyline
+											points="73,35 73,25 127,25 127,35"
+											stroke="#c084fc"
+											strokeWidth="1.5"
+											strokeDasharray="4 3"
+											opacity="0.6"
+											vectorEffect="non-scaling-stroke"
+											strokeLinejoin="round"
+											fill="none"
+										>
+											<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2.5s" repeatCount="indefinite" />
+										</polyline>
+									</svg>
+								</div>
 
-							{/* Animated DB connection lines from domains to shared */}
-							<DbConnectionLines />
+								{/* Spacer between domain grid and shared bar */}
+								<div className="h-8" />
 
-							{/* Shared services */}
-							<div className="flex flex-wrap items-center justify-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-5 py-3">
-								<span className="text-[11px] font-medium uppercase tracking-wider text-emerald-400">
-									Shared
-								</span>
-								<Badge variant="outline" className="border-white/10 text-[11px] text-slate-300">
-									PostgreSQL
-								</Badge>
-								<Badge variant="outline" className="border-white/10 text-[11px] text-slate-300">
-									pgAdmin
-								</Badge>
+								{/* Shared services */}
+								<div className="relative flex flex-wrap items-center justify-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-5 py-3">
+									<span className="text-[11px] font-medium uppercase tracking-wider text-emerald-400">
+										Shared
+									</span>
+									<Badge variant="outline" className="border-white/10 text-[11px] text-slate-300">
+										PostgreSQL
+									</Badge>
+									{/* Animated dotted line: pgAdmin → PostgreSQL (flows right-to-left) */}
+									<svg width="48" height="2" viewBox="0 0 48 2" fill="none" className="-mx-3">
+										<line
+											x1="0" y1="1" x2="48" y2="1"
+											stroke={DB_COLOR}
+											strokeWidth="1.5"
+											strokeDasharray="4 3"
+											opacity="0.6"
+										>
+											<animate attributeName="stroke-dashoffset" from="0" to="14" dur="2s" repeatCount="indefinite" />
+										</line>
+									</svg>
+									<Badge variant="outline" className="border-white/10 text-[11px] text-slate-300">
+										pgAdmin
+									</Badge>
+								</div>
+
+								{/* Green DB connection lines — absolute overlay, behind shared bar so lines terminate at its border */}
+								<svg
+									className="pointer-events-none absolute inset-0 z-0 hidden h-full w-full sm:block"
+									viewBox="0 0 200 100"
+									preserveAspectRatio="none"
+									fill="none"
+								>
+									{/* CIAM Hydra (cx=26, bot=65) → PostgreSQL (cx=94, top=88) — outer L */}
+									<polyline
+										points="26,65 26,78.5 91,78.5 91,88"
+										stroke={DB_COLOR}
+										strokeWidth="1.5"
+										strokeDasharray="4 3"
+										opacity="0.6"
+										vectorEffect="non-scaling-stroke"
+										strokeLinejoin="round"
+										fill="none"
+									>
+										<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" repeatCount="indefinite" />
+									</polyline>
+
+									{/* CIAM Kratos (cx=73, bot=65) → PostgreSQL (cx=94, top=88) — inner L */}
+									<polyline
+										points="73,65 73,74.5 93,74.5 93,88"
+										stroke={DB_COLOR}
+										strokeWidth="1.5"
+										strokeDasharray="4 3"
+										opacity="0.6"
+										vectorEffect="non-scaling-stroke"
+										strokeLinejoin="round"
+										fill="none"
+									>
+										<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.3s" repeatCount="indefinite" />
+									</polyline>
+
+									{/* IAM Hydra (cx=127, bot=65) → PostgreSQL (cx=94, top=88) — inner L */}
+									<polyline
+										points="127,65 127,74.5 95,74.5 95,88"
+										stroke={DB_COLOR}
+										strokeWidth="1.5"
+										strokeDasharray="4 3"
+										opacity="0.6"
+										vectorEffect="non-scaling-stroke"
+										strokeLinejoin="round"
+										fill="none"
+									>
+										<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.6s" repeatCount="indefinite" />
+									</polyline>
+
+									{/* IAM Kratos (cx=174, bot=65) → PostgreSQL (cx=94, top=88) — outer L */}
+									<polyline
+										points="174,65 174,78.5 97,78.5 97,88"
+										stroke={DB_COLOR}
+										strokeWidth="1.5"
+										strokeDasharray="4 3"
+										opacity="0.6"
+										vectorEffect="non-scaling-stroke"
+										strokeLinejoin="round"
+										fill="none"
+									>
+										<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.9s" repeatCount="indefinite" />
+									</polyline>
+								</svg>
 							</div>
 
 							{/* Flow description */}
