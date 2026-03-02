@@ -1,16 +1,19 @@
-export { AnimatedBackground } from "./animated-background";
-export { AuthCard, LoginButton, StatusBadge as DemoStatusBadge } from "./auth-card";
-export { AuthFormCard, AuthFormHeader, AuthFormError, AuthFormField, AuthSubmitButton } from "./auth-form-card";
-export { AuthLayout } from "./auth-layout";
+// Auth organisms
+export { AuthCard, LoginButton, DemoStatusBadge } from "./auth";
+export { AuthFormCard, AuthFormHeader, AuthFormError, AuthFormField, AuthSubmitButton } from "./auth";
+export { AuthLayout } from "./auth";
+
+// Generic (used across multiple apps)
 export { PageShell } from "./page-shell";
 export { SessionDisplay } from "./session-display";
 
 // Site brochure sections
-export { NavBar } from "./nav-bar";
-export { HeroSection } from "./hero-section";
-export { FeaturesSection } from "./features-section";
-export { ArchitectureSection } from "./architecture-section";
-export { GettingStartedSection } from "./getting-started-section";
-export { PlaygroundSection } from "./playground-section";
-export { PlaygroundGrid, PlaygroundAdminSection, AuthStatusRow, AuthStatusBadgeRow, LogoutLink } from "./playground-grid";
-export { SiteFooter } from "./site-footer";
+export { AnimatedBackground } from "./site";
+export { ArchitectureSection } from "./site";
+export { FeaturesSection } from "./site";
+export { GettingStartedSection } from "./site";
+export { HeroSection } from "./site";
+export { NavBar } from "./site";
+export { PlaygroundGrid, PlaygroundAdminSection, AuthStatusRow, AuthStatusBadgeRow, LogoutLink } from "./site";
+export { PlaygroundSection } from "./site";
+export { SiteFooter } from "./site";

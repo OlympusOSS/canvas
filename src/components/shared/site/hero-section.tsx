@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { AnimatedBackground } from "./animated-background";
-import { Badge } from "../ui/badge";
+import { Badge } from "../../ui/badge";
 
 export function HeroSection() {
 	return (
