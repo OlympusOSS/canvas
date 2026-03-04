@@ -35,8 +35,8 @@ export function SessionDisplay({ data }: { data: TokenData }) {
 			className="space-y-3 text-[13px]"
 		>
 			{/* User Info */}
-			<div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-				<h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+			<div className="rounded-xl border border-border bg-muted p-4">
+				<h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
 					User Info
 				</h3>
 				<div className="space-y-2">
@@ -52,13 +52,13 @@ export function SessionDisplay({ data }: { data: TokenData }) {
 			</div>
 
 			{/* ID Token Claims (collapsible) */}
-			<div className="rounded-xl border border-white/[0.06] bg-white/[0.02]">
+			<div className="rounded-xl border border-border bg-muted">
 				<button
 					type="button"
 					onClick={() => setShowClaims(!showClaims)}
 					className="flex w-full items-center justify-between p-4 text-left"
 				>
-					<h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+					<h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
 						ID Token Claims
 					</h3>
 					<motion.svg
@@ -70,7 +70,7 @@ export function SessionDisplay({ data }: { data: TokenData }) {
 						fill="none"
 						stroke="currentColor"
 						strokeWidth="2"
-						className="text-slate-500"
+						className="text-muted-foreground"
 					>
 						<polyline points="6 9 12 15 18 9" />
 					</motion.svg>
@@ -84,7 +84,7 @@ export function SessionDisplay({ data }: { data: TokenData }) {
 							transition={{ duration: 0.2 }}
 							className="overflow-hidden"
 						>
-							<pre className="mx-4 mb-4 overflow-auto rounded-lg bg-slate-900/50 p-4 text-[11px] leading-relaxed text-indigo-300">
+							<pre className="mx-4 mb-4 overflow-auto rounded-lg bg-muted p-4 text-[11px] leading-relaxed text-primary">
 								{JSON.stringify(data.claims, null, 2)}
 							</pre>
 						</motion.div>
@@ -93,8 +93,8 @@ export function SessionDisplay({ data }: { data: TokenData }) {
 			</div>
 
 			{/* Tokens */}
-			<div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-				<h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+			<div className="rounded-xl border border-border bg-muted p-4">
+				<h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
 					Tokens
 				</h3>
 				<div className="space-y-2">
@@ -102,7 +102,7 @@ export function SessionDisplay({ data }: { data: TokenData }) {
 						<div className="min-w-0 flex-1">
 							<InfoRow
 								label="Access Token"
-								value={`${data.access_token.substring(0, 40)}…`}
+								value={`${data.access_token.substring(0, 40)}\u2026`}
 								mono
 							/>
 						</div>
@@ -111,9 +111,9 @@ export function SessionDisplay({ data }: { data: TokenData }) {
 							onClick={() =>
 								copyToClipboard(data.access_token, "access")
 							}
-							className="ml-2 shrink-0 rounded-md px-2 py-1 text-xs text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+							className="ml-2 shrink-0 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 						>
-							{copied === "access" ? "✓" : "Copy"}
+							{copied === "access" ? "\u2713" : "Copy"}
 						</button>
 					</div>
 					<InfoRow label="Type" value={data.token_type} />
@@ -131,9 +131,9 @@ function InfoRow({
 }: { label: string; value: string; mono?: boolean }) {
 	return (
 		<div className="flex items-baseline gap-2">
-			<span className="shrink-0 text-slate-500">{label}:</span>
+			<span className="shrink-0 text-muted-foreground">{label}:</span>
 			<span
-				className={`truncate text-slate-200 ${mono ? "font-mono text-[11px]" : ""}`}
+				className={`truncate text-foreground ${mono ? "font-mono text-[11px]" : ""}`}
 			>
 				{value}
 			</span>

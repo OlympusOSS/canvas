@@ -6,6 +6,7 @@ export { AuthLayout } from "./auth";
 // Generic (used across multiple apps)
 export { PageShell } from "./page-shell";
 export { SessionDisplay } from "./session-display";
+export { WelcomeBanner, type WelcomeBannerProps } from "./welcome-banner";
 
 // Site brochure sections
 export { AnimatedBackground } from "./site";

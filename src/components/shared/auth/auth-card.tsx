@@ -29,31 +29,21 @@ export function AuthCard({
 				duration: 0.5,
 				ease: [0.22, 1, 0.36, 1],
 			}}
-			whileHover={{ y: -4, transition: { duration: 0.2 } }}
 			className="glass-surface group relative overflow-hidden rounded-2xl border p-8 transition-colors duration-300"
 		>
-			{/* Gradient glow on hover */}
-			<div
-				className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-				style={{
-					background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${iconBg}10, transparent 40%)`,
-				}}
-			/>
-
 			<div className="relative">
 				<div className="mb-3 flex items-center gap-3">
 					<div
-						className="flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold text-white shadow-lg"
+						className="flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold text-primary-foreground"
 						style={{
 							background: iconBg,
-							boxShadow: `0 4px 14px ${iconBg}40`,
 						}}
 					>
 						{icon}
 					</div>
-					<h2 className="text-lg font-semibold text-white">{title}</h2>
+					<h2 className="text-lg font-semibold text-foreground">{title}</h2>
 				</div>
-				<p className="mb-6 text-sm leading-relaxed text-slate-400">
+				<p className="mb-6 text-sm leading-relaxed text-muted-foreground">
 					{description}
 				</p>
 				{children}
@@ -80,15 +70,12 @@ export function LoginButton({
 			href={href}
 			whileHover={{ scale: 1.02 }}
 			whileTap={{ scale: 0.98 }}
-			className="group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-lg px-6 py-2.5 text-[15px] font-semibold no-underline shadow-lg transition-shadow duration-200 hover:shadow-xl"
+			className="group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-lg px-6 py-2.5 text-[15px] font-semibold no-underline shadow-md transition-shadow duration-200 hover:shadow-lg"
 			style={{
 				background: bg,
 				color: textColor,
-				boxShadow: `0 4px 14px ${bg}30`,
 			}}
 		>
-			{/* Shimmer overlay */}
-			<span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover/btn:translate-x-full" />
 			<span className="relative flex items-center gap-2">
 				<svg
 					width="16"

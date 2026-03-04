@@ -58,20 +58,19 @@ Built on [Nivo](https://nivo.rocks/):
 
 ### Auth Components
 
-- **AuthLayout** — Full-screen centered layout with animated background
-- **AuthFormCard** — Glass card for login/registration forms
-- **AuthFormHeader** — Animated brand header (logo, title, subtitle)
+- **AuthLayout** — Full-screen centered layout
+- **AuthFormCard** — Card for login/registration forms
+- **AuthFormHeader** — Brand header (logo, title, subtitle)
 - **AuthFormError** — Animated error message
 - **AuthFormField** — Animated field wrapper
-- **AuthSubmitButton** — Gradient button with shimmer and loading state
-- **AuthCard** — Animated feature card with gradient hover effects
-- **LoginButton** — Branded CTA button with shimmer effect
+- **AuthSubmitButton** — Primary button with loading state
+- **AuthCard** — Animated feature card
+- **LoginButton** — Branded CTA button
 
 ### Shared
 
 - **PageShell** — App page layout wrapper
 - **SessionDisplay** — User session/token viewer
-- **AnimatedBackground** — Floating gradient orbs
 
 ### Utilities
 
@@ -84,24 +83,26 @@ Built on [Nivo](https://nivo.rocks/):
 
 ## Design Tokens
 
-`tokens.css` defines CSS custom properties for colors, spacing, and glass effects in both light and dark mode.
+`tokens.css` defines CSS custom properties for colors, spacing, and surface effects in both light and dark mode.
 
 Key token groups:
 - **Colors** — background, foreground, primary, secondary, muted, accent, destructive, success
 - **Layout** — radius, border, ring, input
-- **Glass** — blur, opacity, border, and shadow tokens for each glass tier
+- **Surface** — shadow tokens for each surface tier
+- **Sidebar** — always-dark navy sidebar tokens (Zoho CRM style)
 
 ---
 
-## Glass System
+## Surface System
 
-Three tiers of frosted-glass surfaces for dark mode. Light mode renders as solid surfaces.
+Three tiers of surface classes that adapt to light and dark mode. Both modes render as solid surfaces with clean shadows.
 
-| Class | Use | Blur | Opacity |
-|-------|-----|------|---------|
-| `glass-surface` | Content cards, panels | 12px | 60% |
-| `glass-chrome` | Sidebar, header, toolbars | 16px | 75% |
-| `glass-overlay` | Dialogs, popovers, dropdowns | 20px | 80% |
+| Class | Use |
+|-------|-----|
+| `glass-surface` | Content cards, panels |
+| `glass-chrome` | Sidebar, header, toolbars |
+| `glass-overlay` | Dialogs, popovers, dropdowns |
+| `glass-nav` | Always-dark sidebar navigation |
 
 ---
 

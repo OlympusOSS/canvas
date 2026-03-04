@@ -29,17 +29,14 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 			initial={{ y: -80, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
 			transition={{ duration: 0.5, ease: "easeOut" }}
-			className="glass-chrome fixed left-0 right-0 top-0 z-50 border-b border-white/10"
+			className="glass-chrome fixed left-0 right-0 top-0 z-50 border-b border-border"
 		>
 			<div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
 				{/* Logo + Title */}
-				<a href="#" className="flex items-center gap-2.5 no-underline">
+				<a href="#" className="flex items-center no-underline">
 					{logoSrc && (
-						<img src={logoSrc} alt="Olympus" width={28} height={28} />
+						<img src={logoSrc} alt="OlympusOSS" width={64} height={64} />
 					)}
-					<span className="text-lg font-bold tracking-tight text-white">
-						OlympusOSS
-					</span>
 				</a>
 
 				{/* Links */}
@@ -48,7 +45,7 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 						<a
 							key={link.href}
 							href={link.href}
-							className="text-[13px] font-medium text-slate-400 no-underline transition-colors hover:text-white"
+							className="text-[13px] font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
 						>
 							{link.label}
 						</a>
@@ -57,7 +54,7 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 						href="https://github.com/orgs/OlympusOSS/repositories"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[13px] font-medium text-white no-underline transition-colors hover:bg-white/10"
+						className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-3.5 py-1.5 text-[13px] font-medium text-foreground no-underline transition-colors hover:bg-accent"
 					>
 						<GitHubIcon size={14} />
 						GitHub

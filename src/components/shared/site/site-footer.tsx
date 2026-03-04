@@ -49,8 +49,8 @@ export function SiteFooter({ logoSrc }: { logoSrc?: string }) {
 								<img
 									src={logoSrc}
 									alt="Olympus"
-									width={20}
-									height={20}
+									width={64}
+									height={64}
 								/>
 							)}
 							<span className="text-sm font-bold text-white">

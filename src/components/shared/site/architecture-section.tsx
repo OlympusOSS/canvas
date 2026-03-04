@@ -79,9 +79,9 @@ function PlatformIcon({ type }: { type: "phone" | "globe" }) {
  *          Hydra (BL)   Kratos (BR)
  *
  * Connections (same for both CIAM and IAM):
- *  - Hera ↔ Hydra    — vertical left    (Hera is the login/consent UI for Hydra)
- *  - Athena ↔ Kratos  — vertical right   (Athena admin manages Kratos identities)
- *  - Hydra ↔ Kratos   — horizontal bottom (Hydra uses Kratos for auth)
+ *  - Hera <-> Hydra    — vertical left    (Hera is the login/consent UI for Hydra)
+ *  - Athena <-> Kratos  — vertical right   (Athena admin manages Kratos identities)
+ *  - Hydra <-> Kratos   — horizontal bottom (Hydra uses Kratos for auth)
  */
 function ConnectionOverlay({ color, showAthenaToHera }: { color: string; showAthenaToHera?: boolean }) {
 	return (
@@ -91,7 +91,7 @@ function ConnectionOverlay({ color, showAthenaToHera }: { color: string; showAth
 			preserveAspectRatio="none"
 			fill="none"
 		>
-			{/* Hera (cx=23, bot=47) ↔ Hydra (cx=23, top=68) — vertical left */}
+			{/* Hera (cx=23, bot=47) <-> Hydra (cx=23, top=68) — vertical left */}
 			<line
 				x1="23" y1="47" x2="23" y2="68"
 				stroke={color}
@@ -103,7 +103,7 @@ function ConnectionOverlay({ color, showAthenaToHera }: { color: string; showAth
 				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" repeatCount="indefinite" />
 			</line>
 
-			{/* Athena (cx=77, bot=47) ↔ Kratos (cx=77, top=68) — vertical right */}
+			{/* Athena (cx=77, bot=47) <-> Kratos (cx=77, top=68) — vertical right */}
 			<line
 				x1="77" y1="47" x2="77" y2="68"
 				stroke={color}
@@ -115,7 +115,7 @@ function ConnectionOverlay({ color, showAthenaToHera }: { color: string; showAth
 				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.5s" repeatCount="indefinite" />
 			</line>
 
-			{/* Hydra (right=47) ↔ Kratos (left=53) — horizontal bottom */}
+			{/* Hydra (right=47) <-> Kratos (left=53) — horizontal bottom */}
 			<line
 				x1="47" y1="84" x2="53" y2="84"
 				stroke={color}
@@ -127,7 +127,21 @@ function ConnectionOverlay({ color, showAthenaToHera }: { color: string; showAth
 				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="1s" repeatCount="indefinite" />
 			</line>
 
-			{/* Athena (right≈55) → Hera (left≈45) — horizontal top (IAM only: Athena authenticates via Hera) */}
+			{/* Athena (TR, cx=72) -> Hydra (BL, cx=35) — L-shaped: down then left (Athena manages OAuth2 clients) */}
+			<polyline
+				points="72,47 72,60 33,60 33,68"
+				stroke={color}
+				strokeWidth="1.5"
+				strokeDasharray="4 3"
+				opacity="0.7"
+				vectorEffect="non-scaling-stroke"
+				strokeLinejoin="round"
+				fill="none"
+			>
+				<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="1.5s" repeatCount="indefinite" />
+			</polyline>
+
+			{/* Athena (right~55) -> Hera (left~45) — horizontal top (IAM only: Athena authenticates via Hera) */}
 			{showAthenaToHera && (
 				<line
 					x1="55" y1="30" x2="45" y2="30"
@@ -168,8 +182,8 @@ function DomainColumn({
 			style={{ borderColor: `${borderColor}40` }}
 		>
 			<div className="mb-4 text-center">
-				<h4 className="text-sm font-semibold text-white">{title}</h4>
-				<p className="text-[11px] text-slate-500">{subtitle}</p>
+				<h4 className="text-sm font-semibold text-foreground">{title}</h4>
+				<p className="text-[11px] text-muted-foreground">{subtitle}</p>
 			</div>
 			<div className="relative">
 				{/* Connection lines behind the service boxes */}
@@ -179,9 +193,9 @@ function DomainColumn({
 					{services.map((svc) => (
 						<div
 							key={svc.name}
-							className="rounded-lg border border-white/5 bg-slate-900/90 px-3 py-2.5 text-center backdrop-blur-sm"
+							className="rounded-lg border border-border bg-card px-3 py-2.5 text-center"
 						>
-							<div className="text-xs font-medium text-white">
+							<div className="text-xs font-medium text-foreground">
 								{svc.name}
 							</div>
 							{svc.platforms && (
@@ -189,7 +203,7 @@ function DomainColumn({
 									{svc.platforms.map((p) => (
 										<div
 											key={p.label}
-											className="flex items-center gap-0.5 text-[9px] text-slate-500"
+											className="flex items-center gap-0.5 text-[9px] text-muted-foreground"
 										>
 											<PlatformIcon type={p.icon} />
 											<span>{p.label}</span>
@@ -216,10 +230,10 @@ export function ArchitectureSection() {
 					transition={{ duration: 0.5 }}
 					className="mb-16 text-center"
 				>
-					<h2 className="mb-3 text-3xl font-bold text-white">
+					<h2 className="mb-3 text-3xl font-bold text-foreground">
 						Dual-Domain Architecture
 					</h2>
-					<p className="text-base text-slate-400">
+					<p className="text-base text-muted-foreground">
 						Separate identity domains for customers and employees —
 						clean isolation, shared infrastructure.
 					</p>
@@ -231,17 +245,12 @@ export function ArchitectureSection() {
 					viewport={{ once: true, margin: "-50px" }}
 					transition={{ duration: 0.5, delay: 0.1 }}
 				>
-					<Card className="glass-surface border-white/5">
+					<Card>
 						<CardContent className="p-6">
 							{/*
-							 * Wrapper: relative container spanning domains → shared bar.
+							 * Wrapper: relative container spanning domains -> shared bar.
 							 * Green DB lines are an absolute overlay so they connect
 							 * directly from Hydra/Kratos boxes to the PostgreSQL pill.
-							 *
-							 * ViewBox 200×100 mapped to this wrapper:
-							 *   Bottom-row boxes bottom ≈ y67
-							 *   PostgreSQL pill center   ≈ y92, cx93
-							 *   pgAdmin pill center      ≈ y92, cx123
 							 */}
 							<div className="relative">
 								{/* Two domains side by side */}
@@ -261,14 +270,14 @@ export function ArchitectureSection() {
 										lineColor="#fbbf24"
 										showAthenaToHera
 									/>
-									{/* Cross-domain: CIAM Athena → IAM Hera (admin SSO via IAM) */}
+									{/* Cross-domain: CIAM Athena -> IAM Hera (admin SSO via IAM) */}
 									<svg
 										className="pointer-events-none absolute inset-0 z-20 hidden h-full w-full sm:block"
 										viewBox="0 0 200 100"
 										preserveAspectRatio="none"
 										fill="none"
 									>
-										{/* Inverted-U: CIAM Athena (cx=73,top=35) → up → across → IAM Hera (cx=127,top=35) */}
+										{/* Inverted-U: CIAM Athena (cx=73,top=35) -> up -> across -> IAM Hera (cx=127,top=35) */}
 										<polyline
 											points="73,35 73,25 127,25 127,35"
 											stroke="#c084fc"
@@ -288,14 +297,14 @@ export function ArchitectureSection() {
 								<div className="h-8" />
 
 								{/* Shared services */}
-								<div className="relative flex flex-wrap items-center justify-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-5 py-3">
-									<span className="text-[11px] font-medium uppercase tracking-wider text-emerald-400">
+								<div className="relative flex flex-wrap items-center justify-center gap-3 rounded-xl border border-success/20 bg-success/5 px-5 py-3">
+									<span className="text-[11px] font-medium uppercase tracking-wider text-success">
 										Shared
 									</span>
-									<Badge variant="outline" className="border-white/10 text-[11px] text-slate-300">
+									<Badge variant="outline" className="border-border text-[11px] text-muted-foreground">
 										PostgreSQL
 									</Badge>
-									{/* Animated dotted line: pgAdmin → PostgreSQL (flows right-to-left) */}
+									{/* Animated dotted line: pgAdmin -> PostgreSQL (flows right-to-left) */}
 									<svg width="48" height="2" viewBox="0 0 48 2" fill="none" className="-mx-3">
 										<line
 											x1="0" y1="1" x2="48" y2="1"
@@ -307,19 +316,19 @@ export function ArchitectureSection() {
 											<animate attributeName="stroke-dashoffset" from="0" to="14" dur="2s" repeatCount="indefinite" />
 										</line>
 									</svg>
-									<Badge variant="outline" className="border-white/10 text-[11px] text-slate-300">
+									<Badge variant="outline" className="border-border text-[11px] text-muted-foreground">
 										pgAdmin
 									</Badge>
 								</div>
 
-								{/* Green DB connection lines — absolute overlay, behind shared bar so lines terminate at its border */}
+								{/* Green DB connection lines — absolute overlay */}
 								<svg
 									className="pointer-events-none absolute inset-0 z-0 hidden h-full w-full sm:block"
 									viewBox="0 0 200 100"
 									preserveAspectRatio="none"
 									fill="none"
 								>
-									{/* CIAM Hydra (cx=26, bot=65) → PostgreSQL (cx=94, top=88) — outer L */}
+									{/* CIAM Hydra -> PostgreSQL */}
 									<polyline
 										points="26,65 26,78.5 91,78.5 91,88"
 										stroke={DB_COLOR}
@@ -333,7 +342,7 @@ export function ArchitectureSection() {
 										<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" repeatCount="indefinite" />
 									</polyline>
 
-									{/* CIAM Kratos (cx=73, bot=65) → PostgreSQL (cx=94, top=88) — inner L */}
+									{/* CIAM Kratos -> PostgreSQL */}
 									<polyline
 										points="73,65 73,74.5 93,74.5 93,88"
 										stroke={DB_COLOR}
@@ -347,7 +356,7 @@ export function ArchitectureSection() {
 										<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.3s" repeatCount="indefinite" />
 									</polyline>
 
-									{/* IAM Hydra (cx=127, bot=65) → PostgreSQL (cx=94, top=88) — inner L */}
+									{/* IAM Hydra -> PostgreSQL */}
 									<polyline
 										points="127,65 127,74.5 95,74.5 95,88"
 										stroke={DB_COLOR}
@@ -361,7 +370,7 @@ export function ArchitectureSection() {
 										<animate attributeName="stroke-dashoffset" from="0" to="-14" dur="2s" begin="0.6s" repeatCount="indefinite" />
 									</polyline>
 
-									{/* IAM Kratos (cx=174, bot=65) → PostgreSQL (cx=94, top=88) — outer L */}
+									{/* IAM Kratos -> PostgreSQL */}
 									<polyline
 										points="174,65 174,78.5 97,78.5 97,88"
 										stroke={DB_COLOR}
@@ -378,18 +387,18 @@ export function ArchitectureSection() {
 							</div>
 
 							{/* Flow description */}
-							<div className="mt-6 rounded-lg border border-white/5 bg-white/[0.02] p-4">
-								<p className="text-center text-[12px] leading-relaxed text-slate-500">
-									<span className="text-white">OAuth2 flow:</span>{" "}
+							<div className="mt-6 rounded-lg border border-border bg-muted p-4">
+								<p className="text-center text-[12px] leading-relaxed text-muted-foreground">
+									<span className="text-foreground">OAuth2 flow:</span>{" "}
 									App → Hydra{" "}
-									<span className="text-indigo-400">/oauth2/auth</span>{" "}
+									<span className="text-primary">/oauth2/auth</span>{" "}
 									→ Hera{" "}
-									<span className="text-indigo-400">/login</span> →
+									<span className="text-primary">/login</span> →
 									Kratos auth →{" "}
-									<span className="text-indigo-400">/consent</span> →
+									<span className="text-primary">/consent</span> →
 									Hydra issues tokens → App receives code
 								</p>
-								<p className="mt-1.5 text-center text-[11px] text-slate-600">
+								<p className="mt-1.5 text-center text-[11px] text-muted-foreground">
 									Athena admin panels authenticate via IAM Hera (employee SSO)
 								</p>
 							</div>

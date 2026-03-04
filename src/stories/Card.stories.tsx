@@ -21,7 +21,7 @@ export const Default: Story = {
 				<CardDescription>Card description with supporting text.</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<p>Card content goes here. This is a glass-surface card that adapts to light and dark mode.</p>
+				<p>Card content goes here. This card adapts to light and dark mode.</p>
 			</CardContent>
 			<CardFooter>
 				<Button variant="outline">Cancel</Button>
