@@ -24,7 +24,7 @@ jobs:
           bun-version: latest
       - run: bun install
       - run: bun run build-storybook
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: storybook-static
 
