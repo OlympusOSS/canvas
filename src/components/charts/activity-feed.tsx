@@ -45,7 +45,7 @@ export function ActivityFeed({
 						key={item.id}
 						initial={{ opacity: 0, x: -10 }}
 						animate={{ opacity: 1, x: 0 }}
-						transition={{ delay: index * 0.03, duration: 0.3 }}
+						transition={{ delay: Math.min(index * 0.02, 0.3), duration: 0.2 }}
 						className={cn(
 							"flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
 							onItemClick && "cursor-pointer hover:bg-muted/50",

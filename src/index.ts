@@ -134,6 +134,7 @@ export { AuthFormCard, AuthFormHeader, AuthFormError, AuthFormField, AuthSubmitB
 export { AuthLayout } from "./components/shared";
 export { PageShell } from "./components/shared";
 export { SessionDisplay } from "./components/shared";
+export { WelcomeBanner, type WelcomeBannerProps } from "./components/shared";
 
 // Site brochure sections
 export { NavBar } from "./components/shared";

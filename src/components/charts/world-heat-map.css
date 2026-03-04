@@ -6,7 +6,7 @@
 
 /* Tooltip styling */
 .whm-leaflet-tooltip {
-	background: hsl(var(--popover) / 0.92) !important;
+	background: hsl(var(--popover)) !important;
 	color: hsl(var(--popover-foreground)) !important;
 	border: 1px solid hsl(var(--border) / 0.5) !important;
 	border-radius: 0.5rem !important;
@@ -14,12 +14,10 @@
 	font-size: 0.75rem !important;
 	font-family: inherit !important;
 	box-shadow: 0 4px 12px rgb(0 0 0 / 0.15) !important;
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
 }
 
 .whm-leaflet-tooltip::before {
-	border-top-color: hsl(var(--popover) / 0.92) !important;
+	border-top-color: hsl(var(--popover)) !important;
 }
 
 .whm-tooltip-label {
@@ -60,10 +58,8 @@
 }
 
 .world-heat-map .leaflet-control-zoom a {
-	background: hsl(var(--popover) / 0.85) !important;
+	background: hsl(var(--popover)) !important;
 	color: hsl(var(--popover-foreground)) !important;
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
 	border-bottom-color: hsl(var(--border) / 0.3) !important;
 	width: 32px !important;
 	height: 32px !important;

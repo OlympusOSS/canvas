@@ -39,7 +39,7 @@ export function DashboardGrid({
 	onLayoutChange,
 	children,
 	cols = DEFAULT_COLS,
-	rowHeight = 50,
+	rowHeight = 56,
 	className,
 	isEditable = true,
 }: DashboardGridProps) {
@@ -92,7 +92,7 @@ export function DashboardGrid({
 				dragConfig={dragConfig}
 				resizeConfig={resizeConfig}
 				compactor={verticalCompactor}
-				margin={[16, 16]}
+				margin={[20, 20]}
 				containerPadding={[0, 0]}
 			>
 				{children}

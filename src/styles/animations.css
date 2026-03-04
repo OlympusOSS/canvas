@@ -1,38 +1,3 @@
-/* Animated gradient orb backgrounds */
-@keyframes orb-float-1 {
-	0%, 100% {
-		transform: translate(0, 0) scale(1);
-	}
-	33% {
-		transform: translate(30px, -50px) scale(1.1);
-	}
-	66% {
-		transform: translate(-20px, 20px) scale(0.9);
-	}
-}
-
-@keyframes orb-float-2 {
-	0%, 100% {
-		transform: translate(0, 0) scale(1);
-	}
-	33% {
-		transform: translate(-40px, 30px) scale(1.15);
-	}
-	66% {
-		transform: translate(25px, -40px) scale(0.85);
-	}
-}
-
-/* Button/card shimmer overlay */
-@keyframes shimmer {
-	0% {
-		background-position: -200% 0;
-	}
-	100% {
-		background-position: 200% 0;
-	}
-}
-
 /* ECG heartbeat monitor — scrolling waveform (3 cycles, shift by 1) */
 @keyframes ecg-scroll {
 	0% {

@@ -40,7 +40,7 @@ open http://localhost:2000
 open http://localhost:4003  # IAM Admin
 open http://localhost:3003  # CIAM Admin
 
-# Login: admin@athena.dev / admin123!`,
+# Login: admin@demo.user / admin123!`,
 		language: "bash",
 	},
 ];
@@ -82,14 +82,14 @@ function StepCard({ step }: { step: Step }) {
 	return (
 		<div>
 			<div className="mb-4 flex items-center gap-3">
-				<span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600/20 text-xs font-bold text-indigo-400">
+				<span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary">
 					{step.number}
 				</span>
 				<div>
-					<h3 className="text-sm font-semibold text-white">
+					<h3 className="text-sm font-semibold text-foreground">
 						{step.title}
 					</h3>
-					<p className="text-[12px] text-slate-500">
+					<p className="text-[12px] text-muted-foreground">
 						{step.description}
 					</p>
 				</div>
@@ -110,10 +110,10 @@ export function GettingStartedSection() {
 					transition={{ duration: 0.5 }}
 					className="mb-16 text-center"
 				>
-					<h2 className="mb-3 text-3xl font-bold text-white">
+					<h2 className="mb-3 text-3xl font-bold text-foreground">
 						Get Started
 					</h2>
-					<p className="text-base text-slate-400">
+					<p className="text-base text-muted-foreground">
 						Up and running in three steps — locally or in
 						production.
 					</p>
@@ -127,13 +127,13 @@ export function GettingStartedSection() {
 						viewport={{ once: true, margin: "-50px" }}
 						transition={{ duration: 0.4 }}
 					>
-						<Card className="glass-surface h-full border-white/5">
+						<Card className="h-full">
 							<CardContent className="p-6">
 								<div className="mb-8 text-center">
-									<h3 className="text-lg font-bold text-emerald-400">
+									<h3 className="text-lg font-bold text-success">
 										Development
 									</h3>
-									<p className="mt-1 text-sm text-slate-500">
+									<p className="mt-1 text-sm text-muted-foreground">
 										Docker + live reload
 									</p>
 								</div>
@@ -156,13 +156,13 @@ export function GettingStartedSection() {
 						viewport={{ once: true, margin: "-50px" }}
 						transition={{ duration: 0.4, delay: 0.1 }}
 					>
-						<Card className="glass-surface h-full border-white/5">
+						<Card className="h-full">
 							<CardContent className="p-6">
 								<div className="mb-8 text-center">
-									<h3 className="text-lg font-bold text-indigo-400">
+									<h3 className="text-lg font-bold text-primary">
 										Production
 									</h3>
-									<p className="mt-1 text-sm text-slate-500">
+									<p className="mt-1 text-sm text-muted-foreground">
 										octl CLI
 									</p>
 								</div>

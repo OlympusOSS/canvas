@@ -35,7 +35,7 @@ export function WidgetShell({ id, onRemove, children, isEditable = true }: Widge
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.15 }}
-						className="widget-drag-handle absolute top-2 left-2 z-20 flex cursor-grab items-center justify-center rounded-md bg-muted/80 p-1 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-muted hover:text-foreground active:cursor-grabbing"
+						className="widget-drag-handle absolute top-2 left-2 z-20 flex cursor-grab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:cursor-grabbing"
 					>
 						<Icon name="move" className="h-3.5 w-3.5" />
 					</motion.div>
@@ -54,7 +54,7 @@ export function WidgetShell({ id, onRemove, children, isEditable = true }: Widge
 							e.stopPropagation();
 							onRemove();
 						}}
-						className="absolute top-2 right-2 z-20 flex items-center justify-center rounded-md bg-muted/80 p-1 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-destructive/20 hover:text-destructive"
+						className="absolute top-2 right-2 z-20 flex items-center justify-center rounded-md bg-muted p-1 text-muted-foreground transition-colors hover:bg-destructive/20 hover:text-destructive"
 						aria-label="Remove widget"
 					>
 						<Icon name="close" className="h-3.5 w-3.5" />
@@ -70,7 +70,7 @@ export function WidgetShell({ id, onRemove, children, isEditable = true }: Widge
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.15 }}
-						className="pointer-events-none absolute bottom-2 right-2 z-20 flex items-center justify-center rounded-md bg-muted/80 p-1 text-muted-foreground backdrop-blur-sm"
+						className="pointer-events-none absolute bottom-2 right-2 z-20 flex items-center justify-center rounded-md bg-muted p-1 text-muted-foreground"
 					>
 						<Icon name="resize-handle" className="h-3.5 w-3.5" />
 					</motion.div>

@@ -391,8 +391,8 @@ export function WorldHeatMap({
 			{!hasData && (
 				<div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1000]">
 					<div
-						className="rounded-lg px-4 py-2 text-xs text-muted-foreground backdrop-blur-sm"
-						style={{ backgroundColor: "hsl(var(--card) / 0.8)" }}
+						className="rounded-lg px-4 py-2 text-xs text-muted-foreground"
+						style={{ backgroundColor: "hsl(var(--card))" }}
 					>
 						No geographic data available
 					</div>

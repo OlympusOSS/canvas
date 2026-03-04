@@ -1,7 +1,6 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { AnimatedBackground } from "../site/animated-background"
 import { cn } from "../../../lib/utils"
 
 interface AuthLayoutProps {
@@ -10,7 +9,7 @@ interface AuthLayoutProps {
 }
 
 /**
- * Full-screen centered auth layout with animated gradient background.
+ * Full-screen centered auth layout with solid background.
  * Used by Hera (login/consent) and Athena (login redirect).
  */
 export function AuthLayout({ children, className }: AuthLayoutProps) {
@@ -22,7 +21,6 @@ export function AuthLayout({ children, className }: AuthLayoutProps) {
         className
       )}
     >
-      <AnimatedBackground />
       {children}
     </div>
   )

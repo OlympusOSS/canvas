@@ -67,10 +67,10 @@ export function FeaturesSection() {
 					transition={{ duration: 0.5 }}
 					className="mb-16 text-center"
 				>
-					<h2 className="mb-3 text-3xl font-bold text-white">
+					<h2 className="mb-3 text-3xl font-bold text-foreground">
 						Everything You Need
 					</h2>
-					<p className="text-base text-slate-400">
+					<p className="text-base text-muted-foreground">
 						A complete identity stack — authentication, authorization, and
 						administration.
 					</p>
@@ -85,7 +85,7 @@ export function FeaturesSection() {
 							viewport={{ once: true, margin: "-50px" }}
 							transition={{ duration: 0.4, delay: i * 0.1 }}
 						>
-							<Card className="glass-surface h-full border-white/5 transition-colors hover:border-white/10">
+							<Card className="h-full">
 								<CardHeader className="pb-2">
 									<div
 										className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg"
@@ -97,12 +97,12 @@ export function FeaturesSection() {
 											style={{ color: feature.color }}
 										/>
 									</div>
-									<CardTitle className="text-base text-white">
+									<CardTitle className="text-base text-foreground">
 										{feature.title}
 									</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<p className="text-[13px] leading-relaxed text-slate-400">
+									<p className="text-[13px] leading-relaxed text-muted-foreground">
 										{feature.description}
 									</p>
 								</CardContent>
