@@ -80,8 +80,7 @@ export function AnimatedAreaChart({
 					tickPadding: 8,
 				}}
 				useMesh={true}
-				animate={true}
-				motionConfig="gentle"
+				animate={false}
 				defs={[
 					{
 						id: "areaGradient",

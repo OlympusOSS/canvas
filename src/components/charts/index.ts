@@ -11,3 +11,4 @@ export { ChartCardWithFilter, type ChartCardWithFilterProps } from "./chart-card
 export { LocationList, type LocationItem, type LocationListProps } from "./location-list";
 export { WorldHeatMap, type GeoPoint, type WorldHeatMapProps } from "./world-heat-map";
 export { YearlyBarChart, type YearlyBarChartProps } from "./yearly-bar-chart";
+export { SecurityInsights, type SecurityInsightsProps, type SecurityAlert, type SecurityAlertSeverity, type SecurityAlertCategory } from "./security-insights";

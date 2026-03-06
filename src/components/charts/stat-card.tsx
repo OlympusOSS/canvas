@@ -24,6 +24,8 @@ export interface StatCardProps {
 	sparkline?: ReactNode;
 	/** Optional footer content rendered below the value row (takes precedence over subtitle) */
 	footer?: ReactNode;
+	/** Layout direction for value + sparkline: "horizontal" (side-by-side) or "vertical" (stacked) */
+	layout?: "horizontal" | "vertical";
 	loading?: boolean;
 }
 
@@ -49,6 +51,7 @@ export function StatCard({
 	trend,
 	sparkline,
 	footer,
+	layout = "horizontal",
 	loading = false,
 }: StatCardProps) {
 	const str = String(value);
@@ -83,8 +86,8 @@ export function StatCard({
 			}}
 		>
 			<Card className="group relative h-full overflow-hidden transition-shadow duration-200 hover:shadow-[var(--glass-shadow-hover)]">
-				<CardContent>
-					<div className="flex items-center justify-between text-muted-foreground">
+				<CardContent className="flex-1 flex flex-col min-h-0">
+					<div className="flex items-center justify-between text-muted-foreground shrink-0">
 						<div className="flex items-center gap-2.5">
 							{icon && (
 								<div className={cn("h-4 w-4 shrink-0", iconColors[colorVariant])}>
@@ -129,22 +132,36 @@ export function StatCard({
 								{subtitle || (isHealthy ? "healthy" : "unhealthy")}
 							</span>
 						</div>
+					) : layout === "vertical" ? (
+						<div className="flex-1 flex flex-col min-h-0">
+							<span className="text-3xl font-bold tracking-tight text-foreground shrink-0">
+								{str}
+							</span>
+							{sparkline && (
+								<div className="flex-1 min-w-0 self-stretch" style={{ minHeight: "60px" }}>{sparkline}</div>
+							)}
+							{footer ? (
+								<div className="mt-1 shrink-0">{footer}</div>
+							) : (subtitle || trend?.label) ? (
+								<p className="text-xs text-muted-foreground shrink-0">{trend?.label || subtitle}</p>
+							) : null}
+						</div>
 					) : (
-						<div>
-							<div className="flex items-center gap-3">
-								<span className="text-3xl font-bold tracking-tight text-foreground">
+						<div className="flex-1 flex flex-col min-h-0">
+							<div className="flex items-start gap-3 flex-1 min-h-0">
+								<span className="text-3xl font-bold tracking-tight text-foreground shrink-0">
 									{str}
 								</span>
 
 								{sparkline && (
-									<div className="ml-auto min-w-0 flex-1">{sparkline}</div>
+									<div className="ml-auto min-w-0 flex-1 self-stretch">{sparkline}</div>
 								)}
 							</div>
 
 							{footer ? (
-								<div className="mt-1">{footer}</div>
+								<div className="mt-1 shrink-0">{footer}</div>
 							) : (subtitle || trend?.label) ? (
-								<p className="text-xs text-muted-foreground">{trend?.label || subtitle}</p>
+								<p className="text-xs text-muted-foreground shrink-0">{trend?.label || subtitle}</p>
 							) : null}
 						</div>
 					)}
