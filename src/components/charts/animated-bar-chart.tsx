@@ -66,8 +66,7 @@ export function AnimatedBarChart({
 					tickSize: 0,
 					tickPadding: 8,
 				}}
-				animate={true}
-				motionConfig="gentle"
+				animate={false}
 				borderRadius={3}
 			/>
 		</div>

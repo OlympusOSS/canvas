@@ -115,8 +115,7 @@ export function MultiSeriesAreaChart({
 						tickPadding: 8,
 					}}
 					enableSlices="x"
-					animate={true}
-					motionConfig="gentle"
+					animate={false}
 					defs={gradientDefs}
 					fill={fillRules}
 				/>

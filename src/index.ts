@@ -88,6 +88,9 @@ export { Textarea } from "./components/ui/textarea";
 export { Toast, Toaster, useToast, toastVariants, type ToastProps, type ToasterProps, type ToastState } from "./components/ui/toast";
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "./components/ui/tooltip";
 export { CodeBlock, type CodeBlockProps } from "./components/ui/code-block";
+export { NotificationItem, type NotificationItemProps, type NotificationSeverity } from "./components/ui/notification-item";
+export { NotificationList, type NotificationListProps, type NotificationData } from "./components/ui/notification-list";
+export { ReleaseInfo, type ReleaseInfoProps, type ReleaseInfoEntry } from "./components/ui/release-info";
 
 // Icon
 export { Icon, iconNames, type IconName, type IconProps } from "./components/icon";
@@ -110,6 +113,7 @@ export { ChartCardWithFilter, type ChartCardWithFilterProps } from "./components
 export { LocationList, type LocationItem, type LocationListProps } from "./components/charts";
 export { WorldHeatMap, type GeoPoint, type WorldHeatMapProps } from "./components/charts";
 export { YearlyBarChart, type YearlyBarChartProps } from "./components/charts";
+export { SecurityInsights, type SecurityInsightsProps, type SecurityAlert, type SecurityAlertSeverity, type SecurityAlertCategory } from "./components/charts";
 
 // Dashboard
 export { DashboardGrid, type DashboardGridProps, type Layout, type Layouts } from "./components/dashboard";

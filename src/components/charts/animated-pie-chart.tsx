@@ -73,8 +73,7 @@ export function AnimatedPieChart({
 					borderWidth={0}
 					enableArcLinkLabels={false}
 					enableArcLabels={false}
-					animate={true}
-					motionConfig="gentle"
+					animate={false}
 					legends={[]}
 				/>
 			</div>
@@ -97,8 +96,7 @@ export function AnimatedPieChart({
 					borderWidth={0}
 					enableArcLinkLabels={false}
 					enableArcLabels={false}
-					animate={true}
-					motionConfig="gentle"
+					animate={false}
 					legends={[]}
 				/>
 			</div>
