@@ -1,7 +1,6 @@
 "use client";
 
 import { Icon } from "../icon";
-import { ScrollArea } from "./scroll-area";
 import { NotificationItem, type NotificationSeverity } from "./notification-item";
 import type { IconName } from "../icon";
 import { cn } from "../../lib/utils";
@@ -27,7 +26,7 @@ export interface NotificationListProps {
 export function NotificationList({
 	notifications,
 	maxHeight = "140px",
-	emptyMessage = "All systems operational",
+	emptyMessage = "All systems nominal",
 	className,
 	variant = "banner",
 }: NotificationListProps) {
@@ -48,8 +47,8 @@ export function NotificationList({
 
 	return (
 		<div className={className}>
-			<ScrollArea style={{ maxHeight }}>
-				<div className="flex flex-col gap-1 pr-2">
+			<div className="overflow-y-auto pr-2" style={{ maxHeight }}>
+				<div className="flex flex-col gap-1">
 					{notifications.map((notification) => (
 						<NotificationItem
 							key={notification.id}
@@ -62,7 +61,7 @@ export function NotificationList({
 						/>
 					))}
 				</div>
-			</ScrollArea>
+			</div>
 		</div>
 	);
 }
