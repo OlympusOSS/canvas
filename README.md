@@ -125,7 +125,7 @@ Canvas is part of the [OlympusOSS Identity Platform](https://github.com/OlympusO
 
 ```
 Olympus/
-├── platform/    # Infrastructure & Docker Compose
+├── platform/    # Infrastructure & Podman Compose
 ├── athena/      # Admin dashboard
 ├── hera/        # Auth & consent UI
 ├── site/        # Brochure site & OAuth2 playground
@@ -133,7 +133,7 @@ Olympus/
 └── octl/        # Deployment CLI
 ```
 
-Canvas is consumed as **source** (not pre-built) — consuming apps transpile it via `transpilePackages: ["@olympusoss/canvas"]` in their Next.js config. Canvas does not run in Docker; it's referenced directly from the sibling directory.
+Canvas is consumed as **source** (not pre-built) — consuming apps transpile it via `transpilePackages: ["@olympusoss/canvas"]` in their Next.js config. Canvas does not run in Podman; it's bind-mounted into containers as a volume.
 
 ```bash
 bun install

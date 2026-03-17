@@ -51,7 +51,7 @@ const FEATURES: Feature[] = [
 		icon: "server",
 		title: "Self-Hosted & Portable",
 		description:
-			"Deploy anywhere with Docker Compose — your infrastructure, your cloud, your rules. Fully automated with GitHub Actions CI/CD.",
+			"Deploy anywhere with Podman Compose — your infrastructure, your cloud, your rules. Fully automated with GitHub Actions CI/CD.",
 		color: "#0ea5e9",
 	},
 ];
