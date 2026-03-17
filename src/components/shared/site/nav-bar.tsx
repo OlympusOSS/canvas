@@ -31,11 +31,11 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 			transition={{ duration: 0.5, ease: "easeOut" }}
 			className="glass-chrome fixed left-0 right-0 top-0 z-50 border-b border-border"
 		>
-			<div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+			<div className="mx-auto flex h-10 max-w-6xl items-center justify-between px-6">
 				{/* Logo + Title */}
 				<a href="#" className="flex items-center no-underline">
 					{logoSrc && (
-						<img src={logoSrc} alt="OlympusOSS" width={64} height={64} />
+						<img src={logoSrc} alt="OlympusOSS" width={24} height={24} className="p-1" />
 					)}
 				</a>
 
@@ -54,7 +54,7 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 						href="https://github.com/orgs/OlympusOSS/repositories"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-3.5 py-1.5 text-[13px] font-medium text-foreground no-underline transition-colors hover:bg-accent"
+						className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-3 py-1 text-[13px] font-medium text-foreground no-underline transition-colors hover:bg-accent"
 					>
 						<GitHubIcon size={14} />
 						GitHub

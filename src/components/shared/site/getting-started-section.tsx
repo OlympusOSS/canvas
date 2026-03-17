@@ -25,8 +25,8 @@ cd OlympusOSS`,
 		number: "02",
 		title: "Start the platform",
 		description:
-			"Docker Compose brings up all services and seeds test data.",
-		code: `cd dev && docker compose up -d`,
+			"The CLI installs Podman, starts containers, and seeds test data.",
+		code: `octl dev`,
 		language: "bash",
 	},
 	{
@@ -134,7 +134,7 @@ export function GettingStartedSection() {
 										Development
 									</h3>
 									<p className="mt-1 text-sm text-muted-foreground">
-										Docker + live reload
+										octl CLI + live reload
 									</p>
 								</div>
 								<div className="space-y-6">
