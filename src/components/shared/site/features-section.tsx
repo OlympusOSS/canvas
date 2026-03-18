@@ -58,16 +58,16 @@ const FEATURES: Feature[] = [
 
 export function FeaturesSection() {
 	return (
-		<section id="features" className="scroll-mt-20 px-6 py-24">
+		<section id="features" className="scroll-mt-20 px-4 py-16 landscape:py-10 sm:px-6 sm:py-20 lg:py-24">
 			<div className="mx-auto max-w-6xl">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{ duration: 0.5 }}
-					className="mb-16 text-center"
+					className="mb-8 text-center sm:mb-12 lg:mb-16"
 				>
-					<h2 className="mb-3 text-3xl font-bold text-foreground">
+					<h2 className="mb-3 text-2xl font-bold text-foreground sm:text-3xl">
 						Everything You Need
 					</h2>
 					<p className="text-base text-muted-foreground">
@@ -76,7 +76,7 @@ export function FeaturesSection() {
 					</p>
 				</motion.div>
 
-				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				<div className="grid gap-6 sm:grid-cols-2 landscape:grid-cols-3 lg:grid-cols-3">
 					{FEATURES.map((feature, i) => (
 						<motion.div
 							key={feature.title}

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
 	{ label: "Playground", href: "#playground" },
@@ -23,7 +24,28 @@ function GitHubIcon({ size = 14 }: { size?: number }) {
 	);
 }
 
+function HamburgerIcon({ open }: { open: boolean }) {
+	return (
+		<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+			{open ? (
+				<>
+					<line x1="4" y1="4" x2="14" y2="14" />
+					<line x1="14" y1="4" x2="4" y2="14" />
+				</>
+			) : (
+				<>
+					<line x1="3" y1="5" x2="15" y2="5" />
+					<line x1="3" y1="9" x2="15" y2="9" />
+					<line x1="3" y1="13" x2="15" y2="13" />
+				</>
+			)}
+		</svg>
+	);
+}
+
 export function NavBar({ logoSrc }: { logoSrc?: string }) {
+	const [mobileOpen, setMobileOpen] = useState(false);
+
 	return (
 		<motion.nav
 			initial={{ y: -80, opacity: 0 }}
@@ -31,7 +53,7 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 			transition={{ duration: 0.5, ease: "easeOut" }}
 			className="glass-chrome fixed left-0 right-0 top-0 z-50 border-b border-border"
 		>
-			<div className="mx-auto flex h-10 max-w-6xl items-center justify-between px-6">
+			<div className="mx-auto flex h-10 max-w-6xl items-center justify-between px-4 sm:px-6">
 				{/* Logo + Title */}
 				<a href="#" className="flex items-center no-underline">
 					{logoSrc && (
@@ -39,8 +61,8 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 					)}
 				</a>
 
-				{/* Links */}
-				<div className="hidden items-center gap-6 sm:flex">
+				{/* Desktop links */}
+				<div className="hidden items-center gap-6 md:flex">
 					{NAV_LINKS.map((link) => (
 						<a
 							key={link.href}
@@ -60,7 +82,53 @@ export function NavBar({ logoSrc }: { logoSrc?: string }) {
 						GitHub
 					</a>
 				</div>
+
+				{/* Mobile hamburger */}
+				<button
+					type="button"
+					onClick={() => setMobileOpen((v) => !v)}
+					className="flex items-center justify-center text-muted-foreground transition-colors hover:text-foreground md:hidden"
+					aria-label={mobileOpen ? "Close menu" : "Open menu"}
+				>
+					<HamburgerIcon open={mobileOpen} />
+				</button>
 			</div>
+
+			{/* Mobile dropdown */}
+			<AnimatePresence>
+				{mobileOpen && (
+					<motion.div
+						initial={{ height: 0, opacity: 0 }}
+						animate={{ height: "auto", opacity: 1 }}
+						exit={{ height: 0, opacity: 0 }}
+						transition={{ duration: 0.2, ease: "easeInOut" }}
+						className="overflow-hidden border-t border-border md:hidden"
+					>
+						<div className="flex flex-col gap-1 px-4 py-3 sm:px-6">
+							{NAV_LINKS.map((link) => (
+								<a
+									key={link.href}
+									href={link.href}
+									onClick={() => setMobileOpen(false)}
+									className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-foreground"
+								>
+									{link.label}
+								</a>
+							))}
+							<a
+								href="https://github.com/orgs/OlympusOSS/repositories"
+								target="_blank"
+								rel="noopener noreferrer"
+								onClick={() => setMobileOpen(false)}
+								className="flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-foreground"
+							>
+								<GitHubIcon size={14} />
+								GitHub
+							</a>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</motion.nav>
 	);
 }
