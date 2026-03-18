@@ -30,18 +30,18 @@ const FOOTER_LINKS = [
 ];
 
 const REPO_LINKS = [
-	{ label: "Platform", href: "https://github.com/orgs/OlympusOSS/repositories/platform" },
-	{ label: "Athena", href: "https://github.com/orgs/OlympusOSS/repositories/athena" },
-	{ label: "Hera", href: "https://github.com/orgs/OlympusOSS/repositories/hera" },
-	{ label: "Canvas", href: "https://github.com/orgs/OlympusOSS/repositories/canvas" },
-	{ label: "octl", href: "https://github.com/orgs/OlympusOSS/repositories/octl" },
+	{ label: "Platform", href: "https://github.com/OlympusOSS/platform" },
+	{ label: "Athena", href: "https://github.com/OlympusOSS/athena" },
+	{ label: "Hera", href: "https://github.com/OlympusOSS/hera" },
+	{ label: "Canvas", href: "https://github.com/OlympusOSS/canvas" },
+	{ label: "octl", href: "https://github.com/OlympusOSS/octl" },
 ];
 
 export function SiteFooter({ logoSrc }: { logoSrc?: string }) {
 	return (
-		<footer className="border-t border-white/5 px-6 py-12">
+		<footer className="border-t border-white/5 px-4 py-8 sm:px-6 sm:py-10 lg:py-12">
 			<div className="mx-auto max-w-6xl">
-				<div className="grid gap-10 sm:grid-cols-3">
+				<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 					{/* Brand */}
 					<div>
 						<div className="mb-3 flex items-center gap-2">

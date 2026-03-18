@@ -9,16 +9,16 @@ export function PlaygroundSection({
 	children: ReactNode;
 }) {
 	return (
-		<section id="playground" className="scroll-mt-20 px-6 pb-24 pt-12">
+		<section id="playground" className="scroll-mt-20 px-4 pb-16 pt-8 landscape:pb-10 landscape:pt-6 sm:px-6 sm:pb-20 sm:pt-12 lg:pb-24">
 			<div className="mx-auto max-w-[960px]">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{ duration: 0.5 }}
-					className="mb-16 text-center"
+					className="mb-8 text-center sm:mb-12 lg:mb-16"
 				>
-					<h2 className="mb-3 text-3xl font-bold text-white">
+					<h2 className="mb-3 text-2xl font-bold text-white sm:text-3xl">
 						Try It Out
 					</h2>
 					<p className="text-base text-slate-400">

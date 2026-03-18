@@ -221,16 +221,16 @@ function DomainColumn({
 
 export function ArchitectureSection() {
 	return (
-		<section id="architecture" className="scroll-mt-20 px-6 py-24">
+		<section id="architecture" className="scroll-mt-20 px-4 py-16 landscape:py-10 sm:px-6 sm:py-20 lg:py-24">
 			<div className="mx-auto max-w-4xl">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{ duration: 0.5 }}
-					className="mb-16 text-center"
+					className="mb-8 text-center sm:mb-12 lg:mb-16"
 				>
-					<h2 className="mb-3 text-3xl font-bold text-foreground">
+					<h2 className="mb-3 text-2xl font-bold text-foreground sm:text-3xl">
 						Dual-Domain Architecture
 					</h2>
 					<p className="text-base text-muted-foreground">

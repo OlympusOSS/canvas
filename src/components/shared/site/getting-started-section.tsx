@@ -81,15 +81,15 @@ const PROD_STEPS: Step[] = [
 function StepCard({ step }: { step: Step }) {
 	return (
 		<div>
-			<div className="mb-4 flex items-center gap-3">
-				<span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary">
+			<div className="mb-3 flex items-start gap-3">
+				<span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary sm:h-8 sm:w-8">
 					{step.number}
 				</span>
-				<div>
+				<div className="min-w-0">
 					<h3 className="text-sm font-semibold text-foreground">
 						{step.title}
 					</h3>
-					<p className="text-[12px] text-muted-foreground">
+					<p className="text-[12px] leading-relaxed text-muted-foreground">
 						{step.description}
 					</p>
 				</div>
@@ -101,16 +101,16 @@ function StepCard({ step }: { step: Step }) {
 
 export function GettingStartedSection() {
 	return (
-		<section id="get-started" className="scroll-mt-20 px-6 py-24">
+		<section id="get-started" className="scroll-mt-20 px-4 py-16 landscape:py-10 sm:px-6 sm:py-20 lg:py-24">
 			<div className="mx-auto max-w-5xl">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{ duration: 0.5 }}
-					className="mb-16 text-center"
+					className="mb-8 text-center sm:mb-12 lg:mb-16"
 				>
-					<h2 className="mb-3 text-3xl font-bold text-foreground">
+					<h2 className="mb-3 text-2xl font-bold text-foreground sm:text-3xl">
 						Get Started
 					</h2>
 					<p className="text-base text-muted-foreground">
@@ -126,10 +126,11 @@ export function GettingStartedSection() {
 						whileInView={{ opacity: 1, x: 0 }}
 						viewport={{ once: true, margin: "-50px" }}
 						transition={{ duration: 0.4 }}
+						className="min-w-0"
 					>
 						<Card className="h-full">
-							<CardContent className="p-6">
-								<div className="mb-8 text-center">
+							<CardContent className="p-4 sm:p-6">
+								<div className="mb-5 text-center sm:mb-8">
 									<h3 className="text-lg font-bold text-success">
 										Development
 									</h3>
@@ -137,7 +138,7 @@ export function GettingStartedSection() {
 										octl CLI + live reload
 									</p>
 								</div>
-								<div className="space-y-6">
+								<div className="space-y-5 sm:space-y-6">
 									{DEV_STEPS.map((step) => (
 										<StepCard
 											key={step.number}
@@ -155,10 +156,11 @@ export function GettingStartedSection() {
 						whileInView={{ opacity: 1, x: 0 }}
 						viewport={{ once: true, margin: "-50px" }}
 						transition={{ duration: 0.4, delay: 0.1 }}
+						className="min-w-0"
 					>
 						<Card className="h-full">
-							<CardContent className="p-6">
-								<div className="mb-8 text-center">
+							<CardContent className="p-4 sm:p-6">
+								<div className="mb-5 text-center sm:mb-8">
 									<h3 className="text-lg font-bold text-primary">
 										Production
 									</h3>
@@ -166,7 +168,7 @@ export function GettingStartedSection() {
 										octl CLI
 									</p>
 								</div>
-								<div className="space-y-6">
+								<div className="space-y-5 sm:space-y-6">
 									{PROD_STEPS.map((step) => (
 										<StepCard
 											key={step.number}

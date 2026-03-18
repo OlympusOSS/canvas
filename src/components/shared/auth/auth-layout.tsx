@@ -17,7 +17,7 @@ export function AuthLayout({ children, className }: AuthLayoutProps) {
     <div
       data-slot="auth-layout"
       className={cn(
-        "relative flex min-h-screen items-center justify-center px-4",
+        "relative flex min-h-screen items-center justify-center px-4 sm:px-6",
         className
       )}
     >

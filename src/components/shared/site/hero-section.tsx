@@ -5,7 +5,7 @@ import { Badge } from "../../ui/badge";
 
 export function HeroSection() {
 	return (
-		<section className="relative flex items-center justify-center overflow-hidden px-6 pb-12 pt-32">
+		<section className="relative flex items-center justify-center overflow-hidden px-4 pb-12 pt-24 landscape:pb-6 landscape:pt-16 sm:px-6 sm:pt-28 lg:pt-32">
 			<div className="relative z-10 mx-auto max-w-3xl text-center">
 				{/* Badge */}
 				<motion.div
@@ -23,7 +23,7 @@ export function HeroSection() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, delay: 0.3 }}
-					className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+					className="mb-4 text-3xl font-bold tracking-tight text-foreground landscape:mb-2 landscape:text-2xl sm:text-4xl lg:text-6xl"
 				>
 					<span className="text-primary">
 						OlympusOSS
@@ -41,7 +41,7 @@ export function HeroSection() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, delay: 0.4 }}
-					className="mx-auto mb-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+					className="mx-auto mb-6 max-w-xl text-base leading-relaxed text-muted-foreground landscape:mb-4 landscape:text-sm sm:text-lg"
 				>
 					Self-hosted authentication and authorization built on{" "}
 					<a href="https://github.com/ory/kratos" target="_blank" rel="noopener noreferrer" className="text-foreground no-underline">Ory Kratos</a> and{" "}

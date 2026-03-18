@@ -41,7 +41,7 @@ function CodeBlock({
     >
       {/* Header */}
       {(title || showCopy) && (
-        <div className="flex items-center justify-between border-b px-4 py-2">
+        <div className="flex items-center justify-between border-b px-3 py-1.5 sm:px-4 sm:py-2">
           <span className="text-xs font-medium text-muted-foreground">
             {title || language || "Code"}
           </span>
@@ -60,10 +60,10 @@ function CodeBlock({
 
       {/* Code content */}
       <div
-        className="overflow-auto p-4"
+        className="overflow-auto p-3 sm:p-4"
         style={{ maxHeight }}
       >
-        <pre className="text-sm leading-relaxed">
+        <pre className="text-xs leading-relaxed sm:text-sm">
           <code className="font-mono text-foreground">{code}</code>
         </pre>
       </div>
