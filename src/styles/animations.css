@@ -40,6 +40,22 @@
 	animation: ecg-scan 2.5s linear infinite;
 }
 
+/* Entrance animation — fade in + slide up from below */
+@keyframes fade-slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-fade-slide-up {
+	animation: fade-slide-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Focus ring pulse */
 @keyframes ring-pulse {
 	0%, 100% {
