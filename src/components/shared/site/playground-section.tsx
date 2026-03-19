@@ -23,7 +23,7 @@ export function PlaygroundSection({
 					</h2>
 					<p className="text-base text-slate-400">
 						OAuth2 playground — test the full authorization code flow
-						against the local CIAM and IAM domains.
+						against the CIAM and IAM domains.
 					</p>
 				</motion.div>
 
