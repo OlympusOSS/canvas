@@ -37,8 +37,8 @@ cd OlympusOSS`,
 open http://localhost:2000
 
 # Admin panels
-open http://localhost:4003  # IAM Admin
-open http://localhost:3003  # CIAM Admin
+open http://localhost:4001  # IAM Admin
+open http://localhost:3001  # CIAM Admin
 
 # Login: admin@demo.user / admin123!`,
 		language: "bash",
