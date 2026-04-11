@@ -21,6 +21,12 @@ jobs:
           bun-version: latest
       - run: bun install
       - run: bunx tsc --noEmit
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium
+      - name: Run Storybook component tests
+        run: bun run test
+        env:
+          CI: true
 
   publish:
     needs: test
