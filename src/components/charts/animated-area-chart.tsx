@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useNivoTheme } from "../../hooks/use-nivo-theme";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 type ChartColorToken = "chart-1" | "chart-2" | "chart-3" | "chart-4" | "chart-5" | "primary" | "success" | "destructive";
 
@@ -49,12 +50,15 @@ export function AnimatedAreaChart({
 		[data],
 	);
 
+	const heightStr = typeof height === "number" ? `${height}px` : String(height);
+	const { className: hCls, style: hStyle } = useDynamicStyle({ height: heightStr });
+
 	if (data.length === 0) {
-		return <div style={{ height }} />;
+		return <div className={hCls} style={hStyle} />;
 	}
 
 	return (
-		<div style={{ height }}>
+		<div className={hCls} style={hStyle}>
 			<ResponsiveLine
 				data={nivoData}
 				theme={nivoTheme}

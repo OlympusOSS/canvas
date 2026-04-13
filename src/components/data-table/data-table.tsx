@@ -2,6 +2,7 @@
 
 import { Icon } from "../icon";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useDynamicStyle } from "../ui/dynamic-style";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
@@ -306,16 +307,14 @@ export const DataTable = React.memo(
 										</TableHead>
 									)}
 									{columns.map((column) => (
-										<TableHead
+										<StyledTableHead
 											key={column.field}
-											style={{
-												minWidth: column.minWidth,
-												maxWidth: column.maxWidth,
-												width: column.width,
-											}}
+											minWidth={column.minWidth}
+											maxWidth={column.maxWidth}
+											width={column.width}
 										>
 											{column.headerName}
-										</TableHead>
+										</StyledTableHead>
 									))}
 								</TableRow>
 							</TableHeader>
@@ -370,16 +369,14 @@ export const DataTable = React.memo(
 													</TableCell>
 												)}
 												{columns.map((column) => (
-													<TableCell
+													<StyledTableCell
 														key={column.field}
-														style={{
-															minWidth: column.minWidth,
-															maxWidth: column.maxWidth,
-															width: column.width,
-														}}
+														minWidth={column.minWidth}
+														maxWidth={column.maxWidth}
+														width={column.width}
 													>
 														{renderCell(column, row, index)}
-													</TableCell>
+													</StyledTableCell>
 												))}
 											</TableRow>
 										);
@@ -445,3 +442,41 @@ export const DataTable = React.memo(
 );
 
 DataTable.displayName = "DataTable";
+
+function StyledTableHead({
+	minWidth,
+	maxWidth,
+	width,
+	children,
+}: {
+	minWidth?: number | string;
+	maxWidth?: number | string;
+	width?: number | string;
+	children: React.ReactNode;
+}) {
+	const styles: Record<string, string | undefined> = {};
+	if (minWidth !== undefined) styles.minWidth = typeof minWidth === "number" ? `${minWidth}px` : String(minWidth);
+	if (maxWidth !== undefined) styles.maxWidth = typeof maxWidth === "number" ? `${maxWidth}px` : String(maxWidth);
+	if (width !== undefined) styles.width = typeof width === "number" ? `${width}px` : String(width);
+	const { className, style } = useDynamicStyle(styles);
+	return <TableHead className={className} style={style}>{children}</TableHead>;
+}
+
+function StyledTableCell({
+	minWidth,
+	maxWidth,
+	width,
+	children,
+}: {
+	minWidth?: number | string;
+	maxWidth?: number | string;
+	width?: number | string;
+	children: React.ReactNode;
+}) {
+	const styles: Record<string, string | undefined> = {};
+	if (minWidth !== undefined) styles.minWidth = typeof minWidth === "number" ? `${minWidth}px` : String(minWidth);
+	if (maxWidth !== undefined) styles.maxWidth = typeof maxWidth === "number" ? `${maxWidth}px` : String(maxWidth);
+	if (width !== undefined) styles.width = typeof width === "number" ? `${width}px` : String(width);
+	const { className, style } = useDynamicStyle(styles);
+	return <TableCell className={className} style={style}>{children}</TableCell>;
+}

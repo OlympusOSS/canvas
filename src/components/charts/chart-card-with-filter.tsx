@@ -33,8 +33,8 @@ export function ChartCardWithFilter({
 	const hasFilter = timeRangeOptions && timeRangeOptions.length > 0 && onTimeRangeChange;
 
 	return (
-		<Card className={cn("pt-0", className)} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-			<CardHeader className="px-5 pt-4" style={{ height: "fit-content", flexShrink: 0 }}>
+		<Card className={cn("flex h-full flex-col pt-0", className)}>
+			<CardHeader className="h-fit shrink-0 px-5 pt-4">
 				<div className="flex items-start justify-between gap-2">
 					<CardTitle className="text-base font-semibold tracking-tight">{title}</CardTitle>
 					{hasFilter && (
@@ -53,7 +53,7 @@ export function ChartCardWithFilter({
 					)}
 				</div>
 			</CardHeader>
-			<CardContent style={{ flex: "1 1 auto", minHeight: 0 }}>{children}</CardContent>
+			<CardContent className="min-h-0 flex-auto">{children}</CardContent>
 		</Card>
 	);
 }

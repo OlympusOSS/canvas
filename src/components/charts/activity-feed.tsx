@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { ScrollArea } from "../ui/scroll-area";
 import { cn } from "../../lib/utils";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 export interface ActivityItem {
 	id: string;
@@ -37,8 +38,12 @@ export function ActivityFeed({
 		);
 	}
 
+	const { className: mhCls, style: mhStyle } = useDynamicStyle(
+		maxHeight ? { maxHeight: typeof maxHeight === "number" ? `${maxHeight}px` : String(maxHeight) } : {}
+	);
+
 	return (
-		<ScrollArea type="always" className={cn(!maxHeight && "h-full")} style={maxHeight ? { maxHeight } : undefined}>
+		<ScrollArea type="always" className={cn(!maxHeight && "h-full", mhCls)} style={mhStyle}>
 			<div className="space-y-1">
 				{items.map((item, index) => (
 					<motion.div

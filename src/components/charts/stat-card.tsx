@@ -138,7 +138,7 @@ export function StatCard({
 								{str}
 							</span>
 							{sparkline && (
-								<div className="flex-1 min-w-0 self-stretch" style={{ minHeight: "60px" }}>{sparkline}</div>
+								<div className="flex-1 min-w-0 self-stretch min-h-[60px]">{sparkline}</div>
 							)}
 							{footer ? (
 								<div className="mt-1 shrink-0">{footer}</div>

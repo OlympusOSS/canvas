@@ -32,13 +32,9 @@ export function WelcomeBanner({
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
 			className={cn(
-				"relative overflow-hidden rounded-xl px-6 py-5",
+				"welcome-banner-gradient relative overflow-hidden rounded-xl px-6 py-5",
 				className,
 			)}
-			style={{
-				background:
-					"linear-gradient(135deg, hsl(213 72% 48%) 0%, hsl(213 55% 42%) 100%)",
-			}}
 		>
 			{hasColumns ? (
 				/* ── Multi-column layout ── */

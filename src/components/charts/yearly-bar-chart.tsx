@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 // ── Types ────────────────────────────────────────────
 
@@ -64,60 +65,86 @@ export function YearlyBarChart({
 	// Minimum total width = bars * minBarWidth so scrolling kicks in
 	const minWidth = data.length * minBarWidth;
 
+	const { className: containerCls, style: containerStyle } = useDynamicStyle({
+		maxWidth: "100%",
+		minHeight: `${height + 22}px`,
+	});
+	const { className: gridCls, style: gridStyle } = useDynamicStyle({
+		minWidth: `${minWidth}px`,
+	});
+
 	return (
 		<div
 			ref={ref}
-			className="h-full overflow-x-auto overflow-y-hidden styled-scrollbar"
-			style={{ maxWidth: "100%", minHeight: `${height + 22}px` }}
+			className={`h-full overflow-x-auto overflow-y-hidden styled-scrollbar ${containerCls}`}
+			style={containerStyle}
 		>
 			<div
-				style={{ minWidth: `${minWidth}px` }}
-				className="flex h-full gap-1.5"
+				className={`flex h-full gap-1.5 ${gridCls}`}
+				style={gridStyle}
 			>
 				{data.map((d) => {
 					const fraction = d.count / maxCount;
 
 					return (
-						<div
+						<YearlyBar
 							key={d.year}
-							className="flex flex-1 flex-col items-center gap-0.5 h-full"
-							style={{ minWidth: `${minBarWidth - 6}px` }}
-						>
-							{/* Value label */}
-							<span
-								className="shrink-0 text-[10px] font-medium tabular-nums leading-none"
-								style={{
-									color: resolved,
-									opacity: visible ? 1 : 0,
-									transition: "opacity 0.5s ease-out",
-								}}
-							>
-								{d.count.toLocaleString()}
-							</span>
-
-							{/* Bar area — fills remaining vertical space */}
-							<div className="flex-1 flex items-end w-full min-h-0">
-								<div
-									style={{
-										height: visible ? `${Math.max(8, fraction * 100)}%` : "0%",
-										backgroundColor: resolved,
-										opacity: 0.75,
-										transition:
-											"height 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease-out",
-										borderRadius: "3px 3px 0 0",
-									}}
-									className="w-full"
-								/>
-							</div>
-
-							{/* Label */}
-							<span className="shrink-0 text-[9px] tabular-nums leading-none text-muted-foreground">
-								{d.label ?? d.year}
-							</span>
-						</div>
+							count={d.count}
+							label={d.label ?? String(d.year)}
+							fraction={fraction}
+							minBarWidth={minBarWidth}
+							color={resolved}
+							visible={visible}
+						/>
 					);
 				})}
 			</div>
+		</div>
+	);
+}
+
+function YearlyBar({
+	count,
+	label,
+	fraction,
+	minBarWidth,
+	color,
+	visible,
+}: {
+	count: number;
+	label: string;
+	fraction: number;
+	minBarWidth: number;
+	color: string;
+	visible: boolean;
+}) {
+	const { className: colCls, style: colStyle } = useDynamicStyle({
+		minWidth: `${minBarWidth - 6}px`,
+	});
+	const { className: labelCls, style: labelStyle } = useDynamicStyle({
+		color,
+		opacity: visible ? "1" : "0",
+		transition: "opacity 0.5s ease-out",
+	});
+	const { className: barCls, style: barStyle } = useDynamicStyle({
+		height: visible ? `${Math.max(8, fraction * 100)}%` : "0%",
+		backgroundColor: color,
+		opacity: "0.75",
+		transition: "height 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease-out",
+		borderRadius: "3px 3px 0 0",
+	});
+
+	return (
+		<div className={`flex flex-1 flex-col items-center gap-0.5 h-full ${colCls}`} style={colStyle}>
+			<span className={`shrink-0 text-[10px] font-medium tabular-nums leading-none ${labelCls}`} style={labelStyle}>
+				{count.toLocaleString()}
+			</span>
+			<div className="flex-1 flex items-end w-full min-h-0">
+				<div className={`w-full ${barCls}`} style={barStyle} />
+			</div>
+			<span className="shrink-0 text-[9px] tabular-nums leading-none text-muted-foreground">
+				{label}
+			</span>
 		</div>
 	);
 }
