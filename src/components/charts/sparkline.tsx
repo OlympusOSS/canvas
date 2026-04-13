@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 export interface SparklineProps {
 	/** Data points to plot */
@@ -49,6 +50,8 @@ export function Sparkline({
 		return () => obs.disconnect();
 	}, [fixedWidth]);
 
+	const { className: hCls, style: hStyle } = useDynamicStyle({ height: `${height}px` });
+
 	if (!data.length) return null;
 
 	const w = fixedWidth ?? containerWidth;
@@ -71,8 +74,8 @@ export function Sparkline({
 	return (
 		<div
 			ref={containerRef}
-			className={cn("w-full", className)}
-			style={{ height }}
+			className={cn("w-full", className, hCls)}
+			style={hStyle}
 		>
 			<svg
 				width={w}
@@ -112,7 +115,7 @@ export function Sparkline({
 				)}
 			</svg>
 			{xLabels && (
-				<div className="flex justify-between" style={{ height: labelHeight }}>
+				<div className="flex justify-between h-3">
 					<span className="text-[9px] text-muted-foreground leading-none">{xLabels[0]}</span>
 					<span className="text-[9px] text-muted-foreground leading-none">{xLabels[1]}</span>
 					<span className="text-[9px] text-muted-foreground leading-none">{xLabels[2]}</span>

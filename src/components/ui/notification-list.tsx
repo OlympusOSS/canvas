@@ -4,6 +4,7 @@ import { Icon } from "../icon";
 import { NotificationItem, type NotificationSeverity } from "./notification-item";
 import type { IconName } from "../icon";
 import { cn } from "../../lib/utils";
+import { useDynamicStyle } from "./dynamic-style";
 
 export interface NotificationData {
 	id: string;
@@ -45,9 +46,11 @@ export function NotificationList({
 		);
 	}
 
+	const { className: mhCls, style: mhStyle } = useDynamicStyle({ maxHeight });
+
 	return (
 		<div className={className}>
-			<div className="overflow-y-auto pr-2" style={{ maxHeight }}>
+			<div className={`overflow-y-auto pr-2 ${mhCls}`} style={mhStyle}>
 				<div className="flex flex-col gap-1">
 					{notifications.map((notification) => (
 						<NotificationItem

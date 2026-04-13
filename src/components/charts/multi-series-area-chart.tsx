@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useNivoTheme } from "../../hooks/use-nivo-theme";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 type ChartColorToken =
 	| "chart-1"
@@ -81,15 +82,16 @@ export function MultiSeriesAreaChart({
 		[series],
 	);
 
+	const heightStr = typeof height === "number" ? `${height}px` : String(height);
+	const { className: hCls, style: hStyle } = useDynamicStyle({ height: heightStr });
+
 	if (series.length === 0 || series.every((s) => s.data.length === 0)) {
-		return <div style={{ height }} />;
+		return <div className={hCls} style={hStyle} />;
 	}
 
-	const chartHeight = showLegend ? `calc(${typeof height === "number" ? `${height}px` : height} - 28px)` : height;
-
 	return (
-		<div style={{ height }} className="flex flex-col">
-			<div style={{ height: chartHeight, minHeight: 0, flex: "1 1 auto" }}>
+		<div className={`flex flex-col ${hCls}`} style={hStyle}>
+			<div className="min-h-0 flex-auto">
 				<ResponsiveLine
 					data={nivoData}
 					theme={nivoTheme}
@@ -125,10 +127,7 @@ export function MultiSeriesAreaChart({
 				<div className="flex items-center justify-center gap-4 pt-1">
 					{series.map((s, i) => (
 						<div key={s.id} className="flex items-center gap-1.5">
-							<span
-								className="h-2 w-2 shrink-0 rounded-full"
-								style={{ backgroundColor: resolvedColors[i] }}
-							/>
+							<SeriesLegendDot color={resolvedColors[i]} />
 							<span className="text-xs text-muted-foreground">{s.label}</span>
 						</div>
 					))}
@@ -136,4 +135,9 @@ export function MultiSeriesAreaChart({
 			)}
 		</div>
 	);
+}
+
+function SeriesLegendDot({ color }: { color: string }) {
+	const { className, style } = useDynamicStyle({ backgroundColor: color });
+	return <span className={`h-2 w-2 shrink-0 rounded-full ${className}`} style={style} />;
 }

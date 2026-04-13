@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { useNivoTheme } from "../../hooks/use-nivo-theme";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 type ChartColorToken = "chart-1" | "chart-2" | "chart-3" | "chart-4" | "chart-5" | "primary" | "success" | "destructive";
 
@@ -39,12 +40,15 @@ export function AnimatedBarChart({
 		[data],
 	);
 
+	const heightStr = typeof height === "number" ? `${height}px` : String(height);
+	const { className: hCls, style: hStyle } = useDynamicStyle({ height: heightStr });
+
 	if (data.length === 0) {
-		return <div style={{ height }} />;
+		return <div className={hCls} style={hStyle} />;
 	}
 
 	return (
-		<div style={{ height }}>
+		<div className={hCls} style={hStyle}>
 			<ResponsiveBar
 				data={nivoData}
 				keys={["value"]}

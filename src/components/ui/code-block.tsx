@@ -3,6 +3,7 @@
 import * as React from "react"
 import { cn } from "../../lib/utils"
 import { Icon } from "../icon"
+import { useDynamicStyle } from "./dynamic-style"
 
 /* ─── CodeBlock ──────────────────────────────────────────────────── */
 
@@ -24,6 +25,7 @@ function CodeBlock({
   className,
 }: CodeBlockProps) {
   const [copied, setCopied] = React.useState(false)
+  const { className: mhCls, style: mhStyle } = useDynamicStyle({ maxHeight })
 
   const handleCopy = React.useCallback(async () => {
     await navigator.clipboard.writeText(code)
@@ -60,8 +62,8 @@ function CodeBlock({
 
       {/* Code content */}
       <div
-        className="overflow-auto p-3 sm:p-4"
-        style={{ maxHeight }}
+        className={cn("overflow-auto p-3 sm:p-4", mhCls)}
+        style={mhStyle}
       >
         <pre className="text-xs leading-relaxed sm:text-sm">
           <code className="font-mono text-foreground">{code}</code>

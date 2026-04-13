@@ -4,6 +4,7 @@ import { Icon, type IconName } from "../icon";
 import { ScrollArea } from "../ui/scroll-area";
 import { Badge } from "../ui/badge";
 import { cn } from "../../lib/utils";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 export type SecurityAlertSeverity = "critical" | "warning" | "info";
 export type SecurityAlertCategory = "cve" | "ddos" | "oauth2" | "rate" | "session";
@@ -70,9 +71,11 @@ export function SecurityInsights({
 		);
 	}
 
+	const { className: mhCls, style: mhStyle } = useDynamicStyle({ maxHeight, height: "100%" });
+
 	return (
 		<div className={cn("h-full", className)}>
-			<ScrollArea style={{ maxHeight, height: "100%" }}>
+			<ScrollArea className={mhCls} style={mhStyle}>
 				<div className="flex flex-col gap-1.5 pr-2">
 					{alerts.map((alert) => (
 						<SecurityAlertRow key={alert.id} alert={alert} />

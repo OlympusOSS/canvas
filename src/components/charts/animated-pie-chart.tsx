@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { useNivoTheme } from "../../hooks/use-nivo-theme";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 interface PieDataItem {
 	name: string;
@@ -54,13 +55,16 @@ export function AnimatedPieChart({
 	// Nivo uses ratio (0-1) for innerRadius; normalize from absolute px
 	const innerRadiusRatio = outerRadius > 0 ? innerRadius / outerRadius : 0;
 
+	const heightStr = typeof height === "number" ? `${height}px` : height;
+	const { className: heightClass, style: heightStyle } = useDynamicStyle({ height: heightStr });
+
 	if (data.length === 0) {
-		return <div style={{ height }} />;
+		return <div className={heightClass} style={heightStyle} />;
 	}
 
 	if (!showLegend) {
 		return (
-			<div style={{ height }}>
+			<div className={heightClass} style={heightStyle}>
 				<ResponsivePie
 					data={nivoData}
 					theme={nivoTheme}
@@ -81,7 +85,7 @@ export function AnimatedPieChart({
 	}
 
 	return (
-		<div style={{ height }} className="flex items-center justify-center gap-3">
+		<div className={`flex items-center justify-center gap-3 ${heightClass}`} style={heightStyle}>
 			{/* Donut chart — centered with legend, fixed aspect ratio */}
 			<div className="h-full shrink-0 aspect-square">
 				<ResponsivePie
@@ -105,10 +109,7 @@ export function AnimatedPieChart({
 			<div className="flex flex-col gap-1.5 min-w-0">
 				{nivoData.map((item) => (
 					<div key={item.id} className="flex items-center gap-2">
-						<span
-							className="h-2 w-2 shrink-0 rounded-full"
-							style={{ backgroundColor: item.color }}
-						/>
+						<LegendDot color={item.color} />
 						<span className="truncate text-xs text-muted-foreground">
 							{item.label}
 						</span>
@@ -117,4 +118,9 @@ export function AnimatedPieChart({
 			</div>
 		</div>
 	);
+}
+
+function LegendDot({ color }: { color: string }) {
+	const { className, style } = useDynamicStyle({ backgroundColor: color });
+	return <span className={`h-2 w-2 shrink-0 rounded-full ${className}`} style={style} />;
 }

@@ -48,7 +48,7 @@ export function VerificationGauge({
 
 	return (
 		<div className="relative flex h-full min-h-0 flex-col items-center justify-center overflow-hidden">
-			<div className="relative w-full max-w-[300px] max-h-full aspect-square shrink-0" style={{ maxHeight: 'calc(100% - 1.25rem)' }}>
+			<div className="relative w-full max-w-[300px] max-h-[calc(100%-1.25rem)] aspect-square shrink-0">
 				<svg ref={ref} viewBox={`0 0 ${size} ${size}`} className="h-full w-full">
 					{/* Track */}
 					<path

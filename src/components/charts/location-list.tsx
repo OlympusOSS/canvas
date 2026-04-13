@@ -2,6 +2,7 @@
 
 import { ScrollArea } from "../ui/scroll-area";
 import { Icon } from "../icon";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 export interface LocationItem {
 	location: string;
@@ -16,11 +17,14 @@ export interface LocationListProps {
 }
 
 export function LocationList({ items, height = "100%" }: LocationListProps) {
+	const heightStr = typeof height === "number" ? `${height}px` : String(height);
+	const { className: hCls, style: hStyle } = useDynamicStyle({ height: heightStr });
+
 	if (items.length === 0) {
 		return (
 			<div
-				style={{ height }}
-				className="flex items-center justify-center text-sm text-muted-foreground"
+				className={`flex items-center justify-center text-sm text-muted-foreground ${hCls}`}
+				style={hStyle}
 			>
 				No location data available
 			</div>
@@ -28,7 +32,7 @@ export function LocationList({ items, height = "100%" }: LocationListProps) {
 	}
 
 	return (
-		<ScrollArea style={{ height }}>
+		<ScrollArea className={hCls} style={hStyle}>
 			<div className="flex flex-col gap-3 pr-3">
 				{items.map((item) => (
 					<div key={item.location} className="flex flex-col gap-1">
@@ -42,19 +46,23 @@ export function LocationList({ items, height = "100%" }: LocationListProps) {
 							</span>
 						</div>
 						{item.percentage != null && (
-							<div className="h-1.5 w-full rounded-full" style={{ backgroundColor: "hsl(var(--muted))" }}>
-								<div
-									className="h-full rounded-full transition-all duration-500"
-									style={{
-										width: `${Math.max(item.percentage, 2)}%`,
-										backgroundColor: "hsl(var(--chart-1))",
-									}}
-								/>
+							<div className="h-1.5 w-full rounded-full bg-muted">
+								<LocationBar percentage={item.percentage} />
 							</div>
 						)}
 					</div>
 				))}
 			</div>
 		</ScrollArea>
+	);
+}
+
+function LocationBar({ percentage }: { percentage: number }) {
+	const { className, style } = useDynamicStyle({ width: `${Math.max(percentage, 2)}%` });
+	return (
+		<div
+			className={`h-full rounded-full bg-[hsl(var(--chart-1))] transition-all duration-500 ${className}`}
+			style={style}
+		/>
 	);
 }

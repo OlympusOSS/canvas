@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./world-heat-map.css";
+import { useDynamicStyle } from "../ui/dynamic-style";
 
 // ── Types ────────────────────────────────────────────
 
@@ -122,6 +123,9 @@ export function WorldHeatMap({
 
 	const cssColor = resolveCssColor(color);
 	const hasData = data.length > 0;
+
+	const heightStr = typeof height === "number" ? `${height}px` : String(height);
+	const { className: hCls, style: hStyle } = useDynamicStyle({ height: heightStr });
 
 	// Tile URLs
 	const tileUrl = isDark
@@ -313,8 +317,8 @@ export function WorldHeatMap({
 	if (!isMounted) {
 		return (
 			<div
-				style={{ height }}
-				className="flex items-center justify-center text-sm text-muted-foreground"
+				className={`flex items-center justify-center text-sm text-muted-foreground ${hCls}`}
+				style={hStyle}
 			>
 				<svg
 					width="20"
@@ -340,20 +344,19 @@ export function WorldHeatMap({
 
 	return (
 		<div
-			style={{ height }}
-			className="relative overflow-hidden rounded-xl world-heat-map"
+			className={`relative overflow-hidden rounded-xl world-heat-map ${hCls}`}
+			style={hStyle}
 		>
 			{/* Leaflet map container */}
 			<div
 				ref={mapContainerRef}
-				style={{ width: "100%", height: "100%" }}
+				className="h-full w-full"
 			/>
 
 			{/* Overlaid title — top-left */}
 			{title && (
 				<div
-					className="absolute top-4 left-4 z-[1000] text-sm font-semibold tracking-tight pointer-events-none"
-					style={{ color: "hsl(var(--card-foreground))" }}
+					className="absolute top-4 left-4 z-[1000] text-sm font-semibold tracking-tight pointer-events-none text-[hsl(var(--card-foreground))]"
 				>
 					{title}
 				</div>
@@ -391,8 +394,7 @@ export function WorldHeatMap({
 			{!hasData && (
 				<div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1000]">
 					<div
-						className="rounded-lg px-4 py-2 text-xs text-muted-foreground"
-						style={{ backgroundColor: "hsl(var(--card))" }}
+						className="rounded-lg px-4 py-2 text-xs text-muted-foreground bg-card"
 					>
 						No geographic data available
 					</div>

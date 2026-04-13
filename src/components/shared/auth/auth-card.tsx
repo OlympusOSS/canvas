@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useDynamicStyle } from "../../ui/dynamic-style";
 
 interface AuthCardProps {
 	icon: string;
@@ -20,6 +21,8 @@ export function AuthCard({
 	children,
 	index,
 }: AuthCardProps) {
+	const { className: iconCls, style: iconStyle } = useDynamicStyle({ background: iconBg });
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
@@ -34,10 +37,8 @@ export function AuthCard({
 			<div className="relative">
 				<div className="mb-3 flex items-center gap-3">
 					<div
-						className="flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold text-primary-foreground"
-						style={{
-							background: iconBg,
-						}}
+						className={`flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold text-primary-foreground ${iconCls}`}
+						style={iconStyle}
 					>
 						{icon}
 					</div>
@@ -65,16 +66,15 @@ export function LoginButton({
 	textColor = "white",
 	children,
 }: LoginButtonProps) {
+	const { className: btnCls, style: btnStyle } = useDynamicStyle({ background: bg, color: textColor });
+
 	return (
 		<motion.a
 			href={href}
 			whileHover={{ scale: 1.02 }}
 			whileTap={{ scale: 0.98 }}
-			className="group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-lg px-6 py-2.5 text-[15px] font-semibold no-underline shadow-md transition-shadow duration-200 hover:shadow-lg"
-			style={{
-				background: bg,
-				color: textColor,
-			}}
+			className={`group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-lg px-6 py-2.5 text-[15px] font-semibold no-underline shadow-md transition-shadow duration-200 hover:shadow-lg ${btnCls}`}
+			style={btnStyle}
 		>
 			<span className="relative flex items-center gap-2">
 				<svg
@@ -98,21 +98,21 @@ export function LoginButton({
 }
 
 export function StatusBadge({ label, bg }: { label: string; bg: string }) {
+	const { className: bgCls, style: bgStyle } = useDynamicStyle({ background: bg });
+
 	return (
 		<motion.span
 			initial={{ scale: 0.8, opacity: 0 }}
 			animate={{ scale: 1, opacity: 1 }}
-			className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
-			style={{ background: bg }}
+			className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white ${bgCls}`}
+			style={bgStyle}
 		>
 			<span className="relative flex h-1.5 w-1.5">
 				<span
-					className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-					style={{ background: "currentColor" }}
+					className="absolute inline-flex h-full w-full animate-ping rounded-full bg-current opacity-75"
 				/>
 				<span
-					className="relative inline-flex h-1.5 w-1.5 rounded-full"
-					style={{ background: "currentColor" }}
+					className="relative inline-flex h-1.5 w-1.5 rounded-full bg-current"
 				/>
 			</span>
 			{label}
