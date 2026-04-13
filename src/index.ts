@@ -87,6 +87,7 @@ export { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
 export { Textarea } from "./components/ui/textarea";
 export { Toast, Toaster, useToast, toastVariants, type ToastProps, type ToasterProps, type ToastState } from "./components/ui/toast";
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "./components/ui/tooltip";
+export { SkipLink } from "./components/ui/skip-link";
 export { CodeBlock, type CodeBlockProps } from "./components/ui/code-block";
 export { NotificationItem, type NotificationItemProps, type NotificationSeverity } from "./components/ui/notification-item";
 export { NotificationList, type NotificationListProps, type NotificationData } from "./components/ui/notification-list";
