@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react"
 import { cn } from "../../../lib/utils"
+import { SkipLink } from "../../ui/skip-link"
 
 interface AuthLayoutProps {
   children: ReactNode
@@ -21,7 +22,10 @@ export function AuthLayout({ children, className }: AuthLayoutProps) {
         className
       )}
     >
-      {children}
+      <SkipLink />
+      <div id="main-content">
+        {children}
+      </div>
     </div>
   )
 }

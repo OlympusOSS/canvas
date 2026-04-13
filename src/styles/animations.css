@@ -65,3 +65,52 @@
 		box-shadow: 0 0 0 4px rgba(99, 102, 241, 0);
 	}
 }
+
+/* ── Reduced Motion ────────────────────────────────────────────────── */
+
+/**
+ * Global motion duration scale: defaults to 1 (full motion).
+ * Under prefers-reduced-motion: reduce, becomes 0.
+ * Future components can multiply durations by var(--motion-duration-scale)
+ * to automatically respect the user preference.
+ */
+:root {
+	--motion-duration-scale: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--motion-duration-scale: 0;
+	}
+
+	/* Kill all Canvas-defined infinite/entrance animations */
+	.animate-ecg-scroll,
+	.animate-ecg-flatline,
+	.animate-ecg-scan,
+	.animate-fade-slide-up {
+		animation: none !important;
+	}
+
+	/* Override Tailwind infinite animations */
+	.animate-ping,
+	.animate-pulse,
+	.animate-bounce,
+	.animate-spin {
+		animation: none !important;
+	}
+
+	/* Ensure elements with entrance animations are visible (not stuck at opacity 0) */
+	.animate-fade-slide-up {
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
+	/* Disable CSS transitions globally */
+	*,
+	*::before,
+	*::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}
