@@ -58,7 +58,7 @@
 		"playwright": "^1.58.2",
 		"storybook": "^10.2.12",
 		"tailwindcss": "^4.2.1",
-		"vitest": "^4.0.18"
+		"vitest": "^4.1.4"
 	},
 	"scripts": {
 		"test": "echo 'No component tests yet — see canvas#43 for Storybook a11y test plan'",
