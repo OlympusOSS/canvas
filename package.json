@@ -61,6 +61,7 @@
 		"vitest": "^4.0.18"
 	},
 	"scripts": {
+		"test": "echo 'No component tests yet — see canvas#43 for Storybook a11y test plan'",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
 	}
