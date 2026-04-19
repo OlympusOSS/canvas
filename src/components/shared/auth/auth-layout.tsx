@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "../../../lib/utils";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../../ui/card";
 
 export interface AuthLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
