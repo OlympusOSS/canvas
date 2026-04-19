@@ -13,8 +13,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from "../../lib/utils";
+import { Button } from "./button";
 import {
   Table,
   TableBody,
@@ -22,7 +22,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "./table";
 
 export type DataTableColumn<TData> = ColumnDef<TData, unknown>;
 
