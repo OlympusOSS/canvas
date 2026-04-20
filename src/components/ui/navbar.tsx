@@ -17,11 +17,14 @@ export interface NavBarProps extends React.HTMLAttributes<HTMLElement> {
   links?: NavLink[];
   actions?: React.ReactNode;
   sticky?: boolean;
+  /** Custom link component (e.g. Next.js Link) for client-side navigation */
+  linkComponent?: React.ElementType;
 }
 
 const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
-  ({ logo, links = [], actions, sticky = true, className, ...props }, ref) => {
+  ({ logo, links = [], actions, sticky = true, linkComponent, className, ...props }, ref) => {
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const LinkEl = linkComponent || "a";
 
     return (
       <>
@@ -41,7 +44,7 @@ const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
             {/* Desktop links */}
             <div className="hidden items-center gap-6 md:flex">
               {links.map((link) => (
-                <a
+                <LinkEl
                   key={link.href}
                   href={link.href}
                   className="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
@@ -50,7 +53,7 @@ const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
                     : {})}
                 >
                   {link.label}
-                </a>
+                </LinkEl>
               ))}
               {actions}
             </div>
@@ -78,7 +81,7 @@ const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
             <div className="border-t md:hidden">
               <div className="flex flex-col gap-1 px-4 py-3 sm:px-6">
                 {links.map((link) => (
-                  <a
+                  <LinkEl
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
@@ -88,7 +91,7 @@ const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
                       : {})}
                   >
                     {link.label}
-                  </a>
+                  </LinkEl>
                 ))}
                 {actions && (
                   <div className="px-3 py-2.5">{actions}</div>
