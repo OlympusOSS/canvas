@@ -198,6 +198,15 @@ export {
   navigationMenuTriggerStyle,
 } from "./components/ui/navigation-menu";
 export {
+  NavBar,
+  type NavBarProps,
+  type NavLink,
+} from "./components/ui/navbar";
+export {
+  OlympusLogo,
+  type OlympusLogoProps,
+} from "./components/ui/olympus-logo";
+export {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
