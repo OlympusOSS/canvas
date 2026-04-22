@@ -50,12 +50,22 @@ function ThemeControl() {
 	const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 	return (
 		<div className="space-y-2 text-sm">
-			<p>Theme: <code>{theme}</code> · Resolved: <code>{resolvedTheme}</code></p>
+			<p>
+				Theme: <code>{theme}</code> · Resolved: <code>{resolvedTheme}</code>
+			</p>
 			<div className="flex gap-2">
-				<Button size="sm" variant="outline" onClick={() => setTheme("light")}>Light</Button>
-				<Button size="sm" variant="outline" onClick={() => setTheme("dark")}>Dark</Button>
-				<Button size="sm" variant="outline" onClick={() => setTheme("system")}>System</Button>
-				<Button size="sm" onClick={toggleTheme}>Toggle</Button>
+				<Button size="sm" variant="outline" onClick={() => setTheme("light")}>
+					Light
+				</Button>
+				<Button size="sm" variant="outline" onClick={() => setTheme("dark")}>
+					Dark
+				</Button>
+				<Button size="sm" variant="outline" onClick={() => setTheme("system")}>
+					System
+				</Button>
+				<Button size="sm" onClick={toggleTheme}>
+					Toggle
+				</Button>
 			</div>
 		</div>
 	);
@@ -68,7 +78,10 @@ function Crasher(): never {
 export function OrganismsPage() {
 	return (
 		<Section spacing={4}>
-			<Showcase title="DataTable" description="Legacy column API shown. Supports selection/search/refresh.">
+			<Showcase
+				title="DataTable"
+				description="Legacy column API shown. Supports selection/search/refresh."
+			>
 				<div className="w-full max-w-3xl">
 					<DataTable data={rows} columns={columns} keyField="id" pagination={false} />
 				</div>
@@ -107,8 +120,12 @@ export function OrganismsPage() {
 						<TabsTrigger value="a">Tab A</TabsTrigger>
 						<TabsTrigger value="b">Tab B</TabsTrigger>
 					</TabsList>
-					<TabsContent value="a" className="p-3 text-sm">Content A</TabsContent>
-					<TabsContent value="b" className="p-3 text-sm">Content B</TabsContent>
+					<TabsContent value="a" className="p-3 text-sm">
+						Content A
+					</TabsContent>
+					<TabsContent value="b" className="p-3 text-sm">
+						Content B
+					</TabsContent>
 				</Tabs>
 			</Showcase>
 
@@ -129,7 +146,10 @@ export function OrganismsPage() {
 				<ThemeControl />
 			</Showcase>
 
-			<Showcase title="ErrorBoundary" description="Click to trigger a crash; use Try again to reset.">
+			<Showcase
+				title="ErrorBoundary"
+				description="Click to trigger a crash; use Try again to reset."
+			>
 				<ErrorBoundary>
 					<ErrorBoundaryToggle />
 				</ErrorBoundary>
@@ -141,11 +161,16 @@ export function OrganismsPage() {
 function ErrorBoundaryToggle() {
 	const [boom, setBoom] = useBoom();
 	if (boom) return <Crasher />;
-	return <Button variant="destructive" onClick={() => setBoom(true)}>Crash it</Button>;
+	return (
+		<Button variant="destructive" onClick={() => setBoom(true)}>
+			Crash it
+		</Button>
+	);
 }
 
 // Minimal inlined hook to avoid a state library.
 import { useState as useStateInternal } from "react";
+
 function useBoom(): [boolean, (v: boolean) => void] {
 	const [v, setV] = useStateInternal(false);
 	return [v, setV];

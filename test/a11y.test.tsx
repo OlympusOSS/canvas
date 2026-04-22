@@ -24,15 +24,15 @@ import {
 	Label,
 	PageHeader,
 	PageTabs,
+	SecretField,
 	Section,
 	SectionCard,
-	SecretField,
-	Stepper,
 	StatCard,
 	StatusBadge,
+	Stepper,
+	type StepperStep,
 	ThemeProvider,
 	WizardShell,
-	type StepperStep,
 } from "../src/index";
 
 // jsdom doesn't do color contrast — skip that rule everywhere.

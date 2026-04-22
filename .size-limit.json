@@ -61,12 +61,6 @@
 		"import": "{ SchemaForm }",
 		"limit": "200 KB",
 		"gzip": true,
-		"ignore": [
-			"react",
-			"react-dom",
-			"@rjsf/core",
-			"@rjsf/utils",
-			"@rjsf/validator-ajv8"
-		]
+		"ignore": ["react", "react-dom", "@rjsf/core", "@rjsf/utils", "@rjsf/validator-ajv8"]
 	}
 ]
