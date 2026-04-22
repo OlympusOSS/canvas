@@ -42,7 +42,11 @@
 		"size:why": "size-limit --why",
 		"changeset": "changeset",
 		"version-packages": "changeset version",
-		"release": "changeset publish"
+		"release": "changeset publish",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx,json,jsonc,md,css}": "biome check --write --no-errors-on-unmatched"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
@@ -130,8 +134,10 @@
 		"@vitejs/plugin-react": "^6.0.1",
 		"@vitest/coverage-v8": "^4.1.4",
 		"@vitest/ui": "^4.1.4",
+		"husky": "^9.1.7",
 		"jsdom": "^29.0.2",
 		"libphonenumber-js": "^1.12.0",
+		"lint-staged": "^16.4.0",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"size-limit": "^12.1.0",
