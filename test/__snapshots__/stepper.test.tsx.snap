@@ -1,0 +1,83 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Stepper > matches snapshot 1`] = `
+<div>
+  <ol
+    class="flex flex-col gap-1"
+  >
+    <li
+      class="flex items-center gap-3 py-2"
+    >
+      <button
+        class="flex items-center gap-3 rounded-md transition-colors w-full px-2 py-1 text-left hover:bg-accent/50"
+        type="button"
+      >
+        <span
+          class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs border-green-500 bg-green-500 text-white"
+        >
+          <svg
+            aria-hidden="true"
+            class="lucide lucide-check shrink-0 h-3.5 w-3.5"
+            fill="none"
+            height="16"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 6 9 17l-5-5"
+            />
+          </svg>
+        </span>
+        <span
+          class="text-sm text-foreground"
+        >
+          One
+        </span>
+      </button>
+    </li>
+    <li
+      class="flex items-center gap-3 py-2"
+    >
+      <button
+        class="flex items-center gap-3 rounded-md transition-colors w-full px-2 py-1 text-left hover:bg-accent/50"
+        type="button"
+      >
+        <span
+          class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs border-primary bg-primary text-primary-foreground"
+        >
+          2
+        </span>
+        <span
+          class="text-sm text-foreground font-medium"
+        >
+          Two
+        </span>
+      </button>
+    </li>
+    <li
+      class="flex items-center gap-3 py-2"
+    >
+      <button
+        class="flex items-center gap-3 rounded-md transition-colors w-full px-2 py-1 text-left hover:bg-accent/50"
+        type="button"
+      >
+        <span
+          class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs border-muted-foreground/30 text-muted-foreground"
+        >
+          3
+        </span>
+        <span
+          class="text-sm text-muted-foreground"
+        >
+          Three
+        </span>
+      </button>
+    </li>
+  </ol>
+</div>
+`;

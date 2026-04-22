@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FlexBox > matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col items-center justify-between gap-4 flex-wrap"
+  >
+    <span>
+      a
+    </span>
+    <span>
+      b
+    </span>
+  </div>
+</div>
+`;

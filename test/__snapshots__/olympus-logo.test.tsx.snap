@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OlympusLogo > matches snapshot (icon variant with showText) 1`] = `
+<div>
+  <span
+    class="inline-flex items-center gap-1.5 font-semibold"
+  >
+    <svg
+      fill="none"
+      height="24"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <ellipse
+        cx="12"
+        cy="12"
+        fill="none"
+        rx="5"
+        ry="9"
+        stroke="currentColor"
+        stroke-width="2.5"
+        transform="rotate(90 12 12)"
+      />
+    </svg>
+    <span
+      class="text-foreground"
+    >
+      lympus
+    </span>
+  </span>
+</div>
+`;

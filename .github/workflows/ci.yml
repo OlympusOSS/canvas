@@ -18,8 +18,17 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
+      - name: Lint
+        run: bun run lint
+
       - name: Typecheck
         run: bun run typecheck
 
       - name: Run vitest
         run: bun run test
+
+      - name: Coverage
+        run: bun run test:coverage
+
+      - name: Bundle size
+        run: bun run size
