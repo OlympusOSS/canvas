@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AnimatedBackground > matches snapshot 1`] = `
+<div>
+  <div
+    class="pointer-events-none fixed inset-0 overflow-hidden"
+  >
+    <div
+      class="absolute rounded-full top-0 left-0"
+      style="width: 200px; height: 200px; opacity: 0.3; filter: blur(40px); background: radial-gradient(circle, rgb(18, 52, 86) 0%, transparent 70%);"
+    />
+  </div>
+</div>
+`;

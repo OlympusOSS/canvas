@@ -1,0 +1,174 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NavBar > matches snapshot 1`] = `
+<div>
+  <nav
+    class="left-0 right-0 top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 fixed"
+  >
+    <div
+      class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6"
+    >
+      <div
+        class="shrink-0"
+      >
+        <span>
+          LOGO
+        </span>
+      </div>
+      <div
+        class="hidden items-center gap-6 md:flex"
+      >
+        <a
+          class="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
+          href="/"
+        >
+          Home
+        </a>
+        <a
+          class="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
+          href="/docs"
+        >
+          Docs
+        </a>
+        <a
+          class="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
+          href="https://example.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          External
+        </a>
+        <button
+          type="button"
+        >
+          Go
+        </button>
+      </div>
+      <button
+        aria-label="Open menu"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 w-9 md:hidden"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-menu h-5 w-5"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 5h16"
+          />
+          <path
+            d="M4 12h16"
+          />
+          <path
+            d="M4 19h16"
+          />
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div
+    class="h-14"
+  />
+</div>
+`;
+
+exports[`NavBar > matches snapshot with mobile open 1`] = `
+<div>
+  <nav
+    class="left-0 right-0 top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 fixed"
+  >
+    <div
+      class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6"
+    >
+      <div
+        class="hidden items-center gap-6 md:flex"
+      >
+        <a
+          class="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
+          href="/"
+        >
+          Home
+        </a>
+        <a
+          class="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
+          href="/docs"
+        >
+          Docs
+        </a>
+        <a
+          class="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
+          href="https://example.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          External
+        </a>
+      </div>
+      <button
+        aria-label="Close menu"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 w-9 md:hidden"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-x h-5 w-5"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 6 6 18"
+          />
+          <path
+            d="m6 6 12 12"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="border-t md:hidden"
+    >
+      <div
+        class="flex flex-col gap-1 px-4 py-3 sm:px-6"
+      >
+        <a
+          class="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-foreground"
+          href="/"
+        >
+          Home
+        </a>
+        <a
+          class="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-foreground"
+          href="/docs"
+        >
+          Docs
+        </a>
+        <a
+          class="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-foreground"
+          href="https://example.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          External
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="h-14"
+  />
+</div>
+`;

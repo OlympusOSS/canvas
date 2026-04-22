@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Collapsible > matches snapshot (open) 1`] = `
+<div>
+  <div
+    data-state="open"
+  >
+    <button
+      aria-controls="radix-_r_3_"
+      aria-expanded="true"
+      data-state="open"
+      type="button"
+    >
+      Toggle
+    </button>
+    <div
+      data-state="open"
+      id="radix-_r_3_"
+      style="transition-duration: 0s; animation-name: none;"
+    >
+      Body
+    </div>
+  </div>
+</div>
+`;

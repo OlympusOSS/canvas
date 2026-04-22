@@ -1,0 +1,72 @@
+[
+	{
+		"name": "Full barrel (tree-shakeable, everything)",
+		"path": "src/index.ts",
+		"limit": "400 KB",
+		"gzip": true,
+		"ignore": [
+			"react",
+			"react-dom",
+			"@rjsf/core",
+			"@rjsf/utils",
+			"@rjsf/validator-ajv8",
+			"libphonenumber-js",
+			"recharts",
+			"next-themes"
+		]
+	},
+	{
+		"name": "Core atoms (no Icon)",
+		"path": "src/index.ts",
+		"import": "{ Button, Input, Label, Badge, Checkbox, Switch }",
+		"limit": "40 KB",
+		"gzip": true,
+		"ignore": ["react", "react-dom"]
+	},
+	{
+		"name": "Icon (pulls all of lucide-react)",
+		"path": "src/index.ts",
+		"import": "{ Icon }",
+		"limit": "200 KB",
+		"gzip": true,
+		"ignore": ["react", "react-dom"]
+	},
+	{
+		"name": "Page chrome (PageHeader + ActionBar + SectionCard + PageTabs)",
+		"path": "src/index.ts",
+		"import": "{ PageHeader, ActionBar, SectionCard, PageTabs }",
+		"limit": "200 KB",
+		"gzip": true,
+		"ignore": ["react", "react-dom"]
+	},
+	{
+		"name": "DataTable (TanStack Table)",
+		"path": "src/index.ts",
+		"import": "{ DataTable }",
+		"limit": "60 KB",
+		"gzip": true,
+		"ignore": ["react", "react-dom"]
+	},
+	{
+		"name": "Shells (AdminShell + WizardShell + AuthShell)",
+		"path": "src/index.ts",
+		"import": "{ AdminShell, WizardShell, AuthShell }",
+		"limit": "200 KB",
+		"gzip": true,
+		"ignore": ["react", "react-dom"]
+	},
+	{
+		"name": "SchemaForm (without RJSF peer dep)",
+		"path": "src/index.ts",
+		"import": "{ SchemaForm }",
+		"limit": "200 KB",
+		"gzip": true,
+		"ignore": [
+			"react",
+			"react-dom",
+			"@rjsf/core",
+			"@rjsf/utils",
+			"@rjsf/validator-ajv8"
+		]
+	}
+]
