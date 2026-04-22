@@ -64,7 +64,9 @@ function Gallery() {
 				</div>
 
 				<footer className="mt-6 text-xs text-muted-foreground">
-					<p>Imports live from <code>../src</code>.</p>
+					<p>
+						Imports live from <code>../src</code>.
+					</p>
 					<p className="mt-1">See MIGRATION.md + CONTRIBUTING.md.</p>
 				</footer>
 			</aside>

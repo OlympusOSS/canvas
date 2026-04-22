@@ -17,9 +17,9 @@ import {
 	PageHeader,
 	PageTabs,
 	SearchBar,
+	SecretField,
 	Section,
 	SectionCard,
-	SecretField,
 	StatCard,
 	StatusBadge,
 	Stepper,
@@ -43,14 +43,11 @@ export function MoleculesPage() {
 					<PageHeader
 						title="Identities"
 						subtitle="Manage users in your Kratos instance"
-						breadcrumbs={[
-							{ label: "Home", href: "/" },
-							{ label: "Identities" },
-						]}
+						breadcrumbs={[{ label: "Home", href: "/" }, { label: "Identities" }]}
 						actions={
-							<>
-								<button type="button" className="text-sm text-primary">Export</button>
-							</>
+							<button type="button" className="text-sm text-primary">
+								Export
+							</button>
 						}
 					/>
 				</div>
@@ -63,7 +60,10 @@ export function MoleculesPage() {
 				/>
 			</Showcase>
 
-			<Showcase title="SectionCard" description="Card with built-in loading / error / empty states.">
+			<Showcase
+				title="SectionCard"
+				description="Card with built-in loading / error / empty states."
+			>
 				<div className="w-full grid gap-3 md:grid-cols-3">
 					<SectionCard title="Loading…" loading />
 					<SectionCard title="Something broke" error="Request failed" />
@@ -115,8 +115,18 @@ export function MoleculesPage() {
 
 			<Showcase title="StatCard">
 				<StatCard title="Total identities" value={1_284} icon={<Icon name="Users" />} />
-				<StatCard title="Active sessions" value={42} icon={<Icon name="Shield" />} colorVariant="success" />
-				<StatCard title="Failed logins" value={3} icon={<Icon name="TriangleAlert" />} colorVariant="destructive" />
+				<StatCard
+					title="Active sessions"
+					value={42}
+					icon={<Icon name="Shield" />}
+					colorVariant="success"
+				/>
+				<StatCard
+					title="Failed logins"
+					value={3}
+					icon={<Icon name="TriangleAlert" />}
+					colorVariant="destructive"
+				/>
 			</Showcase>
 
 			<Showcase title="Stepper (vertical)" description="Horizontal form also supported.">
@@ -180,7 +190,10 @@ export function MoleculesPage() {
 
 			<Showcase title="CodeBlock">
 				<div className="w-full max-w-2xl">
-					<CodeBlock language="ts" code={`import { Button } from "@olympusoss/canvas";\n\nexport const Hi = () => <Button>Hi</Button>;`} />
+					<CodeBlock
+						language="ts"
+						code={`import { Button } from "@olympusoss/canvas";\n\nexport const Hi = () => <Button>Hi</Button>;`}
+					/>
 				</div>
 			</Showcase>
 
@@ -220,7 +233,10 @@ export function MoleculesPage() {
 				>
 					Toggle preview
 				</button>
-				<div id="ab-preview" className="hidden relative w-full h-48 rounded-lg overflow-hidden border border-border">
+				<div
+					id="ab-preview"
+					className="hidden relative w-full h-48 rounded-lg overflow-hidden border border-border"
+				>
 					<AnimatedBackground />
 					<div className="relative z-10 flex h-full items-center justify-center text-sm text-muted-foreground">
 						AnimatedBackground is rendered behind this content.

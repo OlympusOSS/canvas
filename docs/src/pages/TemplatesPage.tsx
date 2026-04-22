@@ -3,8 +3,8 @@ import {
 	AuthShell,
 	Button,
 	Icon,
-	type StepperStep,
 	Section,
+	type StepperStep,
 	WizardShell,
 } from "@olympusoss/canvas";
 import { useState } from "react";
@@ -42,14 +42,22 @@ export function TemplatesPage() {
 							<aside className="flex h-full w-60 flex-col border-r border-border bg-muted/30 p-4">
 								<p className="font-semibold">Olympus</p>
 								<nav className="mt-4 space-y-1 text-sm">
-									<a className="block rounded px-2 py-1 text-muted-foreground hover:bg-accent">Identities</a>
-									<a className="block rounded px-2 py-1 text-muted-foreground hover:bg-accent">Sessions</a>
-									<a className="block rounded px-2 py-1 text-muted-foreground hover:bg-accent">Security</a>
+									<span className="block rounded px-2 py-1 text-muted-foreground hover:bg-accent">
+										Identities
+									</span>
+									<span className="block rounded px-2 py-1 text-muted-foreground hover:bg-accent">
+										Sessions
+									</span>
+									<span className="block rounded px-2 py-1 text-muted-foreground hover:bg-accent">
+										Security
+									</span>
 								</nav>
 							</aside>
 						}
 						header={
-							<header className="flex h-12 items-center border-b border-border px-4 text-sm">Dashboard</header>
+							<header className="flex h-12 items-center border-b border-border px-4 text-sm">
+								Dashboard
+							</header>
 						}
 					>
 						<div className="p-4 text-sm text-muted-foreground">Main content area</div>
@@ -74,7 +82,9 @@ export function TemplatesPage() {
 						}
 						footer={
 							<div className="flex justify-end gap-2">
-								<Button variant="outline" size="sm">Back</Button>
+								<Button variant="outline" size="sm">
+									Back
+								</Button>
 								<Button size="sm">Next</Button>
 							</div>
 						}
