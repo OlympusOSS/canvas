@@ -11,9 +11,21 @@ export default defineConfig({
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "html", "json-summary"],
-			include: ["src/components/**/*.tsx"],
-			exclude: ["src/components/**/*.stories.tsx", "src/components/**/__tests__/**"],
+			// Full src/ in scope; barrels, token data, and native-only paths excluded.
+			include: ["src/**/*.{ts,tsx}"],
+			exclude: [
+				"src/**/*.stories.tsx",
+				"src/**/*.test.{ts,tsx}",
+				"src/**/__tests__/**",
+				"src/**/*.d.ts",
+				"src/index.ts",
+				"src/native.ts",
+				"src/tokens/**",
+				"src/**/constants.ts",
+				"src/**/types.ts",
+			],
 			thresholds: {
+				// Ratcheted to current baseline (plan: raise to 100/100/100/90 in Phase 6).
 				lines: 80,
 				statements: 80,
 				functions: 80,
