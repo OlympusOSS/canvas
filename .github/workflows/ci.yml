@@ -27,6 +27,9 @@ jobs:
       - name: Run vitest
         run: bun run test
 
+      - name: Snapshot coverage gate (80%)
+        run: bun run snapshot-coverage
+
       - name: Coverage
         run: bun run test:coverage
 
