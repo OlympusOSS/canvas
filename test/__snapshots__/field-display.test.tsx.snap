@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FieldDisplay > matches snapshot 1`] = `
+<div>
+  <div
+    class="space-y-1"
+  >
+    <dt
+      class="text-sm text-muted-foreground"
+    >
+      Email
+    </dt>
+    <dd
+      class="text-sm font-medium"
+    >
+      user@example.com
+    </dd>
+  </div>
+</div>
+`;
