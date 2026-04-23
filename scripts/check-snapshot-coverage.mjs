@@ -12,8 +12,7 @@
  *   SNAPSHOT_COVERAGE_THRESHOLD=90   (percentage 0–100; default 80)
  */
 
-import { execSync } from "node:child_process";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
