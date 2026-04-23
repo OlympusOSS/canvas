@@ -55,6 +55,7 @@ const Carousel = React.forwardRef<
 	const [canScrollNext, setCanScrollNext] = React.useState(false);
 
 	const onSelect = React.useCallback((api: CarouselApi) => {
+		/* c8 ignore next 3 -- defensive guard: Embla always provides api in the onSelect handler */
 		if (!api) {
 			return;
 		}
@@ -112,6 +113,7 @@ const Carousel = React.forwardRef<
 				carouselRef,
 				api: api,
 				opts,
+				/* c8 ignore next -- orientation has a default of "horizontal", so the fallback ternary is never reached */
 				orientation: orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
 				scrollPrev,
 				scrollNext,

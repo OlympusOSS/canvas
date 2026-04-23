@@ -25,7 +25,16 @@ export default defineConfig({
 				"src/**/types.ts",
 			],
 			thresholds: {
-				// Ratcheted to current baseline (plan: raise to 100/100/100/90 in Phase 6).
+				// Per-file locks: every component file must individually meet 100/100/100/90.
+				// Overall fallback at 80/80/80/80 keeps non-component dirs (hooks, lib)
+				// from regressing without requiring them to hit 100.
+				perFile: true,
+				"src/components/**": {
+					lines: 100,
+					statements: 100,
+					functions: 100,
+					branches: 90,
+				},
 				lines: 80,
 				statements: 80,
 				functions: 80,

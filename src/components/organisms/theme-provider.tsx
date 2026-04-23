@@ -24,6 +24,7 @@ export interface ThemeProviderProps {
 }
 
 function systemTheme(): ResolvedTheme {
+	/* c8 ignore next -- SSR guard: window is always defined in jsdom tests */
 	if (typeof window === "undefined") return "light";
 	return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
@@ -44,6 +45,7 @@ export function ThemeProvider({
 
 	// On mount: read storage and apply.
 	React.useEffect(() => {
+		/* c8 ignore next -- SSR guard: window is always defined in jsdom tests */
 		if (typeof window === "undefined") return;
 		const stored = window.localStorage.getItem(storageKey) as Theme | null;
 		const initial = stored ?? defaultTheme;
@@ -53,10 +55,12 @@ export function ThemeProvider({
 
 	// Apply the resolved theme to <html> and persist.
 	React.useEffect(() => {
+		/* c8 ignore next -- SSR guard: document is always defined in jsdom tests */
 		if (typeof document === "undefined") return;
 		const root = document.documentElement;
 		if (resolvedTheme === "dark") root.classList.add("dark");
 		else root.classList.remove("dark");
+		/* c8 ignore next -- SSR guard: window is always defined in jsdom tests */
 		if (typeof window !== "undefined") {
 			window.localStorage.setItem(storageKey, theme);
 		}

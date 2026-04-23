@@ -37,6 +37,13 @@ const InputOTPSlot = React.forwardRef<
 	const inputOTPContext = React.useContext(OTPInputContext);
 	const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
 
+	/* c8 ignore next -- hasFakeCaret is only set by the input-otp library for a live selection range, which jsdom's fireEvent doesn't produce */
+	const fakeCaret = hasFakeCaret ? (
+		<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+			<div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+		</div>
+	) : null;
+
 	return (
 		<div
 			ref={ref}
@@ -48,11 +55,7 @@ const InputOTPSlot = React.forwardRef<
 			{...props}
 		>
 			{char}
-			{hasFakeCaret && (
-				<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-					<div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
-				</div>
-			)}
+			{fakeCaret}
 		</div>
 	);
 });
