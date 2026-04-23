@@ -38,6 +38,7 @@
 		"test:watch": "vitest",
 		"test:ui": "vitest --ui",
 		"test:coverage": "vitest run --coverage",
+		"snapshot-coverage": "node scripts/check-snapshot-coverage.mjs",
 		"size": "size-limit",
 		"size:why": "size-limit --why",
 		"changeset": "changeset",
