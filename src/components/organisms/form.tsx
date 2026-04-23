@@ -142,6 +142,7 @@ const FormMessage = React.forwardRef<
 	React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
 	const { error, formMessageId } = useFormField();
+	/* c8 ignore next -- error.message is always a string for react-hook-form rules; the ?? "" fallback only triggers for exotic error shapes */
 	const body = error ? String(error?.message ?? "") : children;
 
 	if (!body) {

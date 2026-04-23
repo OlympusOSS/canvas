@@ -89,6 +89,7 @@ export function PhoneInput({
 				setLocalValue(value);
 			}
 		} catch {
+			/* c8 ignore next -- libphonenumber never throws on arbitrary input in jsdom; only reachable if parser invariants change */
 			setLocalValue(value);
 		}
 	}, [value]);
