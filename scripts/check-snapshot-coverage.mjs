@@ -9,7 +9,7 @@
  * Exits non-zero if coverage falls below the threshold.
  *
  * Threshold can be overridden via:
- *   SNAPSHOT_COVERAGE_THRESHOLD=90   (percentage 0–100; default 80)
+ *   SNAPSHOT_COVERAGE_THRESHOLD=90   (percentage 0–100; default 100)
  */
 
 import { existsSync, readdirSync } from "node:fs";
@@ -21,7 +21,7 @@ const ROOT = resolve(__dirname, "..");
 const SRC_TIERS = ["atoms", "molecules", "organisms", "templates"];
 const SNAPSHOT_DIR = join(ROOT, "test", "__snapshots__");
 
-const threshold = Number(process.env.SNAPSHOT_COVERAGE_THRESHOLD ?? 80);
+const threshold = Number(process.env.SNAPSHOT_COVERAGE_THRESHOLD ?? 100);
 
 function listComponentFiles() {
 	const out = [];
