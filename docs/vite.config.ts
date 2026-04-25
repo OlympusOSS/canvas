@@ -13,6 +13,11 @@ export default defineConfig({
 		alias: {
 			"@olympusoss/canvas": new URL("../src/index.ts", import.meta.url).pathname,
 		},
+		// Force a single React copy. Canvas src is aliased to ../src/index.ts and
+		// resolves react from canvas/node_modules; docs/main.tsx resolves it from
+		// docs/node_modules. Two instances share no internal dispatcher and
+		// useState throws "Cannot read properties of null".
+		dedupe: ["react", "react-dom"],
 	},
 	server: { port: 5173 },
 	build: {
