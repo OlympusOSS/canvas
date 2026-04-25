@@ -8,7 +8,7 @@ import {
 } from "@olympusoss/canvas";
 import { useCallback, useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { CmdK } from "../components/CmdK";
+import { DocsTweaksPanel } from "../components/TweaksPanel";
 import { COMPONENTS, TIER_META } from "../data/components";
 
 interface NavItem {
@@ -46,9 +46,10 @@ function ThemeToggle() {
 		<button
 			type="button"
 			onClick={toggleTheme}
-			className="rounded-md border border-border px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+			aria-label="Toggle theme"
+			className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 		>
-			{resolvedTheme === "dark" ? "Light" : "Dark"} mode
+			<Icon name={resolvedTheme === "dark" ? "Sun" : "Moon"} className="h-3.5 w-3.5" />
 		</button>
 	);
 }
@@ -59,20 +60,14 @@ interface NavLinkRowProps {
 	end?: boolean;
 }
 
-function NavLinkRow({ to, label, end }: NavLinkRowProps) {
+function Item({ to, label, end }: NavLinkRowProps) {
 	return (
-		<NavLink
-			to={to}
-			end={end}
-			className={({ isActive }) =>
-				`block rounded-md px-3 py-1.5 text-sm transition-colors ${
-					isActive
-						? "bg-accent text-accent-foreground"
-						: "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-				}`
-			}
-		>
-			{label}
+		<NavLink to={to} end={end}>
+			{({ isActive }) => (
+				<span className="nav-link" data-active={isActive ? "true" : "false"}>
+					{label}
+				</span>
+			)}
 		</NavLink>
 	);
 }
@@ -92,47 +87,65 @@ function ComponentGroup({ tier, open, onOpenChange, currentPath }: ComponentGrou
 
 	return (
 		<Collapsible open={open} onOpenChange={onOpenChange}>
-			<NavLink
-				to={tierIndex}
-				end
-				onClick={() => onOpenChange(!open)}
-				className={({ isActive }) =>
-					`flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-colors ${
-						isActive
-							? "bg-accent text-accent-foreground"
-							: "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-					}`
-				}
-			>
-				<Icon
-					name="ChevronRight"
-					className={`h-3.5 w-3.5 shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
-				/>
-				<span className="flex-1 text-left">{meta.label}</span>
-			</NavLink>
+			<div className="flex items-center gap-0.5">
+				<NavLink to={tierIndex} end className="flex-1">
+					{({ isActive }) => (
+						<span
+							className="nav-link flex items-center gap-2"
+							data-active={isActive ? "true" : "false"}
+						>
+							<TierDot tier={tier} />
+							{meta.label}
+							<span className="ml-auto text-[10px] font-mono text-muted-foreground/60">
+								{components.length}
+							</span>
+						</span>
+					)}
+				</NavLink>
+				<CollapsibleTrigger asChild>
+					<button
+						type="button"
+						aria-label={`${open ? "Collapse" : "Expand"} ${meta.label}`}
+						className="inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+					>
+						<Icon
+							name="ChevronRight"
+							className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-90" : ""}`}
+						/>
+					</button>
+				</CollapsibleTrigger>
+			</div>
 			<CollapsibleContent>
 				<div
-					className={`ml-3 mt-1 space-y-0.5 border-l border-border pl-2 ${tierIsActive ? "border-accent" : ""}`}
+					className={`ml-4 mt-0.5 space-y-px border-l pl-2 ${tierIsActive ? "border-[hsl(var(--brand-via)/0.5)]" : "border-border"}`}
 				>
 					{components.map((c) => (
-						<NavLink
-							key={c.id}
-							to={`/components/${c.tier}/${c.id}`}
-							className={({ isActive }) =>
-								`block rounded-md px-3 py-1 text-[13px] transition-colors ${
-									isActive
-										? "bg-accent text-accent-foreground"
-										: "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-								}`
-							}
-						>
-							{c.label}
+						<NavLink key={c.id} to={`/components/${c.tier}/${c.id}`}>
+							{({ isActive }) => (
+								<span
+									className="nav-link"
+									style={{ fontSize: 12.5 }}
+									data-active={isActive ? "true" : "false"}
+								>
+									{c.label}
+								</span>
+							)}
 						</NavLink>
 					))}
 				</div>
 			</CollapsibleContent>
 		</Collapsible>
 	);
+}
+
+function TierDot({ tier }: { tier: keyof typeof TIER_META }) {
+	const map: Record<string, string> = {
+		atoms: "bg-[hsl(var(--brand-from))]",
+		molecules: "bg-[hsl(var(--brand-via))]",
+		organisms: "bg-[hsl(var(--brand-to))]",
+		templates: "bg-foreground/60",
+	};
+	return <span className={`h-1.5 w-1.5 rounded-full ${map[tier]}`} aria-hidden />;
 }
 
 interface SectionGroupProps {
@@ -149,7 +162,7 @@ function SectionGroup({ label, open, onOpenChange, children }: SectionGroupProps
 			<CollapsibleTrigger asChild>
 				<button
 					type="button"
-					className="flex w-full items-center justify-between rounded-md px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/70 transition-colors hover:text-foreground"
+					className="nav-section-label flex w-full items-center justify-between rounded px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/70 transition-colors hover:text-foreground"
 				>
 					<span>{label}</span>
 					<Icon
@@ -159,7 +172,7 @@ function SectionGroup({ label, open, onOpenChange, children }: SectionGroupProps
 				</button>
 			</CollapsibleTrigger>
 			<CollapsibleContent>
-				<div className="mt-1 space-y-0.5">{children}</div>
+				<div className="mt-1 space-y-px">{children}</div>
 			</CollapsibleContent>
 		</Collapsible>
 	);
@@ -191,9 +204,7 @@ export function Layout() {
 				setOpen((prev) => ({ ...prev, ...parsed }));
 				if (typeof parsed.collapsed === "boolean") setCollapsed(parsed.collapsed);
 			}
-		} catch {
-			// localStorage may be blocked
-		}
+		} catch {}
 	}, []);
 
 	const persist = useCallback((next: OpenState, nextCollapsed: boolean) => {
@@ -202,9 +213,7 @@ export function Layout() {
 				STORAGE_KEY,
 				JSON.stringify({ ...next, collapsed: nextCollapsed }),
 			);
-		} catch {
-			// no-op
-		}
+		} catch {}
 	}, []);
 
 	const toggle = useCallback(
@@ -234,7 +243,7 @@ export function Layout() {
 						type="button"
 						onClick={toggleCollapsed}
 						aria-label="Expand sidebar"
-						className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
+						className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 					>
 						<Icon name="PanelLeftOpen" className="h-4 w-4" />
 					</button>
@@ -242,12 +251,12 @@ export function Layout() {
 						<OlympusLogo className="text-primary" size={24} />
 					</NavLink>
 				</aside>
-				<main className="flex-1 overflow-y-auto">
+				<main className="flex-1 overflow-y-auto scrollbar-thin">
 					<div className="mx-auto max-w-5xl p-8">
 						<Outlet />
 					</div>
 				</main>
-				<CmdK />
+				<DocsTweaksPanel />
 			</div>
 		);
 	}
@@ -255,11 +264,14 @@ export function Layout() {
 	return (
 		<div className="flex min-h-screen bg-background">
 			<aside className="w-64 shrink-0 border-r border-border bg-card/30">
-				<div className="sticky top-0 max-h-screen overflow-y-auto p-6">
-					<div className="flex items-start justify-between gap-2">
-						<NavLink to="/" className="flex items-center gap-2">
-							<OlympusLogo className="text-primary" size={28} />
-							<div>
+				<div className="sticky top-0 flex max-h-screen flex-col overflow-y-auto scrollbar-thin px-4 py-5">
+					<div className="flex items-start justify-between gap-2 px-2">
+						<NavLink to="/" className="group flex items-center gap-2.5">
+							<div className="relative">
+								<div className="absolute inset-0 brand-gradient-bg rounded-full opacity-25 blur-md group-hover:opacity-50 transition-opacity" />
+								<OlympusLogo variant="ring" size={28} className="relative" />
+							</div>
+							<div className="leading-tight">
 								<p className="text-sm font-semibold text-foreground">Canvas</p>
 								<p className="font-mono text-[10px] text-muted-foreground">v{__CANVAS_VERSION__}</p>
 							</div>
@@ -268,13 +280,28 @@ export function Layout() {
 							type="button"
 							onClick={toggleCollapsed}
 							aria-label="Collapse sidebar"
-							className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
+							className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 						>
 							<Icon name="PanelLeftClose" className="h-4 w-4" />
 						</button>
 					</div>
 
-					<nav className="mt-8 space-y-5">
+					{/* Search hint */}
+					<button
+						type="button"
+						onClick={() => {
+							window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
+						}}
+						className="mt-5 flex items-center gap-2 rounded-md border border-border bg-background/60 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+					>
+						<Icon name="Search" className="h-3.5 w-3.5" />
+						<span className="flex-1 text-left">Search docs…</span>
+						<kbd className="rounded border border-border bg-card px-1 font-mono text-[10px]">
+							⌘K
+						</kbd>
+					</button>
+
+					<nav className="mt-6 flex-1 space-y-5">
 						<SectionGroup
 							id="gettingStarted"
 							label="Getting started"
@@ -282,7 +309,7 @@ export function Layout() {
 							onOpenChange={(v) => toggle("gettingStarted", v)}
 						>
 							{TOP_NAV.map((item) => (
-								<NavLinkRow key={item.to} to={item.to} label={item.label} end={item.end} />
+								<Item key={item.to} to={item.to} label={item.label} end={item.end} />
 							))}
 						</SectionGroup>
 
@@ -310,7 +337,7 @@ export function Layout() {
 							onOpenChange={(v) => toggle("showcase", v)}
 						>
 							{SHOWCASE_NAV.map((item) => (
-								<NavLinkRow key={item.to} to={item.to} label={item.label} end={item.end} />
+								<Item key={item.to} to={item.to} label={item.label} end={item.end} />
 							))}
 						</SectionGroup>
 
@@ -321,48 +348,35 @@ export function Layout() {
 							onOpenChange={(v) => toggle("reference", v)}
 						>
 							{BOTTOM_NAV.map((item) => (
-								<NavLinkRow key={item.to} to={item.to} label={item.label} />
+								<Item key={item.to} to={item.to} label={item.label} />
 							))}
 						</SectionGroup>
 					</nav>
 
-					<div className="mt-8 flex items-center justify-between border-t border-border pt-4">
-						<ThemeToggle />
-						<span className="font-mono text-[10px] text-muted-foreground">
-							<kbd className="rounded border border-border px-1.5 py-0.5">⌘K</kbd> search
-						</span>
-					</div>
-
-					<footer className="mt-6 text-xs text-muted-foreground">
-						<p>
+					<footer className="mt-6 flex items-center justify-between border-t border-border pt-4">
+						<div className="flex items-center gap-1.5">
+							<ThemeToggle />
 							<a
 								href="https://github.com/OlympusOSS/canvas"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="underline-offset-4 hover:underline"
+								aria-label="GitHub"
+								className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 							>
-								GitHub
+								<Icon name="Code" className="h-3.5 w-3.5" />
 							</a>
-							{" · "}
-							<a
-								href="https://github.com/OlympusOSS/canvas/blob/main/CONTRIBUTING.md"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="underline-offset-4 hover:underline"
-							>
-								Contribute
-							</a>
-						</p>
+						</div>
+						<span className="font-mono text-[10px] text-muted-foreground">Apache 2.0</span>
 					</footer>
 				</div>
 			</aside>
 
-			<main className="flex-1 overflow-y-auto">
-				<div className="mx-auto max-w-5xl p-8">
+			<main className="flex-1 overflow-y-auto scrollbar-thin">
+				<div className="mx-auto max-w-5xl px-8 py-10">
 					<Outlet />
 				</div>
 			</main>
-			<CmdK />
+			<DocsTweaksPanel />
 		</div>
 	);
 }
