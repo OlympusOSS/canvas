@@ -44,8 +44,6 @@ export function DocsCodeBlock({ html, code, language, filename }: DocsCodeBlockP
 				{html ? (
 					<div
 						className="docs-shiki overflow-x-auto px-4 py-3 text-[13px] leading-relaxed [&_pre]:bg-transparent [&_pre]:p-0"
-						// Shiki output is sanitized HTML produced at build time from trusted source files.
-						// biome-ignore lint/security/noDangerouslySetInnerHtml: Shiki output is built-time HTML.
 						dangerouslySetInnerHTML={{ __html: html }}
 					/>
 				) : (
