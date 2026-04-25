@@ -14,10 +14,9 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"types": ["react", "react-dom", "node", "vite/client"],
 		"paths": {
-			"@olympusoss/canvas": ["../src/index.ts"],
-			"react": ["../node_modules/@types/react"],
-			"react-dom": ["../node_modules/@types/react-dom"]
+			"@olympusoss/canvas": ["../src/index.ts"]
 		}
 	},
 	"include": ["src"]

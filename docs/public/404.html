@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Canvas — redirecting…</title>
+		<script>
+			// SPA fallback for GitHub Pages.
+			// Encode the original path + search + hash into a single ?p= param,
+			// then redirect to the base index.html which decodes it and pushes
+			// the original URL back into history. See index.html for the matching
+			// decode step.
+			(function () {
+				var basePath = "/canvas/"; // GitHub Pages base; matches Vite's `base` and BASE_URL.
+				var loc = window.location;
+				var path = loc.pathname;
+				if (path.indexOf(basePath) === 0) {
+					path = path.slice(basePath.length);
+				}
+				var encoded = encodeURIComponent(path + loc.search + loc.hash);
+				loc.replace(basePath + "?p=" + encoded);
+			})();
+		</script>
+	</head>
+	<body></body>
+</html>
