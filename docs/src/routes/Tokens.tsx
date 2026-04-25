@@ -440,7 +440,7 @@ export function Tokens() {
 					<h3 className="text-sm font-semibold text-foreground">AnimatedBackground</h3>
 					<p className="text-sm text-muted-foreground">
 						Three drifting blurred orbs (indigo · violet · cyan), each 80–120px blur, 10–20%
-						opacity. Loops at 8s / 10s / 12s ease-in-out infinite. Used by hera AuthShell.
+						opacity. Loops at 8s / 10s / 12s ease-in-out infinite. Drop into any AuthShell.
 					</p>
 					<div className="relative h-72 overflow-hidden rounded-xl border border-border">
 						<AnimatedBackground />

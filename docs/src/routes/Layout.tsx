@@ -8,7 +8,7 @@ import {
 } from "@olympusoss/canvas";
 import { useCallback, useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { DocsTweaksPanel } from "../components/TweaksPanel";
+import { CmdK } from "../components/CmdK";
 import { COMPONENTS, TIER_META } from "../data/components";
 
 interface NavItem {
@@ -22,13 +22,6 @@ const TOP_NAV: NavItem[] = [
 	{ to: "/install", label: "Installation" },
 	{ to: "/principles", label: "Principles" },
 	{ to: "/tokens", label: "Tokens" },
-];
-
-const SHOWCASE_NAV: NavItem[] = [
-	{ to: "/showcase", label: "Overview", end: true },
-	{ to: "/showcase/auth", label: "Auth (hera)" },
-	{ to: "/showcase/admin", label: "Admin (athena)" },
-	{ to: "/showcase/marketing", label: "Marketing (site)" },
 ];
 
 const BOTTOM_NAV: NavItem[] = [
@@ -87,34 +80,23 @@ function ComponentGroup({ tier, open, onOpenChange, currentPath }: ComponentGrou
 
 	return (
 		<Collapsible open={open} onOpenChange={onOpenChange}>
-			<div className="flex items-center gap-0.5">
-				<NavLink to={tierIndex} end className="flex-1">
-					{({ isActive }) => (
-						<span
-							className="nav-link flex items-center gap-2"
-							data-active={isActive ? "true" : "false"}
-						>
-							<TierDot tier={tier} />
-							{meta.label}
-							<span className="ml-auto text-[10px] font-mono text-muted-foreground/60">
-								{components.length}
-							</span>
-						</span>
-					)}
-				</NavLink>
-				<CollapsibleTrigger asChild>
-					<button
-						type="button"
-						aria-label={`${open ? "Collapse" : "Expand"} ${meta.label}`}
-						className="inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+			<NavLink to={tierIndex} end onClick={() => onOpenChange(!open)}>
+				{({ isActive }) => (
+					<span
+						className="nav-link flex items-center gap-2"
+						data-active={isActive ? "true" : "false"}
 					>
+						<TierDot tier={tier} />
+						<span className="flex-1">{meta.label}</span>
 						<Icon
 							name="ChevronRight"
-							className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-90" : ""}`}
+							className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${
+								open ? "rotate-90" : ""
+							}`}
 						/>
-					</button>
-				</CollapsibleTrigger>
-			</div>
+					</span>
+				)}
+			</NavLink>
 			<CollapsibleContent>
 				<div
 					className={`ml-4 mt-0.5 space-y-px border-l pl-2 ${tierIsActive ? "border-[hsl(var(--brand-via)/0.5)]" : "border-border"}`}
@@ -181,7 +163,6 @@ function SectionGroup({ label, open, onOpenChange, children }: SectionGroupProps
 const DEFAULT_OPEN = {
 	gettingStarted: true,
 	components: true,
-	showcase: true,
 	reference: true,
 	atoms: false,
 	molecules: false,
@@ -256,7 +237,7 @@ export function Layout() {
 						<Outlet />
 					</div>
 				</main>
-				<DocsTweaksPanel />
+				<CmdK />
 			</div>
 		);
 	}
@@ -331,17 +312,6 @@ export function Layout() {
 						</SectionGroup>
 
 						<SectionGroup
-							id="showcase"
-							label="Showcase"
-							open={open.showcase}
-							onOpenChange={(v) => toggle("showcase", v)}
-						>
-							{SHOWCASE_NAV.map((item) => (
-								<Item key={item.to} to={item.to} label={item.label} end={item.end} />
-							))}
-						</SectionGroup>
-
-						<SectionGroup
 							id="reference"
 							label="Reference"
 							open={open.reference}
@@ -376,7 +346,7 @@ export function Layout() {
 					<Outlet />
 				</div>
 			</main>
-			<DocsTweaksPanel />
+			<CmdK />
 		</div>
 	);
 }
