@@ -5,13 +5,16 @@
 	"description": "Live component gallery for Canvas. Imports directly from ../src.",
 	"scripts": {
 		"dev": "vite",
-		"prebuild": "bun scripts/extract-props.ts",
+		"prebuild": "bun scripts/extract-props.ts && bun scripts/extract-used-in.ts && bun scripts/build-search-index.ts",
 		"build": "vite build",
 		"preview": "vite preview",
-		"extract-props": "bun scripts/extract-props.ts"
+		"extract-props": "bun scripts/extract-props.ts",
+		"extract-used-in": "bun scripts/extract-used-in.ts",
+		"build-search-index": "bun scripts/build-search-index.ts"
 	},
 	"dependencies": {
 		"@mdx-js/rollup": "^3.1.0",
+		"@orama/orama": "^3.1.18",
 		"@shikijs/rehype": "^1.29.0",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",

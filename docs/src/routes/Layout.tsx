@@ -314,8 +314,11 @@ export function Layout() {
 						</SectionGroup>
 					</nav>
 
-					<div className="mt-8 border-t border-border pt-4">
+					<div className="mt-8 flex items-center justify-between border-t border-border pt-4">
 						<ThemeToggle />
+						<span className="font-mono text-[10px] text-muted-foreground">
+							<kbd className="rounded border border-border px-1.5 py-0.5">⌘K</kbd> search
+						</span>
 					</div>
 
 					<footer className="mt-6 text-xs text-muted-foreground">
