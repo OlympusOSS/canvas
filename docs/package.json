@@ -5,8 +5,10 @@
 	"description": "Live component gallery for Canvas. Imports directly from ../src.",
 	"scripts": {
 		"dev": "vite",
+		"prebuild": "bun scripts/extract-props.ts",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"extract-props": "bun scripts/extract-props.ts"
 	},
 	"dependencies": {
 		"@mdx-js/rollup": "^3.1.0",
