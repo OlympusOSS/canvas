@@ -169,6 +169,16 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 			},
 		],
 	},
+	"auth-layout": {
+		id: "auth-layout",
+		tier: "templates",
+		displayName: "AuthLayout",
+		propsSource: "templates/auth-layout",
+		importLine: `import { AuthLayout } from "@olympusoss/canvas";`,
+		overview:
+			"⚠️ DEPRECATED — use AuthShell instead. AuthLayout is the v1 centered-card auth scaffold; it remains exported as a backwards-compatibility alias and will be removed in canvas v3.0.",
+		tokens: [],
+	},
 	card: {
 		id: "card",
 		tier: "molecules",
