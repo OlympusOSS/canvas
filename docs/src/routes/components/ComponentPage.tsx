@@ -2,8 +2,10 @@ import { Badge, Icon } from "@olympusoss/canvas";
 import { Suspense } from "react";
 import { Link, useParams } from "react-router-dom";
 import { DocsCodeBlock } from "../../components/DocsCodeBlock";
+import { EditOnGitHub } from "../../components/EditOnGitHub";
 import { Example } from "../../components/Example";
 import { PropsTable } from "../../components/PropsTable";
+import { UsedIn } from "../../components/UsedIn";
 import { COMPONENT_CONTENT } from "../../data/component-content";
 import { COMPONENTS, TIER_META } from "../../data/components";
 import { NotFound } from "../NotFound";
@@ -126,6 +128,8 @@ export function ComponentPage() {
 				</section>
 			)}
 
+			<UsedIn displayName={manifestEntry.label} />
+
 			<section className="space-y-3 border-t border-border pt-8">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
@@ -136,15 +140,18 @@ export function ComponentPage() {
 							src/components/{tier}/{name}.tsx
 						</span>
 					</div>
-					<a
-						href={sourceUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="inline-flex items-center gap-1 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-					>
-						View source
-						<Icon name="ExternalLink" className="h-3.5 w-3.5" />
-					</a>
+					<div className="flex items-center gap-3">
+						<EditOnGitHub path={`docs/src/data/component-content.tsx`} />
+						<a
+							href={sourceUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-1 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+						>
+							View source
+							<Icon name="ExternalLink" className="h-3.5 w-3.5" />
+						</a>
+					</div>
 				</div>
 			</section>
 		</div>
