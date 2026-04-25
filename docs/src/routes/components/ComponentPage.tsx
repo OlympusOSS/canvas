@@ -5,8 +5,6 @@ import { DocsCodeBlock } from "../../components/DocsCodeBlock";
 import { EditOnGitHub } from "../../components/EditOnGitHub";
 import { Example } from "../../components/Example";
 import { PropsTable } from "../../components/PropsTable";
-import { useDocsTweaks } from "../../components/TweaksPanel";
-import { UsedIn } from "../../components/UsedIn";
 import { COMPONENT_CONTENT } from "../../data/component-content";
 import { COMPONENTS, TIER_META } from "../../data/components";
 import { NotFound } from "../NotFound";
@@ -20,7 +18,6 @@ interface Section {
 
 export function ComponentPage() {
 	const { tier, name } = useParams<{ tier: string; name: string }>();
-	const { tweaks } = useDocsTweaks();
 
 	const manifestEntry = COMPONENTS.find((c) => c.tier === tier && c.id === name);
 	const content = name ? COMPONENT_CONTENT[name] : undefined;
@@ -33,7 +30,6 @@ export function ComponentPage() {
 		s.push({ id: "api", label: "API" });
 		if (content?.a11y?.length) s.push({ id: "a11y", label: "Accessibility" });
 		if (content?.tokens?.length) s.push({ id: "tokens-used", label: "Tokens" });
-		s.push({ id: "used-in", label: "Used in" });
 		return s;
 	}, [content]);
 
@@ -162,10 +158,6 @@ export function ComponentPage() {
 					</section>
 				)}
 
-				<section id="used-in" className="scroll-mt-anchor">
-					<UsedIn displayName={manifestEntry.label} />
-				</section>
-
 				<section className="space-y-3 border-t border-border pt-8">
 					<div className="flex items-center justify-between">
 						<EditOnGitHub path={`docs/src/data/component-content.tsx`} />
@@ -182,7 +174,7 @@ export function ComponentPage() {
 				</section>
 			</div>
 
-			{tweaks.showTOC && <TOC sections={sections} />}
+			<TOC sections={sections} />
 		</div>
 	);
 }
@@ -196,12 +188,13 @@ interface PreviewFrameProps {
 }
 function PreviewFrame({ children }: PreviewFrameProps) {
 	const { resolvedTheme } = useTheme();
-	const [localTheme, setLocalTheme] = useState<"light" | "dark" | "system">(
-		(resolvedTheme as "light" | "dark") ?? "dark",
+	// Default to inverted contrast — opposite of the page theme so components
+	// stand out. User can still flip via the toggle.
+	const [localTheme, setLocalTheme] = useState<"light" | "dark">(
+		resolvedTheme === "dark" ? "light" : "dark",
 	);
 
-	// Use a wrapper class that flips dark vs not, scoped to this frame.
-	const isDark = localTheme === "dark" || (localTheme === "system" && resolvedTheme === "dark");
+	const isDark = localTheme === "dark";
 
 	return (
 		<div className="overflow-hidden rounded-xl border border-border bg-card/30">

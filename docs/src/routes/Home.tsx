@@ -1,17 +1,14 @@
 import {
-	AnimatedBackground,
-	Avatar,
-	AvatarFallback,
 	Badge,
 	Button,
-	Card,
-	CardContent,
 	Icon,
 	OlympusLogo,
 	StatCard,
+	Tabs,
+	TabsList,
+	TabsTrigger,
 } from "@olympusoss/canvas";
 import { Link } from "react-router-dom";
-import { useDocsTweaks } from "../components/TweaksPanel";
 
 interface TierSampleProps {
 	tier: string;
@@ -83,7 +80,7 @@ function HeroRing() {
 				</svg>
 				{/* The ring logo */}
 				<div className="absolute inset-0 flex items-center justify-center">
-					<OlympusLogo variant="ring" className="h-[220px] w-[220px]" />
+					<OlympusLogo variant="ring" className="animate-logo-shimmer h-[220px] w-[220px]" />
 				</div>
 				{/* Orbit dots */}
 				<div className="absolute left-1/2 top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-[hsl(var(--brand-via))] shadow-[0_0_16px_4px_hsl(var(--brand-via)/0.6)]" />
@@ -93,53 +90,30 @@ function HeroRing() {
 	);
 }
 
-function HeroOrbs() {
-	return <AnimatedBackground className="opacity-50" />;
-}
-
-function HeroGrid() {
-	return (
-		<>
-			<div className="pointer-events-none absolute inset-0 bg-grid mask-radial-fade opacity-60" />
-			<div className="pointer-events-none absolute right-12 top-1/2 -translate-y-1/2">
-				<OlympusLogo variant="ring" className="h-[180px] w-[180px] opacity-80" />
-			</div>
-		</>
-	);
-}
-
 export function Home() {
-	const { tweaks } = useDocsTweaks();
-	const heroVariant = tweaks.heroVariant;
-
 	return (
 		<div className="space-y-20">
 			{/* ============ HERO ============ */}
 			<header className="relative overflow-hidden rounded-3xl border border-border bg-card/40 brand-wash">
-				{heroVariant === "ring" && <HeroRing />}
-				{heroVariant === "orbs" && <HeroOrbs />}
-				{heroVariant === "grid" && <HeroGrid />}
+				<HeroRing />
 
 				<div className="relative z-10 px-8 py-20 sm:px-12 sm:py-24 lg:py-28">
 					<div className="max-w-2xl space-y-6">
 						<div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1 backdrop-blur">
-							<span className="relative flex h-1.5 w-1.5">
-								<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[hsl(var(--brand-via))] opacity-60" />
-								<span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[hsl(var(--brand-via))]" />
-							</span>
+							<span className="inline-flex h-1.5 w-1.5 rounded-full bg-[hsl(var(--brand-via))]" />
 							<span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
 								@olympusoss/canvas · v{__CANVAS_VERSION__}
 							</span>
 						</div>
 
 						<h1 className="text-balance text-5xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-							The design system <span className="brand-gradient-text">behind Olympus.</span>
+							A design system <span className="brand-gradient-text">built to be reused.</span>
 						</h1>
 
 						<p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
 							A shadcn-derived React component library on Tailwind v4. Atomic-design layered,
-							tokens-first, dark-mode native. Powers <Mono>hera</Mono>, <Mono>athena</Mono>, and{" "}
-							<Mono>site</Mono>.
+							tokens-first, dark-mode native. Drop it into any React project — Next.js, Vite, Remix,
+							anything.
 						</p>
 
 						<div className="flex flex-wrap gap-3 pt-2">
@@ -201,7 +175,7 @@ export function Home() {
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 					<TierSample
 						tier="Atom"
-						tagline="Primitive wrappers — Button, Input, Icon, Badge."
+						tagline="Single primitives — one Radix wrapper or one lucide icon. No composition."
 						href="/components/atoms"
 					>
 						<div className="flex flex-col items-center gap-3">
@@ -211,7 +185,7 @@ export function Home() {
 					</TierSample>
 					<TierSample
 						tier="Molecule"
-						tagline="Compositions — StatCard, Card, PageHeader."
+						tagline="Two or three atoms composed for one named purpose."
 						href="/components/molecules"
 					>
 						<StatCard
@@ -223,25 +197,26 @@ export function Home() {
 					</TierSample>
 					<TierSample
 						tier="Organism"
-						tagline="Stateful surfaces — Sidebar, DataTable, Form."
+						tagline="Stateful surfaces orchestrating molecules + atoms with their own context."
 						href="/components/organisms"
 					>
-						<Card className="w-full">
-							<CardContent className="flex items-center gap-3 p-4">
-								<Avatar className="h-9 w-9">
-									<AvatarFallback>A</AvatarFallback>
-								</Avatar>
-								<div className="min-w-0 flex-1">
-									<p className="truncate text-sm font-medium text-foreground">ada@olympus.dev</p>
-									<p className="font-mono text-xs text-muted-foreground">01HZ7K…8Q</p>
-								</div>
-								<Icon name="ChevronRight" className="h-4 w-4 text-muted-foreground" />
-							</CardContent>
-						</Card>
+						<Tabs defaultValue="active" className="w-full">
+							<TabsList className="grid h-9 w-full grid-cols-3">
+								<TabsTrigger value="all" className="text-xs">
+									All
+								</TabsTrigger>
+								<TabsTrigger value="active" className="text-xs">
+									Active
+								</TabsTrigger>
+								<TabsTrigger value="locked" className="text-xs">
+									Locked
+								</TabsTrigger>
+							</TabsList>
+						</Tabs>
 					</TierSample>
 					<TierSample
 						tier="Template"
-						tagline="Page-level scaffolding — AuthShell, AdminShell."
+						tagline="Slots-only page scaffolding — composes organisms into a layout."
 						href="/components/templates"
 					>
 						<div className="flex w-full items-center gap-2 rounded-lg border border-border bg-background p-2">
@@ -253,41 +228,6 @@ export function Home() {
 							</div>
 						</div>
 					</TierSample>
-				</div>
-			</section>
-
-			{/* ============ POWERS / SHOWCASE STRIP ============ */}
-			<section className="space-y-6">
-				<header className="space-y-1">
-					<p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-						Powers
-					</p>
-					<h2 className="text-3xl font-semibold tracking-tight text-foreground">
-						Three surfaces. One system.
-					</h2>
-				</header>
-				<div className="grid gap-4 lg:grid-cols-3">
-					<ProductCard
-						repo="hera"
-						title="Auth UI"
-						desc="Login · consent · recovery. Built on AuthShell + AnimatedBackground."
-						icon="Lock"
-						href="/showcase/auth"
-					/>
-					<ProductCard
-						repo="athena"
-						title="Admin dashboard"
-						desc="Sidebar · DataTable · StatCard. Identity & OAuth2 management at scale."
-						icon="LayoutDashboard"
-						href="/showcase/admin"
-					/>
-					<ProductCard
-						repo="site"
-						title="Marketing + playground"
-						desc="Brochure scroll. Live PKCE walkthrough."
-						icon="Globe"
-						href="/showcase/marketing"
-					/>
 				</div>
 			</section>
 
@@ -320,39 +260,6 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function Divider() {
 	return <span className="h-3 w-px bg-border" aria-hidden />;
-}
-
-interface ProductCardProps {
-	repo: string;
-	title: string;
-	desc: string;
-	icon: "Lock" | "LayoutDashboard" | "Globe";
-	href: string;
-}
-function ProductCard({ repo, title, desc, icon, href }: ProductCardProps) {
-	return (
-		<Link
-			to={href}
-			className="group relative flex flex-col gap-4 overflow-hidden rounded-xl border border-border bg-background p-6 transition-colors hover:bg-card"
-		>
-			<div className="flex items-center justify-between">
-				<div className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card">
-					<Icon name={icon} className="h-5 w-5" />
-				</div>
-				<Icon
-					name="ArrowUpRight"
-					className="h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-				/>
-			</div>
-			<div>
-				<p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-					{repo}
-				</p>
-				<h3 className="mt-1 text-lg font-semibold text-foreground">{title}</h3>
-				<p className="mt-1.5 text-sm text-muted-foreground">{desc}</p>
-			</div>
-		</Link>
-	);
 }
 
 interface InstallTileProps {

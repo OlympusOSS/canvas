@@ -3,6 +3,31 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ---------- Light theme depth tuning ----------
+ * The default canvas light tokens make --card identical to --background
+ * (both pure white) — flat cards with only a border for separation. Lift
+ * the page off pure white so cards visibly rise above the surface.
+ */
+:root {
+	--background: 220 16% 97%;
+	--foreground: 224 28% 12%;
+	--card: 0 0% 100%;
+	--card-foreground: 224 28% 12%;
+	--popover: 0 0% 100%;
+	--popover-foreground: 224 28% 12%;
+	--primary: 224 24% 14%;
+	--primary-foreground: 0 0% 100%;
+	--secondary: 220 14% 92%;
+	--secondary-foreground: 224 24% 14%;
+	--muted: 220 14% 92%;
+	--muted-foreground: 220 9% 42%;
+	--accent: 220 14% 92%;
+	--accent-foreground: 224 24% 14%;
+	--border: 220 13% 86%;
+	--input: 220 13% 86%;
+	--ring: 220 9% 50%;
+}
+
 /* ---------- Softer dark theme override ----------
  * Lifts the dark palette off near-black so the docs surface is easier on the
  * eyes. Overrides values from ../../styles/tokens.css.
@@ -121,7 +146,9 @@ body {
 /* ---------- Sidebar nav refinements ---------- */
 .nav-link {
 	position: relative;
-	display: block;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 	border-radius: 6px;
 	padding: 6px 10px 6px 12px;
 	font-size: 13px;
@@ -137,15 +164,27 @@ body {
 	background: hsl(var(--accent));
 	font-weight: 500;
 }
+/* Brand-gradient outline that follows the rounded corners and fades to
+ * transparent toward the trailing edge. Mask-composite trick draws only the
+ * border ring (gradient inside the padding area is masked out). */
 .nav-link[data-active="true"]::before {
 	content: "";
 	position: absolute;
-	left: 0;
-	top: 6px;
-	bottom: 6px;
-	width: 2px;
-	border-radius: 2px;
-	background: var(--brand-grad);
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(
+		90deg,
+		hsl(var(--brand-from)) 0%,
+		hsl(var(--brand-via)) 30%,
+		hsl(var(--brand-via) / 0.4) 60%,
+		transparent 90%
+	);
+	-webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	mask-composite: exclude;
+	pointer-events: none;
 }
 
 /* Density variants — toggled via data-density on body */
@@ -176,6 +215,17 @@ body[data-density="comfortable"] .nav-link { padding: 8px 12px; font-size: 13.5p
 	50% { opacity: 1; transform: scale(1.04); }
 }
 .animate-brand-pulse { animation: brand-pulse 4s ease-in-out infinite; }
+
+/* Subtle shimmer on the hero ring logo: brightness + brand-tinted glow pulse. */
+@keyframes logo-shimmer {
+	0%, 100% {
+		filter: brightness(1) drop-shadow(0 0 6px hsl(var(--brand-via) / 0.25));
+	}
+	50% {
+		filter: brightness(1.15) drop-shadow(0 0 22px hsl(var(--brand-via) / 0.6));
+	}
+}
+.animate-logo-shimmer { animation: logo-shimmer 3.5s ease-in-out infinite; }
 
 /* ---------- Markdown body in docs (Markdown.tsx output) ---------- */
 .docs-prose h1,

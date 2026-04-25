@@ -1,4 +1,10 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger, Icon } from "@olympusoss/canvas";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+	Icon,
+	useTheme,
+} from "@olympusoss/canvas";
 import { type ReactNode, useState } from "react";
 import { DocsCodeBlock } from "./DocsCodeBlock";
 import { OpenInStackBlitz } from "./OpenInStackBlitz";
@@ -21,6 +27,10 @@ export function Example({
 	children,
 }: ExampleProps) {
 	const [open, setOpen] = useState(false);
+	const { resolvedTheme } = useTheme();
+	// Invert contrast: render the preview area in the OPPOSITE theme so
+	// components stand out against the page chrome.
+	const previewIsDark = resolvedTheme !== "dark";
 
 	return (
 		<section className="overflow-hidden rounded-xl border border-border bg-card/30">
@@ -35,7 +45,12 @@ export function Example({
 					title={stackblitzTitle ?? `Canvas · ${title}`}
 				/>
 			</header>
-			<div className="flex min-h-32 items-center justify-center bg-background p-8">{children}</div>
+			<div
+				className={`${previewIsDark ? "dark" : ""} flex min-h-32 items-center justify-center p-8`}
+				style={{ background: "hsl(var(--background))", color: "hsl(var(--foreground))" }}
+			>
+				{children}
+			</div>
 			<Collapsible open={open} onOpenChange={setOpen}>
 				<CollapsibleTrigger asChild>
 					<button
