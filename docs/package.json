@@ -25,6 +25,7 @@
 		"@tailwindcss/vite": "^4.1.4",
 		"@types/mdx": "^2.0.13",
 		"@vitejs/plugin-react": "^5.0.0",
+		"react-docgen-typescript": "^2.4.0",
 		"tailwindcss": "^4.1.4",
 		"tsx": "^4.19.0",
 		"typescript": "^5.8.3",
