@@ -8,7 +8,7 @@
 			// Decode the SPA fallback ?p= param produced by 404.html and restore
 			// the original deep-link URL via history.replaceState BEFORE React
 			// boots. This way react-router sees the right path on first render.
-			(function () {
+			(() => {
 				var params = new URLSearchParams(window.location.search);
 				var p = params.get("p");
 				var basePath = "/canvas/";

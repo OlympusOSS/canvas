@@ -9,7 +9,7 @@
 			// then redirect to the base index.html which decodes it and pushes
 			// the original URL back into history. See index.html for the matching
 			// decode step.
-			(function () {
+			(() => {
 				var basePath = "/canvas/"; // GitHub Pages base; matches Vite's `base` and BASE_URL.
 				var loc = window.location;
 				var path = loc.pathname;
@@ -18,7 +18,7 @@
 					path = path.slice(basePath.length);
 				}
 				encoded = encodeURIComponent(path + loc.search + loc.hash);
-				loc.replace(basePath + "?p=" + encoded);
+				loc.replace(`${basePath}?p=${encoded}`);
 			})();
 		</script>
 	</head>

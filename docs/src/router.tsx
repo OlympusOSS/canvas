@@ -8,15 +8,7 @@ import { Layout } from "./routes/Layout";
 import { Migration } from "./routes/Migration";
 import { NotFound } from "./routes/NotFound";
 import { Principles } from "./routes/Principles";
-import { TokensAnimation } from "./routes/tokens/Animation";
-import { TokensBrand } from "./routes/tokens/Brand";
-import { TokensColors } from "./routes/tokens/Colors";
-import { TokensIcons } from "./routes/tokens/Icons";
-import { TokensLayout } from "./routes/tokens/Layout";
-import { TokensRadii } from "./routes/tokens/Radii";
-import { TokensShadows } from "./routes/tokens/Shadows";
-import { TokensSpacing } from "./routes/tokens/Spacing";
-import { TokensTypography } from "./routes/tokens/Typography";
+import { Tokens } from "./routes/Tokens";
 
 export const router: RouteObject[] = [
 	{
@@ -26,31 +18,11 @@ export const router: RouteObject[] = [
 			{ index: true, Component: Home },
 			{ path: "install", Component: Install },
 			{ path: "principles", Component: Principles },
+			{ path: "tokens", Component: Tokens },
 			{ path: "migration", Component: Migration },
 			{ path: "changelog", Component: Changelog },
-			{
-				path: "tokens",
-				Component: TokensLayout,
-				children: [
-					{ index: true, Component: TokensColors },
-					{ path: "colors", Component: TokensColors },
-					{ path: "typography", Component: TokensTypography },
-					{ path: "spacing", Component: TokensSpacing },
-					{ path: "radii", Component: TokensRadii },
-					{ path: "shadows", Component: TokensShadows },
-					{ path: "icons", Component: TokensIcons },
-					{ path: "animation", Component: TokensAnimation },
-					{ path: "brand", Component: TokensBrand },
-				],
-			},
-			{
-				path: "components/:tier",
-				Component: TierIndex,
-			},
-			{
-				path: "components/:tier/:name",
-				Component: ComponentPage,
-			},
+			{ path: "components/:tier", Component: TierIndex },
+			{ path: "components/:tier/:name", Component: ComponentPage },
 			{ path: "*", Component: NotFound },
 		],
 	},
