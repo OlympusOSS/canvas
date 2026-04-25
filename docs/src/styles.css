@@ -3,8 +3,197 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ---------- Softer dark theme override ----------
+ * Lifts the dark palette off near-black so the docs surface is easier on the
+ * eyes. Overrides values from ../../styles/tokens.css.
+ */
+.dark {
+	--background: 224 12% 10%;
+	--foreground: 210 20% 96%;
+	--card: 224 10% 14%;
+	--card-foreground: 210 20% 96%;
+	--popover: 224 10% 14%;
+	--popover-foreground: 210 20% 96%;
+	--primary: 210 20% 96%;
+	--primary-foreground: 224 12% 10%;
+	--secondary: 222 9% 20%;
+	--secondary-foreground: 210 20% 96%;
+	--muted: 222 9% 20%;
+	--muted-foreground: 220 9% 70%;
+	--accent: 222 9% 22%;
+	--accent-foreground: 210 20% 96%;
+	--border: 220 9% 24%;
+	--input: 220 9% 24%;
+	--ring: 220 9% 70%;
+}
+
+/* ---------- Base ---------- */
 body {
-	font-family: system-ui, -apple-system, sans-serif;
+	font-family: "Inter", system-ui, -apple-system, sans-serif;
 	background: hsl(var(--background));
 	color: hsl(var(--foreground));
+	font-feature-settings: "ss01", "cv11";
 }
+
+/* ---------- Brand gradient utilities ----------
+ * The Olympus blue gradient is the only saturated chrome in Canvas.
+ * Use sparingly: hero H1, ring decoration, occasional accent dots.
+ */
+:root {
+	--brand-from: 224 76% 40%;   /* #1E40AF-ish */
+	--brand-via: 217 91% 60%;    /* #3B82F6 */
+	--brand-to: 213 94% 68%;     /* #60A5FA */
+	--brand-grad: linear-gradient(135deg, hsl(var(--brand-from)) 0%, hsl(var(--brand-via)) 50%, hsl(var(--brand-to)) 100%);
+}
+
+.brand-gradient-text {
+	background: var(--brand-grad);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	-webkit-text-fill-color: transparent;
+}
+
+.brand-gradient-bg {
+	background: var(--brand-grad);
+}
+
+.brand-gradient-border {
+	position: relative;
+	background-clip: padding-box;
+	border: 1px solid transparent;
+}
+.brand-gradient-border::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	margin: -1px;
+	border-radius: inherit;
+	background: var(--brand-grad);
+}
+
+/* Subtle radial brand wash, used in hero / cards */
+.brand-wash {
+	background:
+		radial-gradient(60% 80% at 50% 0%, hsl(var(--brand-via) / 0.10) 0%, transparent 60%),
+		radial-gradient(40% 60% at 100% 100%, hsl(var(--brand-from) / 0.08) 0%, transparent 60%);
+}
+.dark .brand-wash {
+	background:
+		radial-gradient(60% 80% at 50% 0%, hsl(var(--brand-via) / 0.18) 0%, transparent 60%),
+		radial-gradient(40% 60% at 100% 100%, hsl(var(--brand-from) / 0.14) 0%, transparent 60%);
+}
+
+/* ---------- Grid & dot backgrounds ---------- */
+.bg-grid {
+	background-image:
+		linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
+		linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+.bg-dots {
+	background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
+	background-size: 16px 16px;
+}
+
+/* Mask edges of decorative grids so they don't fight content */
+.mask-radial-fade {
+	mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
+	-webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
+}
+
+/* ---------- Branded scrollbar (sidebar + main) ---------- */
+.scrollbar-thin {
+	scrollbar-width: thin;
+	scrollbar-color: hsl(var(--border)) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb {
+	background: hsl(var(--border));
+	border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+	background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* ---------- Sidebar nav refinements ---------- */
+.nav-link {
+	position: relative;
+	display: block;
+	border-radius: 6px;
+	padding: 6px 10px 6px 12px;
+	font-size: 13px;
+	color: hsl(var(--muted-foreground));
+	transition: color 120ms ease, background-color 120ms ease;
+}
+.nav-link:hover {
+	color: hsl(var(--foreground));
+	background: hsl(var(--accent) / 0.6);
+}
+.nav-link[data-active="true"] {
+	color: hsl(var(--foreground));
+	background: hsl(var(--accent));
+	font-weight: 500;
+}
+.nav-link[data-active="true"]::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 6px;
+	bottom: 6px;
+	width: 2px;
+	border-radius: 2px;
+	background: var(--brand-grad);
+}
+
+/* Density variants — toggled via data-density on body */
+body[data-density="compact"] .nav-link { padding: 4px 8px 4px 10px; font-size: 12.5px; }
+body[data-density="compact"] .nav-section-label { font-size: 9px; }
+body[data-density="comfortable"] .nav-link { padding: 8px 12px; font-size: 13.5px; }
+
+/* ---------- Component page anchor offset (sticky TOC) ---------- */
+.scroll-mt-anchor { scroll-margin-top: 96px; }
+
+/* ---------- Shiki overrides ---------- */
+.docs-shiki .shiki { background: transparent !important; }
+
+/* ---------- Subtle ring spin used by hero ---------- */
+@keyframes slow-spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+@keyframes slow-spin-rev {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(-360deg); }
+}
+.animate-slow-spin { animation: slow-spin 40s linear infinite; }
+.animate-slow-spin-rev { animation: slow-spin-rev 60s linear infinite; }
+
+@keyframes brand-pulse {
+	0%, 100% { opacity: 0.6; transform: scale(1); }
+	50% { opacity: 1; transform: scale(1.04); }
+}
+.animate-brand-pulse { animation: brand-pulse 4s ease-in-out infinite; }
+
+/* ---------- Markdown body in docs (Markdown.tsx output) ---------- */
+.docs-prose h1,
+.docs-prose h2,
+.docs-prose h3 { font-weight: 600; letter-spacing: -0.01em; color: hsl(var(--foreground)); }
+.docs-prose h2 { font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.docs-prose p { color: hsl(var(--muted-foreground)); line-height: 1.7; }
+.docs-prose code:not(pre code) {
+	font-family: "JetBrains Mono", ui-monospace, monospace;
+	font-size: 0.875em;
+	background: hsl(var(--muted) / 0.6);
+	padding: 0.1em 0.35em;
+	border-radius: 4px;
+	color: hsl(var(--foreground));
+}
+.docs-prose a { color: hsl(var(--foreground)); text-decoration-line: underline; text-underline-offset: 4px; }
+
+/* ---------- Accent control via tweak ---------- */
+body[data-accent="strict"] .accent-soft { display: none; }
+body[data-accent="generous"] .accent-soft { display: revert; }
+body[data-accent="hero"] .accent-soft { display: revert; }
