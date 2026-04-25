@@ -8,6 +8,10 @@ import { Layout } from "./routes/Layout";
 import { Migration } from "./routes/Migration";
 import { NotFound } from "./routes/NotFound";
 import { Principles } from "./routes/Principles";
+import { ShowcaseAdmin } from "./routes/showcase/Admin";
+import { ShowcaseAuth } from "./routes/showcase/Auth";
+import { ShowcaseIndex } from "./routes/showcase/Index";
+import { ShowcaseMarketing } from "./routes/showcase/Marketing";
 import { Tokens } from "./routes/Tokens";
 
 export const router: RouteObject[] = [
@@ -23,6 +27,10 @@ export const router: RouteObject[] = [
 			{ path: "changelog", Component: Changelog },
 			{ path: "components/:tier", Component: TierIndex },
 			{ path: "components/:tier/:name", Component: ComponentPage },
+			{ path: "showcase", Component: ShowcaseIndex },
+			{ path: "showcase/auth", Component: ShowcaseAuth },
+			{ path: "showcase/admin", Component: ShowcaseAdmin },
+			{ path: "showcase/marketing", Component: ShowcaseMarketing },
 			{ path: "*", Component: NotFound },
 		],
 	},
