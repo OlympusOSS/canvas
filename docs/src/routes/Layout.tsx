@@ -267,9 +267,9 @@ export function Layout() {
 				<div className="sticky top-0 flex max-h-screen flex-col overflow-y-auto scrollbar-thin px-4 py-5">
 					<div className="flex items-start justify-between gap-2 px-2">
 						<NavLink to="/" className="group flex items-center gap-2.5">
-							<div className="relative">
+							<div className="relative h-7 w-7 shrink-0">
 								<div className="absolute inset-0 brand-gradient-bg rounded-full opacity-25 blur-md group-hover:opacity-50 transition-opacity" />
-								<OlympusLogo variant="ring" size={28} className="relative" />
+								<OlympusLogo variant="ring" className="relative h-7 w-7" />
 							</div>
 							<div className="leading-tight">
 								<p className="text-sm font-semibold text-foreground">Canvas</p>
