@@ -92,33 +92,24 @@ function ComponentGroup({ tier, open, onOpenChange, currentPath }: ComponentGrou
 
 	return (
 		<Collapsible open={open} onOpenChange={onOpenChange}>
-			<div className="flex items-center gap-1">
-				<NavLink
-					to={tierIndex}
-					end
-					className={({ isActive }) =>
-						`flex-1 rounded-md px-3 py-1.5 text-sm transition-colors ${
-							isActive
-								? "bg-accent text-accent-foreground"
-								: "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-						}`
-					}
-				>
-					{meta.label}
-				</NavLink>
-				<CollapsibleTrigger asChild>
-					<button
-						type="button"
-						aria-label={`${open ? "Collapse" : "Expand"} ${meta.label}`}
-						className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
-					>
-						<Icon
-							name="ChevronRight"
-							className={`h-4 w-4 transition-transform ${open ? "rotate-90" : ""}`}
-						/>
-					</button>
-				</CollapsibleTrigger>
-			</div>
+			<NavLink
+				to={tierIndex}
+				end
+				onClick={() => onOpenChange(!open)}
+				className={({ isActive }) =>
+					`flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-colors ${
+						isActive
+							? "bg-accent text-accent-foreground"
+							: "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+					}`
+				}
+			>
+				<Icon
+					name="ChevronRight"
+					className={`h-3.5 w-3.5 shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+				/>
+				<span className="flex-1 text-left">{meta.label}</span>
+			</NavLink>
 			<CollapsibleContent>
 				<div
 					className={`ml-3 mt-1 space-y-0.5 border-l border-border pl-2 ${tierIsActive ? "border-accent" : ""}`}
