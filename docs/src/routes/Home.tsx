@@ -48,7 +48,7 @@ function HeroRing() {
 		<div className="pointer-events-none absolute inset-0 flex items-center justify-end pr-8">
 			<div className="relative h-[440px] w-[440px]">
 				{/* Soft brand glow behind ring */}
-				<div className="absolute inset-8 rounded-full bg-[var(--brand-grad)] opacity-20 blur-3xl animate-brand-pulse" />
+				<div className="brand-gradient-bg animate-brand-pulse absolute inset-8 rounded-full opacity-20 blur-3xl" />
 				{/* Outer dashed orbit */}
 				<svg
 					viewBox="0 0 440 440"
@@ -83,7 +83,7 @@ function HeroRing() {
 				</svg>
 				{/* The ring logo */}
 				<div className="absolute inset-0 flex items-center justify-center">
-					<OlympusLogo variant="ring" size={220} />
+					<OlympusLogo variant="ring" className="h-[220px] w-[220px]" />
 				</div>
 				{/* Orbit dots */}
 				<div className="absolute left-1/2 top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-[hsl(var(--brand-via))] shadow-[0_0_16px_4px_hsl(var(--brand-via)/0.6)]" />
@@ -102,7 +102,7 @@ function HeroGrid() {
 		<>
 			<div className="pointer-events-none absolute inset-0 bg-grid mask-radial-fade opacity-60" />
 			<div className="pointer-events-none absolute right-12 top-1/2 -translate-y-1/2">
-				<OlympusLogo variant="ring" size={180} className="opacity-80" />
+				<OlympusLogo variant="ring" className="h-[180px] w-[180px] opacity-80" />
 			</div>
 		</>
 	);
