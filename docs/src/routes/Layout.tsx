@@ -8,6 +8,7 @@ import {
 } from "@olympusoss/canvas";
 import { useCallback, useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { CmdK } from "../components/CmdK";
 import { COMPONENTS, TIER_META } from "../data/components";
 
 interface NavItem {
@@ -255,6 +256,7 @@ export function Layout() {
 						<Outlet />
 					</div>
 				</main>
+				<CmdK />
 			</div>
 		);
 	}
@@ -369,6 +371,7 @@ export function Layout() {
 					<Outlet />
 				</div>
 			</main>
+			<CmdK />
 		</div>
 	);
 }
