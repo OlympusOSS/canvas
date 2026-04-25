@@ -11,9 +11,10 @@
 			(function () {
 				var params = new URLSearchParams(window.location.search);
 				var p = params.get("p");
+				var basePath = "/canvas/";
+				var target;
 				if (p !== null) {
-					var basePath = "/canvas/";
-					var target = basePath + p;
+					target = basePath + p;
 					window.history.replaceState(null, "", target);
 				}
 			})();

@@ -13,10 +13,11 @@
 				var basePath = "/canvas/"; // GitHub Pages base; matches Vite's `base` and BASE_URL.
 				var loc = window.location;
 				var path = loc.pathname;
+				var encoded;
 				if (path.indexOf(basePath) === 0) {
 					path = path.slice(basePath.length);
 				}
-				var encoded = encodeURIComponent(path + loc.search + loc.hash);
+				encoded = encodeURIComponent(path + loc.search + loc.hash);
 				loc.replace(basePath + "?p=" + encoded);
 			})();
 		</script>
