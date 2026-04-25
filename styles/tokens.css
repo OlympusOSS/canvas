@@ -122,3 +122,24 @@
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
 }
+
+@keyframes orb-float-1 {
+	0%, 100% {
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+	33% {
+		transform: translate3d(40px, -30px, 0) scale(1.05);
+	}
+	66% {
+		transform: translate3d(-20px, 20px, 0) scale(0.95);
+	}
+}
+
+@keyframes orb-float-2 {
+	0%, 100% {
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+	50% {
+		transform: translate3d(-30px, -40px, 0) scale(1.08);
+	}
+}
