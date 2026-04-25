@@ -3,7 +3,17 @@
 	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/node_modules", "!**/dist", "!**/build", "!**/coverage", "!**/*.css"]
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/build",
+			"!**/coverage",
+			"!**/*.css",
+			"!docs/src/data/props/generated.json",
+			"!docs/src/data/used-in.json",
+			"!docs/src/data/search-index.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,

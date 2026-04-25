@@ -23,6 +23,13 @@ const TOP_NAV: NavItem[] = [
 	{ to: "/tokens", label: "Tokens" },
 ];
 
+const SHOWCASE_NAV: NavItem[] = [
+	{ to: "/showcase", label: "Overview", end: true },
+	{ to: "/showcase/auth", label: "Auth (hera)" },
+	{ to: "/showcase/admin", label: "Admin (athena)" },
+	{ to: "/showcase/marketing", label: "Marketing (site)" },
+];
+
 const BOTTOM_NAV: NavItem[] = [
 	{ to: "/migration", label: "Migration" },
 	{ to: "/changelog", label: "Changelog" },
@@ -169,6 +176,7 @@ function SectionGroup({ label, open, onOpenChange, children }: SectionGroupProps
 const DEFAULT_OPEN = {
 	gettingStarted: true,
 	components: true,
+	showcase: true,
 	reference: true,
 	atoms: false,
 	molecules: false,
@@ -299,6 +307,17 @@ export function Layout() {
 									onOpenChange={(v) => toggle(tier, v)}
 									currentPath={location.pathname}
 								/>
+							))}
+						</SectionGroup>
+
+						<SectionGroup
+							id="showcase"
+							label="Showcase"
+							open={open.showcase}
+							onOpenChange={(v) => toggle("showcase", v)}
+						>
+							{SHOWCASE_NAV.map((item) => (
+								<NavLinkRow key={item.to} to={item.to} label={item.label} end={item.end} />
 							))}
 						</SectionGroup>
 
