@@ -32,16 +32,14 @@ export function AuthShell({
 	...rest
 }: AuthShellProps) {
 	const headerNode =
-		brandHeader !== undefined
-			? brandHeader
-			: title || subtitle
-				? (
-					<div className="flex flex-col items-center gap-1">
-						{title && <h1 className="text-xl font-semibold tracking-tight">{title}</h1>}
-						{subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-					</div>
-				)
-				: null;
+		brandHeader !== undefined ? (
+			brandHeader
+		) : title || subtitle ? (
+			<div className="flex flex-col items-center gap-1">
+				{title && <h1 className="text-xl font-semibold tracking-tight">{title}</h1>}
+				{subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+			</div>
+		) : null;
 
 	return (
 		<div
