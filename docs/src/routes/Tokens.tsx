@@ -1,5 +1,5 @@
 import { AnimatedBackground, Icon, type IconName } from "@olympusoss/canvas";
-import { OlympusLogo } from "../components/OlympusLogo";
+import { Logo } from "../components/Logo";
 import { Swatch } from "../components/Swatch";
 
 const BASE_TOKENS = [
@@ -184,7 +184,7 @@ export function Tokens() {
 					<header>
 						<h3 className="text-sm font-semibold text-foreground">Brand gradient</h3>
 						<p className="text-xs text-muted-foreground">
-							The only saturated brand chrome. Used by OlympusLogo at ≥40px.
+							The only saturated brand chrome. Used by Logo at ≥40px.
 						</p>
 					</header>
 					<div className="flex flex-col gap-3">
@@ -476,9 +476,9 @@ export function Tokens() {
 				<h2 className="text-2xl font-semibold tracking-tight text-foreground">Brand</h2>
 
 				<div className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card/50 p-8">
-					<OlympusLogo className="h-24 w-auto" />
+					<Logo className="h-24 w-auto" />
 					<div className="text-center">
-						<p className="font-mono text-xs text-foreground">{`<OlympusLogo />`}</p>
+						<p className="font-mono text-xs text-foreground">{`<Logo />`}</p>
 						<p className="mt-1 text-xs text-muted-foreground">
 							The only Olympus brand mark — stadium ring with the blue gradient. Size via
 							`className` (e.g. `h-10 w-auto`).
@@ -493,17 +493,17 @@ export function Tokens() {
 					</p>
 					<div className="flex flex-wrap items-center gap-8 rounded-xl border border-border bg-card/50 p-8">
 						<div className="flex items-center gap-1.5">
-							<OlympusLogo className="h-5 w-auto" />
+							<Logo className="h-5 w-auto" />
 							<span className="text-sm font-semibold tracking-tight text-foreground">olympus</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<OlympusLogo className="h-7 w-auto" />
+							<Logo className="h-7 w-auto" />
 							<span className="text-base font-semibold tracking-tight text-foreground">
 								olympus
 							</span>
 						</div>
 						<div className="flex items-center gap-3">
-							<OlympusLogo className="h-10 w-auto" />
+							<Logo className="h-10 w-auto" />
 							<span className="text-2xl font-semibold tracking-tight text-foreground">olympus</span>
 						</div>
 					</div>

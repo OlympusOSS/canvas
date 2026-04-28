@@ -11,7 +11,7 @@ const OLYMPUS_PATH =
 const OLYMPUS_VIEWBOX = "0 0 440 736";
 const OLYMPUS_TRANSFORM = "translate(220, 368) rotate(90) translate(-700, -510)";
 
-export function OlympusLogo(
+export function Logo(
 	props: Omit<BrandMarkProps, "path" | "viewBox" | "transform" | "from" | "to">,
 ) {
 	return (
