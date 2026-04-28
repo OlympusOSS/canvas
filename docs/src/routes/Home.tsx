@@ -1,6 +1,6 @@
 import { Badge, Button, Icon, StatCard, Tabs, TabsList, TabsTrigger } from "@olympusoss/canvas";
 import { Link } from "react-router-dom";
-import { OlympusLogo } from "../components/OlympusLogo";
+import { Logo } from "../components/Logo";
 
 interface TierSampleProps {
 	tier: string;
@@ -72,7 +72,7 @@ function HeroRing() {
 				</svg>
 				{/* The ring logo */}
 				<div className="absolute inset-0 flex items-center justify-center">
-					<OlympusLogo className="animate-logo-shimmer h-[220px] w-[220px]" />
+					<Logo className="animate-logo-shimmer h-[220px] w-[220px]" />
 				</div>
 				{/* Orbit dots */}
 				<div className="absolute left-1/2 top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-[hsl(var(--brand-via))] shadow-[0_0_16px_4px_hsl(var(--brand-via)/0.6)]" />

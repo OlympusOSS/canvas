@@ -8,7 +8,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { CmdK } from "../components/CmdK";
-import { OlympusLogo } from "../components/OlympusLogo";
+import { Logo } from "../components/Logo";
 import { COMPONENTS, TIER_META } from "../data/components";
 
 interface NavItem {
@@ -231,7 +231,7 @@ export function Layout() {
 						<Icon name="PanelLeftOpen" className="h-4 w-4" />
 					</button>
 					<NavLink to="/" className="mt-4">
-						<OlympusLogo className="h-6 w-auto" />
+						<Logo className="h-6 w-auto" />
 					</NavLink>
 				</aside>
 				<main className="flex-1 overflow-y-auto scrollbar-thin">
@@ -252,7 +252,7 @@ export function Layout() {
 						<NavLink to="/" className="group flex items-center gap-2.5">
 							<div className="relative h-7 w-7 shrink-0">
 								<div className="absolute inset-0 brand-gradient-bg rounded-full opacity-25 blur-md group-hover:opacity-50 transition-opacity" />
-								<OlympusLogo className="relative h-7 w-7" />
+								<Logo className="relative h-7 w-7" />
 							</div>
 							<div className="leading-tight">
 								<p className="text-sm font-semibold text-foreground">Canvas</p>
