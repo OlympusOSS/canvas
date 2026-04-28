@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BrandMark > matches snapshot 1`] = `
+<div>
+  <svg
+    class="shrink-0 h-10 w-10"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <lineargradient
+        id="_r_5_"
+        x1="1"
+        x2="0"
+        y1="1"
+        y2="0"
+      >
+        <stop
+          offset="0%"
+          stop-color="#1E40AF"
+        />
+        <stop
+          offset="100%"
+          stop-color="#60A5FA"
+        />
+      </lineargradient>
+    </defs>
+    <path
+      d="M0 0H24V24H0Z"
+      fill="url(#_r_5_)"
+      fill-rule="evenodd"
+    />
+  </svg>
+</div>
+`;

@@ -49,4 +49,17 @@ describe("BrandMark", () => {
 		expect(svg).toHaveClass("w-10");
 		expect(svg).toHaveAttribute("aria-label", "Acme");
 	});
+
+	it("matches snapshot", () => {
+		const { container } = render(
+			<BrandMark
+				path={SQUARE_PATH}
+				viewBox="0 0 100 100"
+				from="#1E40AF"
+				to="#60A5FA"
+				className="h-10 w-10"
+			/>,
+		);
+		expect(container).toMatchSnapshot();
+	});
 });
