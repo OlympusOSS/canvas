@@ -7,7 +7,6 @@
 export { AspectRatio } from "./components/atoms/aspect-ratio";
 export { Avatar, AvatarFallback, AvatarImage } from "./components/atoms/avatar";
 export { Badge, badgeVariants } from "./components/atoms/badge";
-export { BrandMark, type BrandMarkProps } from "./components/atoms/brand-mark";
 export { Button, type ButtonProps, buttonVariants } from "./components/atoms/button";
 export { Checkbox } from "./components/atoms/checkbox";
 export { FlexBox, type FlexBoxProps } from "./components/atoms/flex-box";
@@ -30,75 +29,6 @@ export { Slider } from "./components/atoms/slider";
 export { Switch } from "./components/atoms/switch";
 export { Textarea } from "./components/atoms/textarea";
 export { Toggle, toggleVariants } from "./components/atoms/toggle";
-export {
-	// Data primitives (auto-cycle palette)
-	Area,
-	// Chart-type wrappers
-	AreaChart,
-	Bar,
-	BarChart,
-	// Containers — pure pass-through
-	Brush,
-	// Chrome — canvas-token defaults
-	CartesianAxis,
-	CartesianGrid,
-	// Details — pure pass-through
-	ChartCell,
-	// Container + style + canvas-specific helpers
-	type ChartConfig,
-	ChartContainer,
-	ChartCustomized,
-	// Text + labels
-	ChartLabel,
-	ChartLegend,
-	ChartLegendContent,
-	ChartStyle,
-	ChartTooltip,
-	ChartTooltipContent,
-	ComposedChart,
-	Cross,
-	Curve,
-	Dot,
-	ErrorBar,
-	Funnel,
-	FunnelChart,
-	LabelList,
-	Layer,
-	Line,
-	LineChart,
-	Pie,
-	PieChart,
-	PolarAngleAxis,
-	PolarGrid,
-	PolarRadiusAxis,
-	Polygon,
-	Radar,
-	RadarChart,
-	RadialBar,
-	RadialBarChart,
-	Rectangle,
-	ReferenceArea,
-	ReferenceDot,
-	ReferenceLine,
-	ResponsiveContainer,
-	Sankey,
-	Scatter,
-	ScatterChart,
-	Sector,
-	SunburstChart,
-	Surface,
-	Text,
-	Trapezoid,
-	Treemap,
-	useChart,
-	// Geographic — Leaflet-based (peer-optional)
-	WorldHeatMap,
-	type WorldHeatMapPoint,
-	type WorldHeatMapProps,
-	XAxis,
-	YAxis,
-	ZAxis,
-} from "./components/charts";
 export {
 	ActionBar,
 	type ActionBarAction,
@@ -328,17 +258,6 @@ export {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "./components/organisms/dropdown-menu";
-export {
-	CodeEditor,
-	type CodeEditorLanguage,
-	type CodeEditorProps,
-	MarkdownEditor,
-	type MarkdownEditorProps,
-	RichTextEditor,
-	type RichTextEditorProps,
-	TOOLBAR_ITEM_IDS,
-	type ToolbarItemId,
-} from "./components/organisms/editors";
 export {
 	ErrorBoundary,
 	type ErrorBoundaryProps,
