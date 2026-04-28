@@ -23,9 +23,7 @@ describe("BrandMark", () => {
 	});
 
 	it("emits a linearGradient when both `from` and `to` are supplied", () => {
-		const { container } = render(
-			<BrandMark path={SQUARE_PATH} from="#1E40AF" to="#60A5FA" />,
-		);
+		const { container } = render(<BrandMark path={SQUARE_PATH} from="#1E40AF" to="#60A5FA" />);
 		const grad = container.querySelector("linearGradient");
 		expect(grad).toBeInTheDocument();
 		const stops = grad?.querySelectorAll("stop");
