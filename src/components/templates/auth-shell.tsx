@@ -1,13 +1,12 @@
 import type * as React from "react";
 
 import { cn } from "../../lib/utils";
-import { OlympusLogo } from "../atoms/olympus-logo";
 import { Card, CardContent } from "../molecules/card";
 
 export interface AuthShellProps extends React.HTMLAttributes<HTMLDivElement> {
 	/**
-	 * Brand header above the card. Pass `null` to hide, or a custom node.
-	 * Default: Olympus logo + optional title/subtitle.
+	 * Brand header rendered above the card — typically your `<BrandMark>` or a
+	 * Logo wrapper plus the title/subtitle. Pass `null` to hide.
 	 */
 	brandHeader?: React.ReactNode | null;
 	title?: string;
@@ -32,14 +31,17 @@ export function AuthShell({
 	className,
 	...rest
 }: AuthShellProps) {
-	const defaultHeader =
-		brandHeader === undefined ? (
-			<div className="flex flex-col items-center gap-2">
-				<OlympusLogo className="h-10 w-auto" />
-				{title && <h1 className="text-xl font-semibold tracking-tight">{title}</h1>}
-				{subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-			</div>
-		) : null;
+	const headerNode =
+		brandHeader !== undefined
+			? brandHeader
+			: title || subtitle
+				? (
+					<div className="flex flex-col items-center gap-1">
+						{title && <h1 className="text-xl font-semibold tracking-tight">{title}</h1>}
+						{subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+					</div>
+				)
+				: null;
 
 	return (
 		<div
@@ -51,7 +53,7 @@ export function AuthShell({
 		>
 			{background && <div className="pointer-events-none absolute inset-0 -z-10">{background}</div>}
 			<div className={cn("relative z-10 flex w-full flex-col items-center gap-6", cardWidthClass)}>
-				{brandHeader === undefined ? defaultHeader : brandHeader}
+				{headerNode}
 				<Card className="w-full">
 					<CardContent className="p-6">{children}</CardContent>
 				</Card>
