@@ -9,6 +9,7 @@ import { useIsMobile } from "../../hooks/use-mobile";
 import { cn } from "../../lib/utils";
 import { Button } from "../atoms/button";
 import { Input } from "../atoms/input";
+import { ScrollArea } from "../atoms/scroll-area";
 import { Separator } from "../atoms/separator";
 import { Skeleton } from "../atoms/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../molecules/tooltip";
@@ -391,21 +392,22 @@ const SidebarSeparator = React.forwardRef<
 });
 SidebarSeparator.displayName = "SidebarSeparator";
 
-const SidebarContent = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
-	({ className, ...props }, ref) => {
-		return (
+const SidebarContent = React.forwardRef<
+	HTMLDivElement,
+	React.ComponentProps<"div"> & { children?: React.ReactNode }
+>(({ className, children, ...props }, ref) => {
+	return (
+		<ScrollArea data-sidebar="content" className={cn("flex min-h-0 flex-1 flex-col", className)}>
 			<div
 				ref={ref}
-				data-sidebar="content"
-				className={cn(
-					"flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
-					className,
-				)}
+				className="flex flex-col gap-2 group-data-[collapsible=icon]:overflow-hidden"
 				{...props}
-			/>
-		);
-	},
-);
+			>
+				{children}
+			</div>
+		</ScrollArea>
+	);
+});
 SidebarContent.displayName = "SidebarContent";
 
 const SidebarGroup = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
