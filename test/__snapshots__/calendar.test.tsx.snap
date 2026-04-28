@@ -3,7 +3,7 @@
 exports[`Calendar > matches snapshot (stable month) 1`] = `
 <div>
   <div
-    class="w-fit rdp-root bg-background group/calendar p-3 [--cell-size:2rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent rtl:**:[.rdp-button\\_next>svg]:rotate-180 rtl:**:[.rdp-button\\_previous>svg]:rotate-180"
+    class="w-fit rdp-root bg-background group/calendar p-4 [--cell-size:2rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent rtl:**:[.rdp-button\\_next>svg]:rotate-180 rtl:**:[.rdp-button\\_previous>svg]:rotate-180"
     data-slot="calendar"
     lang="en-US"
   >
@@ -16,7 +16,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
       >
         <button
           aria-label="Go to the Previous Month"
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50 rdp-button_previous"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-[var(--cell-size)] w-[var(--cell-size)] select-none p-0 aria-disabled:opacity-50 rdp-button_previous"
           type="button"
         >
           <svg
@@ -39,7 +39,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
         </button>
         <button
           aria-label="Go to the Next Month"
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50 rdp-button_next"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-[var(--cell-size)] w-[var(--cell-size)] select-none p-0 aria-disabled:opacity-50 rdp-button_next"
           type="button"
         >
           <svg
@@ -62,14 +62,14 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
         </button>
       </nav>
       <div
-        class="flex w-full flex-col gap-4 rdp-month"
+        class="flex w-full flex-col gap-3 rdp-month"
       >
         <div
-          class="flex h-[--cell-size] w-full items-center justify-center px-[--cell-size] rdp-month_caption"
+          class="flex h-[var(--cell-size)] w-full items-center justify-center px-[var(--cell-size)] rdp-month_caption"
         >
           <span
             aria-live="polite"
-            class="select-none font-medium text-sm rdp-caption_label"
+            class="select-none font-semibold tracking-tight text-foreground text-sm rdp-caption_label"
             role="status"
           >
             January 2024
@@ -85,53 +85,53 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
             aria-hidden="true"
           >
             <tr
-              class="flex rdp-weekdays"
+              class="flex border-b border-border pb-1.5 rdp-weekdays"
             >
               <th
                 aria-label="Sunday"
-                class="text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal rdp-weekday"
+                class="text-muted-foreground flex-1 select-none rounded-md text-[0.7rem] font-medium uppercase tracking-wider rdp-weekday"
                 scope="col"
               >
                 Su
               </th>
               <th
                 aria-label="Monday"
-                class="text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal rdp-weekday"
+                class="text-muted-foreground flex-1 select-none rounded-md text-[0.7rem] font-medium uppercase tracking-wider rdp-weekday"
                 scope="col"
               >
                 Mo
               </th>
               <th
                 aria-label="Tuesday"
-                class="text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal rdp-weekday"
+                class="text-muted-foreground flex-1 select-none rounded-md text-[0.7rem] font-medium uppercase tracking-wider rdp-weekday"
                 scope="col"
               >
                 Tu
               </th>
               <th
                 aria-label="Wednesday"
-                class="text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal rdp-weekday"
+                class="text-muted-foreground flex-1 select-none rounded-md text-[0.7rem] font-medium uppercase tracking-wider rdp-weekday"
                 scope="col"
               >
                 We
               </th>
               <th
                 aria-label="Thursday"
-                class="text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal rdp-weekday"
+                class="text-muted-foreground flex-1 select-none rounded-md text-[0.7rem] font-medium uppercase tracking-wider rdp-weekday"
                 scope="col"
               >
                 Th
               </th>
               <th
                 aria-label="Friday"
-                class="text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal rdp-weekday"
+                class="text-muted-foreground flex-1 select-none rounded-md text-[0.7rem] font-medium uppercase tracking-wider rdp-weekday"
                 scope="col"
               >
                 Fr
               </th>
               <th
                 aria-label="Saturday"
-                class="text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal rdp-weekday"
+                class="text-muted-foreground flex-1 select-none rounded-md text-[0.7rem] font-medium uppercase tracking-wider rdp-weekday"
                 scope="col"
               >
                 Sa
@@ -142,11 +142,11 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
             class="rdp-weeks"
           >
             <tr
-              class="mt-2 flex w-full rdp-week"
+              class="mt-1.5 flex w-full rdp-week"
             >
               <td
                 aria-label="Sunday, December 31st, 2023"
-                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground aria-selected:text-muted-foreground rdp-outside"
+                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground/50 aria-selected:text-muted-foreground rdp-outside"
                 data-day="2023-12-31"
                 data-month="2023-12"
                 data-outside="true"
@@ -204,7 +204,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
               </td>
             </tr>
             <tr
-              class="mt-2 flex w-full rdp-week"
+              class="mt-1.5 flex w-full rdp-week"
             >
               <td
                 aria-label="Sunday, January 7th, 2024"
@@ -264,7 +264,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
               </td>
             </tr>
             <tr
-              class="mt-2 flex w-full rdp-week"
+              class="mt-1.5 flex w-full rdp-week"
             >
               <td
                 aria-label="Sunday, January 14th, 2024"
@@ -324,7 +324,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
               </td>
             </tr>
             <tr
-              class="mt-2 flex w-full rdp-week"
+              class="mt-1.5 flex w-full rdp-week"
             >
               <td
                 aria-label="Sunday, January 21st, 2024"
@@ -384,7 +384,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
               </td>
             </tr>
             <tr
-              class="mt-2 flex w-full rdp-week"
+              class="mt-1.5 flex w-full rdp-week"
             >
               <td
                 aria-label="Sunday, January 28th, 2024"
@@ -420,7 +420,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
               </td>
               <td
                 aria-label="Thursday, February 1st, 2024"
-                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground aria-selected:text-muted-foreground rdp-outside"
+                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground/50 aria-selected:text-muted-foreground rdp-outside"
                 data-day="2024-02-01"
                 data-month="2024-02"
                 data-outside="true"
@@ -430,7 +430,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
               </td>
               <td
                 aria-label="Friday, February 2nd, 2024"
-                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground aria-selected:text-muted-foreground rdp-outside"
+                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground/50 aria-selected:text-muted-foreground rdp-outside"
                 data-day="2024-02-02"
                 data-month="2024-02"
                 data-outside="true"
@@ -440,7 +440,7 @@ exports[`Calendar > matches snapshot (stable month) 1`] = `
               </td>
               <td
                 aria-label="Saturday, February 3rd, 2024"
-                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground aria-selected:text-muted-foreground rdp-outside"
+                class="group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md rdp-day text-muted-foreground/50 aria-selected:text-muted-foreground rdp-outside"
                 data-day="2024-02-03"
                 data-month="2024-02"
                 data-outside="true"

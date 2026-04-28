@@ -15,12 +15,12 @@ describe("StatCard", () => {
 			<StatCard title="x" value="v" icon={<span data-testid="icon">I</span>} />,
 		);
 		expect(screen.getByTestId("icon")).toBeInTheDocument();
-		expect(container.querySelector("div.h-10.w-10")).toBeTruthy();
+		expect(container.querySelector("div.h-9.w-9")).toBeTruthy();
 	});
 
 	it("applies the default color variant (primary) to the icon wrapper", () => {
 		const { container } = render(<StatCard title="x" value="v" icon={<span>I</span>} />);
-		const wrapper = container.querySelector("div.h-10.w-10") as HTMLElement;
+		const wrapper = container.querySelector("div.h-9.w-9") as HTMLElement;
 		expect(wrapper).toHaveClass("bg-primary/10");
 		expect(wrapper).toHaveClass("text-primary");
 	});
@@ -29,7 +29,7 @@ describe("StatCard", () => {
 		const { container } = render(
 			<StatCard title="x" value="v" icon={<span>I</span>} colorVariant="destructive" />,
 		);
-		const wrapper = container.querySelector("div.h-10.w-10") as HTMLElement;
+		const wrapper = container.querySelector("div.h-9.w-9") as HTMLElement;
 		expect(wrapper).toHaveClass("bg-destructive/10");
 		expect(wrapper).toHaveClass("text-destructive");
 	});
@@ -38,14 +38,14 @@ describe("StatCard", () => {
 		const { container } = render(
 			<StatCard title="x" value="v" icon={<span>I</span>} colorVariant="success" />,
 		);
-		const wrapper = container.querySelector("div.h-10.w-10") as HTMLElement;
+		const wrapper = container.querySelector("div.h-9.w-9") as HTMLElement;
 		expect(wrapper).toHaveClass("bg-green-500/10");
 		expect(wrapper).toHaveClass("text-green-500");
 	});
 
 	it("does not render an icon wrapper when icon prop is omitted", () => {
 		const { container } = render(<StatCard title="x" value="v" />);
-		expect(container.querySelector("div.h-10.w-10")).toBeFalsy();
+		expect(container.querySelector("div.h-9.w-9")).toBeFalsy();
 	});
 
 	it("matches snapshot", () => {
