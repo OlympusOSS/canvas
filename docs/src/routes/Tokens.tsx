@@ -1,4 +1,5 @@
-import { AnimatedBackground, Icon, type IconName, OlympusLogo } from "@olympusoss/canvas";
+import { AnimatedBackground, Icon, type IconName } from "@olympusoss/canvas";
+import { OlympusLogo } from "../components/OlympusLogo";
 import { Swatch } from "../components/Swatch";
 
 const BASE_TOKENS = [
@@ -183,7 +184,7 @@ export function Tokens() {
 					<header>
 						<h3 className="text-sm font-semibold text-foreground">Brand gradient</h3>
 						<p className="text-xs text-muted-foreground">
-							The only saturated brand chrome. Used by OlympusLogo (variant=ring) at ≥40px.
+							The only saturated brand chrome. Used by OlympusLogo at ≥40px.
 						</p>
 					</header>
 					<div className="flex flex-col gap-3">
@@ -474,24 +475,14 @@ export function Tokens() {
 			<section id="brand" className="space-y-6">
 				<h2 className="text-2xl font-semibold tracking-tight text-foreground">Brand</h2>
 
-				<div className="grid gap-4 sm:grid-cols-2">
-					<div className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card/50 p-8">
-						<OlympusLogo variant="icon" size={56} />
-						<div className="text-center">
-							<p className="font-mono text-xs text-foreground">{`<OlympusLogo variant="icon" />`}</p>
-							<p className="mt-1 text-xs text-muted-foreground">
-								Sideways-O. Use everywhere ≥20px.
-							</p>
-						</div>
-					</div>
-					<div className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card/50 p-8">
-						<OlympusLogo variant="ring" size={88} />
-						<div className="text-center">
-							<p className="font-mono text-xs text-foreground">{`<OlympusLogo variant="ring" />`}</p>
-							<p className="mt-1 text-xs text-muted-foreground">
-								Stadium / ring. Use ≥40px for hero / decorative moments.
-							</p>
-						</div>
+				<div className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card/50 p-8">
+					<OlympusLogo className="h-24 w-auto" />
+					<div className="text-center">
+						<p className="font-mono text-xs text-foreground">{`<OlympusLogo />`}</p>
+						<p className="mt-1 text-xs text-muted-foreground">
+							The only Olympus brand mark — stadium ring with the blue gradient. Size via
+							`className` (e.g. `h-10 w-auto`).
+						</p>
 					</div>
 				</div>
 
@@ -502,17 +493,17 @@ export function Tokens() {
 					</p>
 					<div className="flex flex-wrap items-center gap-8 rounded-xl border border-border bg-card/50 p-8">
 						<div className="flex items-center gap-1.5">
-							<OlympusLogo variant="icon" size={18} />
+							<OlympusLogo className="h-5 w-auto" />
 							<span className="text-sm font-semibold tracking-tight text-foreground">olympus</span>
 						</div>
 						<div className="flex items-center gap-2">
-							<OlympusLogo variant="icon" size={26} />
+							<OlympusLogo className="h-7 w-auto" />
 							<span className="text-base font-semibold tracking-tight text-foreground">
 								olympus
 							</span>
 						</div>
 						<div className="flex items-center gap-3">
-							<OlympusLogo variant="icon" size={40} />
+							<OlympusLogo className="h-10 w-auto" />
 							<span className="text-2xl font-semibold tracking-tight text-foreground">olympus</span>
 						</div>
 					</div>

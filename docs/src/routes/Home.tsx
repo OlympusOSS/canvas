@@ -1,14 +1,6 @@
-import {
-	Badge,
-	Button,
-	Icon,
-	OlympusLogo,
-	StatCard,
-	Tabs,
-	TabsList,
-	TabsTrigger,
-} from "@olympusoss/canvas";
+import { Badge, Button, Icon, StatCard, Tabs, TabsList, TabsTrigger } from "@olympusoss/canvas";
 import { Link } from "react-router-dom";
+import { OlympusLogo } from "../components/OlympusLogo";
 
 interface TierSampleProps {
 	tier: string;
@@ -80,7 +72,7 @@ function HeroRing() {
 				</svg>
 				{/* The ring logo */}
 				<div className="absolute inset-0 flex items-center justify-center">
-					<OlympusLogo variant="ring" className="animate-logo-shimmer h-[220px] w-[220px]" />
+					<OlympusLogo className="animate-logo-shimmer h-[220px] w-[220px]" />
 				</div>
 				{/* Orbit dots */}
 				<div className="absolute left-1/2 top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-[hsl(var(--brand-via))] shadow-[0_0_16px_4px_hsl(var(--brand-via)/0.6)]" />
@@ -140,7 +132,7 @@ export function Home() {
 						<div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-6 text-xs text-muted-foreground">
 							<Stat label="Components" value={`${83}+`} />
 							<Divider />
-							<Stat label="Tiers" value="4" />
+							<Stat label="Tiers" value="5" />
 							<Divider />
 							<Stat label="React" value="18 · 19" />
 							<Divider />

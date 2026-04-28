@@ -7,6 +7,7 @@
 export { AspectRatio } from "./components/atoms/aspect-ratio";
 export { Avatar, AvatarFallback, AvatarImage } from "./components/atoms/avatar";
 export { Badge, badgeVariants } from "./components/atoms/badge";
+export { BrandMark, type BrandMarkProps } from "./components/atoms/brand-mark";
 export { Button, type ButtonProps, buttonVariants } from "./components/atoms/button";
 export { Checkbox } from "./components/atoms/checkbox";
 export { FlexBox, type FlexBoxProps } from "./components/atoms/flex-box";

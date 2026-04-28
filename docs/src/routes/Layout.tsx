@@ -3,12 +3,12 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 	Icon,
-	OlympusLogo,
 	useTheme,
 } from "@olympusoss/canvas";
 import { useCallback, useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { CmdK } from "../components/CmdK";
+import { OlympusLogo } from "../components/OlympusLogo";
 import { COMPONENTS, TIER_META } from "../data/components";
 
 interface NavItem {
@@ -29,7 +29,13 @@ const BOTTOM_NAV: NavItem[] = [
 	{ to: "/changelog", label: "Changelog" },
 ];
 
-const TIERS: Array<keyof typeof TIER_META> = ["atoms", "molecules", "organisms", "templates"];
+const TIERS: Array<keyof typeof TIER_META> = [
+	"atoms",
+	"molecules",
+	"organisms",
+	"charts",
+	"templates",
+];
 
 const STORAGE_KEY = "canvas-docs:nav-open";
 
@@ -125,6 +131,7 @@ function TierDot({ tier }: { tier: keyof typeof TIER_META }) {
 		atoms: "bg-[hsl(var(--brand-from))]",
 		molecules: "bg-[hsl(var(--brand-via))]",
 		organisms: "bg-[hsl(var(--brand-to))]",
+		charts: "bg-purple-500/60",
 		templates: "bg-foreground/60",
 	};
 	return <span className={`h-1.5 w-1.5 rounded-full ${map[tier]}`} aria-hidden />;
@@ -167,6 +174,7 @@ const DEFAULT_OPEN = {
 	atoms: false,
 	molecules: false,
 	organisms: false,
+	charts: false,
 	templates: false,
 } as const;
 
@@ -229,7 +237,7 @@ export function Layout() {
 						<Icon name="PanelLeftOpen" className="h-4 w-4" />
 					</button>
 					<NavLink to="/" className="mt-4">
-						<OlympusLogo className="text-primary" size={24} />
+						<OlympusLogo className="h-6 w-auto" />
 					</NavLink>
 				</aside>
 				<main className="flex-1 overflow-y-auto scrollbar-thin">
@@ -244,13 +252,13 @@ export function Layout() {
 
 	return (
 		<div className="flex min-h-screen bg-background">
-			<aside className="w-64 shrink-0 border-r border-border bg-card/30">
+			<aside className="w-60 shrink-0 border-r border-sidebar-border bg-sidebar">
 				<div className="sticky top-0 flex max-h-screen flex-col overflow-y-auto scrollbar-thin px-4 py-5">
 					<div className="flex items-start justify-between gap-2 px-2">
 						<NavLink to="/" className="group flex items-center gap-2.5">
 							<div className="relative h-7 w-7 shrink-0">
 								<div className="absolute inset-0 brand-gradient-bg rounded-full opacity-25 blur-md group-hover:opacity-50 transition-opacity" />
-								<OlympusLogo variant="ring" className="relative h-7 w-7" />
+								<OlympusLogo className="relative h-7 w-7" />
 							</div>
 							<div className="leading-tight">
 								<p className="text-sm font-semibold text-foreground">Canvas</p>
@@ -342,7 +350,7 @@ export function Layout() {
 			</aside>
 
 			<main className="flex-1 overflow-y-auto scrollbar-thin">
-				<div className="mx-auto max-w-5xl px-8 py-10">
+				<div className="mx-auto max-w-[1400px] px-8 py-10">
 					<Outlet />
 				</div>
 			</main>
