@@ -180,6 +180,15 @@ export {
 	CarouselPrevious,
 } from "./components/organisms/carousel";
 export {
+	type ChartConfig,
+	ChartContainer,
+	ChartLegend,
+	ChartLegendContent,
+	ChartStyle,
+	ChartTooltip,
+	ChartTooltipContent,
+} from "./components/organisms/chart";
+export {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
