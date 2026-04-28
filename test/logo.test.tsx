@@ -65,4 +65,9 @@ describe("Logo", () => {
 		rerender(<Logo showText className="opacity-80" />);
 		expect(container.firstElementChild).toHaveClass("opacity-80");
 	});
+
+	it("matches snapshot", () => {
+		const { container } = render(<Logo variant="ring" className="h-10 w-auto" />);
+		expect(container).toMatchSnapshot();
+	});
 });
