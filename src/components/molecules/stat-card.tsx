@@ -1,3 +1,4 @@
+import { ArrowDown, ArrowUp } from "lucide-react";
 import type * as React from "react";
 
 import { cn } from "../../lib/utils";
@@ -7,23 +8,30 @@ export interface StatCardProps {
 	title: string;
 	value: React.ReactNode;
 	icon?: React.ReactNode;
-	colorVariant?: "primary" | "blue" | "purple" | "success" | "warning" | "destructive";
+	colorVariant?: "primary" | "blue" | "purple" | "success" | "warning" | "amber" | "destructive";
 	/** Optional delta line shown under the value (e.g. "+4.2%"). */
 	delta?: React.ReactNode;
 	/** Tone for the delta — `up` is green, `down` is red, `neutral` is muted. */
 	deltaTone?: "up" | "down" | "neutral";
 	/** Caption shown next to the delta (e.g. "vs. last 7d"). */
 	deltaCaption?: React.ReactNode;
+	/**
+	 * When `true` (default) and `delta` is a string, prepend an ArrowUp /
+	 * ArrowDown icon based on `deltaTone`. Pass `false` to opt out, or pass
+	 * `delta` as ReactNode to fully control rendering yourself.
+	 */
+	deltaArrow?: boolean;
 	className?: string;
 }
 
 const COLOR: Record<NonNullable<StatCardProps["colorVariant"]>, string> = {
 	primary: "bg-primary/10 text-primary",
-	blue: "bg-blue-500/10 text-blue-500",
-	purple: "bg-purple-500/10 text-purple-500",
-	success: "bg-green-500/10 text-green-500",
-	warning: "bg-amber-500/10 text-amber-500",
-	destructive: "bg-destructive/10 text-destructive",
+	blue: "bg-[hsl(var(--stat-blue)/0.1)] text-[hsl(var(--stat-blue))]",
+	purple: "bg-[hsl(var(--stat-purple)/0.1)] text-[hsl(var(--stat-purple))]",
+	success: "bg-[hsl(var(--stat-success)/0.1)] text-[hsl(var(--stat-success))]",
+	warning: "bg-[hsl(var(--stat-amber)/0.1)] text-[hsl(var(--stat-amber))]",
+	amber: "bg-[hsl(var(--stat-amber)/0.1)] text-[hsl(var(--stat-amber))]",
+	destructive: "bg-[hsl(var(--stat-destructive)/0.1)] text-[hsl(var(--stat-destructive))]",
 };
 
 const DELTA_TONE: Record<NonNullable<StatCardProps["deltaTone"]>, string> = {
@@ -40,15 +48,20 @@ export function StatCard({
 	delta,
 	deltaTone = "up",
 	deltaCaption,
+	deltaArrow = true,
 	className,
 }: StatCardProps) {
+	const showArrow = deltaArrow && typeof delta === "string" && deltaTone !== "neutral";
+	const ArrowGlyph = deltaTone === "down" ? ArrowDown : ArrowUp;
 	return (
 		<Card className={className}>
 			<CardContent className="p-5">
 				<div className="flex items-start justify-between gap-3">
 					<div className="min-w-0 flex-1">
-						<p className="truncate text-xs font-medium text-muted-foreground">{title}</p>
-						<p className="mt-1 text-3xl font-semibold tracking-tight">{value}</p>
+						<p className="truncate text-[13px] font-medium text-muted-foreground">{title}</p>
+						<p className="mt-1 text-[28px] font-semibold leading-tight tracking-[-0.02em]">
+							{value}
+						</p>
 					</div>
 					{icon && (
 						<div
@@ -63,7 +76,15 @@ export function StatCard({
 				</div>
 				{delta != null && (
 					<div className="mt-3 flex items-center gap-1.5 text-xs">
-						<span className={cn("font-mono font-medium", DELTA_TONE[deltaTone])}>{delta}</span>
+						<span
+							className={cn(
+								"inline-flex items-center gap-0.5 font-mono font-medium",
+								DELTA_TONE[deltaTone],
+							)}
+						>
+							{showArrow && <ArrowGlyph className="h-3 w-3" aria-hidden />}
+							{delta}
+						</span>
 						{deltaCaption != null && <span className="text-muted-foreground">{deltaCaption}</span>}
 					</div>
 				)}

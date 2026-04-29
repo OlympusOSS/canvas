@@ -15,18 +15,18 @@ exports[`StatCard > matches snapshot 1`] = `
           class="min-w-0 flex-1"
         >
           <p
-            class="truncate text-xs font-medium text-muted-foreground"
+            class="truncate text-[13px] font-medium text-muted-foreground"
           >
             Active users
           </p>
           <p
-            class="mt-1 text-3xl font-semibold tracking-tight"
+            class="mt-1 text-[28px] font-semibold leading-tight tracking-[-0.02em]"
           >
             1,234
           </p>
         </div>
         <div
-          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-500"
+          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--stat-blue)/0.1)] text-[hsl(var(--stat-blue))]"
         >
           <span>
             👤

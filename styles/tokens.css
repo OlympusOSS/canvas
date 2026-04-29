@@ -1,5 +1,30 @@
+/* ---------- Canvas tokens — single source of truth ----------
+ *
+ * Surface elevation (dark mode):
+ *   L0  body background     `--background`         deepest
+ *   L1  sidebar chrome      `--sidebar-background` subtle lift, distinct hue
+ *   L2  cards + popovers    `--card` / `--popover` clearly elevated
+ *   L3  inside-card chips   `--muted` / `--secondary` / `--accent` topmost
+ *
+ * In light mode the canonical shadcn convention keeps body and cards both
+ * pure white — surfaces are differentiated by borders + 1px shadow rather
+ * than tone. That's intentional.
+ *
+ * Dual-form sidebar declaration (load-bearing — do NOT remove either form):
+ *   - Raw HSL triplets like `--sidebar-background: 230 25% 97%` are consumed
+ *     by `hsl(var(--…))` patterns inside component CSS / inline styles.
+ *   - Resolved `hsl()` forms like `--sidebar: hsl(230 25% 97%)` feed Tailwind
+ *     v4's `@theme inline { --color-sidebar: var(--sidebar) }` mapping so
+ *     `bg-sidebar` / `text-sidebar-foreground` utilities resolve.
+ *
+ * Typography canonical: Inter for surfaces, JetBrains Mono for code.
+ */
+
 @layer base {
 	:root {
+		/* ── Base palette (light) ───────────────────────────────────
+		 * Light mode keeps body and surfaces both white — borders +
+		 * shadow define cards. */
 		--background: 0 0% 100%;
 		--foreground: 240 10% 3.9%;
 		--card: 0 0% 100%;
@@ -23,14 +48,14 @@
 		--ring: 240 5.9% 10%;
 		--radius: 0.5rem;
 
-		/* Chart palette */
+		/* ── Chart palette ─────────────────────────────────────────── */
 		--chart-1: 12 76% 61%;
 		--chart-2: 173 58% 39%;
 		--chart-3: 197 37% 24%;
 		--chart-4: 43 74% 66%;
 		--chart-5: 27 87% 67%;
 
-		/* Sidebar — blue-tinted gray (hue 230) per handoff */
+		/* ── Sidebar — blue-tinted gray (hue 230) per handoff ──────── */
 		--sidebar-background: 230 25% 97%;
 		--sidebar-foreground: 230 15% 40%;
 		--sidebar-primary: 230 45% 25%;
@@ -39,30 +64,65 @@
 		--sidebar-accent-foreground: 230 45% 25%;
 		--sidebar-border: 230 20% 90%;
 		--sidebar-ring: 217.2 91.2% 59.8%;
+
+		/* ── StatCard variant tokens ───────────────────────────────── *
+		 * Used by molecules/stat-card.tsx via
+		 *   bg-[hsl(var(--stat-blue)/0.1)] text-[hsl(var(--stat-blue))]
+		 * to render a 10%-tint background with full-saturation icon. */
+		--stat-blue: 217 91% 60%;        /* #3b82f6 */
+		--stat-success: 160 84% 39%;     /* #10b981 */
+		--stat-purple: 258 90% 66%;      /* #8b5cf6 */
+		--stat-destructive: 0 84% 60%;   /* #ef4444 */
+		--stat-amber: 38 92% 50%;        /* #f59e0b */
+
+		/* ── Typography ────────────────────────────────────────────── */
+		--font-sans: "Inter", system-ui, -apple-system, sans-serif;
+		--font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+		/* ── Letter-spacing scale ──────────────────────────────────── *
+		 * Used by display, h2, page title, stat-card.value. */
+		--tracking-tighter: -0.02em;
+		--tracking-tight: -0.015em;
+		--tracking-normal: 0;
 	}
 
 	.dark {
-		--background: 240 10% 3.9%;
-		--foreground: 0 0% 98%;
-		--card: 240 10% 3.9%;
-		--card-foreground: 0 0% 98%;
-		--popover: 240 10% 3.9%;
-		--popover-foreground: 0 0% 98%;
-		--primary: 0 0% 98%;
-		--primary-foreground: 240 5.9% 10%;
-		--secondary: 240 3.7% 15.9%;
-		--secondary-foreground: 0 0% 98%;
-		--muted: 240 3.7% 15.9%;
-		--muted-foreground: 240 5% 64.9%;
-		--accent: 240 3.7% 15.9%;
-		--accent-foreground: 0 0% 98%;
-		--destructive: 0 62.8% 30.6%;
+		/* ── Base palette (dark) — tiered elevation ─────────────────
+		 * L0: body  L1: sidebar  L2: card/popover  L3: muted/secondary/accent
+		 * All tiers share hue 225 (slight blue-cool) and step lightness
+		 * by ~4-6% so surfaces visually lift above the body. */
+
+		/* L0 — deepest body */
+		--background: 225 24% 6%;
+		--foreground: 220 14% 92%;
+
+		/* L2 — cards & popovers (clearly lifted above body) */
+		--card: 225 18% 13%;
+		--card-foreground: 220 14% 92%;
+		--popover: 225 18% 13%;
+		--popover-foreground: 220 14% 92%;
+
+		/* Primary action — keep light text on dark accent */
+		--primary: 220 14% 95%;
+		--primary-foreground: 225 24% 6%;
+
+		/* L3 — chips/inputs/hover surfaces inside cards */
+		--secondary: 225 14% 19%;
+		--secondary-foreground: 220 14% 92%;
+		--muted: 225 14% 19%;
+		--muted-foreground: 225 9% 64%;
+		--accent: 225 14% 22%;
+		--accent-foreground: 220 14% 92%;
+
+		--destructive: 0 70% 45%;
 		--destructive-foreground: 0 0% 98%;
 		--brand: 213 94% 68%;
 		--brand-foreground: 0 0% 100%;
-		--border: 240 3.7% 15.9%;
-		--input: 240 3.7% 15.9%;
-		--ring: 240 4.9% 83.9%;
+
+		/* Borders — visible but subtle separation */
+		--border: 225 14% 22%;
+		--input: 225 14% 22%;
+		--ring: 217 91% 60%;
 
 		/* Chart palette */
 		--chart-1: 220 70% 50%;
@@ -71,15 +131,22 @@
 		--chart-4: 280 65% 60%;
 		--chart-5: 340 75% 55%;
 
-		/* Sidebar — blue-tinted gray (hue 230) per handoff, dark variant */
-		--sidebar-background: 230 12% 10%;
-		--sidebar-foreground: 230 8% 80%;
+		/* L1 — sidebar (between body and cards, distinct hue 225) */
+		--sidebar-background: 225 16% 10%;
+		--sidebar-foreground: 220 14% 80%;
 		--sidebar-primary: 217 91% 65%;
 		--sidebar-primary-foreground: 0 0% 100%;
-		--sidebar-accent: 230 25% 22%;
-		--sidebar-accent-foreground: 230 60% 88%;
-		--sidebar-border: 230 8% 18%;
+		--sidebar-accent: 225 22% 16%;
+		--sidebar-accent-foreground: 220 14% 92%;
+		--sidebar-border: 225 14% 18%;
 		--sidebar-ring: 217.2 91.2% 59.8%;
+
+		/* StatCard variants — same hex; 10% tint reads on dark via opacity */
+		--stat-blue: 217 91% 60%;
+		--stat-success: 160 84% 39%;
+		--stat-purple: 258 90% 66%;
+		--stat-destructive: 0 84% 60%;
+		--stat-amber: 38 92% 50%;
 	}
 
 	* {
@@ -94,6 +161,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ---------- Resolved hsl() forms ----------
+ * These feed Tailwind v4's `@theme inline { --color-sidebar: var(--sidebar) }`
+ * mapping. They mirror the raw HSL triplets above; keep the two in sync.
+ */
 :root {
 	--sidebar: hsl(230 25% 97%);
 	--sidebar-foreground: hsl(230 15% 40%);
@@ -106,13 +177,13 @@
 }
 
 .dark {
-	--sidebar: hsl(230 12% 10%);
-	--sidebar-foreground: hsl(230 8% 80%);
+	--sidebar: hsl(225 16% 10%);
+	--sidebar-foreground: hsl(220 14% 80%);
 	--sidebar-primary: hsl(217 91% 65%);
 	--sidebar-primary-foreground: hsl(0 0% 100%);
-	--sidebar-accent: hsl(230 25% 22%);
-	--sidebar-accent-foreground: hsl(230 60% 88%);
-	--sidebar-border: hsl(230 8% 18%);
+	--sidebar-accent: hsl(225 22% 16%);
+	--sidebar-accent-foreground: hsl(220 14% 92%);
+	--sidebar-border: hsl(225 14% 18%);
 	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
@@ -125,6 +196,14 @@
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
+
+	/* StatCard variant colors — exposed as Tailwind utilities
+	 * (e.g. text-stat-blue, bg-stat-success) for ergonomic access. */
+	--color-stat-blue: hsl(var(--stat-blue));
+	--color-stat-success: hsl(var(--stat-success));
+	--color-stat-purple: hsl(var(--stat-purple));
+	--color-stat-destructive: hsl(var(--stat-destructive));
+	--color-stat-amber: hsl(var(--stat-amber));
 }
 
 @keyframes orb-float-1 {

@@ -55,7 +55,7 @@ export function PageHeader({
 								) : (
 									<span className="text-foreground">{crumb.label}</span>
 								)}
-								{i < breadcrumbs.length - 1 && <Icon name="ChevronRight" className="h-3.5 w-3.5" />}
+								{i < breadcrumbs.length - 1 && <Icon name="ChevronRight" className="h-3 w-3" />}
 							</span>
 						))}
 					</div>
@@ -63,7 +63,9 @@ export function PageHeader({
 				<div className="flex items-center gap-3">
 					{icon}
 					{typeof title === "string" ? (
-						<h1 className="text-2xl font-bold tracking-tight text-foreground">{title}</h1>
+						<h1 className="text-[22px] font-semibold tracking-[-0.02em] text-foreground">
+							{title}
+						</h1>
 					) : (
 						title
 					)}

@@ -25,22 +25,31 @@ describe("StatCard", () => {
 		expect(wrapper).toHaveClass("text-primary");
 	});
 
-	it("maps colorVariant=destructive to destructive classes", () => {
+	it("maps colorVariant=destructive to the --stat-destructive token classes", () => {
 		const { container } = render(
 			<StatCard title="x" value="v" icon={<span>I</span>} colorVariant="destructive" />,
 		);
 		const wrapper = container.querySelector("div.h-9.w-9") as HTMLElement;
-		expect(wrapper).toHaveClass("bg-destructive/10");
-		expect(wrapper).toHaveClass("text-destructive");
+		expect(wrapper).toHaveClass("bg-[hsl(var(--stat-destructive)/0.1)]");
+		expect(wrapper).toHaveClass("text-[hsl(var(--stat-destructive))]");
 	});
 
-	it("maps colorVariant=success to green classes", () => {
+	it("maps colorVariant=success to the --stat-success token classes", () => {
 		const { container } = render(
 			<StatCard title="x" value="v" icon={<span>I</span>} colorVariant="success" />,
 		);
 		const wrapper = container.querySelector("div.h-9.w-9") as HTMLElement;
-		expect(wrapper).toHaveClass("bg-green-500/10");
-		expect(wrapper).toHaveClass("text-green-500");
+		expect(wrapper).toHaveClass("bg-[hsl(var(--stat-success)/0.1)]");
+		expect(wrapper).toHaveClass("text-[hsl(var(--stat-success))]");
+	});
+
+	it("aliases colorVariant=amber to the --stat-amber token classes", () => {
+		const { container } = render(
+			<StatCard title="x" value="v" icon={<span>I</span>} colorVariant="amber" />,
+		);
+		const wrapper = container.querySelector("div.h-9.w-9") as HTMLElement;
+		expect(wrapper).toHaveClass("bg-[hsl(var(--stat-amber)/0.1)]");
+		expect(wrapper).toHaveClass("text-[hsl(var(--stat-amber))]");
 	});
 
 	it("does not render an icon wrapper when icon prop is omitted", () => {

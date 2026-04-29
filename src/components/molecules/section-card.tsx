@@ -3,11 +3,19 @@ import type * as React from "react";
 import { cn } from "../../lib/utils";
 import { Icon } from "../atoms/icon";
 import { Alert, AlertDescription } from "./alert";
-import { Card, CardContent, CardHeader, CardTitle } from "./card";
+import { Card, CardContent, CardHeader } from "./card";
 
 export interface SectionCardProps {
 	title?: string | React.ReactNode;
 	subtitle?: string;
+	/**
+	 * Icon rendered to the left of the title (16px Lucide via the Canvas
+	 * `<Icon>` atom is the canonical pattern).
+	 */
+	icon?: React.ReactNode;
+	/** Right-aligned action slot inside the header. */
+	actions?: React.ReactNode;
+	/** @deprecated Use `actions`. */
 	headerActions?: React.ReactNode;
 	children?: React.ReactNode;
 	loading?: boolean;
@@ -20,6 +28,8 @@ export interface SectionCardProps {
 export function SectionCard({
 	title,
 	subtitle,
+	icon,
+	actions,
 	headerActions,
 	children,
 	loading = false,
@@ -28,19 +38,33 @@ export function SectionCard({
 	padding = true,
 	className,
 }: SectionCardProps) {
-	const hasHeader = title || subtitle || headerActions;
+	const resolvedActions = actions ?? headerActions;
+	const hasHeader = title || subtitle || icon || resolvedActions;
 	return (
 		<Card className={className}>
 			{hasHeader && (
-				<CardHeader>
-					<div className="flex flex-1 flex-col gap-1">
-						{title && (typeof title === "string" ? <CardTitle>{title}</CardTitle> : title)}
-						{subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-					</div>
-					{headerActions && <div className="flex items-center gap-2">{headerActions}</div>}
-				</CardHeader>
+				<>
+					<CardHeader className="flex flex-row items-center justify-between space-y-0 px-5 pb-3 pt-[18px]">
+						<div className="flex flex-1 flex-col gap-1">
+							{(title || icon) && (
+								<div className="flex items-center gap-2">
+									{icon}
+									{title &&
+										(typeof title === "string" ? (
+											<span className="text-[15px] font-semibold leading-none">{title}</span>
+										) : (
+											title
+										))}
+								</div>
+							)}
+							{subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+						</div>
+						{resolvedActions && <div className="flex items-center gap-2">{resolvedActions}</div>}
+					</CardHeader>
+					<div className="mx-5 mb-3.5 h-px bg-border" />
+				</>
 			)}
-			<CardContent className={cn(!padding && "p-0")}>
+			<CardContent className={cn(padding ? "px-5 pb-[18px] pt-0" : "p-0")}>
 				{loading ? (
 					<div className="flex items-center justify-center py-8">
 						<Icon name="LoaderCircle" className="h-6 w-6 animate-spin text-muted-foreground" />
