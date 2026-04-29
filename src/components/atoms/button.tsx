@@ -34,7 +34,61 @@ const buttonVariants = cva(
 export interface ButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
 		VariantProps<typeof buttonVariants> {
+	/**
+	 * Visual emphasis preset. `default` is the primary action, `destructive`
+	 * is for irreversible actions, `outline` and `secondary` are quieter,
+	 * `ghost` is borderless, `link` looks like body-text underlined.
+	 * @default "default"
+	 */
+	variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+	/**
+	 * Height + horizontal padding preset. `sm` is 32px, `default` is 36px,
+	 * `lg` is 40px, `icon` is square 36×36 for icon-only buttons (always
+	 * pair with `aria-label`).
+	 * @default "default"
+	 */
+	size?: "default" | "sm" | "lg" | "icon";
+	/**
+	 * Render as a Radix Slot — forwards className and behaviour onto the
+	 * immediate child element instead of rendering a wrapper `<button>`.
+	 * Common pattern for using a router `<Link>` while keeping the Button
+	 * styling.
+	 * @default false
+	 */
 	asChild?: boolean;
+	/** Visible label or any nested elements (icons, badges). */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the root element via `cn()`. */
+	className?: string;
+	/**
+	 * When true, dims the button to 50% opacity and blocks pointer/keyboard
+	 * input.
+	 * @default false
+	 */
+	disabled?: boolean;
+	/**
+	 * Native HTML button type. `submit` triggers parent form submission;
+	 * `reset` resets parent form fields; `button` does neither.
+	 * @default "button"
+	 */
+	type?: "button" | "submit" | "reset";
+	/** Click handler. Receives a `MouseEvent<HTMLButtonElement>`. */
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
+	/** Form name when this button submits/resets a form (for forms with multiple buttons). */
+	name?: string;
+	/** Form value sent with the form when this button is the submitter. */
+	value?: string | number | readonly string[];
+	/**
+	 * ID of the form this button belongs to, when the button sits outside
+	 * the `<form>` element.
+	 */
+	form?: string;
+	/** Tab order. Default behaviour is one of native `<button>` tab focus. */
+	tabIndex?: number;
+	/** Accessible label, required for icon-only buttons (`size="icon"`). */
+	"aria-label"?: string;
+	/** ID of an element that describes the button's purpose. */
+	"aria-describedby"?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
