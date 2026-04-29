@@ -6,44 +6,131 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 
-function MenubarMenu({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
+export interface MenubarProps extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root> {
+	/** Controlled active menu value (the `value` of the open `<MenubarMenu>`). */
+	value?: string;
+	/** Initial active menu value for uncontrolled usage. */
+	defaultValue?: string;
+	/** Fires when the open menu changes. */
+	onValueChange?: (value: string) => void;
+	/**
+	 * Reading direction. Affects keyboard arrow navigation.
+	 * @default "ltr"
+	 */
+	dir?: "ltr" | "rtl";
+	/**
+	 * Loop arrow-key navigation across the top-level menus.
+	 * @default false
+	 */
+	loop?: boolean;
+	/** A list of `<MenubarMenu>`s. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
+const Menubar = React.forwardRef<React.ElementRef<typeof MenubarPrimitive.Root>, MenubarProps>(
+	({ className, ...props }, ref) => (
+		<MenubarPrimitive.Root
+			ref={ref}
+			className={cn(
+				"flex h-9 items-center space-x-1 rounded-md border bg-background p-1 shadow-sm",
+				className,
+			)}
+			{...props}
+		/>
+	),
+);
+Menubar.displayName = MenubarPrimitive.Root.displayName;
+
+export interface MenubarMenuProps extends React.ComponentProps<typeof MenubarPrimitive.Menu> {
+	/** Required for controlled menus — unique id of this menu. */
+	value?: string;
+	/** Trigger + Content (sub-menus and items). */
+	children?: React.ReactNode;
+}
+
+function MenubarMenu({ ...props }: MenubarMenuProps) {
 	return <MenubarPrimitive.Menu {...props} />;
 }
 
-function MenubarGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Group>) {
+export interface MenubarGroupProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Group> {
+	/** Items grouped together for screen-reader semantics. */
+	children?: React.ReactNode;
+}
+
+function MenubarGroup({ ...props }: MenubarGroupProps) {
 	return <MenubarPrimitive.Group {...props} />;
 }
 
-function MenubarPortal({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Portal>) {
+export interface MenubarPortalProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Portal> {
+	/** DOM element to portal into. Defaults to `document.body`. */
+	container?: HTMLElement | null;
+	/**
+	 * Force the portal to mount even when the menu is closed.
+	 * @default false
+	 */
+	forceMount?: true;
+	children?: React.ReactNode;
+}
+
+function MenubarPortal({ ...props }: MenubarPortalProps) {
 	return <MenubarPrimitive.Portal {...props} />;
 }
 
-function MenubarRadioGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioGroup>) {
+export interface MenubarRadioGroupProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioGroup> {
+	/** Currently selected value (the `value` of the active RadioItem). */
+	value?: string;
+	/** Fires when the user picks a different RadioItem. */
+	onValueChange?: (value: string) => void;
+	/** A list of `<MenubarRadioItem>`s. */
+	children?: React.ReactNode;
+}
+
+function MenubarRadioGroup({ ...props }: MenubarRadioGroupProps) {
 	return <MenubarPrimitive.RadioGroup {...props} />;
 }
 
-function MenubarSub({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {
+export interface MenubarSubProps extends React.ComponentProps<typeof MenubarPrimitive.Sub> {
+	/** Controlled open state of the sub-menu. */
+	open?: boolean;
+	/**
+	 * Initial open state for uncontrolled usage.
+	 * @default false
+	 */
+	defaultOpen?: boolean;
+	/** Fires whenever the sub-menu opens or closes. */
+	onOpenChange?: (open: boolean) => void;
+	/** SubTrigger + SubContent. */
+	children?: React.ReactNode;
+}
+
+function MenubarSub({ ...props }: MenubarSubProps) {
 	return <MenubarPrimitive.Sub data-slot="menubar-sub" {...props} />;
 }
 
-const Menubar = React.forwardRef<
-	React.ElementRef<typeof MenubarPrimitive.Root>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
->(({ className, ...props }, ref) => (
-	<MenubarPrimitive.Root
-		ref={ref}
-		className={cn(
-			"flex h-9 items-center space-x-1 rounded-md border bg-background p-1 shadow-sm",
-			className,
-		)}
-		{...props}
-	/>
-));
-Menubar.displayName = MenubarPrimitive.Root.displayName;
+export interface MenubarTriggerProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger> {
+	/**
+	 * Disable this top-level trigger.
+	 * @default false
+	 */
+	disabled?: boolean;
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	/** Trigger label (typically a top-level menu name). */
+	children?: React.ReactNode;
+	className?: string;
+}
 
 const MenubarTrigger = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.Trigger>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger>
+	MenubarTriggerProps
 >(({ className, ...props }, ref) => (
 	<MenubarPrimitive.Trigger
 		ref={ref}
@@ -56,11 +143,32 @@ const MenubarTrigger = React.forwardRef<
 ));
 MenubarTrigger.displayName = MenubarPrimitive.Trigger.displayName;
 
+export interface MenubarSubTriggerProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> {
+	/**
+	 * Add left padding so this row aligns with sibling checkbox/radio
+	 * items that have leading indicators.
+	 * @default false
+	 */
+	inset?: boolean;
+	/**
+	 * Disable the sub-trigger.
+	 * @default false
+	 */
+	disabled?: boolean;
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	/** Sub-trigger label. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
 const MenubarSubTrigger = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.SubTrigger>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> & {
-		inset?: boolean;
-	}
+	MenubarSubTriggerProps
 >(({ className, inset, children, ...props }, ref) => (
 	<MenubarPrimitive.SubTrigger
 		ref={ref}
@@ -77,9 +185,33 @@ const MenubarSubTrigger = React.forwardRef<
 ));
 MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName;
 
+export interface MenubarSubContentProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent> {
+	/** Distance from the parent menu (px). */
+	sideOffset?: number;
+	/** Distance from the alignment edge (px). */
+	alignOffset?: number;
+	/**
+	 * Avoid colliding with viewport edges.
+	 * @default true
+	 */
+	avoidCollisions?: boolean;
+	/** Force the sub-content to mount even when closed. */
+	forceMount?: true;
+	/**
+	 * Loop arrow-key navigation through items.
+	 * @default false
+	 */
+	loop?: boolean;
+	asChild?: boolean;
+	/** Items + groups + separators. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
 const MenubarSubContent = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.SubContent>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent>
+	MenubarSubContentProps
 >(({ className, ...props }, ref) => (
 	<MenubarPrimitive.SubContent
 		ref={ref}
@@ -92,9 +224,54 @@ const MenubarSubContent = React.forwardRef<
 ));
 MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName;
 
+export interface MenubarContentProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content> {
+	/**
+	 * Distance from the trigger (px).
+	 * @default 8
+	 */
+	sideOffset?: number;
+	/**
+	 * Distance from the alignment edge (px).
+	 * @default -4
+	 */
+	alignOffset?: number;
+	/**
+	 * Preferred side of the trigger to render on.
+	 * @default "bottom"
+	 */
+	side?: "top" | "right" | "bottom" | "left";
+	/**
+	 * Alignment along the chosen side.
+	 * @default "start"
+	 */
+	align?: "start" | "center" | "end";
+	/**
+	 * Avoid colliding with the viewport edges.
+	 * @default true
+	 */
+	avoidCollisions?: boolean;
+	/** Padding kept from collision boundaries. */
+	collisionPadding?: number | { top?: number; right?: number; bottom?: number; left?: number };
+	/** Loop arrow-key navigation through items. */
+	loop?: boolean;
+	/** Force the content to mount even when closed. */
+	forceMount?: true;
+	asChild?: boolean;
+	/** Fires when the Escape key is pressed. */
+	onEscapeKeyDown?: (event: KeyboardEvent) => void;
+	/** Fires on pointer event outside the menu. */
+	onPointerDownOutside?: (event: CustomEvent<{ originalEvent: PointerEvent }>) => void;
+	/** Fires on any interaction outside (focus + pointer). */
+	onInteractOutside?: (event: Event) => void;
+	/** Items + groups + separators + sub-menus. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
 const MenubarContent = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.Content>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>
+	MenubarContentProps
 >(({ className, align = "start", alignOffset = -4, sideOffset = 8, ...props }, ref) => (
 	<MenubarPrimitive.Portal>
 		<MenubarPrimitive.Content
@@ -112,11 +289,35 @@ const MenubarContent = React.forwardRef<
 ));
 MenubarContent.displayName = MenubarPrimitive.Content.displayName;
 
+export interface MenubarItemProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> {
+	/**
+	 * Add left padding so this row aligns with sibling checkbox/radio
+	 * items that have leading indicators.
+	 * @default false
+	 */
+	inset?: boolean;
+	/**
+	 * Disable the item.
+	 * @default false
+	 */
+	disabled?: boolean;
+	/** Fires when the item is activated (click, Enter, Space). */
+	onSelect?: (event: Event) => void;
+	/**
+	 * Render as a Radix Slot — wrap a router `<Link>` to use the item as
+	 * navigation.
+	 * @default false
+	 */
+	asChild?: boolean;
+	/** Item label or any nested elements. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
 const MenubarItem = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.Item>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> & {
-		inset?: boolean;
-	}
+	MenubarItemProps
 >(({ className, inset, ...props }, ref) => (
 	<MenubarPrimitive.Item
 		ref={ref}
@@ -130,9 +331,28 @@ const MenubarItem = React.forwardRef<
 ));
 MenubarItem.displayName = MenubarPrimitive.Item.displayName;
 
+export interface MenubarCheckboxItemProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem> {
+	/** Controlled checked state. */
+	checked?: boolean | "indeterminate";
+	/** Fires when the user toggles the item. */
+	onCheckedChange?: (checked: boolean) => void;
+	/**
+	 * Disable the item.
+	 * @default false
+	 */
+	disabled?: boolean;
+	/** Fires when the item is activated. */
+	onSelect?: (event: Event) => void;
+	asChild?: boolean;
+	/** Item label. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
 const MenubarCheckboxItem = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.CheckboxItem>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem>
+	MenubarCheckboxItemProps
 >(({ className, children, checked, ...props }, ref) => (
 	<MenubarPrimitive.CheckboxItem
 		ref={ref}
@@ -153,9 +373,25 @@ const MenubarCheckboxItem = React.forwardRef<
 ));
 MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName;
 
+export interface MenubarRadioItemProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem> {
+	/** Required — value reported when this item is selected. Match parent `<RadioGroup>`'s value. */
+	value: string;
+	/**
+	 * Disable the item.
+	 * @default false
+	 */
+	disabled?: boolean;
+	/** Fires when the item is activated. */
+	onSelect?: (event: Event) => void;
+	asChild?: boolean;
+	children?: React.ReactNode;
+	className?: string;
+}
+
 const MenubarRadioItem = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.RadioItem>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem>
+	MenubarRadioItemProps
 >(({ className, children, ...props }, ref) => (
 	<MenubarPrimitive.RadioItem
 		ref={ref}
@@ -175,11 +411,23 @@ const MenubarRadioItem = React.forwardRef<
 ));
 MenubarRadioItem.displayName = MenubarPrimitive.RadioItem.displayName;
 
+export interface MenubarLabelProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> {
+	/**
+	 * Add left padding so this row aligns with sibling checkbox/radio
+	 * items.
+	 * @default false
+	 */
+	inset?: boolean;
+	asChild?: boolean;
+	/** Section heading text. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
 const MenubarLabel = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.Label>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> & {
-		inset?: boolean;
-	}
+	MenubarLabelProps
 >(({ className, inset, ...props }, ref) => (
 	<MenubarPrimitive.Label
 		ref={ref}
@@ -189,9 +437,15 @@ const MenubarLabel = React.forwardRef<
 ));
 MenubarLabel.displayName = MenubarPrimitive.Label.displayName;
 
+export interface MenubarSeparatorProps
+	extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator> {
+	asChild?: boolean;
+	className?: string;
+}
+
 const MenubarSeparator = React.forwardRef<
 	React.ElementRef<typeof MenubarPrimitive.Separator>,
-	React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator>
+	MenubarSeparatorProps
 >(({ className, ...props }, ref) => (
 	<MenubarPrimitive.Separator
 		ref={ref}
@@ -201,7 +455,13 @@ const MenubarSeparator = React.forwardRef<
 ));
 MenubarSeparator.displayName = MenubarPrimitive.Separator.displayName;
 
-const MenubarShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+export interface MenubarShortcutProps extends React.HTMLAttributes<HTMLSpanElement> {
+	/** Keyboard shortcut text (e.g. "⌘K", "⌃Z"). */
+	children?: React.ReactNode;
+	className?: string;
+}
+
+const MenubarShortcut = ({ className, ...props }: MenubarShortcutProps) => {
 	return (
 		<span
 			className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
@@ -209,7 +469,7 @@ const MenubarShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
 		/>
 	);
 };
-MenubarShortcut.displayname = "MenubarShortcut";
+MenubarShortcut.displayName = "MenubarShortcut";
 
 export {
 	Menubar,

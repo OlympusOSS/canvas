@@ -16102,7 +16102,36 @@
       "displayName": "ContextMenu",
       "description": "",
       "file": "src/components/organisms/context-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": null,
+          "description": "Reading direction."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user opens or closes the menu via right-click / long-press."
+        },
+        {
+          "name": "modal",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true, blocks focus from leaving the menu."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
+        }
+      ]
     },
     {
       "displayName": "ContextMenuCheckboxItem",
@@ -16110,9 +16139,44 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "checked",
+          "required": false,
+          "type": "boolean | \"indeterminate\"",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onCheckedChange",
+          "required": false,
+          "type": "((checked: boolean) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16124,9 +16188,72 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Distance from the alignment edge (px)."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "collisionPadding",
+          "required": false,
+          "type": "number | { top?: number; right?: number; bottom?: number | undefined; left?: number | undefined; } | undefined",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "loop",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Whether keyboard navigation should loop around"
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Used to force mounting when more control is needed. Useful when\ncontrolling animation with React animation libraries."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "required": false,
+          "type": "((event: KeyboardEvent) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onPointerDownOutside",
+          "required": false,
+          "type": "((event: CustomEvent<{ originalEvent: PointerEvent; }>) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onInteractOutside",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16152,6 +16279,27 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "inset",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Add left padding to align with checkbox/radio items."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -16159,9 +16307,9 @@
           "description": ""
         },
         {
-          "name": "inset",
+          "name": "className",
           "required": false,
-          "type": "boolean",
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16173,6 +16321,13 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "inset",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -16180,9 +16335,9 @@
           "description": ""
         },
         {
-          "name": "inset",
+          "name": "className",
           "required": false,
-          "type": "boolean",
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16192,13 +16347,42 @@
       "displayName": "ContextMenuPortal",
       "description": "",
       "file": "src/components/organisms/context-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "container",
+          "required": false,
+          "type": "HTMLElement | null",
+          "defaultValue": null,
+          "description": "Specify a container element to portal the content into."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Used to force mounting when more control is needed. Useful when\ncontrolling animation with React animation libraries."
+        }
+      ]
     },
     {
       "displayName": "ContextMenuRadioGroup",
       "description": "",
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
         {
           "name": "asChild",
           "required": false,
@@ -16214,9 +16398,37 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16233,6 +16445,13 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -16240,13 +16459,43 @@
       "displayName": "ContextMenuShortcut",
       "description": "",
       "file": "src/components/organisms/context-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "ContextMenuSub",
       "description": "",
       "file": "src/components/organisms/context-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "ContextMenuSubContent",
@@ -16254,9 +16503,44 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Used to force mounting when more control is needed. Useful when\ncontrolling animation with React animation libraries."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16268,6 +16552,20 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "inset",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Add left padding to align with sibling checkbox/radio items."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -16275,9 +16573,9 @@
           "description": ""
         },
         {
-          "name": "inset",
+          "name": "className",
           "required": false,
-          "type": "boolean",
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16289,9 +16587,30 @@
       "file": "src/components/organisms/context-menu.tsx",
       "props": [
         {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the right-click trigger."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "The element that opens the context menu on right-click / long-press."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18283,6 +18602,55 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Controlled active menu value (the `value` of the open `<MenubarMenu>`)."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Initial active menu value for uncontrolled usage."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string) => void)",
+          "defaultValue": null,
+          "description": "Fires when the open menu changes."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction. Affects keyboard arrow navigation."
+        },
+        {
+          "name": "loop",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Loop arrow-key navigation across the top-level menus."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A list of `<MenubarMenu>`s."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -18297,9 +18665,51 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
+          "name": "checked",
+          "required": false,
+          "type": "boolean | \"indeterminate\"",
+          "defaultValue": null,
+          "description": "Controlled checked state."
+        },
+        {
+          "name": "onCheckedChange",
+          "required": false,
+          "type": "((checked: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user toggles the item."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the item."
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when the item is activated."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Item label."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18311,9 +18721,100 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "8",
+          "description": "Distance from the trigger (px)."
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "-4",
+          "description": "Distance from the alignment edge (px)."
+        },
+        {
+          "name": "side",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"bottom\"",
+          "description": "Preferred side of the trigger to render on."
+        },
+        {
+          "name": "align",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "start",
+          "description": "Alignment along the chosen side."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Avoid colliding with the viewport edges."
+        },
+        {
+          "name": "collisionPadding",
+          "required": false,
+          "type": "number | { top?: number; right?: number; bottom?: number | undefined; left?: number | undefined; } | undefined",
+          "defaultValue": null,
+          "description": "Padding kept from collision boundaries."
+        },
+        {
+          "name": "loop",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Loop arrow-key navigation through items."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Force the content to mount even when closed."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "required": false,
+          "type": "((event: KeyboardEvent) => void)",
+          "defaultValue": null,
+          "description": "Fires when the Escape key is pressed."
+        },
+        {
+          "name": "onPointerDownOutside",
+          "required": false,
+          "type": "((event: CustomEvent<{ originalEvent: PointerEvent; }>) => void)",
+          "defaultValue": null,
+          "description": "Fires on pointer event outside the menu."
+        },
+        {
+          "name": "onInteractOutside",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires on any interaction outside (focus + pointer)."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Items + groups + separators + sub-menus."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18324,6 +18825,13 @@
       "description": "",
       "file": "src/components/organisms/menubar.tsx",
       "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Items grouped together for screen-reader semantics."
+        },
         {
           "name": "asChild",
           "required": false,
@@ -18339,16 +18847,44 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
-          "name": "asChild",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
           "name": "inset",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Add left padding so this row aligns with sibling checkbox/radio\nitems that have leading indicators."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the item."
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when the item is activated (click, Enter, Space)."
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a router `<Link>` to use the item as\nnavigation."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Item label or any nested elements."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18360,6 +18896,13 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
+          "name": "inset",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Add left padding so this row aligns with sibling checkbox/radio\nitems."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -18367,9 +18910,16 @@
           "description": ""
         },
         {
-          "name": "inset",
+          "name": "children",
           "required": false,
-          "type": "boolean",
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Section heading text."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18380,6 +18930,20 @@
       "description": "",
       "file": "src/components/organisms/menubar.tsx",
       "props": [
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required for controlled menus — unique id of this menu."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content (sub-menus and items)."
+        },
         {
           "name": "__scopeMenubar",
           "required": false,
@@ -18393,13 +18957,49 @@
       "displayName": "MenubarPortal",
       "description": "",
       "file": "src/components/organisms/menubar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "container",
+          "required": false,
+          "type": "HTMLElement | null",
+          "defaultValue": null,
+          "description": "DOM element to portal into. Defaults to `document.body`."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the portal to mount even when the menu is closed."
+        }
+      ]
     },
     {
       "displayName": "MenubarRadioGroup",
       "description": "",
       "file": "src/components/organisms/menubar.tsx",
       "props": [
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Currently selected value (the `value` of the active RadioItem)."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user picks a different RadioItem."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A list of `<MenubarRadioItem>`s."
+        },
         {
           "name": "asChild",
           "required": false,
@@ -18415,9 +19015,37 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required — value reported when this item is selected. Match parent `<RadioGroup>`'s value."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the item."
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when the item is activated."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18434,6 +19062,13 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -18441,13 +19076,57 @@
       "displayName": "MenubarShortcut",
       "description": "",
       "file": "src/components/organisms/menubar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Keyboard shortcut text (e.g. \"⌘K\", \"⌃Z\")."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "MenubarSub",
       "description": "",
       "file": "src/components/organisms/menubar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state of the sub-menu."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the sub-menu opens or closes."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "SubTrigger + SubContent."
+        }
+      ]
     },
     {
       "displayName": "MenubarSubContent",
@@ -18455,9 +19134,58 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "8",
+          "description": "Distance from the parent menu (px)."
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "-4",
+          "description": "Distance from the alignment edge (px)."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Avoid colliding with viewport edges."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Force the sub-content to mount even when closed."
+        },
+        {
+          "name": "loop",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Loop arrow-key navigation through items."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Items + groups + separators."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18469,16 +19197,37 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
-          "name": "asChild",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
           "name": "inset",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Add left padding so this row aligns with sibling checkbox/radio\nitems that have leading indicators."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the sub-trigger."
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Sub-trigger label."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18490,9 +19239,30 @@
       "file": "src/components/organisms/menubar.tsx",
       "props": [
         {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable this top-level trigger."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger label (typically a top-level menu name)."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18550,6 +19320,69 @@
       "file": "src/components/organisms/navigation-menu.tsx",
       "props": [
         {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Controlled active item value."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Initial value for uncontrolled usage."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string) => void)",
+          "defaultValue": null,
+          "description": "Fires when the active item changes."
+        },
+        {
+          "name": "delayDuration",
+          "required": false,
+          "type": "number",
+          "defaultValue": "200",
+          "description": "Delay (ms) before opening on hover."
+        },
+        {
+          "name": "skipDelayDuration",
+          "required": false,
+          "type": "number",
+          "defaultValue": "300",
+          "description": "Delay (ms) for skipping subsequent open delays once one menu is open."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction."
+        },
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"horizontal\"",
+          "description": "Layout direction."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "List + Indicator + Viewport."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -18564,9 +19397,44 @@
       "file": "src/components/organisms/navigation-menu.tsx",
       "props": [
         {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when not active. Useful for\npreserving form state during transitions."
+        },
+        {
+          "name": "onFocusOutside",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when focus enters the content."
+        },
+        {
+          "name": "onPointerDownOutside",
+          "required": false,
+          "type": "((event: CustomEvent<{ originalEvent: PointerEvent; }>) => void)",
+          "defaultValue": null,
+          "description": "Fires on pointer event outside the content."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Sub-menu content."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18578,9 +19446,23 @@
       "file": "src/components/organisms/navigation-menu.tsx",
       "props": [
         {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Force the indicator to mount even when no content is open."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18591,6 +19473,27 @@
       "description": "",
       "file": "src/components/organisms/navigation-menu.tsx",
       "props": [
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required for controlled menus — unique id of this item."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content (or Link)."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
         {
           "name": "asChild",
           "required": false,
@@ -18606,9 +19509,37 @@
       "file": "src/components/organisms/navigation-menu.tsx",
       "props": [
         {
+          "name": "active",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Mark as the current/active link."
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when the link is selected (click, Enter, Space)."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Anchor target."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18625,6 +19556,20 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A list of `<NavigationMenuItem>`s."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -18639,6 +19584,20 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger label."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -18648,9 +19607,23 @@
       "file": "src/components/organisms/navigation-menu.tsx",
       "props": [
         {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Force the viewport to mount even when no content is open."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19031,21 +20004,77 @@
           "required": false,
           "type": "string",
           "defaultValue": null,
-          "description": ""
+          "description": "Controlled value. Pair with `onValueChange`."
         },
         {
           "name": "defaultValue",
           "required": false,
           "type": "string",
           "defaultValue": null,
-          "description": ""
+          "description": "Initial value for uncontrolled usage."
         },
         {
           "name": "onValueChange",
           "required": false,
           "type": "((value: string) => void)",
           "defaultValue": null,
-          "description": ""
+          "description": "Fires when the user picks an option."
+        },
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Initial open state."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires when the dropdown opens/closes."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name. Required for native form submission."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the entire select."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Required for native form validation."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
         }
       ]
     },
@@ -19055,9 +20084,79 @@
       "file": "src/components/organisms/select.tsx",
       "props": [
         {
+          "name": "position",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "popper",
+          "description": "Whether to use trigger-anchored (\"popper\") or item-anchored\n(\"item-aligned\") positioning."
+        },
+        {
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Distance from the trigger (px). Only when `position=\"popper\"`."
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Distance from the alignment edge (px)."
+        },
+        {
+          "name": "side",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"bottom\"",
+          "description": "Preferred side. Only when `position=\"popper\"`."
+        },
+        {
+          "name": "align",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"start\"",
+          "description": "Alignment along the chosen side."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Avoid colliding with viewport edges."
+        },
+        {
+          "name": "collisionPadding",
+          "required": false,
+          "type": "number | { top?: number; right?: number; bottom?: number | undefined; left?: number | undefined; } | undefined",
+          "defaultValue": null,
+          "description": "Padding kept from collision boundaries."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Force the content to mount even when closed."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Items + groups + separators."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19068,6 +20167,13 @@
       "description": "",
       "file": "src/components/organisms/select.tsx",
       "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Items grouped together — pair with `<SelectLabel>`."
+        },
         {
           "name": "asChild",
           "required": false,
@@ -19083,9 +20189,44 @@
       "file": "src/components/organisms/select.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required — value reported when this option is picked."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable this option."
+        },
+        {
+          "name": "textValue",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Override what's used as text for typeahead/search."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Item label."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19102,6 +20243,20 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Section heading text."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -19114,6 +20269,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19130,6 +20292,13 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -19144,6 +20313,13 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -19156,6 +20332,20 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Typically a `<SelectValue>`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19167,11 +20357,25 @@
       "file": "src/components/organisms/select.tsx",
       "props": [
         {
+          "name": "placeholder",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Placeholder shown when no value is selected."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — useful when you want to fully customise the\nvalue display."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Custom display node when a value is selected."
         }
       ]
     }
