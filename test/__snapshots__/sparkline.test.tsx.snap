@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Sparkline > matches snapshot 1`] = `
+<div>
+  <div
+    class="w-full"
+  >
+    <div
+      class="flex w-full items-end"
+      style="height: 120px; gap: 4px;"
+    >
+      <div
+        aria-hidden="true"
+        class="flex-1 rounded-sm"
+        style="height: 25%; background: hsl(var(--chart-1));"
+      />
+      <div
+        aria-hidden="true"
+        class="flex-1 rounded-sm"
+        style="height: 50%; background: hsl(var(--chart-1));"
+      />
+      <div
+        aria-hidden="true"
+        class="flex-1 rounded-sm"
+        style="height: 75%; background: hsl(var(--chart-1));"
+      />
+      <div
+        aria-hidden="true"
+        class="flex-1 rounded-sm"
+        style="height: 100%; background: hsl(var(--chart-1));"
+      />
+    </div>
+    <p
+      class="mt-3 text-xs text-muted-foreground"
+    >
+      Demo
+    </p>
+  </div>
+</div>
+`;

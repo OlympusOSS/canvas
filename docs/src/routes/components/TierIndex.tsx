@@ -11,6 +11,8 @@ const TIER_INTROS: Record<keyof typeof TIER_META, string> = {
 		"Two or three atoms composed for a single named purpose. Local state is fine; cross-component context isn't — that's an organism.",
 	organisms:
 		"Components with their own context, controlled/uncontrolled API, and ARIA contracts. They orchestrate molecules and atoms into a feature.",
+	charts:
+		"Theme-aware Recharts wrappers. Axes, grids, and references read canvas tokens by default; data primitives auto-cycle through the chart palette when no colour is supplied.",
 	templates:
 		"Slots-only page chrome. Drop your content into the slots and the spacing, focus, mobile drawers, and theme handling are taken care of.",
 };
@@ -19,6 +21,7 @@ const TIER_DOTS: Record<string, string> = {
 	atoms: "bg-[hsl(var(--brand-from))]",
 	molecules: "bg-[hsl(var(--brand-via))]",
 	organisms: "bg-[hsl(var(--brand-to))]",
+	charts: "bg-purple-500/60",
 	templates: "bg-foreground/60",
 };
 
