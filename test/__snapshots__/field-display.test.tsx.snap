@@ -2,19 +2,19 @@
 
 exports[`FieldDisplay > matches snapshot 1`] = `
 <div>
-  <div
-    class="space-y-1"
+  <dl
+    class="grid grid-cols-[180px_1fr] items-baseline gap-4 py-2"
   >
     <dt
-      class="text-sm text-muted-foreground"
+      class="text-[13px] font-medium text-muted-foreground"
     >
       Email
     </dt>
     <dd
-      class="text-sm font-medium"
+      class="break-words text-[13px] text-foreground"
     >
       user@example.com
     </dd>
-  </div>
+  </dl>
 </div>
 `;

@@ -40,12 +40,22 @@ export {
    MOLECULES — small compositions of atoms.
    Can import: tokens/, lib/utils, atoms/.
    ──────────────────────────────────────────────────────────────── */
+export {
+	ActivityFeed,
+	type ActivityFeedProps,
+	ActivityItem,
+	type ActivityItemProps,
+} from "./components/molecules/activity-item";
 export { Alert, AlertDescription, AlertTitle } from "./components/molecules/alert";
 export {
 	AnimatedBackground,
 	type AnimatedBackgroundOrb,
 	type AnimatedBackgroundProps,
 } from "./components/molecules/animated-background";
+export {
+	BrandLockup,
+	type BrandLockupProps,
+} from "./components/molecules/brand-lockup";
 export {
 	Breadcrumb,
 	BreadcrumbEllipsis,
@@ -88,6 +98,18 @@ export {
 	type LoadingStateProps,
 } from "./components/molecules/loading-state";
 export {
+	NotificationItem,
+	type NotificationItemProps,
+} from "./components/molecules/notification-item";
+export {
+	NotificationList,
+	type NotificationListProps,
+} from "./components/molecules/notification-list";
+export {
+	NumberBadge,
+	type NumberBadgeProps,
+} from "./components/molecules/number-badge";
+export {
 	PageHeader,
 	type PageHeaderBreadcrumb,
 	type PageHeaderProps,
@@ -120,6 +142,10 @@ export {
 	SectionCard,
 	type SectionCardProps,
 } from "./components/molecules/section-card";
+export {
+	Sparkline,
+	type SparklineProps,
+} from "./components/molecules/sparkline";
 export { StatCard, type StatCardProps } from "./components/molecules/stat-card";
 export {
 	StatusBadge,
@@ -149,6 +175,10 @@ export {
 	TooltipProvider,
 	TooltipTrigger,
 } from "./components/molecules/tooltip";
+export {
+	UserAvatarChip,
+	type UserAvatarChipProps,
+} from "./components/molecules/user-avatar-chip";
 /* ────────────────────────────────────────────────────────────────
    ORGANISMS — stateful surfaces, compositions of atoms + molecules.
    Can import: tokens/, lib/utils, atoms/, molecules/.
@@ -402,6 +432,7 @@ export {
 	useTheme,
 } from "./components/organisms/theme-provider";
 export { AdminShell, type AdminShellProps } from "./components/templates/admin-shell";
+export { AppHeader, type AppHeaderProps } from "./components/templates/app-header";
 /* ────────────────────────────────────────────────────────────────
    TEMPLATES — page-level scaffolding.
    Can import: tokens/, lib/utils, atoms/, molecules/, organisms/.

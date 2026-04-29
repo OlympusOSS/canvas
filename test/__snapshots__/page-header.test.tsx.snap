@@ -22,7 +22,7 @@ exports[`PageHeader > matches snapshot 1`] = `
           </a>
           <svg
             aria-hidden="true"
-            class="lucide lucide-chevron-right shrink-0 h-3.5 w-3.5"
+            class="lucide lucide-chevron-right shrink-0 h-3 w-3"
             fill="none"
             height="16"
             stroke="currentColor"
@@ -52,7 +52,7 @@ exports[`PageHeader > matches snapshot 1`] = `
         class="flex items-center gap-3"
       >
         <h1
-          class="text-2xl font-bold tracking-tight text-foreground"
+          class="text-[22px] font-semibold tracking-[-0.02em] text-foreground"
         >
           Users
         </h1>

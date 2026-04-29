@@ -8,6 +8,12 @@ import { Button } from "../atoms/button";
 
 export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
 	icon?: React.ReactNode;
+	/** Primary message. Renders below the icon pill, 15px font-medium. */
+	title?: string;
+	/**
+	 * @deprecated Use `title`. Retained as an alias so existing call sites
+	 * (e.g. DataTable's empty fallback) keep working.
+	 */
 	message?: string;
 	description?: string;
 	action?: {
@@ -17,7 +23,8 @@ export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
-	({ icon, message = "No items found", description, action, className, ...props }, ref) => {
+	({ icon, title, message, description, action, className, ...props }, ref) => {
+		const heading = title ?? message ?? "No items found";
 		return (
 			<div
 				ref={ref}
@@ -27,9 +34,11 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
 				)}
 				{...props}
 			>
-				{icon ?? <Inbox className="h-10 w-10" />}
+				<div className="mb-1 inline-flex rounded-full bg-muted p-3 text-muted-foreground">
+					{icon ?? <Inbox className="h-5 w-5" />}
+				</div>
 				<div className="text-center">
-					<p className="text-sm font-medium">{message}</p>
+					<p className="text-[15px] font-medium text-foreground">{heading}</p>
 					{description && <p className="mt-1 text-xs text-muted-foreground">{description}</p>}
 				</div>
 				{action && (

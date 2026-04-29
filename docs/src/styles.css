@@ -1,55 +1,81 @@
 @import "tailwindcss";
+@source "../../src/**/*.{ts,tsx}";
 @import "../../styles/tokens.css";
+
+@theme inline {
+	--color-background: hsl(var(--background));
+	--color-foreground: hsl(var(--foreground));
+	--color-card: hsl(var(--card));
+	--color-card-foreground: hsl(var(--card-foreground));
+	--color-popover: hsl(var(--popover));
+	--color-popover-foreground: hsl(var(--popover-foreground));
+	--color-primary: hsl(var(--primary));
+	--color-primary-foreground: hsl(var(--primary-foreground));
+	--color-secondary: hsl(var(--secondary));
+	--color-secondary-foreground: hsl(var(--secondary-foreground));
+	--color-muted: hsl(var(--muted));
+	--color-muted-foreground: hsl(var(--muted-foreground));
+	--color-accent: hsl(var(--accent));
+	--color-accent-foreground: hsl(var(--accent-foreground));
+	--color-destructive: hsl(var(--destructive));
+	--color-destructive-foreground: hsl(var(--destructive-foreground));
+	--color-brand: hsl(var(--brand));
+	--color-brand-foreground: hsl(var(--brand-foreground));
+	--color-border: hsl(var(--border));
+	--color-input: hsl(var(--input));
+	--color-ring: hsl(var(--ring));
+}
 
 @custom-variant dark (&:is(.dark *));
 
-/* ---------- Light theme depth tuning ----------
- * The default canvas light tokens make --card identical to --background
- * (both pure white) — flat cards with only a border for separation. Lift
- * the page off pure white so cards visibly rise above the surface.
+/* ---------- Light theme — canonical canvas tokens ----------
+ * Use canvas's pure-white --background so the blue-tinted --sidebar
+ * (hue 230) reads as designed. The previous override at 220 16% 97% had
+ * the same lightness as --sidebar, making the sidebar tint disappear.
  */
 :root {
-	--background: 220 16% 97%;
-	--foreground: 224 28% 12%;
+	--background: 0 0% 100%;
+	--foreground: 240 10% 3.9%;
 	--card: 0 0% 100%;
-	--card-foreground: 224 28% 12%;
+	--card-foreground: 240 10% 3.9%;
 	--popover: 0 0% 100%;
-	--popover-foreground: 224 28% 12%;
-	--primary: 224 24% 14%;
-	--primary-foreground: 0 0% 100%;
-	--secondary: 220 14% 92%;
-	--secondary-foreground: 224 24% 14%;
-	--muted: 220 14% 92%;
-	--muted-foreground: 220 9% 42%;
-	--accent: 220 14% 92%;
-	--accent-foreground: 224 24% 14%;
-	--border: 220 13% 86%;
-	--input: 220 13% 86%;
-	--ring: 220 9% 50%;
+	--popover-foreground: 240 10% 3.9%;
+	--primary: 240 5.9% 10%;
+	--primary-foreground: 0 0% 98%;
+	--secondary: 240 4.8% 95.9%;
+	--secondary-foreground: 240 5.9% 10%;
+	--muted: 240 4.8% 95.9%;
+	--muted-foreground: 240 3.8% 46.1%;
+	--accent: 240 4.8% 95.9%;
+	--accent-foreground: 240 5.9% 10%;
+	--border: 240 5.9% 90%;
+	--input: 240 5.9% 90%;
+	--ring: 240 5.9% 10%;
 }
 
-/* ---------- Softer dark theme override ----------
- * Lifts the dark palette off near-black so the docs surface is easier on the
- * eyes. Overrides values from ../../styles/tokens.css.
+/* ---------- Dark theme — canonical canvas tokens ----------
+ * Canvas's canonical dark --background is `240 10% 3.9%`. The previous
+ * override at `224 12% 10%` had the same lightness as the dark sidebar
+ * (`230 12% 10%`), making the sidebar tint disappear in dark mode.
  */
 .dark {
-	--background: 224 12% 10%;
-	--foreground: 210 20% 96%;
-	--card: 224 10% 14%;
-	--card-foreground: 210 20% 96%;
-	--popover: 224 10% 14%;
-	--popover-foreground: 210 20% 96%;
-	--primary: 210 20% 96%;
-	--primary-foreground: 224 12% 10%;
-	--secondary: 222 9% 20%;
-	--secondary-foreground: 210 20% 96%;
-	--muted: 222 9% 20%;
-	--muted-foreground: 220 9% 70%;
-	--accent: 222 9% 22%;
-	--accent-foreground: 210 20% 96%;
-	--border: 220 9% 24%;
-	--input: 220 9% 24%;
-	--ring: 220 9% 70%;
+	--background: 240 10% 3.9%;
+	--foreground: 0 0% 98%;
+	--card: 240 10% 3.9%;
+	--card-foreground: 0 0% 98%;
+	--popover: 240 10% 3.9%;
+	--popover-foreground: 0 0% 98%;
+	--primary: 0 0% 98%;
+	--primary-foreground: 240 5.9% 10%;
+	--secondary: 240 3.7% 15.9%;
+	--secondary-foreground: 0 0% 98%;
+	--muted: 240 3.7% 15.9%;
+	--muted-foreground: 240 5% 64.9%;
+	--accent: 240 3.7% 15.9%;
+	--accent-foreground: 0 0% 98%;
+	--border: 240 3.7% 15.9%;
+	--input: 240 3.7% 15.9%;
+	--ring: 240 4.9% 83.9%;
 }
 
 /* ---------- Base ---------- */
@@ -194,6 +220,19 @@ body[data-density="comfortable"] .nav-link { padding: 8px 12px; font-size: 13.5p
 
 /* ---------- Component page anchor offset (sticky TOC) ---------- */
 .scroll-mt-anchor { scroll-margin-top: 96px; }
+
+/* ---------- Example preview body — mirrors the consuming app's page bg ---
+ * Reads `--background` directly so previews show components against the
+ * exact same surface a real Athena/Hera/Site page would render against.
+ * In dark mode this reveals the proper card-vs-body elevation lift; in
+ * light mode body and card are both white and borders define the card.
+ * Tokens are NOT redeclared here, so canvas components inside inherit
+ * whichever theme (light :root / dark .dark) is active on the document.
+ */
+.example-preview-body {
+	background: hsl(var(--background));
+	color: hsl(var(--foreground));
+}
 
 /* ---------- Shiki overrides ---------- */
 .docs-shiki .shiki { background: transparent !important; }

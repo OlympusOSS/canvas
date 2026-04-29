@@ -5,15 +5,78 @@ import { Swatch } from "../components/Swatch";
 const BASE_TOKENS = [
 	{ name: "background", value: "0 0% 100%" },
 	{ name: "foreground", value: "240 10% 3.9%" },
+	{ name: "card", value: "0 0% 100%" },
+	{ name: "card-foreground", value: "240 10% 3.9%" },
+	{ name: "popover", value: "0 0% 100%" },
+	{ name: "popover-foreground", value: "240 10% 3.9%" },
 	{ name: "primary", value: "240 5.9% 10%" },
+	{ name: "primary-foreground", value: "0 0% 98%" },
 	{ name: "secondary", value: "240 4.8% 95.9%" },
+	{ name: "secondary-foreground", value: "240 5.9% 10%" },
 	{ name: "muted", value: "240 4.8% 95.9%" },
 	{ name: "muted-foreground", value: "240 3.8% 46.1%" },
 	{ name: "accent", value: "240 4.8% 95.9%" },
+	{ name: "accent-foreground", value: "240 5.9% 10%" },
 	{ name: "border", value: "240 5.9% 90%" },
 	{ name: "input", value: "240 5.9% 90%" },
-	{ name: "ring", value: "240 5% 64.9%" },
 	{ name: "destructive", value: "0 84.2% 60.2%" },
+	{ name: "destructive-foreground", value: "0 0% 98%" },
+];
+
+const ELEVATION_TIERS = [
+	{
+		tier: "L0",
+		token: "background",
+		description: "Body — deepest surface",
+		light: "0 0% 100%",
+		dark: "225 24% 6%",
+	},
+	{
+		tier: "L1",
+		token: "sidebar-background",
+		description: "Sidebar chrome — subtle lift, distinct hue",
+		light: "230 25% 97%",
+		dark: "225 16% 10%",
+	},
+	{
+		tier: "L2",
+		token: "card / popover",
+		description: "Cards + popovers — clearly elevated",
+		light: "0 0% 100%",
+		dark: "225 18% 13%",
+	},
+	{
+		tier: "L3",
+		token: "muted / secondary / accent",
+		description: "Inside-card chips, hover, inputs — topmost",
+		light: "240 4.8% 95.9%",
+		dark: "225 14% 19%",
+	},
+];
+
+const RING_TOKEN = {
+	name: "ring",
+	light: "240 5.9% 10%",
+	dark: "217 91% 60%",
+};
+
+const SIDEBAR_TOKENS = [
+	{ name: "sidebar-background", light: "230 25% 97%", dark: "225 16% 10%" },
+	{ name: "sidebar-foreground", light: "230 15% 40%", dark: "220 14% 80%" },
+	{ name: "sidebar-primary", light: "230 45% 25%", dark: "217 91% 65%" },
+	{ name: "sidebar-primary-foreground", light: "0 0% 98%", dark: "0 0% 100%" },
+	{ name: "sidebar-accent", light: "230 40% 92%", dark: "225 22% 16%" },
+	{ name: "sidebar-accent-foreground", light: "230 45% 25%", dark: "220 14% 92%" },
+	{ name: "sidebar-border", light: "230 20% 90%", dark: "225 14% 18%" },
+	{ name: "sidebar-ring", light: "217.2 91.2% 59.8%", dark: "217.2 91.2% 59.8%" },
+];
+
+const STAT_TOKENS = [
+	{ name: "stat-blue", value: "217 91% 60%", hex: "#3b82f6" },
+	{ name: "stat-success", value: "160 84% 39%", hex: "#10b981" },
+	{ name: "stat-purple", value: "258 90% 66%", hex: "#8b5cf6" },
+	{ name: "stat-destructive", value: "0 84% 60%", hex: "#ef4444" },
+	{ name: "stat-amber", value: "38 92% 50%", hex: "#f59e0b" },
 ];
 
 const SEMANTIC = [
@@ -40,6 +103,12 @@ const SPACING_STEPS = [
 	{ name: "8", px: 32 },
 	{ name: "12", px: 48 },
 	{ name: "16", px: 64 },
+];
+
+const TRACKING = [
+	{ name: "tracking-tighter", value: "-0.02em", note: "page title · stat value · display" },
+	{ name: "tracking-tight", value: "-0.015em", note: "h2 · h3" },
+	{ name: "tracking-normal", value: "0", note: "body · forms" },
 ];
 
 const RADII = [
@@ -140,6 +209,27 @@ function TypeRow({ meta, children, style, muted }: TypeRowProps) {
 	);
 }
 
+function PairSwatch({ name, light, dark }: { name: string; light: string; dark: string }) {
+	return (
+		<div className="flex flex-col gap-1.5">
+			<div className="flex gap-2">
+				<div
+					className="h-14 w-24 rounded-lg border border-border"
+					style={{ background: `hsl(${light})` }}
+				/>
+				<div
+					className="h-14 w-24 rounded-lg border border-border"
+					style={{ background: `hsl(${dark})` }}
+				/>
+			</div>
+			<div className="text-[11px] font-medium text-foreground">{name}</div>
+			<div className="font-mono text-[11px] text-muted-foreground">
+				{light} · {dark}
+			</div>
+		</div>
+	);
+}
+
 export function Tokens() {
 	return (
 		<div className="space-y-16">
@@ -167,10 +257,44 @@ export function Tokens() {
 
 				<div className="space-y-3">
 					<header>
+						<h3 className="text-sm font-semibold text-foreground">Surface elevation</h3>
+						<p className="text-xs text-muted-foreground">
+							Four elevation tiers in dark mode. Each step lifts ~3-6% lightness so cards visually
+							float above the body and inside-card chips stand out from the card itself. In light
+							mode the body and cards are both pure white — borders + shadow define cards there,
+							intentionally.
+						</p>
+					</header>
+					<div className="flex flex-col gap-2 rounded-xl border border-border bg-card/30 p-3">
+						{ELEVATION_TIERS.map((t) => (
+							<div
+								key={t.tier}
+								className="flex items-center gap-3 rounded-lg border border-border p-3"
+								style={{ background: `hsl(${t.dark})` }}
+							>
+								<span className="font-mono text-[11px] font-semibold text-white/90">{t.tier}</span>
+								<div className="flex-1">
+									<div className="text-[13px] font-medium text-white/90">
+										<code className="font-mono">{t.token}</code>
+									</div>
+									<div className="text-[11px] text-white/60">{t.description}</div>
+								</div>
+								<div className="flex flex-col items-end font-mono text-[10px] text-white/60">
+									<span>light · {t.light}</span>
+									<span>dark · {t.dark}</span>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+
+				<div className="space-y-3">
+					<header>
 						<h3 className="text-sm font-semibold text-foreground">Base palette</h3>
 						<p className="text-xs text-muted-foreground">
 							Reads from <code className="font-mono">--background</code>,{" "}
-							<code className="font-mono">--foreground</code>, etc.
+							<code className="font-mono">--foreground</code>, etc. Each token is paired with a{" "}
+							<code className="font-mono">-foreground</code> twin for accessible contrast.
 						</p>
 					</header>
 					<div className="flex flex-wrap gap-3">
@@ -182,12 +306,88 @@ export function Tokens() {
 
 				<div className="space-y-3">
 					<header>
-						<h3 className="text-sm font-semibold text-foreground">Brand gradient</h3>
+						<h3 className="text-sm font-semibold text-foreground">Ring (focus)</h3>
 						<p className="text-xs text-muted-foreground">
-							The only saturated brand chrome. Used by Logo at ≥40px.
+							Used by <code className="font-mono">focus-visible:ring-1 ring-ring</code>. Tuned per
+							theme.
+						</p>
+					</header>
+					<div className="flex flex-wrap gap-3">
+						<PairSwatch name={RING_TOKEN.name} light={RING_TOKEN.light} dark={RING_TOKEN.dark} />
+					</div>
+				</div>
+
+				<div className="space-y-3">
+					<header>
+						<h3 className="text-sm font-semibold text-foreground">Sidebar palette</h3>
+						<p className="text-xs text-muted-foreground">
+							Eight blue-tinted (hue 230) tokens — light + dark pair. Consumed by{" "}
+							<code className="font-mono">bg-sidebar</code>,{" "}
+							<code className="font-mono">text-sidebar-foreground</code>, and the{" "}
+							<code className="font-mono">{"<Sidebar>"}</code> organism's active-state styles.
+						</p>
+					</header>
+					<div className="flex flex-wrap gap-3">
+						{SIDEBAR_TOKENS.map((t) => (
+							<PairSwatch key={t.name} name={t.name} light={t.light} dark={t.dark} />
+						))}
+					</div>
+				</div>
+
+				<div className="space-y-3">
+					<header>
+						<h3 className="text-sm font-semibold text-foreground">StatCard variants</h3>
+						<p className="text-xs text-muted-foreground">
+							Five hand-tuned hues for{" "}
+							<code className="font-mono">{'<StatCard colorVariant="…" />'}</code>. The icon square
+							renders a 10% tint; the icon itself uses the full-saturation color.
+						</p>
+					</header>
+					<div className="flex flex-wrap gap-3">
+						{STAT_TOKENS.map((t) => (
+							<div key={t.name} className="flex flex-col gap-1.5">
+								<div className="flex items-center gap-2">
+									<div
+										className="flex h-9 w-9 items-center justify-center rounded-lg"
+										style={{
+											background: `hsl(${t.value} / 0.1)`,
+											color: `hsl(${t.value})`,
+										}}
+									>
+										<Icon name="Circle" className="h-5 w-5" />
+									</div>
+									<div
+										className="h-9 w-12 rounded-lg border border-border"
+										style={{ background: `hsl(${t.value})` }}
+									/>
+								</div>
+								<div className="text-[11px] font-medium text-foreground">{t.name}</div>
+								<div className="font-mono text-[11px] text-muted-foreground">
+									{t.value} · {t.hex}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+
+				<div className="space-y-3">
+					<header>
+						<h3 className="text-sm font-semibold text-foreground">Brand</h3>
+						<p className="text-xs text-muted-foreground">
+							The brand pair (<code className="font-mono">--brand</code> /{" "}
+							<code className="font-mono">--brand-foreground</code>) plus the gradient. The only
+							saturated brand chrome — used by Logo at ≥40px and select hero accents.
 						</p>
 					</header>
 					<div className="flex flex-col gap-3">
+						<div className="flex flex-wrap gap-3">
+							<Swatch color="hsl(var(--brand))" name="brand" value="213 94% 68%" />
+							<Swatch
+								color="hsl(var(--brand-foreground))"
+								name="brand-foreground"
+								value="0 0% 100%"
+							/>
+						</div>
 						<div
 							className="h-16 w-full max-w-md rounded-xl"
 							style={{ background: "linear-gradient(135deg, #1E40AF 0%, #60A5FA 100%)" }}
@@ -233,22 +433,7 @@ export function Tokens() {
 					</header>
 					<div className="flex flex-wrap gap-3">
 						{CHART.map((c) => (
-							<div key={c.name} className="flex flex-col gap-1.5">
-								<div className="flex gap-2">
-									<div
-										className="h-14 w-24 rounded-lg border border-border"
-										style={{ background: `hsl(${c.light})` }}
-									/>
-									<div
-										className="h-14 w-24 rounded-lg border border-border"
-										style={{ background: `hsl(${c.dark})` }}
-									/>
-								</div>
-								<div className="text-[11px] font-medium text-foreground">{c.name}</div>
-								<div className="font-mono text-[11px] text-muted-foreground">
-									{c.light} · {c.dark}
-								</div>
-							</div>
+							<PairSwatch key={c.name} name={c.name} light={c.light} dark={c.dark} />
 						))}
 					</div>
 				</div>
@@ -256,6 +441,26 @@ export function Tokens() {
 
 			<section id="typography" className="space-y-6">
 				<h2 className="text-2xl font-semibold tracking-tight text-foreground">Typography</h2>
+
+				<div className="space-y-3">
+					<h3 className="text-sm font-semibold text-foreground">Font stacks</h3>
+					<p className="text-xs text-muted-foreground">
+						Inter is used for every surface in Canvas; JetBrains Mono for code. Both are exposed as
+						CSS variables (<code className="font-mono">--font-sans</code>,{" "}
+						<code className="font-mono">--font-mono</code>) so consumers can swap or extend the
+						stack without re-declaring the tokens.
+					</p>
+					<div className="space-y-2 rounded-lg border border-border bg-card/40 p-4">
+						<div className="font-mono text-[11px] text-muted-foreground">--font-sans</div>
+						<div className="text-base text-foreground" style={{ fontFamily: "var(--font-sans)" }}>
+							Inter, system-ui, -apple-system, sans-serif
+						</div>
+						<div className="mt-3 font-mono text-[11px] text-muted-foreground">--font-mono</div>
+						<div className="text-base text-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+							JetBrains Mono, Fira Code, ui-monospace, monospace
+						</div>
+					</div>
+				</div>
 
 				<div className="space-y-2">
 					<h3 className="text-sm font-semibold text-foreground">Display + heading</h3>
@@ -283,6 +488,17 @@ export function Tokens() {
 							H2 Heading
 						</TypeRow>
 						<TypeRow
+							meta="22 · 28/32 · 600"
+							style={{
+								fontSize: 22,
+								lineHeight: "28px",
+								fontWeight: 600,
+								letterSpacing: "-0.02em",
+							}}
+						>
+							Page title · 22px (PageHeader)
+						</TypeRow>
+						<TypeRow
 							meta="2xl · 24/32 · 600"
 							style={{
 								fontSize: 24,
@@ -291,13 +507,19 @@ export function Tokens() {
 								letterSpacing: "-0.015em",
 							}}
 						>
-							Page title
+							Section title · h3
 						</TypeRow>
 						<TypeRow
 							meta="lg · 18/28 · 500"
 							style={{ fontSize: 18, lineHeight: "28px", fontWeight: 500 }}
 						>
-							Card title / section
+							Card title / subsection
+						</TypeRow>
+						<TypeRow
+							meta="15 · 20/24 · 600"
+							style={{ fontSize: 15, lineHeight: "24px", fontWeight: 600 }}
+						>
+							SectionCard heading · 15px
 						</TypeRow>
 					</div>
 				</div>
@@ -306,10 +528,13 @@ export function Tokens() {
 					<h3 className="text-sm font-semibold text-foreground">Body</h3>
 					<div className="space-y-3">
 						<TypeRow meta="base · 16/24 · 400" style={{ fontSize: 16, lineHeight: "24px" }}>
-							Body — Roboto is used for every surface in Canvas.
+							Body — Inter is used for every surface in Canvas.
 						</TypeRow>
 						<TypeRow meta="sm · 14/20 · 400" style={{ fontSize: 14, lineHeight: "20px" }}>
 							Small — default for form fields, descriptions.
+						</TypeRow>
+						<TypeRow meta="13 · 18 · 400" style={{ fontSize: 13, lineHeight: "18px" }}>
+							Table cell · DataTable rows · 13px
 						</TypeRow>
 						<TypeRow meta="sm · 14/20 · muted" style={{ fontSize: 14, lineHeight: "20px" }} muted>
 							Muted subtitle — under titles, on cards
@@ -332,7 +557,7 @@ export function Tokens() {
 						<TypeRow
 							meta="mono · 14/20"
 							style={{
-								fontFamily: "var(--font-mono, ui-monospace)",
+								fontFamily: "var(--font-mono)",
 								fontSize: 14,
 								lineHeight: "20px",
 							}}
@@ -342,7 +567,7 @@ export function Tokens() {
 						<TypeRow
 							meta="mono · 12/16 · muted"
 							style={{
-								fontFamily: "var(--font-mono, ui-monospace)",
+								fontFamily: "var(--font-mono)",
 								fontSize: 12,
 								lineHeight: "16px",
 							}}
@@ -352,6 +577,38 @@ export function Tokens() {
 						</TypeRow>
 					</div>
 				</div>
+
+				<div className="space-y-2">
+					<h3 className="text-sm font-semibold text-foreground">Letter-spacing scale</h3>
+					<p className="text-xs text-muted-foreground">
+						Three named tracking tokens. Apply via Tailwind's arbitrary value syntax —{" "}
+						<code className="font-mono">tracking-[var(--tracking-tighter)]</code> — or use the
+						hard-coded literals directly (<code className="font-mono">tracking-[-0.02em]</code>)
+						when you want the value visible in the source.
+					</p>
+					<div className="space-y-3">
+						{TRACKING.map((t) => (
+							<div
+								key={t.name}
+								className="flex flex-wrap items-baseline gap-4 border-b border-border pb-3 last:border-0"
+							>
+								<div
+									className="font-mono text-[11px] text-muted-foreground"
+									style={{ minWidth: 200 }}
+								>
+									{t.name} · {t.value}
+								</div>
+								<div
+									className="text-foreground"
+									style={{ fontSize: 22, fontWeight: 600, letterSpacing: t.value }}
+								>
+									Olympus admin · sample
+								</div>
+								<div className="text-[11px] text-muted-foreground">{t.note}</div>
+							</div>
+						))}
+					</div>
+				</div>
 			</section>
 
 			<section id="spacing" className="space-y-4">
@@ -359,7 +616,7 @@ export function Tokens() {
 				<p className="text-sm text-muted-foreground">
 					Tailwind default 4px grid. Card padding is <code className="font-mono">p-6</code> (24px).
 					Shell gutter is <code className="font-mono">p-4 sm:p-6</code>. Content max-width is{" "}
-					<code className="font-mono">max-w-6xl mx-auto</code>.
+					<code className="font-mono">max-w-[1400px] mx-auto</code>.
 				</p>
 				<div className="grid grid-cols-4 gap-4 sm:grid-cols-8">
 					{SPACING_STEPS.map((s) => (
