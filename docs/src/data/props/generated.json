@@ -14899,7 +14899,36 @@
       "displayName": "AlertDialog",
       "description": "",
       "file": "src/components/organisms/alert-dialog.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state. Pair with `onOpenChange`."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the dialog opens or closes."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
+        }
+      ]
     },
     {
       "displayName": "AlertDialogAction",
@@ -14910,8 +14939,22 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a custom button while still hooking the\ndialog's commit behaviour."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Action label (e.g. \"Delete\", \"Confirm\")."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`. Defaults to canvas's primary button."
         }
       ]
     },
@@ -14924,8 +14967,22 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Cancel label (e.g. \"Cancel\", \"Keep editing\")."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`. Defaults to canvas's outline button."
         }
       ]
     },
@@ -14938,8 +14995,50 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when closed. Useful for\nexit animations."
+        },
+        {
+          "name": "onOpenAutoFocus",
+          "required": false,
+          "type": "((event: Event) => void)",
           "defaultValue": null,
-          "description": ""
+          "description": "Fires when focus enters the dialog after it opens."
+        },
+        {
+          "name": "onCloseAutoFocus",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when focus leaves the dialog after it closes."
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "required": false,
+          "type": "((event: KeyboardEvent) => void)",
+          "defaultValue": null,
+          "description": "Fires when the Escape key is pressed."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Title + Description + Footer (with `<AlertDialogAction>` and\n`<AlertDialogCancel>`)."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     },
@@ -14952,8 +15051,22 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Description text shown below the title."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     },
@@ -14961,13 +15074,43 @@
       "displayName": "AlertDialogFooter",
       "description": "",
       "file": "src/components/organisms/alert-dialog.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Action + Cancel buttons."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
+        }
+      ]
     },
     {
       "displayName": "AlertDialogHeader",
       "description": "",
       "file": "src/components/organisms/alert-dialog.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Title + optional description."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
+        }
+      ]
     },
     {
       "displayName": "AlertDialogOverlay",
@@ -14978,8 +15121,22 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the overlay to mount even when closed."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
-          "description": ""
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     },
@@ -14987,7 +15144,22 @@
       "displayName": "AlertDialogPortal",
       "description": "",
       "file": "src/components/organisms/alert-dialog.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "container",
+          "required": false,
+          "type": "HTMLElement | null",
+          "defaultValue": null,
+          "description": "DOM element to portal into. Defaults to `document.body`."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the portal to mount its children even when closed."
+        }
+      ]
     },
     {
       "displayName": "AlertDialogTitle",
@@ -14998,8 +15170,22 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — useful to swap the heading level."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Title text."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     },
@@ -15012,8 +15198,22 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "The button (or slot) that opens the alert."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     }
@@ -17319,7 +17519,50 @@
       "displayName": "HoverCard",
       "description": "",
       "file": "src/components/organisms/hover-card.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state. Pair with `onOpenChange`."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the hover card opens or closes."
+        },
+        {
+          "name": "openDelay",
+          "required": false,
+          "type": "number",
+          "defaultValue": "700",
+          "description": "Delay in ms before the card opens after the user hovers the trigger."
+        },
+        {
+          "name": "closeDelay",
+          "required": false,
+          "type": "number",
+          "defaultValue": "300",
+          "description": "Delay in ms before the card closes after the cursor leaves."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
+        }
+      ]
     },
     {
       "displayName": "HoverCardContent",
@@ -17327,11 +17570,74 @@
       "file": "src/components/organisms/hover-card.tsx",
       "props": [
         {
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4",
+          "description": "Distance in pixels between the trigger and the card."
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "0",
+          "description": "Distance from the alignment edge."
+        },
+        {
+          "name": "side",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"bottom\"",
+          "description": "Preferred side of the trigger to render on."
+        },
+        {
+          "name": "align",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "center",
+          "description": "Alignment along the chosen side."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Avoid colliding with the viewport edges."
+        },
+        {
+          "name": "collisionPadding",
+          "required": false,
+          "type": "number | { top?: number; right?: number; bottom?: number | undefined; left?: number | undefined; } | undefined",
+          "defaultValue": "0",
+          "description": "Padding kept from collision boundaries."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when closed."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Card body."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     },
@@ -17344,6 +17650,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -17736,7 +18049,43 @@
       "displayName": "Popover",
       "description": "",
       "file": "src/components/organisms/popover.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state. Pair with `onOpenChange`."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the popover opens or closes."
+        },
+        {
+          "name": "modal",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "When true, blocks focus from leaving the popover."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
+        }
+      ]
     },
     {
       "displayName": "PopoverAnchor",
@@ -17747,8 +18096,8 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
-          "defaultValue": null,
-          "description": ""
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot. Use to anchor the popover to an element other\nthan the trigger (e.g. a parent input while the trigger is a button)."
         }
       ]
     },
@@ -17758,11 +18107,123 @@
       "file": "src/components/organisms/popover.tsx",
       "props": [
         {
-          "name": "asChild",
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4",
+          "description": "Distance in pixels between the anchor and the popover."
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "0",
+          "description": "Distance from the alignment edge."
+        },
+        {
+          "name": "side",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"bottom\"",
+          "description": "Preferred side of the anchor to render on."
+        },
+        {
+          "name": "align",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "center",
+          "description": "Alignment along the chosen side."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Avoid colliding with the viewport edges by flipping/shifting."
+        },
+        {
+          "name": "collisionPadding",
+          "required": false,
+          "type": "number | { top?: number; right?: number; bottom?: number | undefined; left?: number | undefined; } | undefined",
+          "defaultValue": "0",
+          "description": "Padding kept from collision boundaries."
+        },
+        {
+          "name": "sticky",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"partial\"",
+          "description": "Stick to the trigger or partially follow on scroll."
+        },
+        {
+          "name": "hideWhenDetached",
           "required": false,
           "type": "boolean",
           "defaultValue": null,
-          "description": ""
+          "description": "Hide the content when the trigger is detached or covered."
+        },
+        {
+          "name": "onOpenAutoFocus",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when focus enters the popover after it opens."
+        },
+        {
+          "name": "onCloseAutoFocus",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when focus leaves the popover after it closes."
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "required": false,
+          "type": "((event: KeyboardEvent) => void)",
+          "defaultValue": null,
+          "description": "Fires when the Escape key is pressed inside the popover."
+        },
+        {
+          "name": "onPointerDownOutside",
+          "required": false,
+          "type": "((event: CustomEvent<{ originalEvent: PointerEvent; }>) => void)",
+          "defaultValue": null,
+          "description": "Fires on pointer event outside the popover."
+        },
+        {
+          "name": "onInteractOutside",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires on any interaction outside (focus + pointer)."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when closed."
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Popover body."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     },
@@ -17775,6 +18236,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a custom button while keeping the\npopover's trigger behaviour."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18100,7 +18568,43 @@
       "displayName": "Sheet",
       "description": "",
       "file": "src/components/organisms/sheet.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state. Pair with `onOpenChange`."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the sheet opens or closes."
+        },
+        {
+          "name": "modal",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true, the sheet traps focus and renders the scrim overlay."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
+        }
+      ]
     },
     {
       "displayName": "SheetClose",
@@ -18111,6 +18615,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18122,18 +18633,74 @@
       "file": "src/components/organisms/sheet.tsx",
       "props": [
         {
+          "name": "side",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "right",
+          "description": "Which edge of the viewport the sheet slides in from."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
-          "defaultValue": null,
-          "description": ""
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
         },
         {
-          "name": "side",
+          "name": "forceMount",
           "required": false,
-          "type": "\"top\" | \"bottom\" | \"left\" | \"right\" | null",
-          "defaultValue": "right",
-          "description": ""
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when closed."
+        },
+        {
+          "name": "onOpenAutoFocus",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when focus enters the sheet after it opens."
+        },
+        {
+          "name": "onCloseAutoFocus",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when focus leaves the sheet after it closes."
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "required": false,
+          "type": "((event: KeyboardEvent) => void)",
+          "defaultValue": null,
+          "description": "Fires when Escape is pressed."
+        },
+        {
+          "name": "onPointerDownOutside",
+          "required": false,
+          "type": "((event: CustomEvent<{ originalEvent: PointerEvent; }>) => void)",
+          "defaultValue": null,
+          "description": "Fires on pointer event outside the sheet."
+        },
+        {
+          "name": "onInteractOutside",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires on any interaction outside (focus + pointer)."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Sheet body — `<SheetHeader>`, content, `<SheetFooter>`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
         }
       ]
     },
@@ -18146,6 +18713,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18155,13 +18729,43 @@
       "displayName": "SheetFooter",
       "description": "",
       "file": "src/components/organisms/sheet.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Action buttons."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SheetHeader",
       "description": "",
       "file": "src/components/organisms/sheet.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Title + optional description."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SheetOverlay",
@@ -18172,6 +18776,20 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the overlay to mount even when closed."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18181,7 +18799,22 @@
       "displayName": "SheetPortal",
       "description": "",
       "file": "src/components/organisms/sheet.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "container",
+          "required": false,
+          "type": "HTMLElement | null",
+          "defaultValue": null,
+          "description": "DOM element to portal into. Defaults to `document.body`."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the portal to mount even when the sheet is closed."
+        }
+      ]
     },
     {
       "displayName": "SheetTitle",
@@ -18192,6 +18825,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18206,6 +18846,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }

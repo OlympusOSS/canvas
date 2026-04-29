@@ -7,17 +7,89 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 
-const Sheet = SheetPrimitive.Root;
+export interface SheetProps extends React.ComponentProps<typeof SheetPrimitive.Root> {
+	/** Controlled open state. Pair with `onOpenChange`. */
+	open?: boolean;
+	/**
+	 * Initial open state for uncontrolled usage.
+	 * @default false
+	 */
+	defaultOpen?: boolean;
+	/** Fires whenever the sheet opens or closes. */
+	onOpenChange?: (open: boolean) => void;
+	/**
+	 * When true, the sheet traps focus and renders the scrim overlay.
+	 * @default true
+	 */
+	modal?: boolean;
+	/** Trigger + Content. */
+	children?: React.ReactNode;
+}
 
-const SheetTrigger = SheetPrimitive.Trigger;
+const Sheet = SheetPrimitive.Root as React.FC<SheetProps>;
 
-const SheetClose = SheetPrimitive.Close;
+export interface SheetTriggerProps
+	extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger> {
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	children?: React.ReactNode;
+	className?: string;
+}
 
-const SheetPortal = SheetPrimitive.Portal;
+const SheetTrigger = SheetPrimitive.Trigger as React.ForwardRefExoticComponent<
+	SheetTriggerProps & React.RefAttributes<HTMLButtonElement>
+>;
+
+export interface SheetCloseProps
+	extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Close> {
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	children?: React.ReactNode;
+	className?: string;
+}
+
+const SheetClose = SheetPrimitive.Close as React.ForwardRefExoticComponent<
+	SheetCloseProps & React.RefAttributes<HTMLButtonElement>
+>;
+
+export interface SheetPortalProps
+	extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Portal> {
+	/** DOM element to portal into. Defaults to `document.body`. */
+	container?: HTMLElement | null;
+	/**
+	 * Force the portal to mount even when the sheet is closed.
+	 * @default false
+	 */
+	forceMount?: true;
+	children?: React.ReactNode;
+}
+
+const SheetPortal = SheetPrimitive.Portal as React.FC<SheetPortalProps>;
+
+export interface SheetOverlayProps
+	extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay> {
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	/**
+	 * Force the overlay to mount even when closed.
+	 * @default false
+	 */
+	forceMount?: true;
+	className?: string;
+}
 
 const SheetOverlay = React.forwardRef<
 	React.ElementRef<typeof SheetPrimitive.Overlay>,
-	React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
+	SheetOverlayProps
 >(({ className, ...props }, ref) => (
 	<SheetPrimitive.Overlay
 		className={cn(
@@ -49,9 +121,39 @@ const sheetVariants = cva(
 	},
 );
 
-interface SheetContentProps
+export interface SheetContentProps
 	extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-		VariantProps<typeof sheetVariants> {}
+		VariantProps<typeof sheetVariants> {
+	/**
+	 * Which edge of the viewport the sheet slides in from.
+	 * @default "right"
+	 */
+	side?: "top" | "right" | "bottom" | "left";
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	/**
+	 * Force the content to mount even when closed.
+	 * @default false
+	 */
+	forceMount?: true;
+	/** Fires when focus enters the sheet after it opens. */
+	onOpenAutoFocus?: (event: Event) => void;
+	/** Fires when focus leaves the sheet after it closes. */
+	onCloseAutoFocus?: (event: Event) => void;
+	/** Fires when Escape is pressed. */
+	onEscapeKeyDown?: (event: KeyboardEvent) => void;
+	/** Fires on pointer event outside the sheet. */
+	onPointerDownOutside?: (event: CustomEvent<{ originalEvent: PointerEvent }>) => void;
+	/** Fires on any interaction outside (focus + pointer). */
+	onInteractOutside?: (event: Event) => void;
+	/** Sheet body — `<SheetHeader>`, content, `<SheetFooter>`. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged via `cn()`. */
+	className?: string;
+}
 
 const SheetContent = React.forwardRef<
 	React.ElementRef<typeof SheetPrimitive.Content>,
@@ -70,12 +172,24 @@ const SheetContent = React.forwardRef<
 ));
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
-const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+export interface SheetHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+	/** Title + optional description. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
+const SheetHeader = ({ className, ...props }: SheetHeaderProps) => (
 	<div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
 );
 SheetHeader.displayName = "SheetHeader";
 
-const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+export interface SheetFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+	/** Action buttons. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
+const SheetFooter = ({ className, ...props }: SheetFooterProps) => (
 	<div
 		className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
 		{...props}
@@ -83,21 +197,42 @@ const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
 );
 SheetFooter.displayName = "SheetFooter";
 
-const SheetTitle = React.forwardRef<
-	React.ElementRef<typeof SheetPrimitive.Title>,
-	React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
->(({ className, ...props }, ref) => (
-	<SheetPrimitive.Title
-		ref={ref}
-		className={cn("text-lg font-semibold text-foreground", className)}
-		{...props}
-	/>
-));
+export interface SheetTitleProps
+	extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title> {
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	children?: React.ReactNode;
+	className?: string;
+}
+
+const SheetTitle = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Title>, SheetTitleProps>(
+	({ className, ...props }, ref) => (
+		<SheetPrimitive.Title
+			ref={ref}
+			className={cn("text-lg font-semibold text-foreground", className)}
+			{...props}
+		/>
+	),
+);
 SheetTitle.displayName = SheetPrimitive.Title.displayName;
+
+export interface SheetDescriptionProps
+	extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description> {
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	children?: React.ReactNode;
+	className?: string;
+}
 
 const SheetDescription = React.forwardRef<
 	React.ElementRef<typeof SheetPrimitive.Description>,
-	React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
+	SheetDescriptionProps
 >(({ className, ...props }, ref) => (
 	<SheetPrimitive.Description
 		ref={ref}

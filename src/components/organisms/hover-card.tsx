@@ -5,13 +5,98 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 
-const HoverCard = HoverCardPrimitive.Root;
+export interface HoverCardProps extends React.ComponentProps<typeof HoverCardPrimitive.Root> {
+	/** Controlled open state. Pair with `onOpenChange`. */
+	open?: boolean;
+	/**
+	 * Initial open state for uncontrolled usage.
+	 * @default false
+	 */
+	defaultOpen?: boolean;
+	/** Fires whenever the hover card opens or closes. */
+	onOpenChange?: (open: boolean) => void;
+	/**
+	 * Delay in ms before the card opens after the user hovers the trigger.
+	 * @default 700
+	 */
+	openDelay?: number;
+	/**
+	 * Delay in ms before the card closes after the cursor leaves.
+	 * @default 300
+	 */
+	closeDelay?: number;
+	/** Trigger + Content. */
+	children?: React.ReactNode;
+}
 
-const HoverCardTrigger = HoverCardPrimitive.Trigger;
+const HoverCard = HoverCardPrimitive.Root as React.FC<HoverCardProps>;
+
+export interface HoverCardTriggerProps
+	extends React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Trigger> {
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	children?: React.ReactNode;
+	className?: string;
+}
+
+const HoverCardTrigger = HoverCardPrimitive.Trigger as React.ForwardRefExoticComponent<
+	HoverCardTriggerProps & React.RefAttributes<HTMLAnchorElement>
+>;
+
+export interface HoverCardContentProps
+	extends React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Content> {
+	/**
+	 * Distance in pixels between the trigger and the card.
+	 * @default 4
+	 */
+	sideOffset?: number;
+	/**
+	 * Distance from the alignment edge.
+	 * @default 0
+	 */
+	alignOffset?: number;
+	/**
+	 * Preferred side of the trigger to render on.
+	 * @default "bottom"
+	 */
+	side?: "top" | "right" | "bottom" | "left";
+	/**
+	 * Alignment along the chosen side.
+	 * @default "center"
+	 */
+	align?: "start" | "center" | "end";
+	/**
+	 * Avoid colliding with the viewport edges.
+	 * @default true
+	 */
+	avoidCollisions?: boolean;
+	/**
+	 * Padding kept from collision boundaries.
+	 * @default 0
+	 */
+	collisionPadding?: number | { top?: number; right?: number; bottom?: number; left?: number };
+	/**
+	 * Force the content to mount even when closed.
+	 * @default false
+	 */
+	forceMount?: true;
+	/**
+	 * Render as a Radix Slot.
+	 * @default false
+	 */
+	asChild?: boolean;
+	/** Card body. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged via `cn()`. */
+	className?: string;
+}
 
 const HoverCardContent = React.forwardRef<
 	React.ElementRef<typeof HoverCardPrimitive.Content>,
-	React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Content>
+	HoverCardContentProps
 >(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
 	<HoverCardPrimitive.Content
 		ref={ref}
