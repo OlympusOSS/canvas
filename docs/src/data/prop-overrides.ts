@@ -28,6 +28,46 @@ import type { PropsOverrideMap } from "../components/PropsTable";
  * Keyed: `sourceId` (e.g. `organisms/sidebar`) → component displayName.
  */
 export const COMPONENT_DESCRIPTIONS: Record<string, Record<string, string>> = {
+	"atoms/aspect-ratio": {
+		AspectRatio:
+			"Re-export of Radix's `AspectRatio.Root`. Pass `ratio` (number, e.g. `16/9`) to lock a child's width-to-height ratio. Useful for video/image embeds and avatars that must stay square regardless of grid width.",
+	},
+	"atoms/avatar": {
+		Avatar:
+			"Round container for a user's profile image. Composes `Avatar` + `AvatarImage` + `AvatarFallback`; the fallback shows when the image fails to load. Defaults to `h-10 w-10`.",
+		AvatarImage:
+			"The `<img>` slot inside `<Avatar>`. Accepts every native `<img>` attribute (`src`, `alt`, `srcSet`, `loading`, `referrerPolicy`, `crossOrigin`, `decoding`, `onLoad`, `onError`). Hides itself if the image errors so the fallback can take over.",
+		AvatarFallback:
+			"Rendered when the image is missing or hasn't loaded yet — usually initials, an icon, or a generic silhouette. Inherits the avatar's size and circular clip.",
+	},
+	"atoms/checkbox": {
+		Checkbox:
+			"Wraps Radix's `Checkbox.Root`. Accepts every Radix checkbox prop: `checked` / `defaultChecked` (boolean or `'indeterminate'`), `onCheckedChange`, `disabled`, `required`, `name`, `value`, plus the standard HTML attributes. The check glyph is rendered inside the component automatically.",
+	},
+	"atoms/input": {
+		Input:
+			"Styled wrapper around the native `<input>` — accepts every native input attribute: `type` (`text`/`email`/`password`/`number`/`tel`/`url`/`search`/`date`/`time`/`file`/etc.), `value` / `defaultValue`, `placeholder`, `disabled`, `readOnly`, `required`, `name`, `id`, `min` / `max` / `step`, `pattern`, `minLength` / `maxLength`, `autoComplete`, `autoFocus`, `onChange` / `onBlur` / `onFocus` / `onInput`. Default height 36px (`h-9`) with rounded-md and the canvas focus ring.",
+	},
+	"atoms/label": {
+		Label:
+			"Wraps Radix's `Label.Root`. Behaves like a native `<label>` — pair via `htmlFor` matching the form control's `id`, or wrap the control as a child for implicit association. Auto-dims to 70% opacity when the associated input is `:disabled`.",
+	},
+	"atoms/separator": {
+		Separator:
+			"Thin divider line. Set `orientation='horizontal'` (default, full-width 1px line) or `orientation='vertical'` (full-height 1px column). When `decorative={true}` (default) it's hidden from screen readers; pass `decorative={false}` for semantic separators.",
+	},
+	"atoms/skeleton": {
+		Skeleton:
+			"Animated placeholder for content that's loading. Render at the size of the eventual content (set width/height via className) and Skeleton fills with a pulsing tinted block. Accepts every `<div>` attribute.",
+	},
+	"atoms/switch": {
+		Switch:
+			"Wraps Radix's `Switch.Root` — a binary on/off toggle. Accepts `checked` / `defaultChecked`, `onCheckedChange`, `disabled`, `required`, `name`, `value`, plus the standard HTML attributes. Pair with a `<Label>` so the affordance is clear.",
+	},
+	"atoms/textarea": {
+		Textarea:
+			"Styled wrapper around the native `<textarea>`. Accepts every native textarea attribute: `value` / `defaultValue`, `placeholder`, `rows`, `cols`, `wrap`, `disabled`, `readOnly`, `required`, `maxLength` / `minLength`, `autoComplete`, `autoFocus`, `onChange` / `onBlur` / `onFocus`. Default min-height is 60px; resize handles inherit from the browser.",
+	},
 	"organisms/sidebar": {
 		SidebarProvider:
 			"Wraps the entire shell and supplies the `useSidebar()` context. Reads the `--sidebar-width` / `--sidebar-width-icon` CSS variables off this element, so any width override goes here via `style`. Required around every Sidebar.",
