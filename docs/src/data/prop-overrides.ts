@@ -529,20 +529,6 @@ export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = 
 			},
 		},
 	},
-	"atoms/button": {
-		Button: {
-			variant: {
-				description:
-					"Visual emphasis. `default` is the primary action, `destructive` is for irreversible actions, `outline` and `secondary` are quieter, `ghost` is borderless, `link` looks like body-text underlined.",
-				defaultValue: '"default"',
-			},
-			size: {
-				description:
-					"Height + horizontal padding preset. `sm` (32px), `default` (36px), `lg` (40px), `icon` is square 36px for icon-only buttons (always pair with `aria-label`).",
-				defaultValue: '"default"',
-			},
-		},
-	},
 	"atoms/flex-box": {
 		FlexBox: {
 			direction: {
