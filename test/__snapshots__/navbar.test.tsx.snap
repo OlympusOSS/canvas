@@ -3,7 +3,7 @@
 exports[`NavBar > matches snapshot 1`] = `
 <div>
   <nav
-    class="top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky"
+    class="left-0 right-0 top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 fixed"
   >
     <div
       class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6"
@@ -74,13 +74,16 @@ exports[`NavBar > matches snapshot 1`] = `
       </button>
     </div>
   </nav>
+  <div
+    class="h-14"
+  />
 </div>
 `;
 
 exports[`NavBar > matches snapshot with mobile open 1`] = `
 <div>
   <nav
-    class="top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky"
+    class="left-0 right-0 top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 fixed"
   >
     <div
       class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6"
@@ -164,5 +167,8 @@ exports[`NavBar > matches snapshot with mobile open 1`] = `
       </div>
     </div>
   </nav>
+  <div
+    class="h-14"
+  />
 </div>
 `;

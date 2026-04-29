@@ -30,6 +30,70 @@ export { Slider } from "./components/atoms/slider";
 export { Switch } from "./components/atoms/switch";
 export { Textarea } from "./components/atoms/textarea";
 export { Toggle, toggleVariants } from "./components/atoms/toggle";
+/* ────────────────────────────────────────────────────────────────
+   CHARTS — theme-aware Recharts wrappers.
+   Re-exported selectively so chart-type wrappers, data primitives, and
+   chrome (axes/grids/references/text/containers) are accessible without
+   shadowing the existing `chart.tsx` organism's ChartConfig/ChartContainer
+   /ChartLegend/ChartTooltip names.
+   ──────────────────────────────────────────────────────────────── */
+export {
+	CartesianAxis,
+	PolarAngleAxis,
+	PolarRadiusAxis,
+	XAxis,
+	YAxis,
+	ZAxis,
+} from "./components/charts/axes";
+export {
+	AreaChart,
+	BarChart,
+	ComposedChart,
+	FunnelChart,
+	LineChart,
+	PieChart,
+	RadarChart,
+	RadialBarChart,
+	Sankey,
+	ScatterChart,
+	SunburstChart,
+	Treemap,
+} from "./components/charts/chart-types";
+export { Brush, Layer, ResponsiveContainer, Surface } from "./components/charts/containers";
+export {
+	Area,
+	Bar,
+	Funnel,
+	Line,
+	Pie,
+	Radar,
+	RadialBar,
+	Scatter,
+} from "./components/charts/data";
+export {
+	ChartCell,
+	ChartCustomized,
+	Cross,
+	Curve,
+	Dot,
+	ErrorBar,
+	Polygon,
+	Rectangle,
+	Sector,
+	Trapezoid,
+} from "./components/charts/details";
+export { CartesianGrid, PolarGrid } from "./components/charts/grids";
+export {
+	ReferenceArea,
+	ReferenceDot,
+	ReferenceLine,
+} from "./components/charts/references";
+export { ChartLabel, LabelList, Text } from "./components/charts/text";
+export {
+	WorldHeatMap,
+	type WorldHeatMapPoint,
+	type WorldHeatMapProps,
+} from "./components/charts/world-heat-map";
 export {
 	ActionBar,
 	type ActionBarAction,
@@ -298,6 +362,26 @@ export {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "./components/organisms/dropdown-menu";
+/* ────────────────────────────────────────────────────────────────
+   EDITORS — Code, Markdown, Rich-text.
+   ──────────────────────────────────────────────────────────────── */
+export {
+	CodeEditor,
+	type CodeEditorLanguage,
+	type CodeEditorProps,
+} from "./components/organisms/editors/code-editor";
+export {
+	MarkdownEditor,
+	type MarkdownEditorProps,
+} from "./components/organisms/editors/markdown-editor";
+export {
+	RichTextEditor,
+	type RichTextEditorProps,
+} from "./components/organisms/editors/rich-text-editor";
+export {
+	TOOLBAR_ITEM_IDS,
+	type ToolbarItemId,
+} from "./components/organisms/editors/toolbar/rte-toolbar";
 export {
 	ErrorBoundary,
 	type ErrorBoundaryProps,
