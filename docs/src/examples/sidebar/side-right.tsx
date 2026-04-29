@@ -13,15 +13,16 @@ import {
 	SidebarTrigger,
 } from "@olympusoss/canvas";
 
-import { BrandTrigger, NAV_GROUPS } from "./_shared";
+import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	return (
 		<SidebarProvider className="min-h-[520px]">
-			<SidebarInset className="p-4 text-sm">
-				<p className="text-muted-foreground">
+			<SidebarInset>
+				<Topbar title="Dashboard" />
+				<div className="p-4 text-sm text-muted-foreground">
 					Sidebar lives on the right. Same Olympus shell, mirrored layout.
-				</p>
+				</div>
 			</SidebarInset>
 			<Sidebar side="right" collapsible="icon">
 				<SidebarHeader>

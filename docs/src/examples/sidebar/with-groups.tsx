@@ -15,7 +15,7 @@ import {
 } from "@olympusoss/canvas";
 import { Fragment } from "react";
 
-import { BrandTrigger, NAV_GROUPS } from "./_shared";
+import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	return (
@@ -48,8 +48,11 @@ export default function App() {
 					))}
 				</SidebarContent>
 			</Sidebar>
-			<SidebarInset className="p-4 text-sm text-muted-foreground">
-				Each labeled group is separated by a `SidebarSeparator`.
+			<SidebarInset>
+				<Topbar title="Dashboard" />
+				<div className="p-4 text-sm text-muted-foreground">
+					Each labeled group is separated by a `SidebarSeparator`.
+				</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);
