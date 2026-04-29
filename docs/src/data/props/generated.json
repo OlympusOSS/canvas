@@ -13426,6 +13426,63 @@
       ]
     }
   ],
+  "molecules/activity-item": [
+    {
+      "displayName": "ActivityFeed",
+      "description": "",
+      "file": "src/components/molecules/activity-item.tsx",
+      "props": []
+    },
+    {
+      "displayName": "ActivityItem",
+      "description": "",
+      "file": "src/components/molecules/activity-item.tsx",
+      "props": [
+        {
+          "name": "subject",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Bold subject (the actor)."
+        },
+        {
+          "name": "action",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Muted action verb + object."
+        },
+        {
+          "name": "timestamp",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Right-aligned timestamp."
+        },
+        {
+          "name": "leading",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Leading icon or avatar slot."
+        },
+        {
+          "name": "onClick",
+          "required": false,
+          "type": "(() => void)",
+          "defaultValue": null,
+          "description": "When provided, the row becomes clickable."
+        },
+        {
+          "name": "index",
+          "required": false,
+          "type": "number",
+          "defaultValue": "1",
+          "description": "Index in a list — when 0, the top border is suppressed so consecutive\nitems only render dividers between rows. Defaults to 1 (border on)."
+        }
+      ]
+    }
+  ],
   "molecules/alert": [
     {
       "displayName": "Alert",
@@ -13517,6 +13574,43 @@
           "type": "string",
           "defaultValue": null,
           "description": "Tailwind / CSS classes merged onto the root container via `cn()`.\nDefaults to `pointer-events-none fixed inset-0 overflow-hidden`."
+        }
+      ]
+    }
+  ],
+  "molecules/brand-lockup": [
+    {
+      "displayName": "BrandLockup",
+      "description": "",
+      "file": "src/components/molecules/brand-lockup.tsx",
+      "props": [
+        {
+          "name": "productName",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Wordmark next to the logo (e.g. \"Athena\", \"Hera\")."
+        },
+        {
+          "name": "subtitle",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Optional secondary line under the wordmark."
+        },
+        {
+          "name": "size",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "md",
+          "description": "Visual size — sm = sidebar collapsed, md = sidebar expanded, lg = hero."
+        },
+        {
+          "name": "collapsed",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "When true, renders only the logo without the wordmark or subtitle."
         }
       ]
     }
@@ -13986,11 +14080,18 @@
           "description": ""
         },
         {
+          "name": "title",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Primary message. Renders below the icon pill, 15px font-medium."
+        },
+        {
           "name": "message",
           "required": false,
           "type": "string",
-          "defaultValue": "No items found",
-          "description": ""
+          "defaultValue": null,
+          "description": "@deprecated Use `title`. Retained as an alias so existing call sites\n(e.g. DataTable's empty fallback) keep working."
         },
         {
           "name": "description",
@@ -14186,6 +14287,131 @@
           "type": "enum",
           "defaultValue": "default",
           "description": ""
+        }
+      ]
+    }
+  ],
+  "molecules/notification-item": [
+    {
+      "displayName": "NotificationItem",
+      "description": "",
+      "file": "src/components/molecules/notification-item.tsx",
+      "props": [
+        {
+          "name": "icon",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Leading icon — typically a Canvas `<Icon name=\"…\" />`."
+        },
+        {
+          "name": "iconTone",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "neutral",
+          "description": "Tint variant for the icon's circular background."
+        },
+        {
+          "name": "title",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Bold title line."
+        },
+        {
+          "name": "description",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Optional secondary line (description / metadata)."
+        },
+        {
+          "name": "timestamp",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Right-aligned timestamp (relative or absolute)."
+        },
+        {
+          "name": "onClick",
+          "required": false,
+          "type": "(() => void)",
+          "defaultValue": null,
+          "description": "When provided, the entire row becomes clickable."
+        }
+      ]
+    }
+  ],
+  "molecules/notification-list": [
+    {
+      "displayName": "NotificationList",
+      "description": "",
+      "file": "src/components/molecules/notification-list.tsx",
+      "props": [
+        {
+          "name": "title",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": "Notifications",
+          "description": "Header title — defaults to \"Notifications\"."
+        },
+        {
+          "name": "count",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Optional count chip rendered to the right of the title (e.g. \"3 new\")."
+        },
+        {
+          "name": "footer",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Footer slot — typically a single full-width \"View all\" link/button."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Notification rows — typically `<NotificationItem>` instances."
+        }
+      ]
+    }
+  ],
+  "molecules/number-badge": [
+    {
+      "displayName": "NumberBadge",
+      "description": "Small overlay badge for counts on icon buttons (notification bell, inbox,\netc.). Position it absolutely against a `relative` parent — typically by\npairing with `absolute -right-1 -top-1` or similar utility classes via\n`className`. Defaults to top-right placement.",
+      "file": "src/components/molecules/number-badge.tsx",
+      "props": [
+        {
+          "name": "count",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Numeric count. When omitted (or `dot` is true), renders a tone-tinted dot."
+        },
+        {
+          "name": "max",
+          "required": false,
+          "type": "number",
+          "defaultValue": "99",
+          "description": "Cap displayed count — anything above renders as `${max}+`. Default 99."
+        },
+        {
+          "name": "tone",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "destructive",
+          "description": "Color tone."
+        },
+        {
+          "name": "dot",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Render as a dot regardless of count."
         }
       ]
     }
@@ -14595,6 +14821,13 @@
           "type": "(() => void)",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "shortcut",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Optional keyboard-shortcut hint rendered as a `<kbd>` on the right of\nthe input when empty. Hidden once the user types so the clear button\nhas the slot. Example: `shortcut=\"⌘K\"`."
         }
       ]
     }
@@ -14713,11 +14946,25 @@
           "description": ""
         },
         {
+          "name": "icon",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Icon rendered to the left of the title (16px Lucide via the Canvas\n`<Icon>` atom is the canonical pattern)."
+        },
+        {
+          "name": "actions",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Right-aligned action slot inside the header."
+        },
+        {
           "name": "headerActions",
           "required": false,
           "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "@deprecated Use `actions`."
         },
         {
           "name": "loading",
@@ -14753,6 +15000,50 @@
           "type": "string",
           "defaultValue": null,
           "description": ""
+        }
+      ]
+    }
+  ],
+  "molecules/sparkline": [
+    {
+      "displayName": "Sparkline",
+      "description": "Pure-CSS mini bar chart for inline embedding in `<StatCard>` /\n`<SectionCard>`. Decorative — for live data, use a `<BarChart>` from the\ncharts tier with proper axes and tooltips.",
+      "file": "src/components/molecules/sparkline.tsx",
+      "props": [
+        {
+          "name": "data",
+          "required": true,
+          "type": "number[]",
+          "defaultValue": null,
+          "description": "Values to plot. Each entry maps to a bar."
+        },
+        {
+          "name": "height",
+          "required": false,
+          "type": "number",
+          "defaultValue": "160",
+          "description": "Pixel height of the chart."
+        },
+        {
+          "name": "colorVar",
+          "required": false,
+          "type": "string",
+          "defaultValue": "chart-1",
+          "description": "CSS variable name (without leading `--`) used for the bar fill. Default\n`chart-1`. The variable should resolve to an HSL triplet for `hsl()`."
+        },
+        {
+          "name": "gap",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4",
+          "description": "Pixel gap between bars."
+        },
+        {
+          "name": "caption",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Caption rendered below the bars."
         }
       ]
     }
@@ -14811,6 +15102,13 @@
           "type": "ReactNode",
           "defaultValue": null,
           "description": "Caption shown next to the delta (e.g. \"vs. last 7d\")."
+        },
+        {
+          "name": "deltaArrow",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When `true` (default) and `delta` is a string, prepend an ArrowUp /\nArrowDown icon based on `deltaTone`. Pass `false` to opt out, or pass\n`delta` as ReactNode to fully control rendering yourself."
         },
         {
           "name": "className",
@@ -15444,6 +15742,57 @@
           "type": "ReactNode",
           "defaultValue": null,
           "description": "The element that opens the tooltip on hover/focus."
+        }
+      ]
+    }
+  ],
+  "molecules/user-avatar-chip": [
+    {
+      "displayName": "UserAvatarChip",
+      "description": "",
+      "file": "src/components/molecules/user-avatar-chip.tsx",
+      "props": [
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Display name (rendered next to the avatar)."
+        },
+        {
+          "name": "email",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Optional secondary line. Hidden when `collapsed`."
+        },
+        {
+          "name": "fallback",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Initials shown by AvatarFallback when no image is provided."
+        },
+        {
+          "name": "imageSrc",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Avatar image src."
+        },
+        {
+          "name": "collapsed",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "When true, renders only the avatar without name + chevron."
+        },
+        {
+          "name": "chevron",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Set to false to hide the trailing ChevronDown affordance."
         }
       ]
     }
@@ -22379,6 +22728,50 @@
           "type": "string",
           "defaultValue": null,
           "description": ""
+        }
+      ]
+    }
+  ],
+  "templates/app-header": [
+    {
+      "displayName": "AppHeader",
+      "description": "",
+      "file": "src/components/templates/app-header.tsx",
+      "props": [
+        {
+          "name": "search",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Search slot — typically a `<SearchBar>` constrained to a max width.\nRendered on the left, flex-grows to fill available space."
+        },
+        {
+          "name": "actions",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Actions slot — chrome buttons (theme toggle, bell, settings). Rendered\nright of the search, before the user chip."
+        },
+        {
+          "name": "user",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "User slot — typically a `<UserAvatarChip>` or `<DropdownMenu>`-wrapped\navatar. Rendered last on the right."
+        },
+        {
+          "name": "mobileMenuTrigger",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Mobile menu trigger slot — rendered before search on small viewports.\nTypically a hamburger Button that calls AdminShell's `onMobileMenuToggle`."
+        },
+        {
+          "name": "sticky",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true, sticks the header to the top with `bg-background` and a\nborder-bottom. Defaults to true — the typical admin pattern."
         }
       ]
     }
