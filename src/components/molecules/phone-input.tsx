@@ -11,13 +11,7 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 import { Input } from "../atoms/input";
 import { Label } from "../atoms/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "../organisms/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../organisms/select";
 
 export interface PhoneInputProps {
 	id: string;
