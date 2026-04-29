@@ -20,6 +20,408 @@
 import type { PropsOverrideMap } from "../components/PropsTable";
 
 /**
+ * Synthetic prop entries appended to the auto-extracted props in the prop
+ * table. Use this for canvas atoms that just spread `React.ComponentProps<>`
+ * over a native HTML element or a Radix primitive — `react-docgen` can't
+ * enumerate those inherited attributes, so we describe the most relevant
+ * ones by hand here.
+ *
+ * Keyed: `sourceId` → component displayName → list of synthetic prop rows.
+ */
+export interface ExtraPropEntry {
+	name: string;
+	required: boolean;
+	type: string;
+	defaultValue: string | null;
+	description: string;
+}
+
+export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
+	"atoms/input": {
+		Input: [
+			{
+				name: "type",
+				required: false,
+				type: '"text" | "email" | "password" | "number" | "tel" | "url" | "search" | "date" | "time" | "file" | …',
+				defaultValue: '"text"',
+				description: "Native input type. Drives keyboard, validation, and on iOS the picker.",
+			},
+			{
+				name: "value",
+				required: false,
+				type: "string | number",
+				defaultValue: null,
+				description:
+					"Controlled value. Pair with `onChange`. For uncontrolled inputs use `defaultValue` instead.",
+			},
+			{
+				name: "defaultValue",
+				required: false,
+				type: "string | number",
+				defaultValue: null,
+				description: "Initial value for an uncontrolled input. Ignored if `value` is also passed.",
+			},
+			{
+				name: "placeholder",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Hint text shown when the input is empty. Renders in `text-muted-foreground`.",
+			},
+			{
+				name: "disabled",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description:
+					"Visually dims to 50% and blocks all input. Pair with `Label` so the dim cascades.",
+			},
+			{
+				name: "readOnly",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Selectable but not editable. Useful for displaying server-set values.",
+			},
+			{
+				name: "required",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description:
+					"Block native form submit unless the input has a value. Mirror with a visual cue.",
+			},
+			{
+				name: "name",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					"Form field name. Required when relying on uncontrolled native form submission.",
+			},
+			{
+				name: "id",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "DOM id. Match this from `<Label htmlFor>` for screen-reader association.",
+			},
+			{
+				name: "min / max / step",
+				required: false,
+				type: "number | string",
+				defaultValue: null,
+				description:
+					'Numeric / date bounds. Honoured by `type="number"` / `"date"` / `"time"` / `"range"`.',
+			},
+			{
+				name: "pattern",
+				required: false,
+				type: "string (regex)",
+				defaultValue: null,
+				description:
+					"Native HTML5 validation regex. Triggers `:invalid` if the value doesn't match.",
+			},
+			{
+				name: "minLength / maxLength",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description: "Character count limits for text inputs.",
+			},
+			{
+				name: "autoComplete",
+				required: false,
+				type: '"on" | "off" | "email" | "current-password" | …',
+				defaultValue: null,
+				description: "Browser autofill hint. See MDN for the full token list.",
+			},
+			{
+				name: "autoFocus",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Focus the input on mount. Use sparingly — surprises keyboard users.",
+			},
+			{
+				name: "onChange",
+				required: false,
+				type: "(e: ChangeEvent<HTMLInputElement>) => void",
+				defaultValue: null,
+				description:
+					"Fires on every keystroke. Read `e.target.value`. Required if you pass `value`.",
+			},
+			{
+				name: "onBlur / onFocus",
+				required: false,
+				type: "(e: FocusEvent<HTMLInputElement>) => void",
+				defaultValue: null,
+				description: "Focus events. Common for blur-validation or remote-typeahead lookups.",
+			},
+			{
+				name: "ref",
+				required: false,
+				type: "React.Ref<HTMLInputElement>",
+				defaultValue: null,
+				description:
+					"Forwarded to the native `<input>` for imperative focus / select / scrollIntoView.",
+			},
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS classes merged onto the input via `cn()`.",
+			},
+		],
+	},
+	"atoms/textarea": {
+		Textarea: [
+			{
+				name: "value",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Controlled value. Pair with `onChange`.",
+			},
+			{
+				name: "defaultValue",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Uncontrolled initial value.",
+			},
+			{
+				name: "placeholder",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Hint text shown when empty.",
+			},
+			{
+				name: "rows",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Visible row count. Canvas's default min-height is 60px regardless; `rows` overrides.",
+			},
+			{
+				name: "cols",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description: "Visible column count (width). Canvas overrides this with `w-full`.",
+			},
+			{
+				name: "disabled / readOnly / required",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Same semantics as native `<textarea>`.",
+			},
+			{
+				name: "maxLength / minLength",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description: "Character count limits.",
+			},
+			{
+				name: "autoComplete / autoFocus",
+				required: false,
+				type: "string / boolean",
+				defaultValue: null,
+				description: "Browser autofill hint / focus on mount.",
+			},
+			{
+				name: "onChange",
+				required: false,
+				type: "(e: ChangeEvent<HTMLTextAreaElement>) => void",
+				defaultValue: null,
+				description: "Fires on every keystroke.",
+			},
+			{
+				name: "onBlur / onFocus",
+				required: false,
+				type: "(e: FocusEvent<HTMLTextAreaElement>) => void",
+				defaultValue: null,
+				description: "Focus events.",
+			},
+			{
+				name: "ref",
+				required: false,
+				type: "React.Ref<HTMLTextAreaElement>",
+				defaultValue: null,
+				description: "Forwarded to the native `<textarea>`.",
+			},
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS classes merged via `cn()`.",
+			},
+		],
+	},
+	"atoms/checkbox": {
+		Checkbox: [
+			{
+				name: "checked",
+				required: false,
+				type: "boolean | 'indeterminate'",
+				defaultValue: null,
+				description:
+					"Controlled state. Pass `'indeterminate'` to render the dash glyph instead of the check.",
+			},
+			{
+				name: "defaultChecked",
+				required: false,
+				type: "boolean | 'indeterminate'",
+				defaultValue: "false",
+				description: "Uncontrolled initial state.",
+			},
+			{
+				name: "onCheckedChange",
+				required: false,
+				type: "(checked: boolean | 'indeterminate') => void",
+				defaultValue: null,
+				description: "Fires when the user toggles the checkbox. Use this instead of `onChange`.",
+			},
+			{
+				name: "disabled",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Dims to 50% and blocks input.",
+			},
+			{
+				name: "required / name / value",
+				required: false,
+				type: "boolean / string / string",
+				defaultValue: null,
+				description: "Used inside native `<form>` submission.",
+			},
+			{
+				name: "ref",
+				required: false,
+				type: "React.Ref<HTMLButtonElement>",
+				defaultValue: null,
+				description: "Forwarded to Radix's button.",
+			},
+		],
+	},
+	"atoms/switch": {
+		Switch: [
+			{
+				name: "checked",
+				required: false,
+				type: "boolean",
+				defaultValue: null,
+				description: "Controlled state.",
+			},
+			{
+				name: "defaultChecked",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Uncontrolled initial state.",
+			},
+			{
+				name: "onCheckedChange",
+				required: false,
+				type: "(checked: boolean) => void",
+				defaultValue: null,
+				description: "Fires when the user flips the switch.",
+			},
+			{
+				name: "disabled",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Dims and blocks input.",
+			},
+			{
+				name: "required / name / value",
+				required: false,
+				type: "boolean / string / string",
+				defaultValue: null,
+				description: "Used inside native `<form>` submission.",
+			},
+			{
+				name: "ref",
+				required: false,
+				type: "React.Ref<HTMLButtonElement>",
+				defaultValue: null,
+				description: "Forwarded to Radix's button.",
+			},
+		],
+	},
+	"atoms/separator": {
+		Separator: [
+			{
+				name: "orientation",
+				required: false,
+				type: '"horizontal" | "vertical"',
+				defaultValue: '"horizontal"',
+				description:
+					"Layout direction. `horizontal` is a 1px row spanning width; `vertical` is a 1px column spanning height.",
+			},
+			{
+				name: "decorative",
+				required: false,
+				type: "boolean",
+				defaultValue: "true",
+				description:
+					"When true (default), the separator is hidden from screen readers. Set to false for separators that have semantic meaning.",
+			},
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS classes merged via `cn()`.",
+			},
+		],
+	},
+	"atoms/avatar": {
+		AvatarImage: [
+			{
+				name: "src",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Image URL. Hides itself if loading errors so the fallback can render.",
+			},
+			{
+				name: "alt",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Accessible label. Defaults to the empty string for decorative use.",
+			},
+			{
+				name: "onLoadingStatusChange",
+				required: false,
+				type: "(status: 'idle' | 'loading' | 'loaded' | 'error') => void",
+				defaultValue: null,
+				description: "Radix lifecycle hook for tracking the load state.",
+			},
+		],
+		AvatarFallback: [
+			{
+				name: "delayMs",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Wait this many ms before showing the fallback (avoids flash on fast image loads).",
+			},
+		],
+	},
+};
+
+/**
  * Component-level descriptions. Used by `<PropsTable>` when a component has
  * no explicit JSDoc but accepts only standard HTML attributes — instead of
  * the bland "takes no documented props" fallback, we explain *what the
@@ -30,43 +432,41 @@ import type { PropsOverrideMap } from "../components/PropsTable";
 export const COMPONENT_DESCRIPTIONS: Record<string, Record<string, string>> = {
 	"atoms/aspect-ratio": {
 		AspectRatio:
-			"Re-export of Radix's `AspectRatio.Root`. Pass `ratio` (number, e.g. `16/9`) to lock a child's width-to-height ratio. Useful for video/image embeds and avatars that must stay square regardless of grid width.",
+			"Re-export of Radix's `AspectRatio.Root`. Pass `ratio` (number, e.g. `16/9`) to lock a child's aspect ratio.",
 	},
 	"atoms/avatar": {
 		Avatar:
-			"Round container for a user's profile image. Composes `Avatar` + `AvatarImage` + `AvatarFallback`; the fallback shows when the image fails to load. Defaults to `h-10 w-10`.",
+			"Round profile-image container. Composes `Avatar` + `AvatarImage` + `AvatarFallback`. Defaults to `h-10 w-10`.",
 		AvatarImage:
-			"The `<img>` slot inside `<Avatar>`. Accepts every native `<img>` attribute (`src`, `alt`, `srcSet`, `loading`, `referrerPolicy`, `crossOrigin`, `decoding`, `onLoad`, `onError`). Hides itself if the image errors so the fallback can take over.",
+			"The `<img>` slot inside `<Avatar>`. Hides itself if loading errors so the fallback can render.",
 		AvatarFallback:
-			"Rendered when the image is missing or hasn't loaded yet — usually initials, an icon, or a generic silhouette. Inherits the avatar's size and circular clip.",
+			"Rendered when the image is missing or still loading — typically initials, an icon, or a silhouette.",
 	},
 	"atoms/checkbox": {
-		Checkbox:
-			"Wraps Radix's `Checkbox.Root`. Accepts every Radix checkbox prop: `checked` / `defaultChecked` (boolean or `'indeterminate'`), `onCheckedChange`, `disabled`, `required`, `name`, `value`, plus the standard HTML attributes. The check glyph is rendered inside the component automatically.",
+		Checkbox: "Wraps Radix's `Checkbox.Root`. The check glyph is rendered inside automatically.",
 	},
 	"atoms/input": {
 		Input:
-			"Styled wrapper around the native `<input>` — accepts every native input attribute: `type` (`text`/`email`/`password`/`number`/`tel`/`url`/`search`/`date`/`time`/`file`/etc.), `value` / `defaultValue`, `placeholder`, `disabled`, `readOnly`, `required`, `name`, `id`, `min` / `max` / `step`, `pattern`, `minLength` / `maxLength`, `autoComplete`, `autoFocus`, `onChange` / `onBlur` / `onFocus` / `onInput`. Default height 36px (`h-9`) with rounded-md and the canvas focus ring.",
+			"Styled wrapper around the native `<input>` — 36px tall, rounded-md, 1px border, transparent background, canvas focus ring. Forwards every native input attribute through to the underlying element.",
 	},
 	"atoms/label": {
 		Label:
-			"Wraps Radix's `Label.Root`. Behaves like a native `<label>` — pair via `htmlFor` matching the form control's `id`, or wrap the control as a child for implicit association. Auto-dims to 70% opacity when the associated input is `:disabled`.",
+			"Wraps Radix's `Label.Root`. Pair via `htmlFor` matching the form control's `id`, or wrap the control as a child. Auto-dims to 70% when the associated input is `:disabled`.",
 	},
 	"atoms/separator": {
-		Separator:
-			"Thin divider line. Set `orientation='horizontal'` (default, full-width 1px line) or `orientation='vertical'` (full-height 1px column). When `decorative={true}` (default) it's hidden from screen readers; pass `decorative={false}` for semantic separators.",
+		Separator: "Thin divider line — horizontal (default) or vertical.",
 	},
 	"atoms/skeleton": {
 		Skeleton:
-			"Animated placeholder for content that's loading. Render at the size of the eventual content (set width/height via className) and Skeleton fills with a pulsing tinted block. Accepts every `<div>` attribute.",
+			"Animated placeholder for content that's loading. Set width/height via className; Skeleton fills with a pulsing tinted block.",
 	},
 	"atoms/switch": {
 		Switch:
-			"Wraps Radix's `Switch.Root` — a binary on/off toggle. Accepts `checked` / `defaultChecked`, `onCheckedChange`, `disabled`, `required`, `name`, `value`, plus the standard HTML attributes. Pair with a `<Label>` so the affordance is clear.",
+			"Wraps Radix's `Switch.Root` — a binary on/off toggle. Pair with `<Label>` for accessibility.",
 	},
 	"atoms/textarea": {
 		Textarea:
-			"Styled wrapper around the native `<textarea>`. Accepts every native textarea attribute: `value` / `defaultValue`, `placeholder`, `rows`, `cols`, `wrap`, `disabled`, `readOnly`, `required`, `maxLength` / `minLength`, `autoComplete`, `autoFocus`, `onChange` / `onBlur` / `onFocus`. Default min-height is 60px; resize handles inherit from the browser.",
+			"Styled wrapper around the native `<textarea>`. 60px min-height, rounded-md, 1px border, transparent background.",
 	},
 	"organisms/sidebar": {
 		SidebarProvider:
