@@ -14843,9 +14843,79 @@
       "file": "src/components/organisms/accordion.tsx",
       "props": [
         {
+          "name": "type",
+          "required": true,
+          "type": "enum",
+          "defaultValue": null,
+          "description": "Selection mode. `\"single\"` allows one item open at a time;\n`\"multiple\"` allows multiple items open simultaneously."
+        },
+        {
+          "name": "value",
+          "required": false,
+          "type": "string | string[]",
+          "defaultValue": null,
+          "description": "Controlled value. For `type=\"single\"` it's a string (id of the open\nitem); for `type=\"multiple\"` it's a string array."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string | string[]",
+          "defaultValue": null,
+          "description": "Initial value for uncontrolled usage."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string & string[]) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user opens/closes an item."
+        },
+        {
+          "name": "collapsible",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "For `type=\"single\"` only — when true, an open item can be collapsed\nby clicking it again."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the entire accordion."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction. Affects keyboard arrow navigation."
+        },
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"vertical\"",
+          "description": "Layout direction."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A list of `<AccordionItem>`s."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -14857,9 +14927,30 @@
       "file": "src/components/organisms/accordion.tsx",
       "props": [
         {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when collapsed."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Item body."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -14871,9 +14962,37 @@
       "file": "src/components/organisms/accordion.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required — unique value identifying this item."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable only this item."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A `<AccordionTrigger>` + `<AccordionContent>`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -14888,6 +15007,20 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger label — typically a section heading."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -15598,6 +15731,48 @@
       "file": "src/components/organisms/collapsible.tsx",
       "props": [
         {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state. Pair with `onOpenChange`."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the collapsible opens or closes."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the trigger."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -15612,9 +15787,30 @@
       "file": "src/components/organisms/collapsible.tsx",
       "props": [
         {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when collapsed. Useful for measuring\nheight for animations."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Content shown when expanded."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -15629,6 +15825,20 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a custom button while keeping the\ncollapsible's toggle behaviour."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "The button (or slot) that opens/closes the content."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16860,7 +17070,50 @@
       "displayName": "DropdownMenu",
       "description": "",
       "file": "src/components/organisms/dropdown-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state. Pair with `onOpenChange`."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the menu opens or closes."
+        },
+        {
+          "name": "modal",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true, blocks focus from leaving the menu."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction. Affects keyboard arrow navigation."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger + Content."
+        }
+      ]
     },
     {
       "displayName": "DropdownMenuCheckboxItem",
@@ -16868,9 +17121,51 @@
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
         {
+          "name": "checked",
+          "required": false,
+          "type": "boolean | \"indeterminate\"",
+          "defaultValue": null,
+          "description": "Controlled checked state."
+        },
+        {
+          "name": "onCheckedChange",
+          "required": false,
+          "type": "((checked: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user toggles the item."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the item."
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when the item is activated."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Item label."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16882,9 +17177,100 @@
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
         {
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4",
+          "description": "Distance from the trigger (px)."
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "0",
+          "description": "Distance from the alignment edge (px)."
+        },
+        {
+          "name": "side",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"bottom\"",
+          "description": "Preferred side of the trigger to render on."
+        },
+        {
+          "name": "align",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"center\"",
+          "description": "Alignment along the chosen side."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Avoid colliding with the viewport edges."
+        },
+        {
+          "name": "collisionPadding",
+          "required": false,
+          "type": "number | { top?: number; right?: number; bottom?: number | undefined; left?: number | undefined; } | undefined",
+          "defaultValue": null,
+          "description": "Padding kept from collision boundaries."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Force the content to mount even when closed."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "loop",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Loop arrow-key navigation through items."
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "required": false,
+          "type": "((event: KeyboardEvent) => void)",
+          "defaultValue": null,
+          "description": "Fires when the Escape key is pressed."
+        },
+        {
+          "name": "onPointerDownOutside",
+          "required": false,
+          "type": "((event: CustomEvent<{ originalEvent: PointerEvent; }>) => void)",
+          "defaultValue": null,
+          "description": "Fires on pointer event outside the menu."
+        },
+        {
+          "name": "onInteractOutside",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires on any interaction outside (focus + pointer)."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Items, separators, labels, sub-menus."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16895,6 +17281,13 @@
       "description": "",
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Items grouped together for screen-reader semantics."
+        },
         {
           "name": "asChild",
           "required": false,
@@ -16910,16 +17303,44 @@
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
         {
-          "name": "asChild",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
           "name": "inset",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Add left padding so this row aligns with sibling checkbox/radio\nitems that have leading indicators."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the item."
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when the item is activated (click, Enter, Space)."
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a router `<Link>` to use the item as\nnavigation."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Item label or any nested elements."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16931,6 +17352,13 @@
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
         {
+          "name": "inset",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Add left padding so this row aligns with sibling checkbox/radio\nitems."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
@@ -16938,9 +17366,16 @@
           "description": ""
         },
         {
-          "name": "inset",
+          "name": "children",
           "required": false,
-          "type": "boolean",
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Section heading text."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16950,13 +17385,49 @@
       "displayName": "DropdownMenuPortal",
       "description": "",
       "file": "src/components/organisms/dropdown-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "container",
+          "required": false,
+          "type": "HTMLElement | null",
+          "defaultValue": null,
+          "description": "DOM element to portal into. Defaults to `document.body`."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the portal to mount even when the menu is closed."
+        }
+      ]
     },
     {
       "displayName": "DropdownMenuRadioGroup",
       "description": "",
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Currently selected value (the value of the active RadioItem)."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user picks a different RadioItem."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A list of `<DropdownMenuRadioItem>`s."
+        },
         {
           "name": "asChild",
           "required": false,
@@ -16972,9 +17443,37 @@
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required — value reported when this item is selected. Match parent `<RadioGroup>`'s value."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the item."
+        },
+        {
+          "name": "onSelect",
+          "required": false,
+          "type": "((event: Event) => void)",
+          "defaultValue": null,
+          "description": "Fires when the item is activated."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -16991,6 +17490,13 @@
           "type": "boolean",
           "defaultValue": null,
           "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
         }
       ]
     },
@@ -16998,13 +17504,57 @@
       "displayName": "DropdownMenuShortcut",
       "description": "",
       "file": "src/components/organisms/dropdown-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Keyboard shortcut text (e.g. \"⌘K\", \"⌃Z\")."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "DropdownMenuSub",
       "description": "",
       "file": "src/components/organisms/dropdown-menu.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "open",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled open state of the sub-menu."
+        },
+        {
+          "name": "defaultOpen",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Initial open state for uncontrolled usage."
+        },
+        {
+          "name": "onOpenChange",
+          "required": false,
+          "type": "((open: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires whenever the sub-menu opens or closes."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "SubTrigger + SubContent."
+        }
+      ]
     },
     {
       "displayName": "DropdownMenuSubContent",
@@ -17012,9 +17562,44 @@
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
         {
+          "name": "sideOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4",
+          "description": "Distance from the parent menu (px)."
+        },
+        {
+          "name": "alignOffset",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Distance from the alignment edge (px)."
+        },
+        {
+          "name": "avoidCollisions",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Avoid colliding with viewport edges."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": null,
+          "description": "Force the sub-content to mount even when closed."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -17026,16 +17611,37 @@
       "file": "src/components/organisms/dropdown-menu.tsx",
       "props": [
         {
-          "name": "asChild",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
           "name": "inset",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Add left padding so this row visually aligns with sibling\ncheckbox/radio items that have leading indicators."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the sub-trigger."
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Trigger label."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -17050,6 +17656,13 @@
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19252,7 +19865,92 @@
       "displayName": "Toaster",
       "description": "",
       "file": "src/components/organisms/sonner.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "position",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"bottom-right\"",
+          "description": "Where toasts stack."
+        },
+        {
+          "name": "theme",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"system\"",
+          "description": "Toast colour scheme. Defaults to inheriting from `next-themes`."
+        },
+        {
+          "name": "richColors",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Make toasts rich-coloured by default — success/error/warning tints."
+        },
+        {
+          "name": "closeButton",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Show a close button on every toast."
+        },
+        {
+          "name": "duration",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4000",
+          "description": "How long toasts stay visible (ms)."
+        },
+        {
+          "name": "gap",
+          "required": false,
+          "type": "number",
+          "defaultValue": "14",
+          "description": "Visual gap between stacked toasts (px)."
+        },
+        {
+          "name": "visibleToasts",
+          "required": false,
+          "type": "number",
+          "defaultValue": "3",
+          "description": "Maximum number of toasts visible at once."
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": "32",
+          "description": "Hide the toaster's offset region — useful when you want toasts to\nbutt against the viewport edge."
+        },
+        {
+          "name": "pauseWhenPageIsHidden",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Pause toast timers when the user hovers any toast."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the toaster region."
+        },
+        {
+          "name": "toastOptions",
+          "required": false,
+          "type": "ToastOptions",
+          "defaultValue": null,
+          "description": "Default toast options applied to every toast (className,\ndescriptionClassName, etc.). See sonner docs for the full list."
+        }
+      ]
     }
   ],
   "organisms/tabs": [
@@ -19261,6 +19959,62 @@
       "description": "",
       "file": "src/components/organisms/tabs.tsx",
       "props": [
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Controlled active tab value. Pair with `onValueChange`."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Initial active tab for uncontrolled usage."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user switches tabs."
+        },
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"horizontal\"",
+          "description": "Tab orientation. Affects keyboard arrow navigation."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction."
+        },
+        {
+          "name": "activationMode",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"automatic\"",
+          "description": "When and how content is activated.\n- `automatic` activates on focus (best for tabs that load fast)\n- `manual` requires Enter/Space (best for tabs that fetch data)"
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "TabsList + TabsContent siblings."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
         {
           "name": "asChild",
           "required": false,
@@ -19276,9 +20030,37 @@
       "file": "src/components/organisms/tabs.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required — matches the `value` of a `<TabsTrigger>`."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the content to mount even when not active. Useful for\npreserving form state across tab switches."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Tab pane body."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19290,9 +20072,30 @@
       "file": "src/components/organisms/tabs.tsx",
       "props": [
         {
+          "name": "loop",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "When true, hold-to-skip-disabled-tabs is on."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A flat list of `<TabsTrigger>`s."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -19304,9 +20107,37 @@
       "file": "src/components/organisms/tabs.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Required — value of the tab this trigger activates. Match with `<TabsContent value>`."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Disable this tab."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Tab label."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
