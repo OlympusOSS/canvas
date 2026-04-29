@@ -13,7 +13,7 @@ import {
 	SidebarTrigger,
 } from "@olympusoss/canvas";
 
-import { BrandTrigger, NAV_GROUPS } from "./_shared";
+import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	return (
@@ -43,11 +43,14 @@ export default function App() {
 					))}
 				</SidebarContent>
 			</Sidebar>
-			<SidebarInset className="p-4 text-sm">
-				<p className="text-muted-foreground">
-					Starts collapsed to the icon rail. Click the logo to expand. Hover any icon to see its
-					tooltip label.
-				</p>
+			<SidebarInset>
+				<Topbar title="Dashboard" />
+				<div className="p-4 text-sm">
+					<p className="text-muted-foreground">
+						Starts collapsed to the icon rail. Click the logo to expand. Hover any icon to see its
+						tooltip label. On mobile, use the hamburger in the topbar.
+					</p>
+				</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);

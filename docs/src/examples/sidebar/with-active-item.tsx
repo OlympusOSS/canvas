@@ -14,7 +14,7 @@ import {
 } from "@olympusoss/canvas";
 import { useState } from "react";
 
-import { BrandTrigger, NAV_GROUPS } from "./_shared";
+import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	const [activeId, setActiveId] = useState("dashboard");
@@ -51,10 +51,13 @@ export default function App() {
 					))}
 				</SidebarContent>
 			</Sidebar>
-			<SidebarInset className="p-4 text-sm">
-				<p className="text-muted-foreground">
-					Active: <span className="font-medium text-foreground">{activeLabel}</span>
-				</p>
+			<SidebarInset>
+				<Topbar title={activeLabel} />
+				<div className="p-4 text-sm">
+					<p className="text-muted-foreground">
+						Active: <span className="font-medium text-foreground">{activeLabel}</span>
+					</p>
+				</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);

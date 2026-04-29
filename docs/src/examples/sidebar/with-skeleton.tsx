@@ -13,7 +13,7 @@ import {
 	SidebarTrigger,
 } from "@olympusoss/canvas";
 
-import { BrandTrigger, NAV_GROUPS } from "./_shared";
+import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	return (
@@ -40,9 +40,12 @@ export default function App() {
 					))}
 				</SidebarContent>
 			</Sidebar>
-			<SidebarInset className="p-4 text-sm text-muted-foreground">
-				Loading state: every menu item is replaced by a `SidebarMenuSkeleton`. Rows with even
-				indexes show a leading icon placeholder.
+			<SidebarInset>
+				<Topbar title="Loading…" />
+				<div className="p-4 text-sm text-muted-foreground">
+					Loading state: every menu item is replaced by a `SidebarMenuSkeleton`. Rows with even
+					indexes show a leading icon placeholder.
+				</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);
