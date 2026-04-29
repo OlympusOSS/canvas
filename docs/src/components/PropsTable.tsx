@@ -1,4 +1,4 @@
-import { COMPONENT_DESCRIPTIONS, PROP_OVERRIDES } from "../data/prop-overrides";
+import { COMPONENT_DESCRIPTIONS, EXTRA_PROPS, PROP_OVERRIDES } from "../data/prop-overrides";
 import propsManifest from "../data/props/generated.json";
 
 /**
@@ -71,7 +71,10 @@ function ComponentPropTable({
 	const componentDescription =
 		component.description?.trim() || COMPONENT_DESCRIPTIONS[source]?.[component.displayName];
 
-	if (component.props.length === 0) {
+	const extraProps = EXTRA_PROPS[source]?.[component.displayName] ?? [];
+	const allProps = [...component.props, ...extraProps];
+
+	if (allProps.length === 0) {
 		return (
 			<div className="rounded-lg border border-border bg-card/50 p-4 text-sm text-muted-foreground">
 				{componentDescription ? (
@@ -86,7 +89,7 @@ function ComponentPropTable({
 		);
 	}
 
-	const rows = component.props.map((p) => {
+	const rows = allProps.map((p) => {
 		const localOverride = overrides?.[p.name];
 		const centralOverride = centralOverrides?.[p.name];
 		const description =
