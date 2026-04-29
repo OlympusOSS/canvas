@@ -24,7 +24,18 @@ const badgeVariants = cva(
 
 export interface BadgeProps
 	extends React.HTMLAttributes<HTMLDivElement>,
-		VariantProps<typeof badgeVariants> {}
+		VariantProps<typeof badgeVariants> {
+	/**
+	 * Visual style. `default` is filled brand colour, `secondary` is a muted
+	 * neutral, `outline` is bordered with no fill, `destructive` flags an
+	 * error or warning state.
+	 * @default "default"
+	 */
+	variant?: "default" | "secondary" | "destructive" | "outline";
+	/** Badge label or any nested elements. */
+	children?: React.ReactNode;
+	className?: string;
+}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
 	return <div className={cn(badgeVariants({ variant }), className)} {...props} />;

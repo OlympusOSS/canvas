@@ -2,13 +2,27 @@
   "atoms/aspect-ratio": [
     {
       "displayName": "AspectRatio",
-      "description": "",
+      "description": "Re-export of Radix's `AspectRatio.Root`. Pass `ratio` (number, e.g.\n`16/9`) to lock a child's aspect ratio.",
       "file": "src/components/atoms/aspect-ratio.tsx",
       "props": [
+        {
+          "name": "ratio",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Aspect ratio expressed as a number (e.g. `16/9`, `4/3`, `1`). The\nchild element is sized to fit this ratio while preserving the\ncontainer's width."
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — useful when wrapping a custom container that\nalready has its own DOM element."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -18,13 +32,27 @@
   "atoms/avatar": [
     {
       "displayName": "Avatar",
-      "description": "",
+      "description": "Round profile-image container. Composes `Avatar` + `AvatarImage` +\n`AvatarFallback`. Defaults to `h-10 w-10`.",
       "file": "src/components/atoms/avatar.tsx",
       "props": [
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a custom element while keeping the\nAvatar's image-loading behaviour."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Avatar content — typically `<AvatarImage>` + `<AvatarFallback>`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -32,13 +60,34 @@
     },
     {
       "displayName": "AvatarFallback",
-      "description": "",
+      "description": "Rendered when the image is missing or still loading — typically initials,\nan icon, or a silhouette.",
       "file": "src/components/atoms/avatar.tsx",
       "props": [
+        {
+          "name": "delayMs",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Wait this many ms before showing the fallback (avoids flash on fast\nimage loads)."
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Initials, icon, or silhouette."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -46,13 +95,41 @@
     },
     {
       "displayName": "AvatarImage",
-      "description": "",
+      "description": "The `<img>` slot inside `<Avatar>`. Hides itself if loading errors so the\nfallback can render.",
       "file": "src/components/atoms/avatar.tsx",
       "props": [
+        {
+          "name": "src",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Image URL. Hides itself if loading errors so the fallback can render."
+        },
+        {
+          "name": "alt",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Accessible label. Defaults to the empty string for decorative use."
+        },
+        {
+          "name": "onLoadingStatusChange",
+          "required": false,
+          "type": "((status: \"loading\" | \"idle\" | \"loaded\" | \"error\") => void)",
+          "defaultValue": null,
+          "description": "Radix lifecycle hook for tracking the load state."
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -68,7 +145,21 @@
         {
           "name": "variant",
           "required": false,
-          "type": "\"default\" | \"secondary\" | \"destructive\" | \"outline\" | null",
+          "type": "enum",
+          "defaultValue": "\"default\"",
+          "description": "Visual style. `default` is filled brand colour, `secondary` is a muted\nneutral, `outline` is bordered with no fill, `destructive` flags an\nerror or warning state."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Badge label or any nested elements."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -229,13 +320,69 @@
   "atoms/checkbox": [
     {
       "displayName": "Checkbox",
-      "description": "",
+      "description": "Wraps Radix's `Checkbox.Root`. The check glyph is rendered inside\nautomatically.",
       "file": "src/components/atoms/checkbox.tsx",
       "props": [
+        {
+          "name": "checked",
+          "required": false,
+          "type": "boolean | \"indeterminate\"",
+          "defaultValue": null,
+          "description": "Controlled checked state. Pass `'indeterminate'` to render the dash\nglyph instead of the check."
+        },
+        {
+          "name": "defaultChecked",
+          "required": false,
+          "type": "boolean | \"indeterminate\"",
+          "defaultValue": "false",
+          "description": "Initial state for uncontrolled usage."
+        },
+        {
+          "name": "onCheckedChange",
+          "required": false,
+          "type": "((checked: boolean | \"indeterminate\") => void)",
+          "defaultValue": null,
+          "description": "Fires when the user toggles the checkbox. Use this instead of `onChange`."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Dims to 50% and blocks input."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Block native form submit unless the box is checked."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name for native form submission."
+        },
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field value when submitted."
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -253,21 +400,21 @@
           "required": false,
           "type": "enum",
           "defaultValue": "row",
-          "description": ""
+          "description": "Maps to `flex-direction`."
         },
         {
           "name": "align",
           "required": false,
           "type": "enum",
           "defaultValue": "flex-start",
-          "description": ""
+          "description": "Maps to `align-items`."
         },
         {
           "name": "justify",
           "required": false,
           "type": "enum",
           "defaultValue": "flex-start",
-          "description": ""
+          "description": "Maps to `justify-content`."
         },
         {
           "name": "gap",
@@ -281,6 +428,13 @@
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
+          "description": "Maps to `flex-wrap`. Pass `true` for `flex-wrap`, `false` for\n`flex-nowrap`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
           "description": ""
         }
       ]
@@ -297,13 +451,20 @@
           "required": true,
           "type": "enum",
           "defaultValue": null,
-          "description": ""
+          "description": "Lucide icon name (PascalCase, e.g. `ChevronRight`, `Mail`). Only icons\nre-exported through `lucide-react` are valid."
         },
         {
           "name": "size",
           "required": false,
           "type": "number",
           "defaultValue": "16",
+          "description": "Pixel size of the rendered SVG. Defaults to 16; pass any number to\noverride (e.g. 20, 24)."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
           "description": ""
         }
       ]
@@ -312,9 +473,157 @@
   "atoms/input": [
     {
       "displayName": "Input",
-      "description": "",
+      "description": "Styled wrapper around the native `<input>` — 36px tall, rounded-md, 1px\nborder, transparent background, canvas focus ring. Forwards every native\ninput attribute through to the underlying element.",
       "file": "src/components/atoms/input.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "pattern",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Native HTML5 validation regex. Triggers `:invalid` if the value doesn't match."
+        },
+        {
+          "name": "type",
+          "required": false,
+          "type": "HTMLInputTypeAttribute",
+          "defaultValue": "\"text\"",
+          "description": "Native input type. Drives keyboard, validation, and on iOS the\npicker."
+        },
+        {
+          "name": "value",
+          "required": false,
+          "type": "string | number | readonly string[]",
+          "defaultValue": null,
+          "description": "Controlled value. Pair with `onChange`. For uncontrolled inputs use\n`defaultValue` instead."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string | number | readonly string[]",
+          "defaultValue": null,
+          "description": "Initial value for an uncontrolled input. Ignored if `value` is also passed."
+        },
+        {
+          "name": "placeholder",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Hint text shown when the input is empty. Renders in `text-muted-foreground`."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Visually dims to 50% and blocks all input. Pair with `Label` so the\ndim cascades."
+        },
+        {
+          "name": "readOnly",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Selectable but not editable. Useful for displaying server-set values."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Block native form submit unless the input has a value."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name. Required when relying on uncontrolled native form submission."
+        },
+        {
+          "name": "id",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "DOM id. Match this from `<Label htmlFor>` for screen-reader association."
+        },
+        {
+          "name": "autoComplete",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Browser autofill hint. See MDN for the full token list."
+        },
+        {
+          "name": "autoFocus",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Focus the input on mount. Use sparingly — surprises keyboard users."
+        },
+        {
+          "name": "maxLength",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Character count limit for text inputs."
+        },
+        {
+          "name": "minLength",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Minimum character count for text inputs."
+        },
+        {
+          "name": "min",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": null,
+          "description": "Numeric / date lower bound. Honoured by `type=\"number\"` / `\"date\"` / `\"time\"` / `\"range\"`."
+        },
+        {
+          "name": "max",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": null,
+          "description": "Numeric / date upper bound."
+        },
+        {
+          "name": "step",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": null,
+          "description": "Step increment for `number` / `range` / `date` types."
+        },
+        {
+          "name": "onChange",
+          "required": false,
+          "type": "ChangeEventHandler<HTMLInputElement, Element>",
+          "defaultValue": null,
+          "description": "Fires on every keystroke. Read `e.target.value`. Required if you pass `value`."
+        },
+        {
+          "name": "onFocus",
+          "required": false,
+          "type": "FocusEventHandler<HTMLInputElement>",
+          "defaultValue": null,
+          "description": "Focus event. Common for focus-driven typeahead lookups."
+        },
+        {
+          "name": "onBlur",
+          "required": false,
+          "type": "FocusEventHandler<HTMLInputElement>",
+          "defaultValue": null,
+          "description": "Blur event. Common for blur-validation."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     }
   ],
   "atoms/label": [
@@ -738,13 +1047,34 @@
   "atoms/separator": [
     {
       "displayName": "Separator",
-      "description": "",
+      "description": "Thin divider line — horizontal (default) or vertical.",
       "file": "src/components/atoms/separator.tsx",
       "props": [
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "horizontal",
+          "description": "Layout direction. `horizontal` is a 1px row spanning width;\n`vertical` is a 1px column spanning height."
+        },
+        {
+          "name": "decorative",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true (default), the separator is hidden from screen readers. Set\nto false for separators that have semantic meaning."
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -754,9 +1084,17 @@
   "atoms/skeleton": [
     {
       "displayName": "Skeleton",
-      "description": "",
+      "description": "Animated placeholder for content that's loading. Set width/height via\nclassName; Skeleton fills with a pulsing tinted block.",
       "file": "src/components/atoms/skeleton.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     }
   ],
   "atoms/slider": [
@@ -876,13 +1214,69 @@
   "atoms/switch": [
     {
       "displayName": "Switch",
-      "description": "",
+      "description": "Wraps Radix's `Switch.Root` — a binary on/off toggle. Pair with `<Label>`\nfor accessibility.",
       "file": "src/components/atoms/switch.tsx",
       "props": [
+        {
+          "name": "checked",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled state."
+        },
+        {
+          "name": "defaultChecked",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial state for uncontrolled usage."
+        },
+        {
+          "name": "onCheckedChange",
+          "required": false,
+          "type": "((checked: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user flips the switch."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Dims and blocks input."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Block native form submit unless the switch is on."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name for native form submission."
+        },
+        {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field value when submitted."
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -892,9 +1286,136 @@
   "atoms/textarea": [
     {
       "displayName": "Textarea",
-      "description": "",
+      "description": "Styled wrapper around the native `<textarea>`. 60px min-height, rounded-md,\n1px border, transparent background.",
       "file": "src/components/atoms/textarea.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "value",
+          "required": false,
+          "type": "string | number | readonly string[]",
+          "defaultValue": null,
+          "description": "Controlled value. Pair with `onChange`."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string | number | readonly string[]",
+          "defaultValue": null,
+          "description": "Uncontrolled initial value."
+        },
+        {
+          "name": "placeholder",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Hint text shown when empty."
+        },
+        {
+          "name": "rows",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Visible row count. Canvas's default min-height is 60px regardless;\n`rows` overrides."
+        },
+        {
+          "name": "cols",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Visible column count (width). Canvas overrides this with `w-full`."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Dim and block input."
+        },
+        {
+          "name": "readOnly",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Selectable but not editable."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Block native form submit unless the textarea has a value."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name for native form submission."
+        },
+        {
+          "name": "id",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "DOM id for `<Label htmlFor>` association."
+        },
+        {
+          "name": "autoComplete",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Browser autofill hint."
+        },
+        {
+          "name": "autoFocus",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Focus on mount."
+        },
+        {
+          "name": "maxLength",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Character count upper limit."
+        },
+        {
+          "name": "minLength",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Character count lower limit."
+        },
+        {
+          "name": "onChange",
+          "required": false,
+          "type": "ChangeEventHandler<HTMLTextAreaElement, Element>",
+          "defaultValue": null,
+          "description": "Fires on every keystroke."
+        },
+        {
+          "name": "onFocus",
+          "required": false,
+          "type": "FocusEventHandler<HTMLTextAreaElement>",
+          "defaultValue": null,
+          "description": "Fires on focus."
+        },
+        {
+          "name": "onBlur",
+          "required": false,
+          "type": "FocusEventHandler<HTMLTextAreaElement>",
+          "defaultValue": null,
+          "description": "Fires on blur."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     }
   ],
   "atoms/toggle": [
@@ -904,23 +1425,65 @@
       "file": "src/components/atoms/toggle.tsx",
       "props": [
         {
-          "name": "asChild",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
           "name": "variant",
           "required": false,
-          "type": "\"default\" | \"outline\" | null",
-          "defaultValue": null,
-          "description": ""
+          "type": "enum",
+          "defaultValue": "\"default\"",
+          "description": "`default` (filled when on) or `outline` (bordered)."
         },
         {
           "name": "size",
           "required": false,
-          "type": "\"default\" | \"sm\" | \"lg\" | null",
+          "type": "enum",
+          "defaultValue": "\"default\"",
+          "description": "Square size — `sm` (32px), `default` (36px), or `lg` (40px)."
+        },
+        {
+          "name": "pressed",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled pressed state. Pair with `onPressedChange`."
+        },
+        {
+          "name": "defaultPressed",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial pressed state for uncontrolled usage."
+        },
+        {
+          "name": "onPressedChange",
+          "required": false,
+          "type": "((pressed: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user toggles the pressed state."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the toggle."
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Toggle content (typically an icon or short label)."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -13130,7 +13693,21 @@
         {
           "name": "orientation",
           "required": false,
-          "type": "\"horizontal\" | \"vertical\" | null",
+          "type": "enum",
+          "defaultValue": "\"horizontal\"",
+          "description": "`horizontal` (default) lays buttons left-to-right with shared borders;\n`vertical` stacks them with shared horizontal borders."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "A row/column of `<Button>`s, `<ButtonGroupText>`s, or separators."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -13141,6 +13718,27 @@
       "description": "",
       "file": "src/components/molecules/button-group.tsx",
       "props": [
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "vertical",
+          "description": "Layout direction."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "decorative",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true (default), the separator is hidden from screen readers. Set\nto false for separators that have semantic meaning."
+        },
         {
           "name": "asChild",
           "required": false,
@@ -13160,6 +13758,20 @@
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
+          "description": "Render as a Radix Slot — useful for wrapping a label or icon as the\ngroup's text element."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Text or icon content."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
           "description": ""
         }
       ]
@@ -13176,7 +13788,7 @@
           "required": false,
           "type": "enum",
           "defaultValue": "ghost",
-          "description": ""
+          "description": "Variant applied to the prev/next month nav buttons. Maps to the\n`Button` atom's variants."
         }
       ]
     },
@@ -20679,7 +21291,7 @@
   "organisms/sidebar": [
     {
       "displayName": "Sidebar",
-      "description": "",
+      "description": "The sidebar shell — chooses left/right side, `sidebar`/`floating`/`inset`\nvariant, and the collapse mode. Renders a Sheet drawer instead of an inline\ncolumn when `useIsMobile()` returns true.",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
         {
@@ -20687,280 +21299,622 @@
           "required": false,
           "type": "enum",
           "defaultValue": "left",
-          "description": ""
+          "description": "Which side of the layout the sidebar lives on."
         },
         {
           "name": "variant",
           "required": false,
           "type": "enum",
           "defaultValue": "default",
-          "description": ""
+          "description": "`sidebar` is the standard layout column, `floating` lifts the sidebar\nwith a shadow, `inset` insets it into the page surface."
         },
         {
           "name": "collapsible",
           "required": false,
           "type": "enum",
           "defaultValue": "offcanvas",
+          "description": "Collapse mode. `offcanvas` slides off-screen, `icon` collapses to\nicons-only, `none` disables collapsing."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Header + Content + Footer."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
           "description": ""
         }
       ]
     },
     {
       "displayName": "SidebarContent",
-      "description": "",
+      "description": "Scrollable region between header and footer. Wrap one or more\n`<SidebarGroup>`s here. Uses canvas's `<ScrollArea>` so the scrollbar\nmatches the rest of the design system.",
       "file": "src/components/organisms/sidebar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SidebarFooter",
-      "description": "",
+      "description": "Bottom region of the sidebar — default styling: column flex with 8px gap\nand 8px padding. Common uses: a sign-out button, version string, or theme\ntoggle.",
       "file": "src/components/organisms/sidebar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SidebarGroup",
-      "description": "",
+      "description": "Section wrapper inside `SidebarContent`. Use one per logical chunk of nav\n(Overview, Identity, OAuth2, …). Pair with `SidebarGroupLabel` +\n`SidebarGroupContent`.",
       "file": "src/components/organisms/sidebar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SidebarGroupAction",
-      "description": "",
+      "description": "Right-aligned button inside a `SidebarGroup` (e.g. a `+` to add an item to\nthat section). Hidden when the sidebar collapses to the icon rail.",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
-          "description": ""
+          "description": "Render as a Radix Slot — wrap a custom button element."
         }
       ]
     },
     {
       "displayName": "SidebarGroupContent",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": []
-    },
-    {
-      "displayName": "SidebarGroupLabel",
-      "description": "",
+      "description": "Inner content slot of a `SidebarGroup`. Holds a `SidebarMenu` (or any\ncustom UI you want grouped under the label).",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
         {
-          "name": "asChild",
+          "name": "className",
           "required": false,
-          "type": "boolean",
-          "defaultValue": "false",
+          "type": "string",
+          "defaultValue": null,
           "description": ""
         }
       ]
     },
     {
-      "displayName": "SidebarHeader",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": []
-    },
-    {
-      "displayName": "SidebarInput",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": []
-    },
-    {
-      "displayName": "SidebarInset",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": []
-    },
-    {
-      "displayName": "SidebarMenu",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": []
-    },
-    {
-      "displayName": "SidebarMenuAction",
-      "description": "",
+      "displayName": "SidebarGroupLabel",
+      "description": "Small uppercase heading at the top of a group. 11px, tracking-wider,\nsidebar-foreground/70. Auto-hides when the sidebar collapses to the icon\nrail.",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a custom element while inheriting the\nlabel styling."
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarHeader",
+      "description": "Top region of the sidebar. Default styling: 56px tall, row flex, gap-2.5,\n16px horizontal padding, bottom border. Centred when collapsed to the icon\nrail. Typically holds the brand mark and a collapse trigger.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
           "description": ""
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarInput",
+      "description": "`<Input>` styled to fit inside the sidebar (transparent bg, no shadow,\nsidebar-ring focus colour). Use for an in-sidebar search field.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "pattern",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Native HTML5 validation regex. Triggers `:invalid` if the value doesn't match."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string | number | readonly string[]",
+          "defaultValue": null,
+          "description": "Initial value for an uncontrolled input. Ignored if `value` is also passed."
+        },
+        {
+          "name": "autoFocus",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Focus the input on mount. Use sparingly — surprises keyboard users."
+        },
+        {
+          "name": "id",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "DOM id. Match this from `<Label htmlFor>` for screen-reader association."
+        },
+        {
+          "name": "onFocus",
+          "required": false,
+          "type": "FocusEventHandler<HTMLInputElement>",
+          "defaultValue": null,
+          "description": "Focus event. Common for focus-driven typeahead lookups."
+        },
+        {
+          "name": "onBlur",
+          "required": false,
+          "type": "FocusEventHandler<HTMLInputElement>",
+          "defaultValue": null,
+          "description": "Blur event. Common for blur-validation."
+        },
+        {
+          "name": "onChange",
+          "required": false,
+          "type": "ChangeEventHandler<HTMLInputElement, Element>",
+          "defaultValue": null,
+          "description": "Fires on every keystroke. Read `e.target.value`. Required if you pass `value`."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Visually dims to 50% and blocks all input. Pair with `Label` so the\ndim cascades."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name. Required when relying on uncontrolled native form submission."
+        },
+        {
+          "name": "type",
+          "required": false,
+          "type": "HTMLInputTypeAttribute",
+          "defaultValue": "\"text\"",
+          "description": "Native input type. Drives keyboard, validation, and on iOS the\npicker."
+        },
+        {
+          "name": "value",
+          "required": false,
+          "type": "string | number | readonly string[]",
+          "defaultValue": null,
+          "description": "Controlled value. Pair with `onChange`. For uncontrolled inputs use\n`defaultValue` instead."
+        },
+        {
+          "name": "placeholder",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Hint text shown when the input is empty. Renders in `text-muted-foreground`."
+        },
+        {
+          "name": "readOnly",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Selectable but not editable. Useful for displaying server-set values."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Block native form submit unless the input has a value."
+        },
+        {
+          "name": "autoComplete",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Browser autofill hint. See MDN for the full token list."
+        },
+        {
+          "name": "maxLength",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Character count limit for text inputs."
+        },
+        {
+          "name": "minLength",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Minimum character count for text inputs."
+        },
+        {
+          "name": "min",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": null,
+          "description": "Numeric / date lower bound. Honoured by `type=\"number\"` / `\"date\"` / `\"time\"` / `\"range\"`."
+        },
+        {
+          "name": "max",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": null,
+          "description": "Numeric / date upper bound."
+        },
+        {
+          "name": "step",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": null,
+          "description": "Step increment for `number` / `range` / `date` types."
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarInset",
+      "description": "The main content column — sibling of `<Sidebar>`. Adapts margin /\nborder-radius / shadow when the sidebar uses `variant=\"inset\"`. Place your\ntopbar + page content inside.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarMenu",
+      "description": "Unordered list (`<ul>`) of `SidebarMenuItem`s. The list semantics are\nimportant for screen-reader users — keep menu items in here rather than\ninlining buttons in the group.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarMenuAction",
+      "description": "Icon button anchored to the right of a `SidebarMenuItem` (e.g. a row's\noverflow menu). Use `showOnHover` to keep it hidden until the row is\nhovered/focused.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a custom button element."
         },
         {
           "name": "showOnHover",
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
-          "description": ""
+          "description": "Only reveal the action when the parent menu item is hovered or\nfocused."
         }
       ]
     },
     {
       "displayName": "SidebarMenuBadge",
-      "description": "",
+      "description": "Right-aligned numeric or status badge inside a menu item (e.g. unread\ncount, pending count). Hidden when the sidebar collapses to the icon rail.",
       "file": "src/components/organisms/sidebar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SidebarMenuButton",
-      "description": "",
+      "description": "The clickable nav item itself — supports `isActive`, `tooltip` (shown when\ncollapsed to the rail), and `variant`/`size`. Use `asChild` to wrap a\nrouter `<Link>` instead of rendering a `<button>`.",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
         {
           "name": "variant",
           "required": false,
-          "type": "\"default\" | \"outline\" | null",
+          "type": "enum",
           "defaultValue": "default",
-          "description": ""
+          "description": "Visual style."
         },
         {
-          "name": "asChild",
+          "name": "className",
           "required": false,
-          "type": "boolean",
-          "defaultValue": "false",
-          "description": ""
-        },
-        {
-          "name": "size",
-          "required": false,
-          "type": "\"default\" | \"sm\" | \"lg\" | null",
-          "defaultValue": "md",
-          "description": ""
-        },
-        {
-          "name": "tooltip",
-          "required": false,
-          "type": "string | (TooltipContentProps & RefAttributes<HTMLDivElement>)",
+          "type": "string",
           "defaultValue": null,
           "description": ""
         },
         {
-          "name": "isActive",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": "false",
-          "description": ""
-        }
-      ]
-    },
-    {
-      "displayName": "SidebarMenuItem",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": []
-    },
-    {
-      "displayName": "SidebarMenuSkeleton",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": [
-        {
-          "name": "showIcon",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": "false",
-          "description": ""
-        }
-      ]
-    },
-    {
-      "displayName": "SidebarMenuSub",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": []
-    },
-    {
-      "displayName": "SidebarMenuSubButton",
-      "description": "",
-      "file": "src/components/organisms/sidebar.tsx",
-      "props": [
-        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
-          "description": ""
+          "description": "Render as a Radix Slot — wrap a router `<Link>` to use the menu item\nas navigation."
         },
         {
           "name": "size",
           "required": false,
           "type": "enum",
           "defaultValue": "md",
-          "description": ""
+          "description": "Height preset."
         },
         {
           "name": "isActive",
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
+          "description": "Mark as the currently active item (highlighted styling)."
+        },
+        {
+          "name": "tooltip",
+          "required": false,
+          "type": "string | (TooltipContentProps & RefAttributes<HTMLDivElement>)",
+          "defaultValue": null,
+          "description": "Tooltip text shown when the sidebar collapses to icons-only mode (so\nthe label is still discoverable)."
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarMenuItem",
+      "description": "Single row in the menu (`<li>`). Wraps a `SidebarMenuButton` plus an\noptional `SidebarMenuAction` and `SidebarMenuBadge`.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
           "description": ""
         }
       ]
     },
     {
-      "displayName": "SidebarMenuSubItem",
-      "description": "",
+      "displayName": "SidebarMenuSkeleton",
+      "description": "Loading-state placeholder that matches the `SidebarMenuButton` height. Set\n`showIcon` to also render a leading icon placeholder.",
       "file": "src/components/organisms/sidebar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "showIcon",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render a skeleton block where the leading icon would normally be."
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarMenuSub",
+      "description": "Nested menu (`<ul>`) for sub-items under a `SidebarMenuButton`. Pair with\n`SidebarMenuSubItem` + `SidebarMenuSubButton`.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarMenuSubButton",
+      "description": "The clickable element inside a `SidebarMenuSubItem`. Defaults to an `<a>`\n(use `asChild` for router links). Smaller than top-level menu buttons.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — wrap a router `<Link>` instead of `<a>`."
+        },
+        {
+          "name": "size",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "md",
+          "description": "`sm` or `md` — sub-items are typically smaller than top-level menu\nbuttons."
+        },
+        {
+          "name": "isActive",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Mark as the currently active sub-item."
+        }
+      ]
+    },
+    {
+      "displayName": "SidebarMenuSubItem",
+      "description": "`<li>` wrapper for an item inside a `SidebarMenuSub`. Matches\n`SidebarMenuItem` semantically but at the sub level.",
+      "file": "src/components/organisms/sidebar.tsx",
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SidebarProvider",
-      "description": "",
+      "description": "Wraps the entire shell and supplies the `useSidebar()` context. Reads the\n`--sidebar-width` / `--sidebar-width-icon` CSS variables off this element,\nso any width override goes here via `style`. Required around every Sidebar.",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
+        {
+          "name": "style",
+          "required": false,
+          "type": "CSSProperties",
+          "defaultValue": null,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Sidebar + Inset + page content."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
         {
           "name": "defaultOpen",
           "required": false,
           "type": "boolean",
           "defaultValue": "true",
-          "description": ""
+          "description": "Initial open state when uncontrolled."
         },
         {
           "name": "open",
           "required": false,
           "type": "boolean",
           "defaultValue": null,
-          "description": ""
+          "description": "Controlled open state. Pair with `onOpenChange`."
         },
         {
           "name": "onOpenChange",
           "required": false,
           "type": "((open: boolean) => void)",
           "defaultValue": null,
-          "description": ""
+          "description": "Fires with the next open state."
         }
       ]
     },
     {
       "displayName": "SidebarRail",
-      "description": "",
+      "description": "Thin draggable rail at the sidebar's edge that toggles open/collapsed.\nOptional — only useful when `collapsible !== \"none\"`.",
       "file": "src/components/organisms/sidebar.tsx",
-      "props": []
+      "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "SidebarSeparator",
-      "description": "",
+      "description": "Horizontal divider with `mx-2` and the sidebar-border colour. Drop between\ngroups when you want a visible split (otherwise the gap-2 spacing on\n`SidebarContent` is usually enough).",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        },
         {
           "name": "asChild",
           "required": false,
           "type": "boolean",
           "defaultValue": "false",
           "description": ""
+        },
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"horizontal\"",
+          "description": "Layout direction. `horizontal` is a 1px row spanning width;\n`vertical` is a 1px column spanning height."
+        },
+        {
+          "name": "decorative",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true (default), the separator is hidden from screen readers. Set\nto false for separators that have semantic meaning."
         }
       ]
     },
     {
       "displayName": "SidebarTrigger",
-      "description": "",
+      "description": "Default button that toggles the sidebar via `useSidebar().toggleSidebar`.\nRenders the panel-left glyph; swap with your own button if you want a\ndifferent icon (e.g. a hamburger).",
       "file": "src/components/organisms/sidebar.tsx",
       "props": [
         {
@@ -20969,6 +21923,20 @@
           "type": "string",
           "defaultValue": null,
           "description": "ID of the form this button belongs to, when the button sits outside\nthe `<form>` element."
+        },
+        {
+          "name": "variant",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "default",
+          "description": "Mirrors `Button` variants. Defaults to ghost for low-emphasis chrome."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Visible label or any nested elements (icons, badges)."
         },
         {
           "name": "className",
@@ -20999,25 +21967,18 @@
           "description": "Accessible label, required for icon-only buttons (`size=\"icon\"`)."
         },
         {
-          "name": "children",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Visible label or any nested elements (icons, badges)."
-        },
-        {
           "name": "onClick",
           "required": false,
           "type": "MouseEventHandler<HTMLButtonElement>",
           "defaultValue": null,
-          "description": "Click handler. Receives a `MouseEvent<HTMLButtonElement>`."
+          "description": "Click handler chained before `toggleSidebar()`."
         },
         {
-          "name": "variant",
+          "name": "asChild",
           "required": false,
-          "type": "enum",
-          "defaultValue": "default",
-          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text underlined."
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards className and behaviour onto the\nimmediate child element instead of rendering a wrapper `<button>`.\nCommon pattern for using a router `<Link>` while keeping the Button\nstyling."
         },
         {
           "name": "disabled",
@@ -21048,18 +22009,11 @@
           "description": "Form value sent with the form when this button is the submitter."
         },
         {
-          "name": "asChild",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": "false",
-          "description": "Render as a Radix Slot — forwards className and behaviour onto the\nimmediate child element instead of rendering a wrapper `<button>`.\nCommon pattern for using a router `<Link>` while keeping the Button\nstyling."
-        },
-        {
           "name": "size",
           "required": false,
           "type": "enum",
           "defaultValue": "md",
-          "description": "Height + horizontal padding preset. `sm` is 32px, `default` is 36px,\n`lg` is 40px, `icon` is square 36×36 for icon-only buttons (always\npair with `aria-label`)."
+          "description": "Mirrors `Button` sizes. Defaults to icon."
         }
       ]
     }

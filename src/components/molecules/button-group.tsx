@@ -1,5 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import type * as React from "react";
 
 import { cn } from "../../lib/utils";
 import { Separator } from "../atoms/separator";
@@ -21,11 +22,21 @@ const buttonGroupVariants = cva(
 	},
 );
 
-function ButtonGroup({
-	className,
-	orientation,
-	...props
-}: React.ComponentProps<"div"> & VariantProps<typeof buttonGroupVariants>) {
+export interface ButtonGroupProps
+	extends React.ComponentProps<"div">,
+		VariantProps<typeof buttonGroupVariants> {
+	/**
+	 * `horizontal` (default) lays buttons left-to-right with shared borders;
+	 * `vertical` stacks them with shared horizontal borders.
+	 * @default "horizontal"
+	 */
+	orientation?: "horizontal" | "vertical";
+	/** A row/column of `<Button>`s, `<ButtonGroupText>`s, or separators. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
+function ButtonGroup({ className, orientation, ...props }: ButtonGroupProps) {
 	return (
 		<div
 			role="group"
@@ -37,13 +48,19 @@ function ButtonGroup({
 	);
 }
 
-function ButtonGroupText({
-	className,
-	asChild = false,
-	...props
-}: React.ComponentProps<"div"> & {
+export interface ButtonGroupTextProps extends React.ComponentProps<"div"> {
+	/**
+	 * Render as a Radix Slot — useful for wrapping a label or icon as the
+	 * group's text element.
+	 * @default false
+	 */
 	asChild?: boolean;
-}) {
+	/** Text or icon content. */
+	children?: React.ReactNode;
+	className?: string;
+}
+
+function ButtonGroupText({ className, asChild = false, ...props }: ButtonGroupTextProps) {
 	const Comp = asChild ? Slot : "div";
 
 	return (
@@ -57,11 +74,20 @@ function ButtonGroupText({
 	);
 }
 
+export interface ButtonGroupSeparatorProps extends React.ComponentProps<typeof Separator> {
+	/**
+	 * Layout direction.
+	 * @default "vertical"
+	 */
+	orientation?: "horizontal" | "vertical";
+	className?: string;
+}
+
 function ButtonGroupSeparator({
 	className,
 	orientation = "vertical",
 	...props
-}: React.ComponentProps<typeof Separator>) {
+}: ButtonGroupSeparatorProps) {
 	return (
 		<Separator
 			data-slot="button-group-separator"
