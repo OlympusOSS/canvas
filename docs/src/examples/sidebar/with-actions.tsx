@@ -13,10 +13,9 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarProvider,
-	SidebarTrigger,
 } from "@olympusoss/canvas";
 
-import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
+import { BrandTrigger, HamburgerTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	return (
@@ -24,7 +23,7 @@ export default function App() {
 			<Sidebar collapsible="icon">
 				<SidebarHeader>
 					<BrandTrigger />
-					<SidebarTrigger className="ml-auto group-data-[collapsible=icon]:hidden" />
+					<HamburgerTrigger className="ml-auto inline-flex group-data-[collapsible=icon]:hidden" />
 				</SidebarHeader>
 				<SidebarContent>
 					{NAV_GROUPS.map((group) => (
@@ -55,7 +54,7 @@ export default function App() {
 				</SidebarContent>
 			</Sidebar>
 			<SidebarInset>
-				<Topbar title="Dashboard" />
+				<Topbar collapsible="icon" title="Dashboard" />
 				<div className="p-4 text-sm text-muted-foreground">
 					Hover any nav row to reveal its menu action. The OAuth2 group also exposes a group-level
 					"+" action.

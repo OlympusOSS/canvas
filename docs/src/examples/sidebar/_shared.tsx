@@ -60,18 +60,24 @@ export const NAV_GROUPS: NavGroup[] = [
 ];
 
 /**
- * 3-line hamburger that toggles the sidebar via canvas's `useSidebar` hook.
- * Used in place of the panel-left SidebarTrigger inside the topbar so the
- * affordance reads correctly at every viewport — including the mobile drawer.
+ * 3-line hamburger that toggles the sidebar via canvas's `useSidebar`. The
+ * caller controls visibility via `className` so the same icon can be used in
+ * the sidebar header (always visible while the sidebar is rendered) and in
+ * the topbar (only visible when the sidebar is fully hidden).
  */
-export function HamburgerTrigger() {
+export function HamburgerTrigger({ className }: { className?: string }) {
 	const { toggleSidebar } = useSidebar();
+	// No `inline-flex`/`hidden` in base — the caller's className picks the
+	// display rule so the topbar can hide the trigger conditionally without
+	// fighting a default class.
+	const base =
+		"h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring";
 	return (
 		<button
 			type="button"
 			onClick={toggleSidebar}
 			aria-label="Toggle navigation"
-			className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+			className={[base, className].filter(Boolean).join(" ")}
 		>
 			<Menu className="h-4 w-4" />
 		</button>
@@ -79,16 +85,43 @@ export function HamburgerTrigger() {
 }
 
 /**
- * Topbar shown at the top of the SidebarInset on every example. The hamburger
- * is always rendered — on mobile/tablet it's the only way to open the
- * Sheet-style drawer canvas's Sidebar falls back to under the md breakpoint.
- * On desktop the inline trigger inside the SidebarHeader takes over visually,
- * but having one here means the layout never gets stranded with no opener.
+ * The Topbar hamburger is only visible when the sidebar is "fully hidden" —
+ * either the Sheet drawer is closed (mobile) or the desktop sidebar is in
+ * `collapsible="offcanvas"` mode and currently collapsed. In every other
+ * configuration (icon rail, expanded, `collapsible="none"`) the in-sidebar
+ * hamburger is reachable, so the topbar's would just be a redundant opener.
+ *
+ * peer-data-* selectors can't be used here because the hamburger sits inside
+ * SidebarInset > Topbar, while `data-state` / `data-collapsible` are on the
+ * Sidebar's own root — not a direct sibling. We compute visibility from the
+ * `useSidebar` hook plus the example-supplied `collapsible` prop instead.
  */
-export function Topbar({ title, actions }: { title: ReactNode; actions?: ReactNode }) {
+type CollapsibleMode = "offcanvas" | "icon" | "none";
+
+function useTopbarHamburgerHidden(collapsible: CollapsibleMode) {
+	const { state, isMobile, openMobile } = useSidebar();
+	if (isMobile) return openMobile;
+	return !(state === "collapsed" && collapsible === "offcanvas");
+}
+
+/**
+ * Topbar shown at the top of the SidebarInset on every example. The hamburger
+ * is always rendered but self-hides when the sidebar is visible (rail or
+ * expanded), so the layout never has two redundant openers active at once.
+ */
+export function Topbar({
+	title,
+	actions,
+	collapsible = "offcanvas",
+}: {
+	title: ReactNode;
+	actions?: ReactNode;
+	collapsible?: CollapsibleMode;
+}) {
+	const hidden = useTopbarHamburgerHidden(collapsible);
 	return (
 		<header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-			<HamburgerTrigger />
+			<HamburgerTrigger className={hidden ? "hidden" : "inline-flex"} />
 			<h1 className="text-sm font-semibold tracking-tight">{title}</h1>
 			<div className="ml-auto flex items-center gap-1.5 text-muted-foreground">
 				{actions ?? (

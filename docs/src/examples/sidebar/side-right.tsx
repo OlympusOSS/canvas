@@ -10,16 +10,15 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarProvider,
-	SidebarTrigger,
 } from "@olympusoss/canvas";
 
-import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
+import { BrandTrigger, HamburgerTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	return (
 		<SidebarProvider className="min-h-[520px]">
 			<SidebarInset>
-				<Topbar title="Dashboard" />
+				<Topbar collapsible="icon" title="Dashboard" />
 				<div className="p-4 text-sm text-muted-foreground">
 					Sidebar lives on the right. Same Olympus shell, mirrored layout.
 				</div>
@@ -27,7 +26,7 @@ export default function App() {
 			<Sidebar side="right" collapsible="icon">
 				<SidebarHeader>
 					<BrandTrigger />
-					<SidebarTrigger className="ml-auto group-data-[collapsible=icon]:hidden" />
+					<HamburgerTrigger className="ml-auto inline-flex group-data-[collapsible=icon]:hidden" />
 				</SidebarHeader>
 				<SidebarContent>
 					{NAV_GROUPS.map((group) => (

@@ -10,10 +10,9 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarProvider,
-	SidebarTrigger,
 } from "@olympusoss/canvas";
 
-import { BrandTrigger, NAV_GROUPS, Topbar } from "./_shared";
+import { BrandTrigger, HamburgerTrigger, NAV_GROUPS, Topbar } from "./_shared";
 
 export default function App() {
 	return (
@@ -21,7 +20,7 @@ export default function App() {
 			<Sidebar collapsible="offcanvas">
 				<SidebarHeader>
 					<BrandTrigger />
-					<SidebarTrigger className="ml-auto" />
+					<HamburgerTrigger className="ml-auto inline-flex" />
 				</SidebarHeader>
 				<SidebarContent>
 					{NAV_GROUPS.map((group) => (
