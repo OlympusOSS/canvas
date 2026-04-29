@@ -7,6 +7,28 @@ import { type DayButton, DayPicker, getDefaultClassNames } from "react-day-picke
 import { cn } from "../../lib/utils";
 import { Button, buttonVariants } from "../atoms/button";
 
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+	/**
+	 * Variant applied to the prev/next month nav buttons. Maps to the
+	 * `Button` atom's variants.
+	 * @default "ghost"
+	 */
+	buttonVariant?: React.ComponentProps<typeof Button>["variant"];
+	/**
+	 * Show days from the previous/next month as faded entries to fill the
+	 * grid.
+	 * @default true
+	 */
+	showOutsideDays?: boolean;
+	/**
+	 * How the month/year heading renders. `label` is plain text, the
+	 * dropdown variants render selectable controls.
+	 * @default "label"
+	 */
+	captionLayout?: "label" | "dropdown" | "dropdown-months" | "dropdown-years";
+	className?: string;
+};
+
 function Calendar({
 	className,
 	classNames,
@@ -16,9 +38,7 @@ function Calendar({
 	formatters,
 	components,
 	...props
-}: React.ComponentProps<typeof DayPicker> & {
-	buttonVariant?: React.ComponentProps<typeof Button>["variant"];
-}) {
+}: CalendarProps) {
 	const defaultClassNames = getDefaultClassNames();
 
 	return (

@@ -3,8 +3,20 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 
 export interface FlexBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+	/**
+	 * Maps to `flex-direction`.
+	 * @default "row"
+	 */
 	direction?: "row" | "column";
+	/**
+	 * Maps to `align-items`.
+	 * @default "flex-start"
+	 */
 	align?: "flex-start" | "center" | "flex-end" | "stretch" | "baseline";
+	/**
+	 * Maps to `justify-content`.
+	 * @default "flex-start"
+	 */
 	justify?:
 		| "flex-start"
 		| "center"
@@ -14,7 +26,14 @@ export interface FlexBoxProps extends React.HTMLAttributes<HTMLDivElement> {
 		| "space-evenly";
 	/** Tailwind gap step (0–6) or a raw CSS value. */
 	gap?: number | string;
+	/**
+	 * Maps to `flex-wrap`. Pass `true` for `flex-wrap`, `false` for
+	 * `flex-nowrap`.
+	 * @default false
+	 */
 	wrap?: boolean;
+	children?: React.ReactNode;
+	className?: string;
 }
 
 const DIRECTION: Record<NonNullable<FlexBoxProps["direction"]>, string> = {
