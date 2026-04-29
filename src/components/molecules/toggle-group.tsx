@@ -74,8 +74,7 @@ const ToggleGroupImpl = React.forwardRef<
 >(({ className, variant, size, children, ...props }, ref) => (
 	<ToggleGroupPrimitive.Root
 		ref={ref}
-		// biome-ignore lint/suspicious/noExplicitAny: Radix's discriminated union doesn't survive intersection
-		{...(props as any)}
+		{...(props as React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>)}
 		className={cn("flex items-center justify-center gap-1", className)}
 	>
 		<ToggleGroupContext.Provider value={{ variant, size }}>{children}</ToggleGroupContext.Provider>
