@@ -18,7 +18,7 @@ export default function App() {
 	return (
 		<SidebarProvider className="min-h-[520px]">
 			<SidebarInset>
-				<Topbar collapsible="icon" title="Dashboard" />
+				<Topbar collapsible="icon" side="right" title="Dashboard" />
 				<div className="p-4 text-sm text-muted-foreground">
 					Sidebar lives on the right. Same Olympus shell, mirrored layout.
 				</div>
