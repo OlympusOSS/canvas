@@ -324,11 +324,32 @@
       "file": "src/components/atoms/label.tsx",
       "props": [
         {
+          "name": "htmlFor",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "ID of the form control this label describes. Sets `for` on the\nunderlying `<label>` so screen readers and click-to-focus work.\nMatch this with the input's `id`."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child\nelement instead of rendering a wrapper `<label>`."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Label text. Can include nested elements (icons, helper text)."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the label via `cn()`."
         }
       ]
     }
@@ -384,11 +405,39 @@
       "file": "src/components/atoms/progress.tsx",
       "props": [
         {
+          "name": "value",
+          "required": false,
+          "type": "number | null",
+          "defaultValue": "null",
+          "description": "Current progress as a number between `0` and `max`. When `null` the\nindicator renders in indeterminate mode (Radix's default\nloading-spinner-style fill)."
+        },
+        {
+          "name": "max",
+          "required": false,
+          "type": "number",
+          "defaultValue": "100",
+          "description": "Maximum value the progress can reach. The fill width is\n`value / max * 100%`."
+        },
+        {
+          "name": "getValueLabel",
+          "required": false,
+          "type": "((value: number, max: number) => string)",
+          "defaultValue": null,
+          "description": "Function that returns the accessible label announcing the current\nvalue to screen readers. Defaults to `\"X%\"`."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child\nelement instead of rendering a wrapper `<div>`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
-          "description": ""
+          "description": "Tailwind / CSS classes merged onto the track via `cn()`."
         }
       ]
     }
@@ -400,11 +449,88 @@
       "file": "src/components/atoms/radio-group.tsx",
       "props": [
         {
+          "name": "value",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Controlled selected value. Pair with `onValueChange`. Match the\n`value` of one of the child `<RadioGroupItem>`s."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Initial selected value for uncontrolled usage. Ignored if `value` is\nalso passed."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: string) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user picks a different option."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disables every radio in the group."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Required for native form submission — at least one option must be\nselected."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name. Required when relying on uncontrolled native form submission."
+        },
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"vertical\"",
+          "description": "Layout direction of the radios."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction of the group. Affects keyboard arrow navigation."
+        },
+        {
+          "name": "loop",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "When true, arrow-key navigation wraps from the last item back to the\nfirst."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child\nelement instead of rendering a wrapper `<div>`."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "A flat list of `<RadioGroupItem>`s."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the group via `cn()`."
         }
       ]
     },
@@ -414,11 +540,46 @@
       "file": "src/components/atoms/radio-group.tsx",
       "props": [
         {
+          "name": "value",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Value reported when this radio is selected. Required — must match\nthe parent `<RadioGroup>`'s `value` for selection to register."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disables only this radio."
+        },
+        {
+          "name": "required",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Required for native form submission."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child\nelement instead of rendering a wrapper `<button>`."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Optional inner content (visual only — Radix provides the indicator)."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the radio button via `cn()`."
         }
       ]
     }
@@ -430,11 +591,46 @@
       "file": "src/components/atoms/scroll-area.tsx",
       "props": [
         {
+          "name": "type",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"hover\"",
+          "description": "When the scrollbar is shown:\n- `\"hover\"` reveals on hover and 600ms after scroll\n- `\"scroll\"` reveals only while scrolling\n- `\"auto\"` defers to OS conventions (always-visible on Linux/Win)\n- `\"always\"` keeps the scrollbar visible at all times"
+        },
+        {
+          "name": "scrollHideDelay",
+          "required": false,
+          "type": "number",
+          "defaultValue": "600",
+          "description": "How long the scrollbar lingers after scroll/hover ends, in ms. Only\napplies when `type` is `\"hover\"` or `\"scroll\"`."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction. Affects which side the vertical scrollbar lives on."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child\nelement instead of rendering a wrapper `<div>`."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
           "defaultValue": null,
-          "description": ""
+          "description": "Scrollable content."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the root via `cn()`. Set the\nheight/max-height here so the scroll area knows when to scroll."
         }
       ]
     },
@@ -444,11 +640,32 @@
       "file": "src/components/atoms/scroll-area.tsx",
       "props": [
         {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "vertical",
+          "description": "Which axis the scrollbar controls."
+        },
+        {
+          "name": "forceMount",
+          "required": false,
+          "type": "true",
+          "defaultValue": "false",
+          "description": "Force the scrollbar to mount even when it's not needed (no overflow).\nPair with a CSS animation that fades in/out based on `data-state`."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child\nelement instead of rendering a wrapper `<div>`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
-          "description": ""
+          "description": "Tailwind / CSS classes merged onto the scrollbar via `cn()`."
         }
       ]
     }
@@ -462,9 +679,58 @@
         {
           "name": "spacing",
           "required": false,
-          "type": "number",
+          "type": "enum",
           "defaultValue": "3",
-          "description": "Tailwind vertical-spacing step (0–6)."
+          "description": "Vertical-rhythm step applied as `space-y-*` between immediate children.\nMaps to Tailwind's spacing scale: `0` = 0, `1` = 8px, `2` = 16px,\n`3` = 24px, `4` = 32px, `5` = 40px, `6` = 48px."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Section content — typically a heading + body, or stacked cards."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the root `<div>` via `cn()`."
+        },
+        {
+          "name": "id",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "DOM id, useful when linked to from a `<Label>` or anchor `#hash`."
+        },
+        {
+          "name": "role",
+          "required": false,
+          "type": "AriaRole",
+          "defaultValue": null,
+          "description": "ARIA role override. Pass `\"region\"` (paired with `aria-label` /\n`aria-labelledby`) when the section should be a navigable landmark\nfor screen-reader users."
+        },
+        {
+          "name": "aria-label",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Accessible label for landmark-role sections."
+        },
+        {
+          "name": "aria-labelledby",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "ID of an element that labels the section (e.g. its heading)."
+        },
+        {
+          "name": "aria-describedby",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "ID of an element that describes the section."
         }
       ]
     }
@@ -500,11 +766,109 @@
       "file": "src/components/atoms/slider.tsx",
       "props": [
         {
+          "name": "value",
+          "required": false,
+          "type": "number[]",
+          "defaultValue": null,
+          "description": "Controlled value. Pass an array — single-thumb sliders use a length-1\ntuple (`[40]`), range sliders use length-2 (`[20, 80]`). Pair with\n`onValueChange`."
+        },
+        {
+          "name": "defaultValue",
+          "required": false,
+          "type": "number[]",
+          "defaultValue": "[0]",
+          "description": "Initial value for uncontrolled usage. Same array shape as `value`."
+        },
+        {
+          "name": "onValueChange",
+          "required": false,
+          "type": "((value: number[]) => void)",
+          "defaultValue": null,
+          "description": "Fires on every move. Use this for live previews."
+        },
+        {
+          "name": "onValueCommit",
+          "required": false,
+          "type": "((value: number[]) => void)",
+          "defaultValue": null,
+          "description": "Fires when the user releases the thumb (commit handler)."
+        },
+        {
+          "name": "min",
+          "required": false,
+          "type": "number",
+          "defaultValue": "0",
+          "description": "Minimum value the slider can reach."
+        },
+        {
+          "name": "max",
+          "required": false,
+          "type": "number",
+          "defaultValue": "100",
+          "description": "Maximum value the slider can reach."
+        },
+        {
+          "name": "step",
+          "required": false,
+          "type": "number",
+          "defaultValue": "1",
+          "description": "Quantum the slider snaps to. Set to `1` for integer-only values."
+        },
+        {
+          "name": "minStepsBetweenThumbs",
+          "required": false,
+          "type": "number",
+          "defaultValue": "0",
+          "description": "Minimum gap between two thumbs in a range slider. Ignored for\nsingle-thumb sliders."
+        },
+        {
+          "name": "orientation",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"horizontal\"",
+          "description": "Layout direction."
+        },
+        {
+          "name": "dir",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"ltr\"",
+          "description": "Reading direction. Affects which end is \"min\" on the visual axis."
+        },
+        {
+          "name": "inverted",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Whether the slider is inverted — flips which end is \"min\"."
+        },
+        {
+          "name": "disabled",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Disable the slider."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form field name. Required when relying on uncontrolled native form submission."
+        },
+        {
           "name": "asChild",
           "required": false,
           "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards props onto the immediate child\nelement instead of rendering a wrapper `<span>`."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
-          "description": ""
+          "description": "Tailwind / CSS classes merged onto the slider via `cn()`."
         }
       ]
     }
