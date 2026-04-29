@@ -11,6 +11,13 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 import { Input } from "../atoms/input";
 import { Label } from "../atoms/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "../organisms/select";
 
 export interface PhoneInputProps {
 	id: string;
@@ -34,7 +41,15 @@ interface CountryOption {
 	code: CountryCode;
 	name: string;
 	callingCode: string;
-	label: string;
+}
+
+/** Convert an ISO 3166-1 alpha-2 country code to its flag emoji. */
+function flagEmoji(code: string): string {
+	const A = "A".charCodeAt(0);
+	const offset = 0x1f1e6 - A;
+	const upper = code.toUpperCase();
+	if (upper.length !== 2) return code;
+	return String.fromCodePoint(upper.charCodeAt(0) + offset, upper.charCodeAt(1) + offset);
 }
 
 function buildCountryOptions(codes?: CountryCode[]): CountryOption[] {
@@ -44,12 +59,7 @@ function buildCountryOptions(codes?: CountryCode[]): CountryOption[] {
 		.map((code) => {
 			const callingCode = getCountryCallingCode(code);
 			const name = displayNames.of(code) || code;
-			return {
-				code,
-				name,
-				callingCode: `+${callingCode}`,
-				label: `${name} (+${callingCode})`,
-			};
+			return { code, name, callingCode };
 		})
 		.sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -131,26 +141,44 @@ export function PhoneInput({
 				</Label>
 			)}
 			<div className="flex gap-2">
-				<select
-					aria-label="Country"
+				<Select
 					value={selectedCountry}
-					onChange={(e) => {
-						const next = e.target.value as CountryCode;
-						setSelectedCountry(next);
-						emit(next, localValue);
+					onValueChange={(next) => {
+						const code = next as CountryCode;
+						setSelectedCountry(code);
+						emit(code, localValue);
 					}}
 					disabled={disabled || readonly}
-					className={cn(
-						"h-9 rounded-md border border-input bg-background px-2 text-sm",
-						"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-					)}
 				>
-					{countryOptions.map((opt) => (
-						<option key={opt.code} value={opt.code}>
-							{opt.label}
-						</option>
-					))}
-				</select>
+					<SelectTrigger
+						aria-label="Country"
+						className="w-auto shrink-0 gap-1.5 px-2.5 font-mono text-sm"
+					>
+						<SelectValue>
+							<span className="flex items-center gap-1.5">
+								<span aria-hidden className="text-base leading-none">
+									{flagEmoji(selectedCountry)}
+								</span>
+								<span>+{getCountryCallingCode(selectedCountry)}</span>
+							</span>
+						</SelectValue>
+					</SelectTrigger>
+					<SelectContent className="max-h-[320px] min-w-[260px]">
+						{countryOptions.map((opt) => (
+							<SelectItem key={opt.code} value={opt.code}>
+								<span className="flex items-center gap-2">
+									<span aria-hidden className="text-base leading-none">
+										{flagEmoji(opt.code)}
+									</span>
+									<span>{opt.name}</span>
+									<span className="font-mono text-xs text-muted-foreground">
+										+{opt.callingCode}
+									</span>
+								</span>
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 				<Input
 					id={id}
 					type="tel"
@@ -164,7 +192,7 @@ export function PhoneInput({
 					placeholder={placeholder}
 					disabled={disabled}
 					readOnly={readonly}
-					className={cn(error && "border-destructive focus-visible:ring-destructive")}
+					className={cn("flex-1", error && "border-destructive focus-visible:ring-destructive")}
 				/>
 			</div>
 			{error && <p className="text-xs text-destructive">{error}</p>}

@@ -4,15 +4,31 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 
-const Breadcrumb = React.forwardRef<
-	HTMLElement,
-	React.ComponentPropsWithoutRef<"nav"> & {
-		separator?: React.ReactNode;
-	}
->(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />);
+export interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
+	/**
+	 * Custom separator element used between items. Defaults to a chevron
+	 * via `<BreadcrumbSeparator>`.
+	 */
+	separator?: React.ReactNode;
+	/** A `<BreadcrumbList>` containing items. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the `<nav>` via `cn()`. */
+	className?: string;
+}
+
+const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) => (
+	<nav ref={ref} aria-label="breadcrumb" {...props} />
+));
 Breadcrumb.displayName = "Breadcrumb";
 
-const BreadcrumbList = React.forwardRef<HTMLOListElement, React.ComponentPropsWithoutRef<"ol">>(
+export interface BreadcrumbListProps extends React.ComponentPropsWithoutRef<"ol"> {
+	/** A flat list of `<BreadcrumbItem>`s, separated by `<BreadcrumbSeparator>`. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the `<ol>` via `cn()`. */
+	className?: string;
+}
+
+const BreadcrumbList = React.forwardRef<HTMLOListElement, BreadcrumbListProps>(
 	({ className, ...props }, ref) => (
 		<ol
 			ref={ref}
@@ -26,32 +42,61 @@ const BreadcrumbList = React.forwardRef<HTMLOListElement, React.ComponentPropsWi
 );
 BreadcrumbList.displayName = "BreadcrumbList";
 
-const BreadcrumbItem = React.forwardRef<HTMLLIElement, React.ComponentPropsWithoutRef<"li">>(
+export interface BreadcrumbItemProps extends React.ComponentPropsWithoutRef<"li"> {
+	/** Typically a `<BreadcrumbLink>` or `<BreadcrumbPage>`. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the `<li>` via `cn()`. */
+	className?: string;
+}
+
+const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbItemProps>(
 	({ className, ...props }, ref) => (
 		<li ref={ref} className={cn("inline-flex items-center gap-1.5", className)} {...props} />
 	),
 );
 BreadcrumbItem.displayName = "BreadcrumbItem";
 
-const BreadcrumbLink = React.forwardRef<
-	HTMLAnchorElement,
-	React.ComponentPropsWithoutRef<"a"> & {
-		asChild?: boolean;
-	}
->(({ asChild, className, ...props }, ref) => {
-	const Comp = asChild ? Slot : "a";
+export interface BreadcrumbLinkProps extends React.ComponentPropsWithoutRef<"a"> {
+	/**
+	 * Render as a Radix Slot — useful for wrapping a router `<Link>` so
+	 * it inherits breadcrumb styling.
+	 * @default false
+	 */
+	asChild?: boolean;
+	/** Anchor target. Used when not in `asChild` mode. */
+	href?: string;
+	/** Link label. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the link via `cn()`. */
+	className?: string;
+}
 
-	return (
-		<Comp
-			ref={ref}
-			className={cn("transition-colors hover:text-foreground", className)}
-			{...props}
-		/>
-	);
-});
+const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
+	({ asChild, className, ...props }, ref) => {
+		const Comp = asChild ? Slot : "a";
+
+		return (
+			<Comp
+				ref={ref}
+				className={cn("transition-colors hover:text-foreground", className)}
+				{...props}
+			/>
+		);
+	},
+);
 BreadcrumbLink.displayName = "BreadcrumbLink";
 
-const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWithoutRef<"span">>(
+export interface BreadcrumbPageProps extends React.ComponentPropsWithoutRef<"span"> {
+	/**
+	 * Label of the current page. This is the last breadcrumb item and is
+	 * non-clickable; sets `aria-current="page"` for assistive tech.
+	 */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the page span via `cn()`. */
+	className?: string;
+}
+
+const BreadcrumbPage = React.forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
 	({ className, ...props }, ref) => (
 		<span
 			ref={ref}
@@ -65,7 +110,17 @@ const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWit
 );
 BreadcrumbPage.displayName = "BreadcrumbPage";
 
-const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentProps<"li">) => (
+export interface BreadcrumbSeparatorProps extends React.ComponentProps<"li"> {
+	/**
+	 * Override the default chevron with a custom node (e.g. a slash, an
+	 * arrow icon).
+	 */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the separator via `cn()`. */
+	className?: string;
+}
+
+const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => (
 	<li
 		role="presentation"
 		aria-hidden="true"
@@ -77,7 +132,12 @@ const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentP
 );
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator";
 
-const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<"span">) => (
+export interface BreadcrumbEllipsisProps extends React.ComponentProps<"span"> {
+	/** Tailwind / CSS classes merged onto the ellipsis via `cn()`. */
+	className?: string;
+}
+
+const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) => (
 	<span
 		role="presentation"
 		aria-hidden="true"

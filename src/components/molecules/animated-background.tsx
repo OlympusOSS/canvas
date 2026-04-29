@@ -1,24 +1,43 @@
 import { cn } from "../../lib/utils";
 
 export interface AnimatedBackgroundOrb {
-	/** CSS color for the radial gradient. */
+	/** CSS color for the radial gradient (hex / rgb / hsl / token). */
 	color: string;
-	/** Size in pixels. Default: 500. */
+	/**
+	 * Diameter in pixels.
+	 * @default 500
+	 */
 	size?: number;
+	/**
+	 * Opacity 0–1. Lower values let more of the page bg bleed through.
+	 * @default 0.2
+	 */
 	opacity?: number;
+	/**
+	 * Gaussian blur radius in pixels. Larger values produce softer orbs.
+	 * @default 100
+	 */
 	blur?: number;
-	/** Tailwind position classes, e.g. `"-top-32 -right-32"`. */
+	/** Tailwind position classes, e.g. `"-top-32 -right-32"` or `"left-1/2 top-1/3"`. */
 	position?: string;
-	/** Animation name declared in your CSS (or inline style). */
+	/**
+	 * CSS `animation` shorthand. Pair with the `orb-float-1` / `orb-float-2`
+	 * keyframes shipped in canvas's tokens, or your own.
+	 */
 	animation?: string;
 }
 
 export interface AnimatedBackgroundProps {
 	/**
-	 * Orbs to render. Defaults to a 3-orb indigo/purple/cyan composition that
-	 * mirrors hera's auth background.
+	 * Orbs to render. Defaults to a 3-orb indigo/purple/cyan composition
+	 * that mirrors the auth-screen backdrop. Pass an empty array `[]` to
+	 * render no orbs (useful for testing).
 	 */
 	orbs?: AnimatedBackgroundOrb[];
+	/**
+	 * Tailwind / CSS classes merged onto the root container via `cn()`.
+	 * Defaults to `pointer-events-none fixed inset-0 overflow-hidden`.
+	 */
 	className?: string;
 }
 
