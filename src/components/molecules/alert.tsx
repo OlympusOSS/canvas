@@ -19,15 +19,40 @@ const alertVariants = cva(
 	},
 );
 
-const Alert = React.forwardRef<
-	HTMLDivElement,
-	React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
-	<div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
-));
+export interface AlertProps
+	extends React.HTMLAttributes<HTMLDivElement>,
+		VariantProps<typeof alertVariants> {
+	/**
+	 * Visual emphasis preset. `default` is informational, `destructive`
+	 * uses the danger palette for errors and warnings.
+	 * @default "default"
+	 */
+	variant?: "default" | "destructive";
+	/**
+	 * Optional leading icon (lucide-react), `<AlertTitle>`, and
+	 * `<AlertDescription>`. The icon — when present as a direct child —
+	 * is auto-positioned in the top-left.
+	 */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the alert via `cn()`. */
+	className?: string;
+}
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+	({ className, variant, ...props }, ref) => (
+		<div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
+	),
+);
 Alert.displayName = "Alert";
 
-const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+export interface AlertTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+	/** The alert headline. Renders as an `<h5>`. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the title via `cn()`. */
+	className?: string;
+}
+
+const AlertTitle = React.forwardRef<HTMLParagraphElement, AlertTitleProps>(
 	({ className, ...props }, ref) => (
 		<h5
 			ref={ref}
@@ -38,12 +63,18 @@ const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<H
 );
 AlertTitle.displayName = "AlertTitle";
 
-const AlertDescription = React.forwardRef<
-	HTMLParagraphElement,
-	React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-	<div ref={ref} className={cn("text-sm [&_p]:leading-relaxed", className)} {...props} />
-));
+export interface AlertDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
+	/** Body copy of the alert. Renders as a `<div>` so it can hold paragraphs and lists. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the description via `cn()`. */
+	className?: string;
+}
+
+const AlertDescription = React.forwardRef<HTMLParagraphElement, AlertDescriptionProps>(
+	({ className, ...props }, ref) => (
+		<div ref={ref} className={cn("text-sm [&_p]:leading-relaxed", className)} {...props} />
+	),
+);
 AlertDescription.displayName = "AlertDescription";
 
 export { Alert, AlertDescription, AlertTitle };

@@ -4,7 +4,14 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 import { type ButtonProps, buttonVariants } from "../atoms/button";
 
-const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
+export interface PaginationProps extends React.ComponentProps<"nav"> {
+	/** A `<PaginationContent>` with `<PaginationItem>`s. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the `<nav>` via `cn()`. */
+	className?: string;
+}
+
+const Pagination = ({ className, ...props }: PaginationProps) => (
 	<nav
 		role="navigation"
 		aria-label="pagination"
@@ -14,22 +21,51 @@ const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
 );
 Pagination.displayName = "Pagination";
 
-const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<"ul">>(
+export interface PaginationContentProps extends React.ComponentProps<"ul"> {
+	/** A flat list of `<PaginationItem>`s. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the `<ul>` via `cn()`. */
+	className?: string;
+}
+
+const PaginationContent = React.forwardRef<HTMLUListElement, PaginationContentProps>(
 	({ className, ...props }, ref) => (
 		<ul ref={ref} className={cn("flex flex-row items-center gap-1", className)} {...props} />
 	),
 );
 PaginationContent.displayName = "PaginationContent";
 
-const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<"li">>(
+export interface PaginationItemProps extends React.ComponentProps<"li"> {
+	/** Typically a `<PaginationLink>`, `<PaginationPrevious>`, `<PaginationNext>`, or `<PaginationEllipsis>`. */
+	children?: React.ReactNode;
+	/** Tailwind / CSS classes merged onto the `<li>` via `cn()`. */
+	className?: string;
+}
+
+const PaginationItem = React.forwardRef<HTMLLIElement, PaginationItemProps>(
 	({ className, ...props }, ref) => <li ref={ref} className={cn("", className)} {...props} />,
 );
 PaginationItem.displayName = "PaginationItem";
 
-type PaginationLinkProps = {
+export interface PaginationLinkProps extends React.ComponentProps<"a"> {
+	/**
+	 * Mark this link as the current page. Adds `aria-current="page"` and
+	 * applies the outline button variant.
+	 * @default false
+	 */
 	isActive?: boolean;
-} & Pick<ButtonProps, "size"> &
-	React.ComponentProps<"a">;
+	/**
+	 * Button-style size preset (inherited from `<Button>`).
+	 * @default "icon"
+	 */
+	size?: ButtonProps["size"];
+	/** Page number or label. */
+	children?: React.ReactNode;
+	/** Anchor target. */
+	href?: string;
+	/** Tailwind / CSS classes merged onto the link via `cn()`. */
+	className?: string;
+}
 
 const PaginationLink = ({ className, isActive, size = "icon", ...props }: PaginationLinkProps) => (
 	<a
@@ -46,10 +82,14 @@ const PaginationLink = ({ className, isActive, size = "icon", ...props }: Pagina
 );
 PaginationLink.displayName = "PaginationLink";
 
-const PaginationPrevious = ({
-	className,
-	...props
-}: React.ComponentProps<typeof PaginationLink>) => (
+export interface PaginationPreviousProps extends Omit<PaginationLinkProps, "size"> {
+	/** Anchor target for the previous page. */
+	href?: string;
+	/** Tailwind / CSS classes merged via `cn()`. */
+	className?: string;
+}
+
+const PaginationPrevious = ({ className, ...props }: PaginationPreviousProps) => (
 	<PaginationLink
 		aria-label="Go to previous page"
 		size="default"
@@ -62,7 +102,14 @@ const PaginationPrevious = ({
 );
 PaginationPrevious.displayName = "PaginationPrevious";
 
-const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+export interface PaginationNextProps extends Omit<PaginationLinkProps, "size"> {
+	/** Anchor target for the next page. */
+	href?: string;
+	/** Tailwind / CSS classes merged via `cn()`. */
+	className?: string;
+}
+
+const PaginationNext = ({ className, ...props }: PaginationNextProps) => (
 	<PaginationLink
 		aria-label="Go to next page"
 		size="default"
@@ -75,7 +122,12 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
 );
 PaginationNext.displayName = "PaginationNext";
 
-const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<"span">) => (
+export interface PaginationEllipsisProps extends React.ComponentProps<"span"> {
+	/** Tailwind / CSS classes merged via `cn()`. */
+	className?: string;
+}
+
+const PaginationEllipsis = ({ className, ...props }: PaginationEllipsisProps) => (
 	<span
 		aria-hidden
 		className={cn("flex h-9 w-9 items-center justify-center", className)}
