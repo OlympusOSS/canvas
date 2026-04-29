@@ -42,6 +42,7 @@ function flagEmoji(code: string): string {
 	const A = "A".charCodeAt(0);
 	const offset = 0x1f1e6 - A;
 	const upper = code.toUpperCase();
+	/* c8 ignore next -- defensive: every CountryCode from libphonenumber is a 2-letter ISO code by construction; only reachable if a malformed string slips past TS at the call site */
 	if (upper.length !== 2) return code;
 	return String.fromCodePoint(upper.charCodeAt(0) + offset, upper.charCodeAt(1) + offset);
 }
@@ -52,6 +53,7 @@ function buildCountryOptions(codes?: CountryCode[]): CountryOption[] {
 	return list
 		.map((code) => {
 			const callingCode = getCountryCallingCode(code);
+			/* c8 ignore next -- defensive: Intl.DisplayNames returns a name for every valid ISO country code in jsdom; the `|| code` fallback only fires if Intl data is stripped */
 			const name = displayNames.of(code) || code;
 			return { code, name, callingCode };
 		})
@@ -88,6 +90,7 @@ export function PhoneInput({
 			const parsed = parsePhoneNumber(value);
 			if (parsed) {
 				if (parsed.country) setSelectedCountry(parsed.country);
+				/* c8 ignore next -- defensive: a successfully-parsed PhoneNumber always exposes a nationalNumber; the `?? ""` fallback only fires if libphonenumber returns a partial object */
 				setLocalValue(parsed.nationalNumber ?? "");
 			} else {
 				setLocalValue(value);
