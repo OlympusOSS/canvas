@@ -41,9 +41,17 @@ export default defineConfig({
 		tailwindcss(),
 	],
 	resolve: {
-		alias: {
-			"@olympusoss/canvas": new URL("../src/index.ts", import.meta.url).pathname,
-		},
+		alias: [
+			// Order matters: more specific first.
+			{
+				find: /^@olympusoss\/canvas\/styles\/(.*)$/,
+				replacement: new URL("../styles/$1", import.meta.url).pathname,
+			},
+			{
+				find: "@olympusoss/canvas",
+				replacement: new URL("../src/index.ts", import.meta.url).pathname,
+			},
+		],
 		// Force a single React copy. Canvas src is aliased to ../src/index.ts and
 		// resolves react from canvas/node_modules; docs/main.tsx resolves it from
 		// docs/node_modules. Two instances share no internal dispatcher and
