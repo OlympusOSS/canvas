@@ -16,12 +16,14 @@ const uiSchema: UiSchema = {
 
 export default function App() {
 	return (
-		<div className="mx-auto w-full max-w-sm">
-			<SchemaForm
-				schema={schema}
-				uiSchema={uiSchema}
-				onSubmit={(e) => alert(JSON.stringify(e.formData))}
-			/>
+		<div className="flex min-h-[350px] items-center justify-center p-8">
+			<div className="w-full max-w-sm">
+				<SchemaForm
+					schema={schema}
+					uiSchema={uiSchema}
+					onSubmit={(e) => alert(JSON.stringify(e.formData))}
+				/>
+			</div>
 		</div>
 	);
 }

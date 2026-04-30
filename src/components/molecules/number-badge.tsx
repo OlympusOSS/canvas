@@ -35,7 +35,7 @@ export const NumberBadge = React.forwardRef<HTMLSpanElement, NumberBadgeProps>(
 				role="status"
 				aria-label={isDot ? "New" : `${count} new`}
 				className={cn(
-					"pointer-events-none absolute right-1 top-1 inline-flex items-center justify-center font-mono font-medium tabular-nums",
+					"pointer-events-none absolute -right-1 -top-1 inline-flex items-center justify-center font-mono font-medium tabular-nums",
 					isDot
 						? "h-1.5 w-1.5 rounded-full"
 						: "min-w-[1.125rem] rounded-full px-1 text-[10px] leading-none",

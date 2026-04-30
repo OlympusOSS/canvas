@@ -15,15 +15,17 @@ const schema: RJSFSchema = {
 
 export default function App() {
 	return (
-		<div className="mx-auto w-full max-w-sm">
-			<SchemaForm
-				schema={schema}
-				uiSchema={{ password: { "ui:widget": "password" } }}
-				onSubmit={(e) => alert(JSON.stringify(e.formData))}
-			/>
-			<p className="mt-2 text-xs text-muted-foreground">
-				Min 8 characters, at least one capital letter and one number.
-			</p>
+		<div className="flex min-h-[280px] items-center justify-center p-8">
+			<div className="w-full max-w-sm">
+				<SchemaForm
+					schema={schema}
+					uiSchema={{ password: { "ui:widget": "password" } }}
+					onSubmit={(e) => alert(JSON.stringify(e.formData))}
+				/>
+				<p className="mt-2 text-xs text-muted-foreground">
+					Min 8 characters, at least one capital letter and one number.
+				</p>
+			</div>
 		</div>
 	);
 }

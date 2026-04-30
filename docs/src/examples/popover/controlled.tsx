@@ -4,18 +4,20 @@ import { useState } from "react";
 export default function App() {
 	const [open, setOpen] = useState(false);
 	return (
-		<div className="flex items-center gap-3">
-			<Button variant="outline" onClick={() => setOpen((o) => !o)}>
-				{open ? "Close" : "Open"} from outside
-			</Button>
-			<Popover open={open} onOpenChange={setOpen}>
-				<PopoverTrigger asChild>
-					<Button>Anchor</Button>
-				</PopoverTrigger>
-				<PopoverContent className="w-60 text-sm text-muted-foreground">
-					Open state is wired to the toggle on the left.
-				</PopoverContent>
-			</Popover>
+		<div className="flex min-h-[250px] items-center justify-center p-8">
+			<div className="flex items-center gap-3">
+				<Button variant="outline" onClick={() => setOpen((o) => !o)}>
+					{open ? "Close" : "Open"} from outside
+				</Button>
+				<Popover open={open} onOpenChange={setOpen}>
+					<PopoverTrigger asChild>
+						<Button>Anchor</Button>
+					</PopoverTrigger>
+					<PopoverContent className="w-60 text-sm text-muted-foreground">
+						Open state is wired to the toggle on the left.
+					</PopoverContent>
+				</Popover>
+			</div>
 		</div>
 	);
 }
