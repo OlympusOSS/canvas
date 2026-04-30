@@ -2,7 +2,7 @@
 	{
 		"name": "Full barrel (tree-shakeable, everything)",
 		"path": "src/index.ts",
-		"limit": "400 KB",
+		"limit": "410 KB",
 		"gzip": true,
 		"ignore": [
 			"react",
@@ -12,7 +12,21 @@
 			"@rjsf/validator-ajv8",
 			"libphonenumber-js",
 			"recharts",
-			"next-themes"
+			"next-themes",
+			"@codemirror/commands",
+			"@codemirror/lang-css",
+			"@codemirror/lang-html",
+			"@codemirror/lang-javascript",
+			"@codemirror/lang-json",
+			"@codemirror/lang-markdown",
+			"@codemirror/language",
+			"@codemirror/state",
+			"@codemirror/view",
+			"@tiptap/core",
+			"@tiptap/extension-link",
+			"@tiptap/extension-placeholder",
+			"@tiptap/react",
+			"@tiptap/starter-kit"
 		]
 	},
 	{

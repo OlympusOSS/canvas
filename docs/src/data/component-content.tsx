@@ -515,9 +515,85 @@ import tooltipDelayedSource from "../examples/tooltip/delayed?raw";
 import tooltipDisabledTriggerSource from "../examples/tooltip/disabled-trigger?raw";
 import tooltipSidesSource from "../examples/tooltip/sides?raw";
 
+// activity-item
+const ActivityItemDefault = lazy(() => import("../examples/activity-item/default"));
+const ActivityItemWithAvatar = lazy(() => import("../examples/activity-item/with-avatar"));
+const ActivityItemClickable = lazy(() => import("../examples/activity-item/clickable"));
+
+import activityItemClickableSource from "../examples/activity-item/clickable?raw";
+import activityItemDefaultSource from "../examples/activity-item/default?raw";
+import activityItemWithAvatarSource from "../examples/activity-item/with-avatar?raw";
+
+// brand-lockup
+const BrandLockupDefault = lazy(() => import("../examples/brand-lockup/default"));
+const BrandLockupCollapsed = lazy(() => import("../examples/brand-lockup/collapsed"));
+const BrandLockupSizes = lazy(() => import("../examples/brand-lockup/sizes"));
+
+import brandLockupCollapsedSource from "../examples/brand-lockup/collapsed?raw";
+import brandLockupDefaultSource from "../examples/brand-lockup/default?raw";
+import brandLockupSizesSource from "../examples/brand-lockup/sizes?raw";
+
+// notification-item
+const NotificationItemDefault = lazy(() => import("../examples/notification-item/default"));
+const NotificationItemWithAvatar = lazy(() => import("../examples/notification-item/with-avatar"));
+const NotificationItemWithoutTimestamp = lazy(
+	() => import("../examples/notification-item/without-timestamp"),
+);
+
+import notificationItemDefaultSource from "../examples/notification-item/default?raw";
+import notificationItemWithAvatarSource from "../examples/notification-item/with-avatar?raw";
+import notificationItemWithoutTimestampSource from "../examples/notification-item/without-timestamp?raw";
+
+// notification-list
+const NotificationListDefault = lazy(() => import("../examples/notification-list/default"));
+const NotificationListEmpty = lazy(() => import("../examples/notification-list/empty"));
+
+import notificationListDefaultSource from "../examples/notification-list/default?raw";
+import notificationListEmptySource from "../examples/notification-list/empty?raw";
+
+// number-badge
+const NumberBadgeDefault = lazy(() => import("../examples/number-badge/default"));
+const NumberBadgeVariants = lazy(() => import("../examples/number-badge/variants"));
+
+import numberBadgeDefaultSource from "../examples/number-badge/default?raw";
+import numberBadgeVariantsSource from "../examples/number-badge/variants?raw";
+
+// sparkline
+const SparklineDefault = lazy(() => import("../examples/sparkline/default"));
+const SparklineColorVariants = lazy(() => import("../examples/sparkline/color-variants"));
+const SparklineInline = lazy(() => import("../examples/sparkline/inline"));
+
+import sparklineColorVariantsSource from "../examples/sparkline/color-variants?raw";
+import sparklineDefaultSource from "../examples/sparkline/default?raw";
+import sparklineInlineSource from "../examples/sparkline/inline?raw";
+
+// user-avatar-chip
+const UserAvatarChipDefault = lazy(() => import("../examples/user-avatar-chip/default"));
+const UserAvatarChipWithEmail = lazy(() => import("../examples/user-avatar-chip/with-email"));
+const UserAvatarChipCollapsed = lazy(() => import("../examples/user-avatar-chip/collapsed"));
+
+import userAvatarChipCollapsedSource from "../examples/user-avatar-chip/collapsed?raw";
+import userAvatarChipDefaultSource from "../examples/user-avatar-chip/default?raw";
+import userAvatarChipWithEmailSource from "../examples/user-avatar-chip/with-email?raw";
+
 // =============================================================================
 // ORGANISMS
 // =============================================================================
+
+// code-editor
+const CodeEditorDefault = lazy(() => import("../examples/code-editor/default"));
+
+import codeEditorDefaultSource from "../examples/code-editor/default?raw";
+
+// markdown-editor
+const MarkdownEditorDefault = lazy(() => import("../examples/markdown-editor/default"));
+
+import markdownEditorDefaultSource from "../examples/markdown-editor/default?raw";
+
+// rich-text-editor
+const RichTextEditorDefault = lazy(() => import("../examples/rich-text-editor/default"));
+
+import richTextEditorDefaultSource from "../examples/rich-text-editor/default?raw";
 
 // accordion
 const AccordionDefault = lazy(() => import("../examples/accordion/default"));
@@ -922,6 +998,15 @@ import themeProviderSystemSource from "../examples/theme-provider/system-theme?r
 // =============================================================================
 // TEMPLATES
 // =============================================================================
+
+// app-header
+const AppHeaderDefault = lazy(() => import("../examples/app-header/default"));
+const AppHeaderMinimal = lazy(() => import("../examples/app-header/minimal"));
+const AppHeaderWithMobileMenu = lazy(() => import("../examples/app-header/with-mobile-menu"));
+
+import appHeaderDefaultSource from "../examples/app-header/default?raw";
+import appHeaderMinimalSource from "../examples/app-header/minimal?raw";
+import appHeaderWithMobileMenuSource from "../examples/app-header/with-mobile-menu?raw";
 
 // admin-shell
 const AdminShellDefault = lazy(() => import("../examples/admin-shell/default"));
@@ -2781,9 +2866,288 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 		],
 	},
 
+	"activity-item": {
+		id: "activity-item",
+		tier: "molecules",
+		displayName: "ActivityItem",
+		propsSource: "molecules/activity-item",
+		importLine: `import { ActivityItem, ActivityFeed } from "@olympusoss/canvas";`,
+		overview:
+			"Audit-log row showing a bold subject, muted action, and optional timestamp. Wrap rows in `<ActivityFeed>` for automatic dividers. Pass `onClick` to make a row interactive.",
+		tokens: ["--border", "--foreground", "--muted-foreground"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <ActivityItemDefault />,
+				source: activityItemDefaultSource,
+				filename: "ActivityItem.tsx",
+			},
+			{
+				id: "with-avatar",
+				title: "With avatar",
+				render: () => <ActivityItemWithAvatar />,
+				source: activityItemWithAvatarSource,
+				filename: "ActivityItem.tsx",
+			},
+			{
+				id: "clickable",
+				title: "Clickable rows",
+				render: () => <ActivityItemClickable />,
+				source: activityItemClickableSource,
+				filename: "ActivityItem.tsx",
+			},
+		],
+	},
+	"brand-lockup": {
+		id: "brand-lockup",
+		tier: "molecules",
+		displayName: "BrandLockup",
+		propsSource: "molecules/brand-lockup",
+		importLine: `import { BrandLockup } from "@olympusoss/canvas";`,
+		overview:
+			"Logo + product wordmark lockup with optional subtitle. Three sizes: `sm` (sidebar collapsed), `md` (sidebar expanded), `lg` (hero). Pass `collapsed` to show only the logo.",
+		tokens: ["--foreground", "--muted-foreground"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <BrandLockupDefault />,
+				source: brandLockupDefaultSource,
+				filename: "BrandLockup.tsx",
+			},
+			{
+				id: "collapsed",
+				title: "Collapsed",
+				description: "Logo only, no wordmark.",
+				render: () => <BrandLockupCollapsed />,
+				source: brandLockupCollapsedSource,
+				filename: "BrandLockup.tsx",
+			},
+			{
+				id: "sizes",
+				title: "Sizes",
+				description: "sm / md / lg.",
+				render: () => <BrandLockupSizes />,
+				source: brandLockupSizesSource,
+				filename: "BrandLockup.tsx",
+			},
+		],
+	},
+	"notification-list": {
+		id: "notification-list",
+		tier: "molecules",
+		displayName: "NotificationList",
+		propsSource: "molecules/notification-list",
+		propsDisplayNames: ["NotificationList", "NotificationItem"],
+		importLine: `import { NotificationList, NotificationItem } from "@olympusoss/canvas";`,
+		overview:
+			"Notification dropdown with a header (title + count chip), scrollable body, and optional footer. Fill with `<NotificationItem>` rows. Each item supports icon tones, avatars, timestamps, and click handlers.",
+		tokens: [
+			"--popover",
+			"--popover-foreground",
+			"--border",
+			"--muted",
+			"--stat-destructive",
+			"--stat-blue",
+			"--stat-success",
+			"--stat-amber",
+		],
+		examples: [
+			{
+				id: "default",
+				title: "Default list",
+				render: () => <NotificationListDefault />,
+				source: notificationListDefaultSource,
+				filename: "NotificationList.tsx",
+			},
+			{
+				id: "empty",
+				title: "Empty state",
+				render: () => <NotificationListEmpty />,
+				source: notificationListEmptySource,
+				filename: "NotificationList.tsx",
+			},
+			{
+				id: "item-default",
+				title: "Item with icon tones",
+				render: () => <NotificationItemDefault />,
+				source: notificationItemDefaultSource,
+				filename: "NotificationItem.tsx",
+			},
+			{
+				id: "item-with-avatar",
+				title: "Item with avatar",
+				description: "Avatar fallback in the icon slot.",
+				render: () => <NotificationItemWithAvatar />,
+				source: notificationItemWithAvatarSource,
+				filename: "NotificationItem.tsx",
+			},
+			{
+				id: "item-without-timestamp",
+				title: "Item without timestamp",
+				render: () => <NotificationItemWithoutTimestamp />,
+				source: notificationItemWithoutTimestampSource,
+				filename: "NotificationItem.tsx",
+			},
+		],
+	},
+	"number-badge": {
+		id: "number-badge",
+		tier: "molecules",
+		displayName: "NumberBadge",
+		propsSource: "molecules/number-badge",
+		importLine: `import { NumberBadge } from "@olympusoss/canvas";`,
+		overview:
+			"Small overlay count badge for icon buttons (bell, inbox). Position absolutely against a `relative` parent. Counts above `max` (default 99) render as `99+`. Pass `dot` for a minimal indicator.",
+		tokens: ["--destructive", "--primary", "--muted"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <NumberBadgeDefault />,
+				source: numberBadgeDefaultSource,
+				filename: "NumberBadge.tsx",
+			},
+			{
+				id: "variants",
+				title: "Variants",
+				description: "Count, overflow, dot, muted tone.",
+				render: () => <NumberBadgeVariants />,
+				source: numberBadgeVariantsSource,
+				filename: "NumberBadge.tsx",
+			},
+		],
+	},
+	sparkline: {
+		id: "sparkline",
+		tier: "molecules",
+		displayName: "Sparkline",
+		propsSource: "molecules/sparkline",
+		importLine: `import { Sparkline } from "@olympusoss/canvas";`,
+		overview:
+			"Pure-CSS mini bar chart for inline embedding in `<StatCard>` or `<SectionCard>`. Decorative only; for interactive data use `<BarChart>` from the charts tier.",
+		tokens: ["--chart-1", "--stat-success", "--stat-purple", "--stat-destructive"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <SparklineDefault />,
+				source: sparklineDefaultSource,
+				filename: "Sparkline.tsx",
+			},
+			{
+				id: "color-variants",
+				title: "Color variants",
+				description: "Different colorVar values.",
+				render: () => <SparklineColorVariants />,
+				source: sparklineColorVariantsSource,
+				filename: "Sparkline.tsx",
+			},
+			{
+				id: "inline",
+				title: "Inline with StatCard",
+				render: () => <SparklineInline />,
+				source: sparklineInlineSource,
+				filename: "Sparkline.tsx",
+			},
+		],
+	},
+	"user-avatar-chip": {
+		id: "user-avatar-chip",
+		tier: "molecules",
+		displayName: "UserAvatarChip",
+		propsSource: "molecules/user-avatar-chip",
+		importLine: `import { UserAvatarChip } from "@olympusoss/canvas";`,
+		overview:
+			"Pill-shaped button chip showing a user avatar with name, optional email, and a dropdown chevron. Use in headers and menus. Pass `collapsed` to show only the avatar.",
+		tokens: ["--border", "--card", "--foreground", "--muted-foreground"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <UserAvatarChipDefault />,
+				source: userAvatarChipDefaultSource,
+				filename: "UserAvatarChip.tsx",
+			},
+			{
+				id: "with-email",
+				title: "With email",
+				render: () => <UserAvatarChipWithEmail />,
+				source: userAvatarChipWithEmailSource,
+				filename: "UserAvatarChip.tsx",
+			},
+			{
+				id: "collapsed",
+				title: "Collapsed",
+				description: "Avatar only, no name or chevron.",
+				render: () => <UserAvatarChipCollapsed />,
+				source: userAvatarChipCollapsedSource,
+				filename: "UserAvatarChip.tsx",
+			},
+		],
+	},
+
 	// =========================================================================
 	// ORGANISMS
 	// =========================================================================
+	"code-editor": {
+		id: "code-editor",
+		tier: "organisms",
+		displayName: "CodeEditor",
+		propsSource: "organisms/editors/code-editor",
+		importLine: `import { CodeEditor } from "@olympusoss/canvas";`,
+		overview:
+			"Source-code editor backed by CodeMirror 6. Pick a language with the `language` prop; the wrapper loads the matching syntax highlighter and applies canvas-themed colours.",
+		tokens: ["--input", "--ring", "--background"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <CodeEditorDefault />,
+				source: codeEditorDefaultSource,
+				filename: "CodeEditor.tsx",
+			},
+		],
+	},
+	"markdown-editor": {
+		id: "markdown-editor",
+		tier: "organisms",
+		displayName: "MarkdownEditor",
+		propsSource: "organisms/editors/markdown-editor",
+		importLine: `import { MarkdownEditor } from "@olympusoss/canvas";`,
+		overview:
+			"Markdown editor backed by CodeMirror 6 with syntax highlighting, a canvas-styled formatting toolbar, and an optional side-by-side preview pane.",
+		tokens: ["--input", "--ring", "--background"],
+		examples: [
+			{
+				id: "default",
+				title: "Default with preview",
+				render: () => <MarkdownEditorDefault />,
+				source: markdownEditorDefaultSource,
+				filename: "MarkdownEditor.tsx",
+			},
+		],
+	},
+	"rich-text-editor": {
+		id: "rich-text-editor",
+		tier: "organisms",
+		displayName: "RichTextEditor",
+		propsSource: "organisms/editors/rich-text-editor",
+		importLine: `import { RichTextEditor } from "@olympusoss/canvas";`,
+		overview:
+			"Rich text editor backed by Tiptap (ProseMirror). Ships with bold, italic, strike, code, lists, blockquotes, code blocks, links, and heading levels. Outputs HTML or JSON.",
+		tokens: ["--input", "--ring", "--background"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <RichTextEditorDefault />,
+				source: richTextEditorDefaultSource,
+				filename: "RichTextEditor.tsx",
+			},
+		],
+	},
 	accordion: {
 		id: "accordion",
 		tier: "organisms",
@@ -4368,6 +4732,41 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 	// =========================================================================
 	// TEMPLATES
 	// =========================================================================
+	"app-header": {
+		id: "app-header",
+		tier: "templates",
+		displayName: "AppHeader",
+		propsSource: "templates/app-header",
+		importLine: `import { AppHeader } from "@olympusoss/canvas";`,
+		overview:
+			"Top-level admin header bar with slots for search, action buttons, user chip, and a mobile menu trigger. Sticky by default.",
+		tokens: ["--border", "--background"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <AppHeaderDefault />,
+				source: appHeaderDefaultSource,
+				filename: "AppHeader.tsx",
+			},
+			{
+				id: "minimal",
+				title: "Minimal",
+				description: "User chip only, no search or actions.",
+				render: () => <AppHeaderMinimal />,
+				source: appHeaderMinimalSource,
+				filename: "AppHeader.tsx",
+			},
+			{
+				id: "with-mobile-menu",
+				title: "With mobile menu",
+				description: "Hamburger trigger for AdminShell's mobile drawer.",
+				render: () => <AppHeaderWithMobileMenu />,
+				source: appHeaderWithMobileMenuSource,
+				filename: "AppHeader.tsx",
+			},
+		],
+	},
 	"admin-shell": {
 		id: "admin-shell",
 		tier: "templates",

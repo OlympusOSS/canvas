@@ -358,6 +358,17 @@ export {
 	DropdownMenuTrigger,
 } from "./components/organisms/dropdown-menu";
 export {
+	CodeEditor,
+	type CodeEditorLanguage,
+	type CodeEditorProps,
+	MarkdownEditor,
+	type MarkdownEditorProps,
+	RichTextEditor,
+	type RichTextEditorProps,
+	TOOLBAR_ITEM_IDS,
+	type ToolbarItemId,
+} from "./components/organisms/editors";
+export {
 	ErrorBoundary,
 	type ErrorBoundaryProps,
 } from "./components/organisms/error-boundary";

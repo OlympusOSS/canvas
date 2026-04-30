@@ -81,7 +81,7 @@ interface PreviewFrameProps {
 function PreviewFrame({ viewport, children }: PreviewFrameProps) {
 	const head = useFrameHead();
 	const [height, setHeight] = useState(MIN_FRAME_HEIGHT);
-	const initialContent = `<!DOCTYPE html><html style="overflow:hidden;"><head>${head}</head><body style="margin:0;background:transparent;position:relative;overflow:hidden;"><div id="frame-root"></div></body></html>`;
+	const initialContent = `<!DOCTYPE html><html style="overflow:hidden;"><head>${head}</head><body style="margin:0;background:transparent;"><div id="frame-root"></div></body></html>`;
 
 	return (
 		<div

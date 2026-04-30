@@ -46,7 +46,6 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "field-display", label: "FieldDisplay", tier: "molecules" },
 	{ id: "input-otp", label: "InputOTP", tier: "molecules" },
 	{ id: "loading-state", label: "LoadingState", tier: "molecules" },
-	{ id: "notification-item", label: "NotificationItem", tier: "molecules" },
 	{ id: "notification-list", label: "NotificationList", tier: "molecules" },
 	{ id: "number-badge", label: "NumberBadge", tier: "molecules" },
 	{ id: "page-header", label: "PageHeader", tier: "molecules" },

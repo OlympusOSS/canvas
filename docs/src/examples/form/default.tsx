@@ -18,27 +18,29 @@ interface FormValues {
 export default function App() {
 	const form = useForm<FormValues>({ defaultValues: { username: "" } });
 	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit((v) => alert(JSON.stringify(v)))}
-				className="w-full max-w-sm space-y-3"
-			>
-				<FormField
-					control={form.control}
-					name="username"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Username</FormLabel>
-							<FormControl>
-								<Input placeholder="bobby" {...field} />
-							</FormControl>
-							<FormDescription>Your public display name.</FormDescription>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button type="submit">Submit</Button>
-			</form>
-		</Form>
+		<div className="flex min-h-[280px] items-center justify-center p-8">
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit((v) => alert(JSON.stringify(v)))}
+					className="w-full max-w-sm space-y-3"
+				>
+					<FormField
+						control={form.control}
+						name="username"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Username</FormLabel>
+								<FormControl>
+									<Input placeholder="bobby" {...field} />
+								</FormControl>
+								<FormDescription>Your public display name.</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<Button type="submit">Submit</Button>
+				</form>
+			</Form>
+		</div>
 	);
 }
