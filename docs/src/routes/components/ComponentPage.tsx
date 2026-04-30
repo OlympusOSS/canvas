@@ -1,5 +1,5 @@
 import { Badge, Icon } from "@olympusoss/canvas";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { DocsCodeBlock } from "../../components/DocsCodeBlock";
 import { EditOnGitHub } from "../../components/EditOnGitHub";
@@ -197,48 +197,77 @@ interface TOCProps {
 }
 function TOC({ sections }: TOCProps) {
 	const [active, setActive] = useState<string>(sections[0]?.id ?? "");
+	// When the user clicks a TOC link, we lock the active state to that
+	// section as long as its heading is still visible in the viewport.
+	// This handles short final sections that can't scroll past OFFSET.
+	const clickedRef = useRef<string | null>(null);
 
 	useEffect(() => {
 		const scrollContainer = document.querySelector("main");
 		if (!scrollContainer || sections.length === 0) return;
 
-		// Scroll-position based tracking: on every scroll frame, find the last
-		// section whose top has scrolled past a threshold near the viewport top.
-		// This is simpler and more reliable than IntersectionObserver for a TOC
-		// — it handles short final sections, bottom-of-page, and click-to-jump.
 		const OFFSET = 120; // px below the top of the scroll container
 
 		const onScroll = () => {
 			const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+			const containerRect = scrollContainer.getBoundingClientRect();
 
-			// If near the bottom, force-activate the last section.
-			if (scrollTop + clientHeight >= scrollHeight - 40) {
-				setActive(sections[sections.length - 1].id);
-				return;
+			// If the user clicked a TOC link, honour that choice as long as
+			// the target heading is still visible in the viewport.
+			if (clickedRef.current) {
+				const el = document.getElementById(clickedRef.current);
+				if (el) {
+					const relTop = el.getBoundingClientRect().top - containerRect.top;
+					if (relTop >= -50 && relTop < clientHeight) {
+						setActive(clickedRef.current);
+						return;
+					}
+				}
+				// The clicked section scrolled out of view — release the lock.
+				clickedRef.current = null;
 			}
 
-			// Walk sections in reverse — the last one whose element top is above
-			// the offset wins.
+			// Reverse walk: last section whose heading scrolled past OFFSET.
+			let found = sections[0].id;
 			for (let i = sections.length - 1; i >= 0; i--) {
 				const el = document.getElementById(sections[i].id);
 				if (!el) continue;
-				const rect = el.getBoundingClientRect();
-				const containerRect = scrollContainer.getBoundingClientRect();
-				if (rect.top - containerRect.top <= OFFSET) {
-					setActive(sections[i].id);
-					return;
+				if (el.getBoundingClientRect().top - containerRect.top <= OFFSET) {
+					found = sections[i].id;
+					break;
 				}
 			}
-			// Nothing scrolled past → first section
-			setActive(sections[0].id);
+
+			// At the scroll limit, deeper sections can't physically scroll
+			// their headings above OFFSET. Upgrade to the deepest visible
+			// heading in the upper half of the viewport.
+			const atBottom = scrollTop + clientHeight >= scrollHeight - 4;
+			if (atBottom) {
+				const foundIdx = sections.findIndex((s) => s.id === found);
+				for (let i = sections.length - 1; i > foundIdx; i--) {
+					const el = document.getElementById(sections[i].id);
+					if (!el) continue;
+					const relTop = el.getBoundingClientRect().top - containerRect.top;
+					if (relTop >= 0 && relTop <= clientHeight * 0.5) {
+						found = sections[i].id;
+						break;
+					}
+				}
+			}
+
+			setActive(found);
 		};
 
 		scrollContainer.addEventListener("scroll", onScroll, { passive: true });
-		// Run once to set initial state
 		onScroll();
 
 		return () => scrollContainer.removeEventListener("scroll", onScroll);
 	}, [sections]);
+
+	const handleTocClick = (id: string) => {
+		clickedRef.current = id;
+		setActive(id);
+	};
 
 	return (
 		<aside className="hidden w-44 shrink-0 lg:block">
@@ -253,6 +282,7 @@ function TOC({ sections }: TOCProps) {
 							<li key={s.id}>
 								<a
 									href={`#${s.id}`}
+									onClick={() => handleTocClick(s.id)}
 									className={`relative block rounded px-2 py-1 text-[12.5px] transition-colors ${
 										isActive
 											? "text-foreground font-medium"
