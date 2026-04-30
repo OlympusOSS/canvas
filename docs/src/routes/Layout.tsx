@@ -226,7 +226,7 @@ export function Layout() {
 
 	if (collapsed) {
 		return (
-			<div className="flex min-h-screen bg-background">
+			<div className="flex h-screen bg-background">
 				<aside className="flex w-12 shrink-0 flex-col items-center border-r border-border bg-card/30 py-4">
 					<button
 						type="button"
@@ -251,9 +251,9 @@ export function Layout() {
 	}
 
 	return (
-		<div className="flex min-h-screen bg-background">
+		<div className="flex h-screen bg-background">
 			<aside className="w-60 shrink-0 border-r border-sidebar-border bg-sidebar">
-				<div className="sticky top-0 flex max-h-screen flex-col overflow-y-auto scrollbar-thin px-4 py-5">
+				<div className="flex h-full flex-col overflow-y-auto scrollbar-thin px-4 py-5">
 					<div className="flex items-start justify-between gap-2 px-2">
 						<NavLink to="/" className="group flex items-center gap-2.5">
 							<div className="relative h-7 w-7 shrink-0">

@@ -1,4 +1,4 @@
-import { Badge, Icon, useTheme } from "@olympusoss/canvas";
+import { Badge, Icon } from "@olympusoss/canvas";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { DocsCodeBlock } from "../../components/DocsCodeBlock";
@@ -24,10 +24,9 @@ export function ComponentPage() {
 
 	const sections: Section[] = useMemo(() => {
 		const s: Section[] = [];
-		if (content?.importLine) s.push({ id: "import", label: "Import" });
-		if (content?.playground) s.push({ id: "playground", label: "Playground" });
-		if (content?.examples?.length) s.push({ id: "examples", label: "Examples" });
-		s.push({ id: "api", label: "API" });
+		s.push({ id: "import", label: "Import" });
+		s.push({ id: "examples", label: "Examples" });
+		s.push({ id: "props", label: "Props" });
 		if (content?.a11y?.length) s.push({ id: "a11y", label: "Accessibility" });
 		if (content?.tokens?.length) s.push({ id: "tokens-used", label: "Tokens" });
 		return s;
@@ -38,6 +37,9 @@ export function ComponentPage() {
 
 	const propsSource = content?.propsSource ?? `${tier}/${name}`;
 	const sourceUrl = `${REPO}/blob/main/src/components/${tier}/${name}.tsx`;
+	// Auto-generate an import line from the manifest if no explicit one is set.
+	const importLine =
+		content?.importLine ?? `import { ${manifestEntry.label} } from "@olympusoss/canvas";`;
 
 	return (
 		<div className="relative flex gap-12">
@@ -64,8 +66,8 @@ export function ComponentPage() {
 						</p>
 					) : (
 						<p className="max-w-2xl text-muted-foreground">
-							This component's overview is auto-generated. The API table below is the source of
-							truth.
+							A Canvas {TIER_META[manifestEntry.tier].label.toLowerCase().replace(/s$/, "")}{" "}
+							component. See the import line and props table below.
 						</p>
 					)}
 					<div className="flex items-center gap-2 pt-2">
@@ -78,28 +80,14 @@ export function ComponentPage() {
 					</div>
 				</header>
 
-				{content?.importLine && (
-					<section id="import" className="scroll-mt-anchor space-y-3">
-						<H2>Import</H2>
-						<DocsCodeBlock code={content.importLine} language="tsx" filename="usage.tsx" />
-					</section>
-				)}
+				<section id="import" className="scroll-mt-anchor space-y-3">
+					<H2>Import</H2>
+					<DocsCodeBlock code={importLine} language="tsx" filename="usage.tsx" />
+				</section>
 
-				{content?.playground && (
-					<section id="playground" className="scroll-mt-anchor space-y-3">
-						<H2>Playground</H2>
-						<p className="text-sm text-muted-foreground">
-							Mutate live props and watch the preview update.
-						</p>
-						<PreviewFrame>
-							<Suspense fallback={null}>{content.playground()}</Suspense>
-						</PreviewFrame>
-					</section>
-				)}
-
-				{content?.examples && content.examples.length > 0 && (
-					<section id="examples" className="scroll-mt-anchor space-y-4">
-						<H2>Examples</H2>
+				<section id="examples" className="scroll-mt-anchor space-y-4">
+					<H2>Examples</H2>
+					{content?.examples && content.examples.length > 0 ? (
 						<div className="space-y-4">
 							{content.examples.map((ex) => (
 								<Example
@@ -118,12 +106,33 @@ export function ComponentPage() {
 								</Example>
 							))}
 						</div>
-					</section>
-				)}
+					) : (
+						<div className="rounded-xl border border-border bg-muted/30 p-6 text-sm text-muted-foreground">
+							<p>
+								Curated examples for <code className="font-mono">{manifestEntry.label}</code> are
+								being authored. View source on GitHub for usage patterns, and check the Props table
+								below for the full API.
+							</p>
+							<a
+								href={sourceUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-foreground underline-offset-4 hover:underline"
+							>
+								View source
+								<Icon name="ExternalLink" className="h-3 w-3" />
+							</a>
+						</div>
+					)}
+				</section>
 
-				<section id="api" className="scroll-mt-anchor space-y-3">
-					<H2>API</H2>
-					<PropsTable source={propsSource} />
+				<section id="props" className="scroll-mt-anchor space-y-3">
+					<H2>Props</H2>
+					<PropsTable
+						source={propsSource}
+						displayNames={content?.propsDisplayNames}
+						overrides={content?.propsOverride}
+					/>
 				</section>
 
 				{content?.a11y && content.a11y.length > 0 && (
@@ -183,58 +192,6 @@ function H2({ children }: { children: React.ReactNode }) {
 	return <h2 className="text-2xl font-semibold tracking-tight text-foreground">{children}</h2>;
 }
 
-interface PreviewFrameProps {
-	children: React.ReactNode;
-}
-function PreviewFrame({ children }: PreviewFrameProps) {
-	const { resolvedTheme } = useTheme();
-	// Default to inverted contrast — opposite of the page theme so components
-	// stand out. User can still flip via the toggle.
-	const [localTheme, setLocalTheme] = useState<"light" | "dark">(
-		resolvedTheme === "dark" ? "light" : "dark",
-	);
-
-	const isDark = localTheme === "dark";
-
-	return (
-		<div className="overflow-hidden rounded-xl border border-border bg-card/30">
-			<header className="flex items-center justify-between border-b border-border bg-muted/30 px-3 py-2">
-				<div className="flex items-center gap-2">
-					<span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-						Preview
-					</span>
-				</div>
-				<div className="flex items-center gap-1 rounded-md border border-border bg-background p-0.5">
-					{(["light", "dark"] as const).map((mode) => (
-						<button
-							key={mode}
-							type="button"
-							onClick={() => setLocalTheme(mode)}
-							className={`inline-flex h-6 items-center gap-1 rounded px-2 text-[11px] transition-colors ${
-								localTheme === mode
-									? "bg-foreground text-background font-medium"
-									: "text-muted-foreground hover:text-foreground"
-							}`}
-							aria-label={`${mode} mode preview`}
-						>
-							<Icon name={mode === "light" ? "Sun" : "Moon"} className="h-3 w-3" />
-							{mode === "light" ? "Light" : "Dark"}
-						</button>
-					))}
-				</div>
-			</header>
-			<div
-				className={`${isDark ? "dark" : ""} bg-grid mask-radial-fade flex min-h-64 items-center justify-center p-10`}
-				style={{
-					background: isDark ? "hsl(240 10% 3.9%)" : "hsl(0 0% 100%)",
-				}}
-			>
-				<div className={isDark ? "dark text-foreground" : "text-foreground"}>{children}</div>
-			</div>
-		</div>
-	);
-}
-
 interface TOCProps {
 	sections: Section[];
 }
@@ -244,22 +201,49 @@ function TOC({ sections }: TOCProps) {
 
 	useEffect(() => {
 		observerRef.current?.disconnect();
+
+		// Track which sections are currently intersecting so the scroll handler
+		// can decide whether IntersectionObserver already covers the bottom.
+		const visibleIds = new Set<string>();
+
 		const obs = new IntersectionObserver(
 			(entries) => {
+				for (const e of entries) {
+					if (e.isIntersecting) visibleIds.add(e.target.id);
+					else visibleIds.delete(e.target.id);
+				}
 				const visible = entries.filter((e) => e.isIntersecting);
 				if (visible.length > 0) {
 					visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
 					setActive(visible[0].target.id);
 				}
 			},
-			{ rootMargin: "-100px 0px -60% 0px", threshold: 0.1 },
+			{ rootMargin: "-80px 0px -35% 0px", threshold: 0.1 },
 		);
 		for (const s of sections) {
 			const el = document.getElementById(s.id);
 			if (el) obs.observe(el);
 		}
 		observerRef.current = obs;
-		return () => obs.disconnect();
+
+		// When the user scrolls to the very bottom of the scrollable area the
+		// last section(s) may sit entirely inside the excluded rootMargin zone.
+		// Detect that case and force-activate the last section.
+		const scrollContainer = document.querySelector("main");
+		const onScroll = () => {
+			if (!scrollContainer) return;
+			const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+			const atBottom = scrollTop + clientHeight >= scrollHeight - 2;
+			if (atBottom && sections.length > 0) {
+				setActive(sections[sections.length - 1].id);
+			}
+		};
+		scrollContainer?.addEventListener("scroll", onScroll, { passive: true });
+
+		return () => {
+			obs.disconnect();
+			scrollContainer?.removeEventListener("scroll", onScroll);
+		};
 	}, [sections]);
 
 	return (
