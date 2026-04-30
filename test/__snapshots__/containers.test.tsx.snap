@@ -1,29 +1,20 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Chart > matches snapshot of minimal BarChart in ChartContainer 1`] = `
+exports[`charts/containers > matches snapshot inside a ChartContainer 1`] = `
 <div>
   <div
     class="flex aspect-video w-full justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none"
-    data-chart="chart-snap"
+    data-chart="chart-containers"
   >
-    <style>
-      
- [data-chart=chart-snap] {
-  --color-desktop: #2563eb;
-  --color-mobile: #60a5fa;
-}
-
-
-.dark [data-chart=chart-snap] {
-  --color-desktop: #2563eb;
-  --color-mobile: #60a5fa;
-}
-
-    </style>
     <div
       class="recharts-responsive-container"
       style="width: 100%; height: 100%; min-width: 0px;"
-    />
+    >
+      <svg
+        height="0"
+        width="0"
+      />
+    </div>
   </div>
 </div>
 `;

@@ -29,7 +29,13 @@ const BOTTOM_NAV: NavItem[] = [
 	{ to: "/changelog", label: "Changelog" },
 ];
 
-const TIERS: Array<keyof typeof TIER_META> = ["atoms", "molecules", "organisms", "templates"];
+const TIERS: Array<keyof typeof TIER_META> = [
+	"atoms",
+	"molecules",
+	"organisms",
+	"charts",
+	"templates",
+];
 
 const STORAGE_KEY = "canvas-docs:nav-open";
 

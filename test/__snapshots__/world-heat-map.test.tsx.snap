@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WorldHeatMap > matches snapshot for the loading shell 1`] = `
+<div>
+  <div
+    class="relative flex items-center justify-center overflow-hidden rounded-xl bg-muted/40 text-xs text-muted-foreground world-heat-map"
+    style="height: 100%;"
+  >
+    <div
+      class="px-4 py-2 text-center"
+    >
+      Map dependencies missing — install 
+      <code>
+        leaflet
+      </code>
+       and 
+      <code>
+        react-leaflet
+      </code>
+      .
+    </div>
+  </div>
+</div>
+`;
