@@ -1,0 +1,13 @@
+/**
+ * Re-export of Leaflet's base stylesheet.
+ *
+ * Consumers of `<WorldHeatMap>` import this once at app entry:
+ *
+ *   import "@olympusoss/canvas/styles/leaflet.css";
+ *
+ * The actual import resolves through the consumer's bundler — `leaflet` is a
+ * peer-optional dependency, so an app that doesn't use the map doesn't
+ * incur this stylesheet. If `leaflet` isn't installed, the @import errors at
+ * build time, which is the right signal.
+ */
+@import "leaflet/dist/leaflet.css";

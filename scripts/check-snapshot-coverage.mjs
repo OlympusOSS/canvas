@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
-const SRC_TIERS = ["atoms", "molecules", "organisms", "templates"];
+const SRC_TIERS = ["atoms", "molecules", "organisms", "charts", "templates"];
 const SNAPSHOT_DIR = join(ROOT, "test", "__snapshots__");
 
 const threshold = Number(process.env.SNAPSHOT_COVERAGE_THRESHOLD ?? 100);

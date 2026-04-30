@@ -30,6 +30,74 @@ export { Slider } from "./components/atoms/slider";
 export { Switch } from "./components/atoms/switch";
 export { Textarea } from "./components/atoms/textarea";
 export { Toggle, toggleVariants } from "./components/atoms/toggle";
+/* ────────────────────────────────────────────────────────────────
+   CHARTS — theme-aware Recharts wrappers + auto-palette container.
+   ──────────────────────────────────────────────────────────────── */
+export {
+	CartesianAxis,
+	PolarAngleAxis,
+	PolarRadiusAxis,
+	XAxis,
+	YAxis,
+	ZAxis,
+} from "./components/charts/axes";
+export {
+	type ChartConfig,
+	ChartContainer,
+	ChartStyle,
+	useChart,
+} from "./components/charts/chart-container";
+export { ChartLegend, ChartLegendContent } from "./components/charts/chart-legend";
+export { ChartTooltip, ChartTooltipContent } from "./components/charts/chart-tooltip";
+export {
+	AreaChart,
+	BarChart,
+	ComposedChart,
+	FunnelChart,
+	LineChart,
+	PieChart,
+	RadarChart,
+	RadialBarChart,
+	Sankey,
+	ScatterChart,
+	SunburstChart,
+	Treemap,
+} from "./components/charts/chart-types";
+export { Brush, Layer, ResponsiveContainer, Surface } from "./components/charts/containers";
+export {
+	Area,
+	Bar,
+	Funnel,
+	Line,
+	Pie,
+	Radar,
+	RadialBar,
+	Scatter,
+} from "./components/charts/data";
+export {
+	ChartCell,
+	ChartCustomized,
+	Cross,
+	Curve,
+	Dot,
+	ErrorBar,
+	Polygon,
+	Rectangle,
+	Sector,
+	Trapezoid,
+} from "./components/charts/details";
+export { CartesianGrid, PolarGrid } from "./components/charts/grids";
+export {
+	ReferenceArea,
+	ReferenceDot,
+	ReferenceLine,
+} from "./components/charts/references";
+export { ChartLabel, LabelList, Text } from "./components/charts/text";
+export {
+	WorldHeatMap,
+	type WorldHeatMapPoint,
+	type WorldHeatMapProps,
+} from "./components/charts/world-heat-map";
 export {
 	ActionBar,
 	type ActionBarAction,
@@ -210,15 +278,6 @@ export {
 	CarouselNext,
 	CarouselPrevious,
 } from "./components/organisms/carousel";
-export {
-	type ChartConfig,
-	ChartContainer,
-	ChartLegend,
-	ChartLegendContent,
-	ChartStyle,
-	ChartTooltip,
-	ChartTooltipContent,
-} from "./components/organisms/chart";
 export {
 	Collapsible,
 	CollapsibleContent,

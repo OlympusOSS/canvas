@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WorldHeatMapInner > matches snapshot (coverage stub — actual render exercised via the lazy boundary in world-heat-map.test.tsx) 1`] = `"world-heat-map-inner-coverage-stub"`;
