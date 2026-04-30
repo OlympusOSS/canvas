@@ -1,5 +1,56 @@
 # Changelog
 
+## 2.4.0
+
+### Minor Changes
+
+- f96ba6d: **Chart tier — full migration from organism to `src/components/charts/`**
+
+  The legacy `organisms/chart.tsx` has been replaced by a dedicated chart tier
+  with 14 source files. All existing named exports (`ChartConfig`,
+  `ChartContainer`, `ChartStyle`, `useChart`, `ChartTooltip`,
+  `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`) continue to work
+  unchanged.
+
+  New exports:
+
+  - **Chart-type wrappers**: `AreaChart`, `BarChart`, `ComposedChart`,
+    `FunnelChart`, `LineChart`, `PieChart`, `RadarChart`, `RadialBarChart`,
+    `Sankey`, `ScatterChart`, `SunburstChart`, `Treemap`.
+  - **Data primitives**: `Area`, `Bar`, `Funnel`, `Line`, `Pie`, `Radar`,
+    `RadialBar`, `Scatter`.
+  - **Axes**: `CartesianAxis`, `XAxis`, `YAxis`, `ZAxis`, `PolarAngleAxis`,
+    `PolarRadiusAxis`.
+  - **Grids**: `CartesianGrid`, `PolarGrid`.
+  - **References**: `ReferenceArea`, `ReferenceDot`, `ReferenceLine`.
+  - **Labels**: `ChartLabel` (renamed from recharts `Label` to avoid collision
+    with the atom-tier form `Label`), `LabelList`, `Text`.
+  - **Containers**: `Brush`, `Layer`, `ResponsiveContainer`, `Surface`.
+  - **Details**: `ChartCell`, `ChartCustomized`, `Cross`, `Curve`, `Dot`,
+    `ErrorBar`, `Polygon`, `Rectangle`, `Sector`, `Trapezoid`.
+  - **Geo**: `WorldHeatMap` (lazy-loaded Leaflet; peer-optional `leaflet` +
+    `react-leaflet`).
+
+  **Auto-palette**: `ChartContainer` now walks its children and injects
+  `hsl(var(--chart-N))` on data primitives that have neither `fill` nor
+  `stroke` set. Consumers passing explicit colors are unaffected.
+
+- c89d485: **8 new components from Athena admin handoff**
+
+  - New molecules: `ActivityItem`, `BrandLockup`, `NotificationItem`,
+    `NotificationList`, `NumberBadge`, `Sparkline`, `UserAvatarChip`.
+  - New template: `AppHeader`.
+  - Surface-elevation token layer.
+
+### Docs
+
+- 280+ curated component examples across all tiers.
+- 13 chart-slug example pages (area, bar, composed, funnel, line, pie, radar,
+  radial-bar, sankey, scatter, sunburst, treemap, world-heat-map).
+- Viewport preview (desktop / tablet / mobile) for all examples.
+- Scroll-position-based TOC tracking with click-aware active indicator.
+- Props tables and search index regenerated for all shipped components.
+
 ## 2.3.1
 
 ### Patch Changes
