@@ -1,5 +1,5 @@
 import { Badge, Icon } from "@olympusoss/canvas";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { DocsCodeBlock } from "../../components/DocsCodeBlock";
 import { EditOnGitHub } from "../../components/EditOnGitHub";
@@ -197,53 +197,47 @@ interface TOCProps {
 }
 function TOC({ sections }: TOCProps) {
 	const [active, setActive] = useState<string>(sections[0]?.id ?? "");
-	const observerRef = useRef<IntersectionObserver | null>(null);
 
 	useEffect(() => {
-		observerRef.current?.disconnect();
-
-		// Track which sections are currently intersecting so the scroll handler
-		// can decide whether IntersectionObserver already covers the bottom.
-		const visibleIds = new Set<string>();
-
-		const obs = new IntersectionObserver(
-			(entries) => {
-				for (const e of entries) {
-					if (e.isIntersecting) visibleIds.add(e.target.id);
-					else visibleIds.delete(e.target.id);
-				}
-				const visible = entries.filter((e) => e.isIntersecting);
-				if (visible.length > 0) {
-					visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-					setActive(visible[0].target.id);
-				}
-			},
-			{ rootMargin: "-80px 0px -35% 0px", threshold: 0.1 },
-		);
-		for (const s of sections) {
-			const el = document.getElementById(s.id);
-			if (el) obs.observe(el);
-		}
-		observerRef.current = obs;
-
-		// When the user scrolls to the very bottom of the scrollable area the
-		// last section(s) may sit entirely inside the excluded rootMargin zone.
-		// Detect that case and force-activate the last section.
 		const scrollContainer = document.querySelector("main");
-		const onScroll = () => {
-			if (!scrollContainer) return;
-			const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
-			const atBottom = scrollTop + clientHeight >= scrollHeight - 2;
-			if (atBottom && sections.length > 0) {
-				setActive(sections[sections.length - 1].id);
-			}
-		};
-		scrollContainer?.addEventListener("scroll", onScroll, { passive: true });
+		if (!scrollContainer || sections.length === 0) return;
 
-		return () => {
-			obs.disconnect();
-			scrollContainer?.removeEventListener("scroll", onScroll);
+		// Scroll-position based tracking: on every scroll frame, find the last
+		// section whose top has scrolled past a threshold near the viewport top.
+		// This is simpler and more reliable than IntersectionObserver for a TOC
+		// — it handles short final sections, bottom-of-page, and click-to-jump.
+		const OFFSET = 120; // px below the top of the scroll container
+
+		const onScroll = () => {
+			const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+
+			// If near the bottom, force-activate the last section.
+			if (scrollTop + clientHeight >= scrollHeight - 40) {
+				setActive(sections[sections.length - 1].id);
+				return;
+			}
+
+			// Walk sections in reverse — the last one whose element top is above
+			// the offset wins.
+			for (let i = sections.length - 1; i >= 0; i--) {
+				const el = document.getElementById(sections[i].id);
+				if (!el) continue;
+				const rect = el.getBoundingClientRect();
+				const containerRect = scrollContainer.getBoundingClientRect();
+				if (rect.top - containerRect.top <= OFFSET) {
+					setActive(sections[i].id);
+					return;
+				}
+			}
+			// Nothing scrolled past → first section
+			setActive(sections[0].id);
 		};
+
+		scrollContainer.addEventListener("scroll", onScroll, { passive: true });
+		// Run once to set initial state
+		onScroll();
+
+		return () => scrollContainer.removeEventListener("scroll", onScroll);
 	}, [sections]);
 
 	return (
