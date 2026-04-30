@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import "./styles.css";
+import "@olympusoss/canvas/styles/leaflet.css";
 
 const browserRouter = createBrowserRouter(router, {
 	basename: import.meta.env.BASE_URL,
