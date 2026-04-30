@@ -239,18 +239,19 @@ export function Tokens() {
 					Every visual decision in Canvas is grounded in a token. Toggle the theme — every preview
 					below updates live.
 				</p>
-				<nav className="flex flex-wrap gap-2 pt-2">
-					{SECTIONS.map((s) => (
-						<a
-							key={s.id}
-							href={`#${s.id}`}
-							className="rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-						>
-							{s.label}
-						</a>
-					))}
-				</nav>
 			</header>
+
+			<nav className="sticky top-0 z-10 -mx-8 -mt-8 flex flex-wrap gap-2 border-b border-border/40 bg-background/80 px-8 py-3 backdrop-blur-sm">
+				{SECTIONS.map((s) => (
+					<a
+						key={s.id}
+						href={`#${s.id}`}
+						className="rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+					>
+						{s.label}
+					</a>
+				))}
+			</nav>
 
 			<section id="colors" className="space-y-8">
 				<h2 className="text-2xl font-semibold tracking-tight text-foreground">Colors</h2>
