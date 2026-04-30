@@ -1,8 +1,3 @@
-// @ts-nocheck — react-leaflet + leaflet are peer-optional. CI installs
-// without them (peerDependenciesMeta.optional: true), so typecheck against
-// `react-leaflet` resolves to "no module" on the runner. This file is only
-// loaded at runtime via React.lazy() when consumers have the peer deps; the
-// outer <WorldHeatMap> wrapper handles the missing-peer error path.
 "use client";
 
 /* c8 ignore file -- Leaflet imports require real DOM measurements and are
