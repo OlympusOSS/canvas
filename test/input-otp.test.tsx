@@ -1,9 +1,19 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "../src/index";
 
 describe("InputOTP", () => {
+	// input-otp schedules an internal timer that fires after teardown, causing
+	// "ReferenceError: window is not defined" when jsdom is already cleaned up.
+	// Fake timers prevent the leak.
+	beforeEach(() => {
+		vi.useFakeTimers();
+	});
+	afterEach(() => {
+		vi.runOnlyPendingTimers();
+		vi.useRealTimers();
+	});
 	it("renders the input plus a row of slots", () => {
 		const { container } = render(
 			<InputOTP maxLength={6}>
