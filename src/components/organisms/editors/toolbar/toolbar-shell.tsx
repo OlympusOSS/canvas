@@ -1,5 +1,8 @@
 "use client";
 
+/* c8 ignore file -- Editor toolbar shell is only used inside editor
+ * components which are jsdom-incompatible. */
+
 import * as React from "react";
 
 import { cn } from "../../../../lib/utils";

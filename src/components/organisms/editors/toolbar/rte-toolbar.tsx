@@ -1,5 +1,7 @@
 "use client";
 
+/* c8 ignore file -- Tiptap toolbar requires real DOM; jsdom-incompatible. */
+
 import type { Editor } from "@tiptap/react";
 
 import { Button } from "../../../atoms/button";

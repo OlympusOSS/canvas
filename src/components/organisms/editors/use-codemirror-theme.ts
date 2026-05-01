@@ -1,5 +1,7 @@
 "use client";
 
+/* c8 ignore file -- CodeMirror EditorView requires real DOM; jsdom-incompatible. */
+
 import { EditorView } from "@codemirror/view";
 import { useMemo } from "react";
 
