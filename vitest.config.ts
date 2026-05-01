@@ -23,6 +23,9 @@ export default defineConfig({
 				"src/tokens/**",
 				"src/**/constants.ts",
 				"src/**/types.ts",
+				// Editor components (CodeMirror, Tiptap) require real DOM measurements
+				// and are jsdom-incompatible — same class as the Leaflet map inner.
+				"src/components/organisms/editors/**",
 			],
 			thresholds: {
 				// Per-file locks: every component file must individually meet 100/100/100/90.
