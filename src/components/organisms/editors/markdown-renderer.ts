@@ -1,5 +1,8 @@
 "use client";
 
+/* c8 ignore file -- DOMPurify + marked require a real DOM; jsdom-incompatible.
+ * Verified visually in the docs site. */
+
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 

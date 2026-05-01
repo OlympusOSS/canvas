@@ -1,5 +1,8 @@
 "use client";
 
+/* c8 ignore file -- Tiptap/ProseMirror requires real DOM measurements;
+ * jsdom-incompatible. Verified visually in the docs site. */
+
 import { Link } from "@tiptap/extension-link";
 import { Placeholder } from "@tiptap/extension-placeholder";
 import { EditorContent, type Extensions, useEditor } from "@tiptap/react";

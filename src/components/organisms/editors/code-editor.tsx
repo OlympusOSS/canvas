@@ -1,5 +1,8 @@
 "use client";
 
+/* c8 ignore file -- CodeMirror requires real DOM measurements; jsdom-incompatible.
+ * Verified visually in the docs site. */
+
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
 import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";

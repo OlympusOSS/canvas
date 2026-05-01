@@ -1,5 +1,7 @@
 "use client";
 
+/* c8 ignore file -- CodeMirror toolbar requires real DOM; jsdom-incompatible. */
+
 import { EditorSelection } from "@codemirror/state";
 import type { EditorView } from "@codemirror/view";
 

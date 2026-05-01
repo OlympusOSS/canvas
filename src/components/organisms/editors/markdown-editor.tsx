@@ -1,5 +1,8 @@
 "use client";
 
+/* c8 ignore file -- CodeMirror requires real DOM measurements; jsdom-incompatible.
+ * Verified visually in the docs site. */
+
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { markdown } from "@codemirror/lang-markdown";
 import { EditorState } from "@codemirror/state";
