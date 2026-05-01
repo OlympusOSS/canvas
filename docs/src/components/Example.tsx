@@ -73,6 +73,83 @@ function useDarkClassMirror(doc: Document | undefined) {
 	}, [doc]);
 }
 
+/**
+ * Relay mouse events from the parent frame into the iframe during drag.
+ *
+ * Leaflet (and other drag-based libraries) listen for `mousemove`/`mouseup` on
+ * `document`. Inside an iframe, those events stop arriving when the cursor
+ * crosses the iframe boundary. This hook detects that scenario and relays the
+ * parent-frame events into the iframe's document so the drag continues smoothly.
+ */
+function useIframeDragRelay(frameDoc: Document | undefined) {
+	useEffect(() => {
+		if (!frameDoc) return;
+		const frameWin = frameDoc.defaultView;
+		if (!frameWin || frameWin === frameWin.parent) return;
+
+		const iframe = frameWin.frameElement as HTMLIFrameElement | null;
+		if (!iframe) return;
+
+		const parentDoc = frameWin.parent.document;
+		let dragging = false;
+		let relayBound = false;
+
+		const relay = (type: string) => (e: MouseEvent) => {
+			const rect = iframe.getBoundingClientRect();
+			frameDoc.dispatchEvent(
+				new MouseEvent(type, {
+					clientX: e.clientX - rect.left,
+					clientY: e.clientY - rect.top,
+					screenX: e.screenX,
+					screenY: e.screenY,
+					button: e.button,
+					buttons: e.buttons,
+					bubbles: true,
+					cancelable: true,
+				}),
+			);
+			if (type === "mouseup") teardown();
+		};
+
+		const relayMove = relay("mousemove");
+		const relayUp = relay("mouseup");
+
+		const setup = () => {
+			if (relayBound) return;
+			relayBound = true;
+			parentDoc.addEventListener("mousemove", relayMove, true);
+			parentDoc.addEventListener("mouseup", relayUp, true);
+		};
+
+		const teardown = () => {
+			dragging = false;
+			if (!relayBound) return;
+			relayBound = false;
+			parentDoc.removeEventListener("mousemove", relayMove, true);
+			parentDoc.removeEventListener("mouseup", relayUp, true);
+		};
+
+		const onDown = () => {
+			dragging = true;
+		};
+		const onUp = () => teardown();
+		const onLeave = () => {
+			if (dragging) setup();
+		};
+
+		frameDoc.addEventListener("mousedown", onDown);
+		frameDoc.addEventListener("mouseup", onUp);
+		iframe.addEventListener("mouseleave", onLeave);
+
+		return () => {
+			teardown();
+			frameDoc.removeEventListener("mousedown", onDown);
+			frameDoc.removeEventListener("mouseup", onUp);
+			iframe.removeEventListener("mouseleave", onLeave);
+		};
+	}, [frameDoc]);
+}
+
 interface PreviewFrameProps {
 	viewport: Viewport;
 	children: ReactNode;
@@ -130,6 +207,7 @@ interface FrameMountProps {
 
 function FrameMount({ frameDoc, onHeightChange, children }: FrameMountProps) {
 	useDarkClassMirror(frameDoc);
+	useIframeDragRelay(frameDoc);
 
 	useEffect(() => {
 		if (!frameDoc) return;

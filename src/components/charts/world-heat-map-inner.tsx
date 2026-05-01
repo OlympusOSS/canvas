@@ -34,6 +34,7 @@ const SCOPED_CSS = `
 	border-radius: inherit;
 	background: transparent;
 	font: inherit;
+	touch-action: none;
 }
 .world-heat-map .leaflet-control-attribution {
 	display: none;
