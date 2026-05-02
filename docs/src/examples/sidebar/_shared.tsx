@@ -170,7 +170,7 @@ export function BrandTrigger() {
 			aria-label="Toggle sidebar"
 			className="flex items-center gap-2.5 rounded-md outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-sidebar-ring"
 		>
-			<Logo variant="ring" className="h-8 w-auto shrink-0" />
+			<Logo className="h-8 w-auto shrink-0" />
 			<span className="text-sm font-semibold tracking-tight group-data-[collapsible=icon]:hidden">
 				Olympus
 			</span>

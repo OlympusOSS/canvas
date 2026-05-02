@@ -7,22 +7,14 @@ import { cn } from "../../lib/utils";
 export interface LogoProps extends React.HTMLAttributes<HTMLElement> {
 	/**
 	 * Custom logo image. When provided, renders an `<img>` instead of the
-	 * default Olympus mark. Apps consuming canvas pass their own brand here.
+	 * default Olympus ring mark. Apps consuming canvas pass their own brand
+	 * here.
 	 */
 	src?: string;
 	/** Alt text for the custom-image variant. Required when `src` is set. */
 	alt?: string;
-	/** Pixel size for the icon variant and any custom `src` image. Default 24. */
+	/** Pixel size for the custom-image variant only. Default 24. */
 	size?: number;
-	/**
-	 * Default-mark variant (only consulted when `src` is not provided).
-	 * - `icon` (default): the small sideways-O ellipse rendered with `currentColor`.
-	 * - `ring`: the larger stadium/ring mark filled with the Olympus blue gradient.
-	 *   Best for header/decorative use ≥ 40px.
-	 */
-	variant?: "icon" | "ring";
-	/** When true and using the default `icon` variant, renders "○lympus" wordmark. */
-	showText?: boolean;
 }
 
 const OlympusRing = React.forwardRef<SVGSVGElement, React.SVGAttributes<SVGSVGElement>>(
@@ -55,48 +47,21 @@ const OlympusRing = React.forwardRef<SVGSVGElement, React.SVGAttributes<SVGSVGEl
 );
 OlympusRing.displayName = "Logo.OlympusRing";
 
-const OlympusIcon = React.forwardRef<
-	SVGSVGElement,
-	React.SVGAttributes<SVGSVGElement> & { size?: number }
->(({ size = 24, className, ...props }, ref) => (
-	<svg
-		ref={ref}
-		width={size}
-		height={size}
-		viewBox="0 0 24 24"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-		className={className}
-		{...props}
-	>
-		<ellipse
-			cx="12"
-			cy="12"
-			rx="5"
-			ry="9"
-			transform="rotate(90 12 12)"
-			stroke="currentColor"
-			strokeWidth="2.5"
-			fill="none"
-		/>
-	</svg>
-));
-OlympusIcon.displayName = "Logo.OlympusIcon";
-
 /**
  * Brand-agnostic logo slot.
  *
- * - With no `src`: renders the default Olympus mark (gradient ring or sideways-O
- *   icon based on `variant`). The `icon` variant supports `showText` for the
- *   "○lympus" wordmark lockup.
+ * - With no `src`: renders the Olympus gradient-ring mark (the canonical
+ *   brand mark — viewBox 0 0 440 736, blue-gradient stadium). Size via
+ *   `className` (e.g. `className="h-10 w-auto"`) — the SVG honours its
+ *   non-square viewBox aspect ratio.
  * - With `src`: renders an `<img>` so consumers can drop in their own brand.
  *
- * Sizing: the `size` prop maps to `width`/`height` for the `icon` and `src`
- * paths; the `ring` path is sized via `className` (e.g. `className="h-10 w-auto"`)
- * because its viewBox aspect ratio is non-square.
+ * The deprecated sideways-O ellipse mark and `showText` wordmark lockup
+ * have been removed. Use `<BrandLockup logo={…} productName="…" />` for
+ * the lockup.
  */
 const Logo = React.forwardRef<HTMLElement, LogoProps>(
-	({ src, alt = "", size = 24, variant = "icon", showText = false, className, ...props }, ref) => {
+	({ src, alt = "", size = 24, className, ...props }, ref) => {
 		if (src) {
 			return (
 				<img
@@ -110,40 +75,13 @@ const Logo = React.forwardRef<HTMLElement, LogoProps>(
 				/>
 			);
 		}
-
-		if (variant === "ring") {
-			return (
-				<OlympusRing
-					ref={ref as React.Ref<SVGSVGElement>}
-					className={className}
-					{...(props as React.SVGAttributes<SVGSVGElement>)}
-				/>
-			);
-		}
-
-		const icon = (
-			<OlympusIcon
-				ref={showText ? undefined : (ref as React.Ref<SVGSVGElement>)}
-				size={size}
-				className={showText ? undefined : className}
-				{...(showText ? {} : (props as React.SVGAttributes<SVGSVGElement>))}
+		return (
+			<OlympusRing
+				ref={ref as React.Ref<SVGSVGElement>}
+				className={className}
+				{...(props as React.SVGAttributes<SVGSVGElement>)}
 			/>
 		);
-
-		if (showText) {
-			return (
-				<span
-					ref={ref as React.Ref<HTMLSpanElement>}
-					className={cn("inline-flex items-center gap-1.5 font-semibold", className)}
-					{...(props as React.HTMLAttributes<HTMLSpanElement>)}
-				>
-					{icon}
-					<span className="text-foreground">lympus</span>
-				</span>
-			);
-		}
-
-		return icon;
 	},
 );
 Logo.displayName = "Logo";
