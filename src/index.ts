@@ -31,8 +31,15 @@ export { Switch } from "./components/atoms/switch";
 export { Textarea } from "./components/atoms/textarea";
 export { Toggle, toggleVariants } from "./components/atoms/toggle";
 /* ────────────────────────────────────────────────────────────────
-   CHARTS — theme-aware Recharts wrappers + auto-palette container.
+   CHARTS — theme-aware Recharts wrappers + auto-palette container,
+   plus hand-rolled data-viz primitives (Gauge, StackedBar,
+   LabeledBarList, ServiceHealthList, ActivityHeatmap) built on
+   canvas tokens.
    ──────────────────────────────────────────────────────────────── */
+export {
+	ActivityHeatmap,
+	type ActivityHeatmapProps,
+} from "./components/charts/activity-heatmap";
 export {
 	CartesianAxis,
 	PolarAngleAxis,
@@ -86,28 +93,45 @@ export {
 	Sector,
 	Trapezoid,
 } from "./components/charts/details";
+export { Gauge, type GaugeProps } from "./components/charts/gauge";
 export { CartesianGrid, PolarGrid } from "./components/charts/grids";
+export {
+	LabeledBarList,
+	type LabeledBarListItem,
+	type LabeledBarListProps,
+} from "./components/charts/labeled-bar-list";
 export {
 	ReferenceArea,
 	ReferenceDot,
 	ReferenceLine,
 } from "./components/charts/references";
+export {
+	type ServiceHealthItem,
+	ServiceHealthList,
+	type ServiceHealthListProps,
+	type ServiceHealthStatus,
+} from "./components/charts/service-health-list";
+export {
+	StackedBar,
+	type StackedBarProps,
+	type StackedBarSegment,
+} from "./components/charts/stacked-bar";
 export { ChartLabel, LabelList, Text } from "./components/charts/text";
 export {
 	WorldHeatMap,
 	type WorldHeatMapPoint,
 	type WorldHeatMapProps,
 } from "./components/charts/world-heat-map";
+/* ────────────────────────────────────────────────────────────────
+   MOLECULES — small compositions of atoms.
+   Can import: tokens/, lib/utils, atoms/.
+   ──────────────────────────────────────────────────────────────── */
 export {
 	ActionBar,
 	type ActionBarAction,
 	type ActionBarProps,
 	type ActionBarSecondary,
 } from "./components/molecules/action-bar";
-/* ────────────────────────────────────────────────────────────────
-   MOLECULES — small compositions of atoms.
-   Can import: tokens/, lib/utils, atoms/.
-   ──────────────────────────────────────────────────────────────── */
 export {
 	ActivityFeed,
 	type ActivityFeedProps,

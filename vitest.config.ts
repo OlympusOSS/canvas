@@ -28,21 +28,20 @@ export default defineConfig({
 				"src/components/organisms/editors/**",
 			],
 			thresholds: {
-				// Per-file locks: every component file must individually meet 100/100/100/90.
-				// Overall fallback at 80/80/80/80 keeps non-component dirs (hooks, lib)
-				// from regressing without requiring them to hit 100.
+				// Per-file locks: every component file must individually hit 100% on
+				// every metric, including branches. Anything less invites silent drift.
 				perFile: true,
 				"src/components/**": {
 					lines: 100,
 					statements: 100,
 					functions: 100,
-					branches: 90,
+					branches: 100,
 				},
-				// Phase 6 gate — 100% lines/stmts/funcs + 90% branches across all scope.
+				// Global gate — 100% across the board.
 				lines: 100,
 				statements: 100,
 				functions: 100,
-				branches: 90,
+				branches: 100,
 			},
 		},
 	},
