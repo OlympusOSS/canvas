@@ -32,6 +32,7 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 
 	// molecules
 	{ id: "action-bar", label: "ActionBar", tier: "molecules" },
+	{ id: "activity-heatmap", label: "ActivityHeatmap", tier: "molecules" },
 	{ id: "activity-item", label: "ActivityItem", tier: "molecules" },
 	{ id: "alert", label: "Alert", tier: "molecules" },
 	{ id: "animated-background", label: "AnimatedBackground", tier: "molecules" },
@@ -44,7 +45,9 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "empty-state", label: "EmptyState", tier: "molecules" },
 	{ id: "error-state", label: "ErrorState", tier: "molecules" },
 	{ id: "field-display", label: "FieldDisplay", tier: "molecules" },
+	{ id: "gauge", label: "Gauge", tier: "molecules" },
 	{ id: "input-otp", label: "InputOTP", tier: "molecules" },
+	{ id: "labeled-bar-list", label: "LabeledBarList", tier: "molecules" },
 	{ id: "loading-state", label: "LoadingState", tier: "molecules" },
 	{ id: "notification-list", label: "NotificationList", tier: "molecules" },
 	{ id: "number-badge", label: "NumberBadge", tier: "molecules" },
@@ -55,7 +58,9 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "search-bar", label: "SearchBar", tier: "molecules" },
 	{ id: "secret-field", label: "SecretField", tier: "molecules" },
 	{ id: "section-card", label: "SectionCard", tier: "molecules" },
+	{ id: "service-health-list", label: "ServiceHealthList", tier: "molecules" },
 	{ id: "sparkline", label: "Sparkline", tier: "molecules" },
+	{ id: "stacked-bar", label: "StackedBar", tier: "molecules" },
 	{ id: "stat-card", label: "StatCard", tier: "molecules" },
 	{ id: "status-badge", label: "StatusBadge", tier: "molecules" },
 	{ id: "stepper", label: "Stepper", tier: "molecules" },
