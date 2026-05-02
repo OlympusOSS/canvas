@@ -5,39 +5,48 @@ import {
 	SunburstChart,
 } from "@olympusoss/canvas";
 
-// SunburstChart needs a `value` at every node — it doesn't auto-aggregate from
-// children. Per-node `fill` is used for the sector colour; without it every
-// sector renders in the recharts default (#333).
+// SunburstChart needs a `value` at every node — Recharts doesn't auto-aggregate
+// from children. Per-node `fill` controls sector colour. Each branch uses one
+// hue at full opacity for the inner ring and the same hue at 0.55 opacity for
+// the outer ring, so depth reads at a glance without colour noise.
 const data = {
-	name: "Codebase",
-	value: 3790,
+	name: "Sign-ins",
+	value: 100,
 	children: [
 		{
-			name: "src",
-			value: 2000,
+			name: "Password",
+			value: 38,
 			fill: "hsl(var(--chart-1))",
 			children: [
-				{ name: "components", value: 1240, fill: "hsl(var(--chart-1))" },
-				{ name: "lib", value: 520, fill: "hsl(var(--chart-1))" },
-				{ name: "hooks", value: 240, fill: "hsl(var(--chart-1))" },
+				{ name: "Verified", value: 30, fill: "hsl(var(--chart-1) / 0.55)" },
+				{ name: "Unverified", value: 8, fill: "hsl(var(--chart-1) / 0.55)" },
 			],
 		},
 		{
-			name: "docs",
-			value: 1200,
+			name: "Social",
+			value: 27,
 			fill: "hsl(var(--chart-2))",
 			children: [
-				{ name: "examples", value: 880, fill: "hsl(var(--chart-2))" },
-				{ name: "data", value: 320, fill: "hsl(var(--chart-2))" },
+				{ name: "Google", value: 16, fill: "hsl(var(--chart-2) / 0.55)" },
+				{ name: "GitHub", value: 11, fill: "hsl(var(--chart-2) / 0.55)" },
 			],
 		},
 		{
-			name: "tests",
-			value: 590,
-			fill: "hsl(var(--chart-3))",
+			name: "WebAuthn",
+			value: 21,
+			fill: "hsl(var(--chart-6))",
 			children: [
-				{ name: "unit", value: 410, fill: "hsl(var(--chart-3))" },
-				{ name: "e2e", value: 180, fill: "hsl(var(--chart-3))" },
+				{ name: "Platform", value: 13, fill: "hsl(var(--chart-6) / 0.55)" },
+				{ name: "Roaming", value: 8, fill: "hsl(var(--chart-6) / 0.55)" },
+			],
+		},
+		{
+			name: "Other",
+			value: 14,
+			fill: "hsl(var(--chart-4))",
+			children: [
+				{ name: "Magic link", value: 9, fill: "hsl(var(--chart-4) / 0.55)" },
+				{ name: "TOTP", value: 5, fill: "hsl(var(--chart-4) / 0.55)" },
 			],
 		},
 	],
@@ -47,7 +56,7 @@ export default function App() {
 	return (
 		<div className="w-full max-w-md p-4">
 			<ChartContainer config={{}} className="h-[300px]">
-				<SunburstChart data={data} dataKey="value">
+				<SunburstChart data={data} dataKey="value" stroke="none">
 					<ChartTooltip content={<ChartTooltipContent hideLabel />} />
 				</SunburstChart>
 			</ChartContainer>

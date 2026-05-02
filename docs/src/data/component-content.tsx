@@ -3883,8 +3883,10 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				filename: "SunburstChart.tsx",
 			},
 			{
-				id: "half-circle",
-				title: "Half-circle",
+				id: "deep-hierarchy",
+				title: "Deep hierarchy",
+				description:
+					"Three levels of nested children — each branch keeps one hue with progressively lighter opacity per ring (1.0 / 0.65 / 0.4) so depth reads without introducing more colours.",
 				render: () => <SunburstChartHalfCircle />,
 				source: sunburstChartHalfCircleSource,
 				filename: "SunburstChart.tsx",
