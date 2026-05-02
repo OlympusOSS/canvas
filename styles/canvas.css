@@ -1,0 +1,54 @@
+/* ---------- Canvas lib runtime entry ----------
+ *
+ * The single CSS import that gives a consumer Canvas's full styling contract:
+ *   - Tailwind v4 with @source pointed at canvas/src
+ *   - Canonical design tokens (light + dark, tiered surfaces, sidebar, stat-card)
+ *   - @theme inline mapping so `bg-card`, `text-foreground`, etc. resolve
+ *   - Leaflet defaults for canvas/components/molecules/leaflet-map and scalable-globe
+ *
+ * Consumers (athena/hera/site/daedalus) and the canvas-docs site both import
+ * this file. Inside canvas-docs, the per-example iframe filters parent
+ * stylesheets down to ONLY this one — the sentinel rule below
+ * (`--canvas-runtime`) is what the filter looks for. Keep that rule.
+ */
+
+@import "tailwindcss";
+@source "../src/**/*.{ts,tsx}";
+@import "./tokens.css";
+@import "./leaflet.css";
+
+@theme inline {
+	--color-background: hsl(var(--background));
+	--color-foreground: hsl(var(--foreground));
+	--color-card: hsl(var(--card));
+	--color-card-foreground: hsl(var(--card-foreground));
+	--color-popover: hsl(var(--popover));
+	--color-popover-foreground: hsl(var(--popover-foreground));
+	--color-primary: hsl(var(--primary));
+	--color-primary-foreground: hsl(var(--primary-foreground));
+	--color-secondary: hsl(var(--secondary));
+	--color-secondary-foreground: hsl(var(--secondary-foreground));
+	--color-muted: hsl(var(--muted));
+	--color-muted-foreground: hsl(var(--muted-foreground));
+	--color-accent: hsl(var(--accent));
+	--color-accent-foreground: hsl(var(--accent-foreground));
+	--color-destructive: hsl(var(--destructive));
+	--color-destructive-foreground: hsl(var(--destructive-foreground));
+	--color-brand: hsl(var(--brand));
+	--color-brand-foreground: hsl(var(--brand-foreground));
+	--color-border: hsl(var(--border));
+	--color-input: hsl(var(--input));
+	--color-ring: hsl(var(--ring));
+}
+
+/* ---------- Iframe-filter sentinel ----------
+ * Do NOT remove. The canvas-docs Example wrapper uses this token to identify
+ * the canvas-runtime stylesheet among all parent-document styles when cloning
+ * into the per-example iframe. Stripping this rule will cause example
+ * components to render unstyled inside the docs preview.
+ */
+@layer canvas-runtime {
+	:root {
+		--canvas-runtime: 1;
+	}
+}
