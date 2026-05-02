@@ -68,13 +68,20 @@ export default function App() {
 					stroke=""
 					padding={0}
 					ringPadding={0}
-					textOptions={{
-						stroke: "none",
-						fill: "hsl(var(--foreground))",
-						fontFamily: "var(--font-mono)",
-						fontSize: "11",
-						fontWeight: "400",
-					}}
+					// letterSpacing isn't in Recharts' TextOptions type but the
+					// underlying SVG <text> element honours the attribute. Cast to
+					// `any` so we can still pass it through.
+					// biome-ignore lint/suspicious/noExplicitAny: see comment above
+					textOptions={
+						{
+							stroke: "none",
+							fill: "hsl(var(--foreground))",
+							fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
+							fontSize: "11",
+							fontWeight: "300",
+							letterSpacing: "-0.02em",
+						} as any
+					}
 				>
 					<ChartTooltip content={<ChartTooltipContent hideLabel />} />
 				</SunburstChart>
