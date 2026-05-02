@@ -666,7 +666,7 @@
   "atoms/logo": [
     {
       "displayName": "Logo",
-      "description": "Brand-agnostic logo slot.\n\n- With no `src`: renders the default Olympus mark (gradient ring or sideways-O\n  icon based on `variant`). The `icon` variant supports `showText` for the\n  \"○lympus\" wordmark lockup.\n- With `src`: renders an `<img>` so consumers can drop in their own brand.\n\nSizing: the `size` prop maps to `width`/`height` for the `icon` and `src`\npaths; the `ring` path is sized via `className` (e.g. `className=\"h-10 w-auto\"`)\nbecause its viewBox aspect ratio is non-square.",
+      "description": "Brand-agnostic logo slot.\n\n- With no `src`: renders the Olympus gradient-ring mark (the canonical\n  brand mark — viewBox 0 0 440 736, blue-gradient stadium). Size via\n  `className` (e.g. `className=\"h-10 w-auto\"`) — the SVG honours its\n  non-square viewBox aspect ratio.\n- With `src`: renders an `<img>` so consumers can drop in their own brand.\n\nThe deprecated sideways-O ellipse mark and `showText` wordmark lockup\nhave been removed. Use `<BrandLockup logo={…} productName=\"…\" />` for\nthe lockup.",
       "file": "src/components/atoms/logo.tsx",
       "props": [
         {
@@ -674,7 +674,7 @@
           "required": false,
           "type": "string",
           "defaultValue": null,
-          "description": "Custom logo image. When provided, renders an `<img>` instead of the\ndefault Olympus mark. Apps consuming canvas pass their own brand here."
+          "description": "Custom logo image. When provided, renders an `<img>` instead of the\ndefault Olympus ring mark. Apps consuming canvas pass their own brand\nhere."
         },
         {
           "name": "alt",
@@ -688,21 +688,7 @@
           "required": false,
           "type": "number",
           "defaultValue": "24",
-          "description": "Pixel size for the icon variant and any custom `src` image. Default 24."
-        },
-        {
-          "name": "variant",
-          "required": false,
-          "type": "enum",
-          "defaultValue": "icon",
-          "description": "Default-mark variant (only consulted when `src` is not provided).\n- `icon` (default): the small sideways-O ellipse rendered with `currentColor`.\n- `ring`: the larger stadium/ring mark filled with the Olympus blue gradient.\n  Best for header/decorative use ≥ 40px."
-        },
-        {
-          "name": "showText",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": "false",
-          "description": "When true and using the default `icon` variant, renders \"○lympus\" wordmark."
+          "description": "Pixel size for the custom-image variant only. Default 24."
         }
       ]
     }
@@ -13812,6 +13798,13 @@
       "file": "src/components/molecules/brand-lockup.tsx",
       "props": [
         {
+          "name": "logo",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Logo node rendered to the left of the wordmark — typically `<Logo />`\nfor the canvas Olympus ring, or any other brand mark of the consumer's\nchoosing. Required so canvas stays brand-agnostic."
+        },
+        {
           "name": "productName",
           "required": true,
           "type": "string",
@@ -17687,6 +17680,78 @@
           "type": "string",
           "defaultValue": null,
           "description": ""
+        }
+      ]
+    }
+  ],
+  "organisms/dashboard-grid": [
+    {
+      "displayName": "DashboardGrid",
+      "description": "Drag-to-reorder, drag-to-resize widget grid backed by `react-grid-layout`.\nFully controlled: pass `items` + `onItemsChange`. Toggle `editing` to gate\ndrag/resize affordances behind a customize-mode UX. The 12-col responsive\ngrid auto-packs collisions and adapts column count to viewport via the\n`breakpoints` map.\n\nConsumers must import the lib's stylesheet once at app entry:\n\n    import \"@olympusoss/canvas/styles/dashboard-grid.css\";\n\nThat sheet pulls in `react-grid-layout/css/styles.css` and\n`react-resizable/css/styles.css`, plus a small canvas-token override that\nrecolours the placeholder + resize handles.",
+      "file": "src/components/organisms/dashboard-grid.tsx",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "DashboardItem[]",
+          "defaultValue": null,
+          "description": "Controlled item list. The component is purely controlled — pass changes to `onItemsChange`."
+        },
+        {
+          "name": "onItemsChange",
+          "required": false,
+          "type": "((next: DashboardItem[]) => void)",
+          "defaultValue": null,
+          "description": "Fired with the next item snapshot whenever a drag or resize completes."
+        },
+        {
+          "name": "renderItem",
+          "required": true,
+          "type": "(item: DashboardItem) => ReactNode",
+          "defaultValue": null,
+          "description": "Render the inner widget for an item. The wrapper is owned by the grid."
+        },
+        {
+          "name": "editing",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "When true, drag handles + resize edges are active. Default `false`."
+        },
+        {
+          "name": "rowHeight",
+          "required": false,
+          "type": "number",
+          "defaultValue": "80",
+          "description": "Pixel height of one row unit. Default `80`."
+        },
+        {
+          "name": "cols",
+          "required": false,
+          "type": "Partial<Record<DashboardGridBreakpoint, number>>",
+          "defaultValue": null,
+          "description": "Column count per breakpoint. Default `{ lg:12, md:8, sm:4, xs:2, xxs:1 }`."
+        },
+        {
+          "name": "breakpoints",
+          "required": false,
+          "type": "Partial<Record<DashboardGridBreakpoint, number>>",
+          "defaultValue": null,
+          "description": "Pixel breakpoint widths. Default react-grid-layout's standard set."
+        },
+        {
+          "name": "margin",
+          "required": false,
+          "type": "[number, number]",
+          "defaultValue": "[16, 16]",
+          "description": "Horizontal margin between items, in pixels. Default `[16, 16]` (`[x, y]`)."
+        },
+        {
+          "name": "emptyState",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Rendered when `items.length === 0`."
         }
       ]
     }

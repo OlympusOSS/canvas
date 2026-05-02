@@ -336,6 +336,12 @@ export {
 	ContextMenuTrigger,
 } from "./components/organisms/context-menu";
 export {
+	DashboardGrid,
+	type DashboardGridBreakpoint,
+	type DashboardGridProps,
+	type DashboardItem,
+} from "./components/organisms/dashboard-grid";
+export {
 	DataTable,
 	type DataTableColumn,
 	type DataTableProps,

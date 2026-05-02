@@ -16,6 +16,7 @@
 @source "../src/**/*.{ts,tsx}";
 @import "./tokens.css";
 @import "./leaflet.css";
+@import "./dashboard-grid.css";
 
 @theme inline {
 	--color-background: hsl(var(--background));

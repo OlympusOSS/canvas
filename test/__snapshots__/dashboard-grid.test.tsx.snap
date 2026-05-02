@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DashboardGrid > matches snapshot in view mode 1`] = `
+<div>
+  <div
+    class="w-full"
+    data-dashboard-grid-editing="false"
+  >
+    <div
+      class="react-grid-layout "
+      data-testid="lib-grid-stub"
+    >
+      <div
+        class="react-grid-item"
+      >
+        <div
+          class="group/dashboard-grid-item flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow"
+        >
+          <div
+            class="flex-1 overflow-hidden"
+          >
+            <div>
+              stats
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="react-grid-item"
+      >
+        <div
+          class="group/dashboard-grid-item flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow"
+        >
+          <div
+            class="flex-1 overflow-hidden"
+          >
+            <div>
+              activity
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="react-grid-item"
+      >
+        <div
+          class="group/dashboard-grid-item flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow"
+        >
+          <div
+            class="flex-1 overflow-hidden"
+          >
+            <div>
+              chart
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
