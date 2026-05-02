@@ -12,6 +12,7 @@
 			"@rjsf/validator-ajv8",
 			"libphonenumber-js",
 			"recharts",
+			"react-grid-layout",
 			"next-themes",
 			"@codemirror/commands",
 			"@codemirror/lang-css",
