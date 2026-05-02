@@ -1,9 +1,14 @@
 import * as React from "react";
 
 import { cn } from "../../lib/utils";
-import { Logo } from "../atoms/logo";
 
 export interface BrandLockupProps extends React.HTMLAttributes<HTMLDivElement> {
+	/**
+	 * Logo node rendered to the left of the wordmark — typically `<Logo />`
+	 * for the canvas Olympus ring, or any other brand mark of the consumer's
+	 * choosing. Required so canvas stays brand-agnostic.
+	 */
+	logo: React.ReactNode;
 	/** Wordmark next to the logo (e.g. "Athena", "Hera"). */
 	productName: string;
 	/** Optional secondary line under the wordmark. */
@@ -14,21 +19,18 @@ export interface BrandLockupProps extends React.HTMLAttributes<HTMLDivElement> {
 	collapsed?: boolean;
 }
 
-const SIZE: Record<
-	NonNullable<BrandLockupProps["size"]>,
-	{ logo: string; name: string; sub: string }
-> = {
-	sm: { logo: "h-5 w-5", name: "text-[13px]", sub: "text-[10px]" },
-	md: { logo: "h-7 w-7", name: "text-sm", sub: "text-[11px]" },
-	lg: { logo: "h-10 w-10", name: "text-2xl", sub: "text-xs" },
+const SIZE: Record<NonNullable<BrandLockupProps["size"]>, { name: string; sub: string }> = {
+	sm: { name: "text-[13px]", sub: "text-[10px]" },
+	md: { name: "text-sm", sub: "text-[11px]" },
+	lg: { name: "text-2xl", sub: "text-xs" },
 };
 
 export const BrandLockup = React.forwardRef<HTMLDivElement, BrandLockupProps>(
-	({ productName, subtitle, size = "md", collapsed = false, className, ...props }, ref) => {
+	({ logo, productName, subtitle, size = "md", collapsed = false, className, ...props }, ref) => {
 		const sz = SIZE[size];
 		return (
 			<div ref={ref} className={cn("flex items-center gap-2.5", className)} {...props}>
-				<Logo className={cn(sz.logo, "shrink-0")} />
+				<span className="shrink-0">{logo}</span>
 				{!collapsed && (
 					<div className="flex flex-col leading-tight">
 						<span className={cn(sz.name, "font-semibold tracking-tight text-foreground")}>

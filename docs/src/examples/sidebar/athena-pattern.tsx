@@ -4,6 +4,7 @@ import {
 	BrandLockup,
 	Icon,
 	type IconName,
+	Logo,
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
@@ -140,7 +141,7 @@ export default function App() {
 		<SidebarProvider className="min-h-[640px]">
 			<Sidebar collapsible="icon">
 				<SidebarHeader>
-					<BrandLockup productName="Athena" />
+					<BrandLockup logo={<Logo className="h-7 w-auto" />} productName="Athena" />
 				</SidebarHeader>
 
 				<SidebarContent>
