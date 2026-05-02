@@ -24,6 +24,15 @@ describe("UserAvatarChip", () => {
 		expect(screen.getByText("AO")).toBeInTheDocument();
 	});
 
+	it("attempts to render the avatar image when imageSrc is provided", () => {
+		// Radix's <AvatarImage> only commits the <img> to the DOM after a real
+		// load event, which jsdom doesn't fire. We only need to exercise the
+		// branch that hands imageSrc to <AvatarImage>; the avatar fallback
+		// remains visible in jsdom.
+		render(<UserAvatarChip name="Ada Olympus" imageSrc="https://example.test/ada.jpg" />);
+		expect(screen.getByText("Ada Olympus")).toBeInTheDocument();
+	});
+
 	it("hides name and chevron when collapsed", () => {
 		render(<UserAvatarChip name="Bobby Nannier" collapsed />);
 		expect(screen.queryByText("Bobby Nannier")).toBeNull();

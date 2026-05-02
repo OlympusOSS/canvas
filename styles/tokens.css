@@ -54,6 +54,11 @@
 		--chart-3: 197 37% 24%;
 		--chart-4: 43 74% 66%;
 		--chart-5: 27 87% 67%;
+		/* Sixth slot added for Athena dashboard charts (CHARTS.md). The 1-5
+		 * triplets above are canonical canvas values and intentionally diverge
+		 * from CHARTS.md's recommended palette per the "Canvas wins" rule —
+		 * flagged in PR. */
+		--chart-6: 173 70% 42%;
 
 		/* ── Sidebar — blue-tinted gray (hue 230) per handoff ──────── */
 		--sidebar-background: 230 25% 97%;
@@ -130,6 +135,7 @@
 		--chart-3: 30 80% 55%;
 		--chart-4: 280 65% 60%;
 		--chart-5: 340 75% 55%;
+		--chart-6: 173 70% 50%;
 
 		/* L1 — sidebar (between body and cards, distinct hue 225) */
 		--sidebar-background: 225 16% 10%;

@@ -14,6 +14,44 @@ describe("SectionCard", () => {
 		expect(screen.getByText("content here")).toBeInTheDocument();
 	});
 
+	it("renders an icon-only header (no title, no subtitle)", () => {
+		const { container } = render(
+			<SectionCard icon={<span data-testid="hdr-icon" />}>
+				<p>body</p>
+			</SectionCard>,
+		);
+		expect(container.querySelector('[data-testid="hdr-icon"]')).toBeTruthy();
+	});
+
+	it("renders a subtitle-only header (no title, no icon)", () => {
+		render(
+			<SectionCard subtitle="Just a subtitle">
+				<p>body</p>
+			</SectionCard>,
+		);
+		expect(screen.getByText("Just a subtitle")).toBeInTheDocument();
+	});
+
+	it("renders a non-string title node as-is", () => {
+		render(
+			<SectionCard title={<span data-testid="title-node">Custom node</span>}>
+				<p>x</p>
+			</SectionCard>,
+		);
+		expect(screen.getByTestId("title-node")).toBeInTheDocument();
+	});
+
+	it("renders without any header chrome when title/subtitle/icon/actions are all omitted", () => {
+		const { container } = render(
+			<SectionCard>
+				<p>just content</p>
+			</SectionCard>,
+		);
+		// No CardHeader; the only direct child of the card is the body content.
+		expect(container.querySelector("[data-slot='card-header']")).toBeNull();
+		expect(screen.getByText("just content")).toBeInTheDocument();
+	});
+
 	it("renders subtitle", () => {
 		render(
 			<SectionCard title="T" subtitle="sub">

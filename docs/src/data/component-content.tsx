@@ -558,6 +558,53 @@ const NumberBadgeVariants = lazy(() => import("../examples/number-badge/variants
 import numberBadgeDefaultSource from "../examples/number-badge/default?raw";
 import numberBadgeVariantsSource from "../examples/number-badge/variants?raw";
 
+// activity-heatmap
+const ActivityHeatmapDefault = lazy(() => import("../examples/activity-heatmap/default"));
+const ActivityHeatmapWeek = lazy(() => import("../examples/activity-heatmap/week"));
+const ActivityHeatmapDense = lazy(() => import("../examples/activity-heatmap/dense"));
+
+import activityHeatmapDefaultSource from "../examples/activity-heatmap/default?raw";
+import activityHeatmapDenseSource from "../examples/activity-heatmap/dense?raw";
+import activityHeatmapWeekSource from "../examples/activity-heatmap/week?raw";
+
+// gauge
+const GaugeDefault = lazy(() => import("../examples/gauge/default"));
+const GaugeCustomLabel = lazy(() => import("../examples/gauge/custom-label"));
+const GaugeColors = lazy(() => import("../examples/gauge/colors"));
+
+import gaugeColorsSource from "../examples/gauge/colors?raw";
+import gaugeCustomLabelSource from "../examples/gauge/custom-label?raw";
+import gaugeDefaultSource from "../examples/gauge/default?raw";
+
+// labeled-bar-list
+const LabeledBarListDefault = lazy(() => import("../examples/labeled-bar-list/default"));
+const LabeledBarListNoLeading = lazy(() => import("../examples/labeled-bar-list/no-leading"));
+const LabeledBarListStorage = lazy(() => import("../examples/labeled-bar-list/storage"));
+
+import labeledBarListDefaultSource from "../examples/labeled-bar-list/default?raw";
+import labeledBarListNoLeadingSource from "../examples/labeled-bar-list/no-leading?raw";
+import labeledBarListStorageSource from "../examples/labeled-bar-list/storage?raw";
+
+// service-health-list
+const ServiceHealthListDefault = lazy(() => import("../examples/service-health-list/default"));
+const ServiceHealthListAllHealthy = lazy(
+	() => import("../examples/service-health-list/all-healthy"),
+);
+const ServiceHealthListMinimal = lazy(() => import("../examples/service-health-list/minimal"));
+
+import serviceHealthListAllHealthySource from "../examples/service-health-list/all-healthy?raw";
+import serviceHealthListDefaultSource from "../examples/service-health-list/default?raw";
+import serviceHealthListMinimalSource from "../examples/service-health-list/minimal?raw";
+
+// stacked-bar
+const StackedBarDefault = lazy(() => import("../examples/stacked-bar/default"));
+const StackedBarNoLegend = lazy(() => import("../examples/stacked-bar/no-legend"));
+const StackedBarRawCounts = lazy(() => import("../examples/stacked-bar/raw-counts"));
+
+import stackedBarDefaultSource from "../examples/stacked-bar/default?raw";
+import stackedBarNoLegendSource from "../examples/stacked-bar/no-legend?raw";
+import stackedBarRawCountsSource from "../examples/stacked-bar/raw-counts?raw";
+
 // sparkline
 const SparklineDefault = lazy(() => import("../examples/sparkline/default"));
 const SparklineColorVariants = lazy(() => import("../examples/sparkline/color-variants"));
@@ -3019,6 +3066,148 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 			},
 		],
 	},
+	"activity-heatmap": {
+		id: "activity-heatmap",
+		tier: "charts",
+		displayName: "ActivityHeatmap",
+		propsSource: "charts/activity-heatmap",
+		importLine: `import { ActivityHeatmap } from "@olympusoss/canvas";`,
+		overview:
+			"CSS-grid heatmap of opacity-tinted cells. For time-of-day × day-of-week activity matrices (token issuance, sign-in concentration, queue depth) where a full chart is overkill.",
+		tokens: ["--chart-1"],
+		examples: [
+			{
+				id: "default",
+				title: "Token issuance",
+				render: () => <ActivityHeatmapDefault />,
+				source: activityHeatmapDefaultSource,
+				filename: "ActivityHeatmap.tsx",
+			},
+			{
+				id: "week",
+				title: "Weekly view with row labels",
+				description: "7 rows × 24 hours with day-of-week labels alongside the grid.",
+				render: () => <ActivityHeatmapWeek />,
+				source: activityHeatmapWeekSource,
+				filename: "ActivityHeatmap.tsx",
+			},
+			{
+				id: "dense",
+				title: "Yearly contribution graph",
+				description: "52 columns × 7 rows of compact cells.",
+				render: () => <ActivityHeatmapDense />,
+				source: activityHeatmapDenseSource,
+				filename: "ActivityHeatmap.tsx",
+			},
+		],
+	},
+	gauge: {
+		id: "gauge",
+		tier: "charts",
+		displayName: "Gauge",
+		propsSource: "charts/gauge",
+		importLine: `import { Gauge } from "@olympusoss/canvas";`,
+		overview:
+			"Single-arc circular gauge with a centered value label. For 0–100 metrics like adoption percentages, health scores, or completion ratios.",
+		tokens: ["--chart-1", "--muted"],
+		examples: [
+			{
+				id: "default",
+				title: "MFA adoption",
+				render: () => <GaugeDefault />,
+				source: gaugeDefaultSource,
+				filename: "Gauge.tsx",
+			},
+			{
+				id: "custom-label",
+				title: "Custom valueLabel",
+				description:
+					"Replace the default percentage with a custom node — e.g. a value-of-total ratio.",
+				render: () => <GaugeCustomLabel />,
+				source: gaugeCustomLabelSource,
+				filename: "Gauge.tsx",
+			},
+			{
+				id: "colors",
+				title: "Color variants",
+				description: "Three thresholds rendered with different `colorVar` tokens.",
+				render: () => <GaugeColors />,
+				source: gaugeColorsSource,
+				filename: "Gauge.tsx",
+			},
+		],
+	},
+	"labeled-bar-list": {
+		id: "labeled-bar-list",
+		tier: "charts",
+		displayName: "LabeledBarList",
+		propsSource: "charts/labeled-bar-list",
+		importLine: `import { LabeledBarList } from "@olympusoss/canvas";`,
+		overview:
+			"Vertical list of labeled rows with a horizontal progress bar per row. Useful for top-N lists like top regions, schema usage, provider connections — anywhere a small set of named values needs proportional comparison without a full chart.",
+		tokens: ["--chart-1", "--muted", "--muted-foreground"],
+		examples: [
+			{
+				id: "default",
+				title: "Top regions",
+				render: () => <LabeledBarListDefault />,
+				source: labeledBarListDefaultSource,
+				filename: "LabeledBarList.tsx",
+			},
+			{
+				id: "no-leading",
+				title: "Schema usage (no leading slot)",
+				description: "Drop the `leading` slot when there's nothing icon-like to show.",
+				render: () => <LabeledBarListNoLeading />,
+				source: labeledBarListNoLeadingSource,
+				filename: "LabeledBarList.tsx",
+			},
+			{
+				id: "storage",
+				title: "Storage with custom valueFormatter",
+				description:
+					"Custom `valueFormatter` renders human-readable units alongside `<Icon />` leading slots.",
+				render: () => <LabeledBarListStorage />,
+				source: labeledBarListStorageSource,
+				filename: "LabeledBarList.tsx",
+			},
+		],
+	},
+	"service-health-list": {
+		id: "service-health-list",
+		tier: "charts",
+		displayName: "ServiceHealthList",
+		propsSource: "charts/service-health-list",
+		importLine: `import { ServiceHealthList } from "@olympusoss/canvas";`,
+		overview:
+			"Vertical list of services with a colored status dot, name, and optional monospace meta cells (latency, uptime, region). Drop-in for service-status panels.",
+		tokens: ["--muted-foreground"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <ServiceHealthListDefault />,
+				source: serviceHealthListDefaultSource,
+				filename: "ServiceHealthList.tsx",
+			},
+			{
+				id: "all-healthy",
+				title: "All systems normal",
+				description: "Every service `healthy` — useful for the steady-state status panel.",
+				render: () => <ServiceHealthListAllHealthy />,
+				source: serviceHealthListAllHealthySource,
+				filename: "ServiceHealthList.tsx",
+			},
+			{
+				id: "minimal",
+				title: "Without meta cells",
+				description: "Drop `meta` for compact sidebars or tight status drawers.",
+				render: () => <ServiceHealthListMinimal />,
+				source: serviceHealthListMinimalSource,
+				filename: "ServiceHealthList.tsx",
+			},
+		],
+	},
 	sparkline: {
 		id: "sparkline",
 		tier: "molecules",
@@ -3050,6 +3239,49 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				render: () => <SparklineInline />,
 				source: sparklineInlineSource,
 				filename: "Sparkline.tsx",
+			},
+		],
+	},
+	"stacked-bar": {
+		id: "stacked-bar",
+		tier: "charts",
+		displayName: "StackedBar",
+		propsSource: "charts/stacked-bar",
+		importLine: `import { StackedBar } from "@olympusoss/canvas";`,
+		overview:
+			"Horizontal stacked-percent bar with an optional swatch legend. Pass raw counts or pre-computed percentages — segments size proportionally to the sum.",
+		tokens: [
+			"--chart-1",
+			"--chart-2",
+			"--chart-3",
+			"--chart-4",
+			"--chart-5",
+			"--chart-6",
+			"--muted",
+		],
+		examples: [
+			{
+				id: "default",
+				title: "Sign-in methods",
+				render: () => <StackedBarDefault />,
+				source: stackedBarDefaultSource,
+				filename: "StackedBar.tsx",
+			},
+			{
+				id: "raw-counts",
+				title: "Raw counts with formatter",
+				description: "Pass raw counts and use `valueFormatter` to render thousands separators.",
+				render: () => <StackedBarRawCounts />,
+				source: stackedBarRawCountsSource,
+				filename: "StackedBar.tsx",
+			},
+			{
+				id: "no-legend",
+				title: "Without legend",
+				description: "Drop the legend with `showLegend={false}` for compact layouts.",
+				render: () => <StackedBarNoLegend />,
+				source: stackedBarNoLegendSource,
+				filename: "StackedBar.tsx",
 			},
 		],
 	},
@@ -3651,8 +3883,10 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				filename: "SunburstChart.tsx",
 			},
 			{
-				id: "half-circle",
-				title: "Half-circle",
+				id: "deep-hierarchy",
+				title: "Deep hierarchy",
+				description:
+					"Three levels of nested children — each branch keeps one hue with progressively lighter opacity per ring (1.0 / 0.65 / 0.4) so depth reads without introducing more colours.",
 				render: () => <SunburstChartHalfCircle />,
 				source: sunburstChartHalfCircleSource,
 				filename: "SunburstChart.tsx",
