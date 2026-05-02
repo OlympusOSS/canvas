@@ -998,7 +998,9 @@ const SidebarWithGroups = lazy(() => import("../examples/sidebar/with-groups"));
 const SidebarWithActiveItem = lazy(() => import("../examples/sidebar/with-active-item"));
 const SidebarWithActions = lazy(() => import("../examples/sidebar/with-actions"));
 const SidebarWithSkeleton = lazy(() => import("../examples/sidebar/with-skeleton"));
+const SidebarAthenaPattern = lazy(() => import("../examples/sidebar/athena-pattern"));
 
+import sidebarAthenaPatternSource from "../examples/sidebar/athena-pattern?raw";
 import sidebarCollapsibleIconSource from "../examples/sidebar/collapsible-icon?raw";
 import sidebarCollapsibleOffcanvasSource from "../examples/sidebar/collapsible-offcanvas?raw";
 import sidebarDefaultSource from "../examples/sidebar/default?raw";
@@ -4838,6 +4840,15 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				title: "With skeleton",
 				render: () => <SidebarWithSkeleton />,
 				source: sidebarWithSkeletonSource,
+				filename: "Sidebar.tsx",
+			},
+			{
+				id: "athena-pattern",
+				title: "Athena admin pattern",
+				description:
+					"Data-driven sidebar mirroring `OlympusOSS/athena`'s local `Sidebar.tsx` — one config array of grouped items with per-item `iconColor`, tooltips on the collapsed rail, an active matcher, and a footer with user chip + logout. Use this as the migration target for replacing the hand-rolled component in athena.",
+				render: () => <SidebarAthenaPattern />,
+				source: sidebarAthenaPatternSource,
 				filename: "Sidebar.tsx",
 			},
 		],
