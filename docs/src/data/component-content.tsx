@@ -791,6 +791,15 @@ import contextMenuWithCheckboxesSource from "../examples/context-menu/with-check
 import contextMenuWithRadioGroupSource from "../examples/context-menu/with-radio-group?raw";
 import contextMenuWithSubmenuSource from "../examples/context-menu/with-submenu?raw";
 
+// dashboard-grid
+const DashboardGridViewMode = lazy(() => import("../examples/dashboard-grid/view-mode"));
+const DashboardGridEditMode = lazy(() => import("../examples/dashboard-grid/edit-mode"));
+const DashboardGridEmptyState = lazy(() => import("../examples/dashboard-grid/empty-state"));
+
+import dashboardGridEditModeSource from "../examples/dashboard-grid/edit-mode?raw";
+import dashboardGridEmptyStateSource from "../examples/dashboard-grid/empty-state?raw";
+import dashboardGridViewModeSource from "../examples/dashboard-grid/view-mode?raw";
+
 // data-table
 const DataTableDefault = lazy(() => import("../examples/data-table/default"));
 const DataTableWithSearch = lazy(() => import("../examples/data-table/with-search"));
@@ -4082,6 +4091,45 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				render: () => <ContextMenuInsetItems />,
 				source: contextMenuInsetItemsSource,
 				filename: "ContextMenu.tsx",
+			},
+		],
+	},
+	"dashboard-grid": {
+		id: "dashboard-grid",
+		tier: "organisms",
+		displayName: "DashboardGrid",
+		propsSource: "organisms/dashboard-grid",
+		importLine: `import { DashboardGrid, type DashboardItem } from "@olympusoss/canvas";`,
+		overview:
+			"Drag-to-reorder, drag-to-resize widget grid built on `react-grid-layout`. Fully controlled — pass `items` + `onItemsChange`. Toggle the `editing` prop to gate drag/resize affordances behind a customize-mode UX. The 12-col responsive grid auto-packs collisions and adapts column count to viewport.",
+		tokens: ["--card", "--border", "--accent", "--muted-foreground"],
+		examples: [
+			{
+				id: "view-mode",
+				title: "View mode",
+				description:
+					"Read-only dashboard. No drag handles, no resize edges — pointer events pass through to widgets. Composed from PR #52 charts + StatCards.",
+				render: () => <DashboardGridViewMode />,
+				source: dashboardGridViewModeSource,
+				filename: "DashboardGrid.tsx",
+			},
+			{
+				id: "edit-mode",
+				title: "Edit mode (toggle)",
+				description:
+					"Toggle button enables `editing`. Drag the grip header to move a widget; drag a corner to resize. `onItemsChange` fires with the next snapshot.",
+				render: () => <DashboardGridEditMode />,
+				source: dashboardGridEditModeSource,
+				filename: "DashboardGrid.tsx",
+			},
+			{
+				id: "empty-state",
+				title: "Empty state",
+				description:
+					"When `items` is empty, the `emptyState` slot replaces the grid. Useful for first-run flows where the user hasn't picked any widgets yet.",
+				render: () => <DashboardGridEmptyState />,
+				source: dashboardGridEmptyStateSource,
+				filename: "DashboardGrid.tsx",
 			},
 		],
 	},

@@ -1,0 +1,47 @@
+/**
+ * Re-export of react-grid-layout's base stylesheets.
+ *
+ * Consumers of `<DashboardGrid>` import this once at app entry:
+ *
+ *   import "@olympusoss/canvas/styles/dashboard-grid.css";
+ *
+ * The actual imports resolve through the consumer's bundler. Both
+ * `react-grid-layout` and `react-resizable` are direct dependencies of
+ * canvas; if either isn't installed (e.g. peer-only consumer) the @import
+ * errors at build time, which is the right signal.
+ *
+ * On top of the lib's stock styles, the rules below recolour the placeholder
+ * (drop-target hint) and resize handles to match canvas tokens — the lib
+ * defaults are bright red / blue and don't fit the design system.
+ */
+@import "react-grid-layout/css/styles.css";
+@import "react-resizable/css/styles.css";
+
+.react-grid-item.react-grid-placeholder {
+	background: hsl(var(--accent));
+	opacity: 0.45;
+	border-radius: 0.75rem;
+	transition-property: transform;
+}
+
+.react-grid-item > .react-resizable-handle {
+	opacity: 0;
+	transition: opacity 150ms ease;
+}
+
+.react-grid-item:hover > .react-resizable-handle,
+.react-grid-item.react-draggable-dragging > .react-resizable-handle {
+	opacity: 1;
+}
+
+/* Recolour the corner glyph the lib draws via ::after */
+.react-grid-item > .react-resizable-handle::after {
+	border-color: hsl(var(--muted-foreground));
+}
+
+/* When DashboardGrid is in view-mode (`editing=false`) we hide handles
+ * entirely — the cursor never tells the user "you can resize this".
+ */
+[data-dashboard-grid-editing="false"] .react-grid-item > .react-resizable-handle {
+	display: none;
+}

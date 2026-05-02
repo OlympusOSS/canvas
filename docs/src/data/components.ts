@@ -72,6 +72,7 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "collapsible", label: "Collapsible", tier: "organisms" },
 	{ id: "command", label: "Command", tier: "organisms" },
 	{ id: "context-menu", label: "ContextMenu", tier: "organisms" },
+	{ id: "dashboard-grid", label: "DashboardGrid", tier: "organisms" },
 	{ id: "data-table", label: "DataTable", tier: "organisms" },
 	{ id: "dialog", label: "Dialog", tier: "organisms" },
 	{ id: "drawer", label: "Drawer", tier: "organisms" },
