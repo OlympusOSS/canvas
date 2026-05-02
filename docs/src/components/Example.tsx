@@ -9,6 +9,7 @@ import {
 } from "@olympusoss/canvas";
 import { type ReactNode, useEffect, useState } from "react";
 import Frame, { FrameContextConsumer } from "react-frame-component";
+import canvasRuntimeCssUrl from "../../../styles/canvas.css?url";
 import { DocsCodeBlock } from "./DocsCodeBlock";
 
 type Viewport = "desktop" | "tablet" | "mobile";
@@ -36,27 +37,23 @@ interface ExampleProps {
 }
 
 /**
- * Build the iframe's `<head>` by cloning every `<link rel="stylesheet">` and
- * `<style>` tag from the parent document. Lets Vite-injected CSS (Tailwind v4
- * @source / @theme inline output) reach the frame so canvas tokens resolve
- * inside the example's own viewport.
+ * Iframe head: a single <link> pointing at the compiled canvas-runtime
+ * stylesheet (canvas/styles/canvas.css), resolved via Vite `?url`.
  *
- * Captured ONCE on mount and never updated. We deliberately don't observe
- * `document.head` — some libraries (input-otp's noScriptCSSFallback, etc.)
- * inject `<style>` tags lazily when they mount inside the iframe, which
- * mutates the parent document.head, which would re-fire a MutationObserver
- * and re-mount the iframe → re-mount the library → infinite loop.
+ * Why this beats cloning parent <style>/<link> tags:
+ *   - In dev Vite injects every imported CSS module as its own <style> tag,
+ *     but in prod they're all bundled into one hashed stylesheet — so any
+ *     filter that tries to keep "only canvas.css" from the parent doc
+ *     either keeps the bundled file (defeating isolation) or drops it
+ *     (leaving examples unstyled). `?url` sidesteps the question by giving
+ *     us a stable URL to the canvas-runtime asset in BOTH modes.
+ *   - `?url` resolves through Vite's full pipeline including @tailwindcss/vite,
+ *     so the served file is the compiled output (Tailwind utilities scanned
+ *     from canvas/src + tokens + leaflet) — exactly what an example needs.
+ *   - The iframe ends up with ONLY canvas-runtime CSS. No docs chrome
+ *     (sidebar, hero, prose, animations) leaks in. Mirrors a real consumer
+ *     app's render environment.
  */
-function useFrameHead() {
-	const [head, setHead] = useState("");
-	useEffect(() => {
-		const collected = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
-			.map((el) => el.outerHTML)
-			.join("\n");
-		setHead(collected);
-	}, []);
-	return head;
-}
 
 /** Mirror the page's dark-mode class onto the iframe's <html>. */
 function useDarkClassMirror(doc: Document | undefined) {
@@ -156,9 +153,8 @@ interface PreviewFrameProps {
 }
 
 function PreviewFrame({ viewport, children }: PreviewFrameProps) {
-	const head = useFrameHead();
 	const [height, setHeight] = useState(MIN_FRAME_HEIGHT);
-	const initialContent = `<!DOCTYPE html><html style="overflow:hidden;"><head>${head}</head><body style="margin:0;background:transparent;"><div id="frame-root"></div></body></html>`;
+	const initialContent = `<!DOCTYPE html><html style="overflow:hidden;"><head><link rel="stylesheet" href="${canvasRuntimeCssUrl}"></head><body style="margin:0;background:transparent;"><div id="frame-root"></div></body></html>`;
 
 	return (
 		<div
@@ -175,7 +171,6 @@ function PreviewFrame({ viewport, children }: PreviewFrameProps) {
 			}}
 		>
 			<Frame
-				key={head ? "ready" : "loading"}
 				initialContent={initialContent}
 				mountTarget="#frame-root"
 				style={{

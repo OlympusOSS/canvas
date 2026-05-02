@@ -3,8 +3,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { router } from "./router";
+import "../../styles/canvas.css";
 import "./styles.css";
-import "../../styles/leaflet.css";
 
 const browserRouter = createBrowserRouter(router, {
 	basename: import.meta.env.BASE_URL,
