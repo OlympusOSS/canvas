@@ -103,9 +103,8 @@ export function Home() {
 						</h1>
 
 						<p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-							A shadcn-derived React component library on Tailwind v4. Atomic-design layered,
-							tokens-first, dark-mode native. Drop it into any React project — Next.js, Vite, Remix,
-							anything.
+							A React component library on Tailwind v4. Atomic-design layered, tokens-first,
+							dark-mode native. Drop it into any React project — Next.js, Vite, Remix, anything.
 						</p>
 
 						<div className="flex flex-wrap gap-3 pt-2">
