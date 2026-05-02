@@ -62,7 +62,19 @@ export default function App() {
 	return (
 		<div className="w-full max-w-md p-4">
 			<ChartContainer config={{}} className="h-[300px]">
-				<SunburstChart data={data} dataKey="value" stroke="none">
+				<SunburstChart
+					data={data}
+					dataKey="value"
+					stroke=""
+					padding={0}
+					ringPadding={0}
+					textOptions={{
+						stroke: "none",
+						fill: "hsl(var(--foreground))",
+						fontSize: "12",
+						fontWeight: "500",
+					}}
+				>
 					<ChartTooltip content={<ChartTooltipContent hideLabel />} />
 				</SunburstChart>
 			</ChartContainer>
