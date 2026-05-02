@@ -71,8 +71,9 @@ export default function App() {
 					textOptions={{
 						stroke: "none",
 						fill: "hsl(var(--foreground))",
-						fontSize: "12",
-						fontWeight: "500",
+						fontFamily: "var(--font-mono)",
+						fontSize: "11",
+						fontWeight: "400",
 					}}
 				>
 					<ChartTooltip content={<ChartTooltipContent hideLabel />} />
