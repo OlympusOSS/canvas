@@ -35,6 +35,15 @@ describe("ActivityItem", () => {
 		expect(items[1].className).toContain("border-t");
 	});
 
+	it("renders the leading slot when provided", () => {
+		const { container } = render(
+			<ActivityFeed>
+				<ActivityItem subject="ada" action="signed in" leading={<span data-testid="lead-icon" />} />
+			</ActivityFeed>,
+		);
+		expect(container.querySelector('[data-testid="lead-icon"]')).toBeTruthy();
+	});
+
 	it("renders as a button when onClick is provided", () => {
 		const { container } = render(
 			<ActivityFeed>

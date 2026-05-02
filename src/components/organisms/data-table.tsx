@@ -255,12 +255,7 @@ function DataTable<TData>({
 												maxWidth: colDef.maxSize,
 											}}
 										>
-											{
-												/* c8 ignore next 2 -- isPlaceholder is only true for cross-column grouping which Canvas doesn't expose */
-												header.isPlaceholder
-													? null
-													: flexRender(header.column.columnDef.header, header.getContext())
-											}
+											{flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									);
 								})}

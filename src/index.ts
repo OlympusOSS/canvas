@@ -104,6 +104,10 @@ export {
 	type ActionBarProps,
 	type ActionBarSecondary,
 } from "./components/molecules/action-bar";
+export {
+	ActivityHeatmap,
+	type ActivityHeatmapProps,
+} from "./components/molecules/activity-heatmap";
 /* ────────────────────────────────────────────────────────────────
    MOLECULES — small compositions of atoms.
    Can import: tokens/, lib/utils, atoms/.
@@ -155,12 +159,18 @@ export {
 	FieldDisplay,
 	type FieldDisplayProps,
 } from "./components/molecules/field-display";
+export { Gauge, type GaugeProps } from "./components/molecules/gauge";
 export {
 	InputOTP,
 	InputOTPGroup,
 	InputOTPSeparator,
 	InputOTPSlot,
 } from "./components/molecules/input-otp";
+export {
+	LabeledBarList,
+	type LabeledBarListItem,
+	type LabeledBarListProps,
+} from "./components/molecules/labeled-bar-list";
 export {
 	LoadingState,
 	type LoadingStateProps,
@@ -211,9 +221,20 @@ export {
 	type SectionCardProps,
 } from "./components/molecules/section-card";
 export {
+	type ServiceHealthItem,
+	ServiceHealthList,
+	type ServiceHealthListProps,
+	type ServiceHealthStatus,
+} from "./components/molecules/service-health-list";
+export {
 	Sparkline,
 	type SparklineProps,
 } from "./components/molecules/sparkline";
+export {
+	StackedBar,
+	type StackedBarProps,
+	type StackedBarSegment,
+} from "./components/molecules/stacked-bar";
 export { StatCard, type StatCardProps } from "./components/molecules/stat-card";
 export {
 	StatusBadge,

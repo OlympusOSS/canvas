@@ -113,8 +113,8 @@ const Carousel = React.forwardRef<
 				carouselRef,
 				api: api,
 				opts,
-				/* c8 ignore next -- orientation has a default of "horizontal", so the fallback ternary is never reached */
-				orientation: orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+				// `orientation` is always defined (default: "horizontal"). No fallback needed.
+				orientation,
 				scrollPrev,
 				scrollNext,
 				canScrollPrev,

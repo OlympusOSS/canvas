@@ -558,6 +558,31 @@ const NumberBadgeVariants = lazy(() => import("../examples/number-badge/variants
 import numberBadgeDefaultSource from "../examples/number-badge/default?raw";
 import numberBadgeVariantsSource from "../examples/number-badge/variants?raw";
 
+// activity-heatmap
+const ActivityHeatmapDefault = lazy(() => import("../examples/activity-heatmap/default"));
+
+import activityHeatmapDefaultSource from "../examples/activity-heatmap/default?raw";
+
+// gauge
+const GaugeDefault = lazy(() => import("../examples/gauge/default"));
+
+import gaugeDefaultSource from "../examples/gauge/default?raw";
+
+// labeled-bar-list
+const LabeledBarListDefault = lazy(() => import("../examples/labeled-bar-list/default"));
+
+import labeledBarListDefaultSource from "../examples/labeled-bar-list/default?raw";
+
+// service-health-list
+const ServiceHealthListDefault = lazy(() => import("../examples/service-health-list/default"));
+
+import serviceHealthListDefaultSource from "../examples/service-health-list/default?raw";
+
+// stacked-bar
+const StackedBarDefault = lazy(() => import("../examples/stacked-bar/default"));
+
+import stackedBarDefaultSource from "../examples/stacked-bar/default?raw";
+
 // sparkline
 const SparklineDefault = lazy(() => import("../examples/sparkline/default"));
 const SparklineColorVariants = lazy(() => import("../examples/sparkline/color-variants"));
@@ -3019,6 +3044,82 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 			},
 		],
 	},
+	"activity-heatmap": {
+		id: "activity-heatmap",
+		tier: "molecules",
+		displayName: "ActivityHeatmap",
+		propsSource: "molecules/activity-heatmap",
+		importLine: `import { ActivityHeatmap } from "@olympusoss/canvas";`,
+		overview:
+			"CSS-grid heatmap of opacity-tinted cells. For time-of-day × day-of-week activity matrices (token issuance, sign-in concentration, queue depth) where a full chart is overkill.",
+		tokens: ["--chart-1"],
+		examples: [
+			{
+				id: "default",
+				title: "Token issuance",
+				render: () => <ActivityHeatmapDefault />,
+				source: activityHeatmapDefaultSource,
+				filename: "ActivityHeatmap.tsx",
+			},
+		],
+	},
+	gauge: {
+		id: "gauge",
+		tier: "molecules",
+		displayName: "Gauge",
+		propsSource: "molecules/gauge",
+		importLine: `import { Gauge } from "@olympusoss/canvas";`,
+		overview:
+			"Single-arc circular gauge with a centered value label. For 0–100 metrics like adoption percentages, health scores, or completion ratios.",
+		tokens: ["--chart-1", "--muted"],
+		examples: [
+			{
+				id: "default",
+				title: "MFA adoption",
+				render: () => <GaugeDefault />,
+				source: gaugeDefaultSource,
+				filename: "Gauge.tsx",
+			},
+		],
+	},
+	"labeled-bar-list": {
+		id: "labeled-bar-list",
+		tier: "molecules",
+		displayName: "LabeledBarList",
+		propsSource: "molecules/labeled-bar-list",
+		importLine: `import { LabeledBarList } from "@olympusoss/canvas";`,
+		overview:
+			"Vertical list of labeled rows with a horizontal progress bar per row. Useful for top-N lists like top regions, schema usage, provider connections — anywhere a small set of named values needs proportional comparison without a full chart.",
+		tokens: ["--chart-1", "--muted", "--muted-foreground"],
+		examples: [
+			{
+				id: "default",
+				title: "Top regions",
+				render: () => <LabeledBarListDefault />,
+				source: labeledBarListDefaultSource,
+				filename: "LabeledBarList.tsx",
+			},
+		],
+	},
+	"service-health-list": {
+		id: "service-health-list",
+		tier: "molecules",
+		displayName: "ServiceHealthList",
+		propsSource: "molecules/service-health-list",
+		importLine: `import { ServiceHealthList } from "@olympusoss/canvas";`,
+		overview:
+			"Vertical list of services with a colored status dot, name, and optional monospace meta cells (latency, uptime, region). Drop-in for service-status panels.",
+		tokens: ["--muted-foreground"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <ServiceHealthListDefault />,
+				source: serviceHealthListDefaultSource,
+				filename: "ServiceHealthList.tsx",
+			},
+		],
+	},
 	sparkline: {
 		id: "sparkline",
 		tier: "molecules",
@@ -3050,6 +3151,33 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				render: () => <SparklineInline />,
 				source: sparklineInlineSource,
 				filename: "Sparkline.tsx",
+			},
+		],
+	},
+	"stacked-bar": {
+		id: "stacked-bar",
+		tier: "molecules",
+		displayName: "StackedBar",
+		propsSource: "molecules/stacked-bar",
+		importLine: `import { StackedBar } from "@olympusoss/canvas";`,
+		overview:
+			"Horizontal stacked-percent bar with an optional swatch legend. Pass raw counts or pre-computed percentages — segments size proportionally to the sum.",
+		tokens: [
+			"--chart-1",
+			"--chart-2",
+			"--chart-3",
+			"--chart-4",
+			"--chart-5",
+			"--chart-6",
+			"--muted",
+		],
+		examples: [
+			{
+				id: "default",
+				title: "Sign-in methods",
+				render: () => <StackedBarDefault />,
+				source: stackedBarDefaultSource,
+				filename: "StackedBar.tsx",
 			},
 		],
 	},

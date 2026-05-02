@@ -13426,6 +13426,57 @@
       ]
     }
   ],
+  "molecules/activity-heatmap": [
+    {
+      "displayName": "ActivityHeatmap",
+      "description": "CSS-grid heatmap of opacity-tinted cells. Useful for time-of-day × day-of-week\nmatrices (token issuance, sign-in concentration, queue depth) where a full\nchart would be overkill. Rendering is a flat `display: grid` — no canvas, no\nSVG, fully interactive via hover titles.",
+      "file": "src/components/molecules/activity-heatmap.tsx",
+      "props": [
+        {
+          "name": "data",
+          "required": true,
+          "type": "number[][]",
+          "defaultValue": null,
+          "description": "Cell values in row-major order. Each entry is a number in `[0, 1]`\nwhere `0` paints the lowest tint and `1` paints the highest. Values are\nclamped on render. The grid dimensions come from `data.length` and\n`data[0].length`; pass jagged arrays only if you accept short rows."
+        },
+        {
+          "name": "colorVar",
+          "required": false,
+          "type": "string",
+          "defaultValue": "chart-1",
+          "description": "CSS variable name (without leading `--`) used for the cell hue. Default\n`chart-1`. Cells render as `hsl(var(--{colorVar}) / opacity)`."
+        },
+        {
+          "name": "cellHeight",
+          "required": false,
+          "type": "number",
+          "defaultValue": "14",
+          "description": "Pixel height of each cell row. Default `14`."
+        },
+        {
+          "name": "gap",
+          "required": false,
+          "type": "number",
+          "defaultValue": "2",
+          "description": "Pixel gap between cells. Default `2`."
+        },
+        {
+          "name": "cellRadius",
+          "required": false,
+          "type": "number",
+          "defaultValue": "3",
+          "description": "Pixel border-radius on each cell. Default `3`."
+        },
+        {
+          "name": "cellTitle",
+          "required": false,
+          "type": "((row: number, col: number, value: number) => string)",
+          "defaultValue": null,
+          "description": "Render the cell `title` attribute (browser tooltip on hover) for each\ncoordinate. Receives `(rowIndex, colIndex, value)` and should return a\nstring. Returns nothing → no title set."
+        }
+      ]
+    }
+  ],
   "molecules/activity-item": [
     {
       "displayName": "ActivityFeed",
@@ -14170,6 +14221,64 @@
       ]
     }
   ],
+  "molecules/gauge": [
+    {
+      "displayName": "Gauge",
+      "description": "Single-arc circular gauge with a centered value. Useful for adoption\npercentages, health scores, completion ratios, and similar 0–100 metrics.\nRenders a complete background ring plus a filled arc; the arc is animated\nvia `transition-[stroke-dashoffset]` so consumers get smooth updates when\n`value` changes.",
+      "file": "src/components/molecules/gauge.tsx",
+      "props": [
+        {
+          "name": "value",
+          "required": true,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Percentage to fill (0–100). Values outside the range are clamped."
+        },
+        {
+          "name": "size",
+          "required": false,
+          "type": "number",
+          "defaultValue": "160",
+          "description": "Pixel size (width = height). Default `160`."
+        },
+        {
+          "name": "strokeWidth",
+          "required": false,
+          "type": "number",
+          "defaultValue": "14",
+          "description": "Pixel stroke width of the ring. Default `14`."
+        },
+        {
+          "name": "colorVar",
+          "required": false,
+          "type": "string",
+          "defaultValue": "chart-1",
+          "description": "CSS variable name (without leading `--`) used for the filled arc. Default\n`chart-1`."
+        },
+        {
+          "name": "valueLabel",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Center value text. Defaults to `\"{value}%\"`. Pass a custom node to render\nsomething richer (e.g. a unit label)."
+        },
+        {
+          "name": "caption",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Small label rendered below the centre value. Optional."
+        },
+        {
+          "name": "aria-label",
+          "required": false,
+          "type": "string",
+          "defaultValue": "Gauge",
+          "description": "Accessible label describing the gauge. Default `\"Gauge\"`."
+        }
+      ]
+    }
+  ],
   "molecules/input-otp": [
     {
       "displayName": "InputOTP",
@@ -14264,6 +14373,50 @@
           "type": "number",
           "defaultValue": null,
           "description": ""
+        }
+      ]
+    }
+  ],
+  "molecules/labeled-bar-list": [
+    {
+      "displayName": "LabeledBarList",
+      "description": "Vertical list of labeled rows with a horizontal progress bar per row. Useful\nfor \"top regions\", \"schema usage\", \"provider connections\" — anywhere a small\nset of named values needs proportional comparison without a full chart.",
+      "file": "src/components/molecules/labeled-bar-list.tsx",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "LabeledBarListItem[]",
+          "defaultValue": null,
+          "description": "Rows rendered top-to-bottom."
+        },
+        {
+          "name": "colorVar",
+          "required": false,
+          "type": "string",
+          "defaultValue": "chart-1",
+          "description": "CSS variable name (without leading `--`) used for the bar fill. Default\n`chart-1`."
+        },
+        {
+          "name": "valueFormatter",
+          "required": false,
+          "type": "((value: number) => string)",
+          "defaultValue": "(v) => v.toLocaleString()",
+          "description": "Format the value rendered to the right of each label. Default `toLocaleString`."
+        },
+        {
+          "name": "barHeight",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4",
+          "description": "Pixel height of the row's bar track. Default `4`."
+        },
+        {
+          "name": "caption",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Caption rendered below the list."
         }
       ]
     }
@@ -15004,6 +15157,29 @@
       ]
     }
   ],
+  "molecules/service-health-list": [
+    {
+      "displayName": "ServiceHealthList",
+      "description": "Vertical list of services with a colored status dot, name, and optional\nmonospace meta cells (latency, uptime, region, …). The dot has a 3-px halo\nmatching the status hue at 18% opacity to pull focus.",
+      "file": "src/components/molecules/service-health-list.tsx",
+      "props": [
+        {
+          "name": "items",
+          "required": true,
+          "type": "ServiceHealthItem[]",
+          "defaultValue": null,
+          "description": "Service rows rendered top-to-bottom."
+        },
+        {
+          "name": "caption",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Caption rendered below the list."
+        }
+      ]
+    }
+  ],
   "molecules/sparkline": [
     {
       "displayName": "Sparkline",
@@ -15044,6 +15220,57 @@
           "type": "ReactNode",
           "defaultValue": null,
           "description": "Caption rendered below the bars."
+        }
+      ]
+    }
+  ],
+  "molecules/stacked-bar": [
+    {
+      "displayName": "StackedBar",
+      "description": "Horizontal stacked-percent bar with an optional swatch legend below. Segments\nare sized proportionally to their value's share of the total — pass raw\ncounts or pre-computed percentages, the rendering is the same.",
+      "file": "src/components/molecules/stacked-bar.tsx",
+      "props": [
+        {
+          "name": "segments",
+          "required": true,
+          "type": "StackedBarSegment[]",
+          "defaultValue": null,
+          "description": "Segments rendered left-to-right with width proportional to `value`."
+        },
+        {
+          "name": "defaultColorVar",
+          "required": false,
+          "type": "string",
+          "defaultValue": "chart-1",
+          "description": "Fallback CSS variable name for segments that omit `colorVar`. Default\n`chart-1`."
+        },
+        {
+          "name": "height",
+          "required": false,
+          "type": "number",
+          "defaultValue": "10",
+          "description": "Pixel height of the bar pill. Default `10`."
+        },
+        {
+          "name": "showLegend",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Show the legend list below the bar. Default `true`."
+        },
+        {
+          "name": "valueFormatter",
+          "required": false,
+          "type": "((value: number) => string)",
+          "defaultValue": "(v) => `${v}%`",
+          "description": "Format the per-segment value in the legend. Default `(v) => `${v}%``."
+        },
+        {
+          "name": "caption",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Caption rendered below the legend."
         }
       ]
     }
