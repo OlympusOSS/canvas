@@ -143,7 +143,7 @@ export default function App() {
 	const [items] = useState<DashboardItem[]>(ITEMS);
 	return (
 		<div className="p-4">
-			<DashboardGrid items={items} renderItem={renderItem} rowHeight={70} />
+			<DashboardGrid items={items} renderItem={renderItem} rowHeight={70} breakpoints={{ lg: 0 }} />
 		</div>
 	);
 }
