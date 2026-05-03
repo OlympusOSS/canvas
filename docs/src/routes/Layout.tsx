@@ -333,7 +333,7 @@ export function Layout() {
 								aria-label="GitHub"
 								className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 							>
-								<Icon name="Code" className="h-3.5 w-3.5" />
+								<Icon name="Github" className="h-3.5 w-3.5" />
 							</a>
 						</div>
 						<span className="font-mono text-[10px] text-muted-foreground">Apache 2.0</span>
