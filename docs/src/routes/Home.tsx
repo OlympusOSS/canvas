@@ -163,7 +163,7 @@ export function Home() {
 						<Icon name="ArrowRight" className="h-3.5 w-3.5" />
 					</Link>
 				</header>
-				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					<TierSample
 						tier="Atom"
 						tagline="Single primitives — one Radix wrapper or one lucide icon. No composition."
@@ -204,20 +204,6 @@ export function Home() {
 								</TabsTrigger>
 							</TabsList>
 						</Tabs>
-					</TierSample>
-					<TierSample
-						tier="Template"
-						tagline="Slots-only page scaffolding — composes organisms into a layout."
-						href="/components/templates"
-					>
-						<div className="flex w-full items-center gap-2 rounded-lg border border-border bg-background p-2">
-							<div className="h-12 w-3 rounded-sm bg-muted" aria-hidden />
-							<div className="flex-1 space-y-1.5">
-								<div className="h-2 w-2/3 rounded-sm bg-muted" aria-hidden />
-								<div className="h-2 w-1/2 rounded-sm bg-muted" aria-hidden />
-								<div className="h-2 w-3/4 rounded-sm bg-muted" aria-hidden />
-							</div>
-						</div>
 					</TierSample>
 				</div>
 			</section>

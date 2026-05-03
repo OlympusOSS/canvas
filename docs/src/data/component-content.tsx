@@ -12,7 +12,7 @@ export interface ExampleContent {
 
 export interface ComponentContent {
 	id: string;
-	tier: "atoms" | "molecules" | "organisms" | "templates" | "charts";
+	tier: "atoms" | "molecules" | "organisms" | "charts";
 	displayName: string;
 	overview: string;
 	importLine: string;
