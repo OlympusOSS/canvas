@@ -112,6 +112,10 @@ export {
 	type ServiceHealthStatus,
 } from "./components/charts/service-health-list";
 export {
+	Sparkline,
+	type SparklineProps,
+} from "./components/charts/sparkline";
+export {
 	StackedBar,
 	type StackedBarProps,
 	type StackedBarSegment,
@@ -234,10 +238,6 @@ export {
 	SectionCard,
 	type SectionCardProps,
 } from "./components/molecules/section-card";
-export {
-	Sparkline,
-	type SparklineProps,
-} from "./components/molecules/sparkline";
 export { StatCard, type StatCardProps } from "./components/molecules/stat-card";
 export {
 	StatusBadge,

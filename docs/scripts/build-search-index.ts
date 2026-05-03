@@ -55,7 +55,7 @@ const STATIC_PAGES = [
 		id: "home",
 		title: "Overview",
 		path: "/",
-		body: "Canvas Olympus design system landing tokens components",
+		body: "Canvas design system landing tokens components",
 	},
 	{
 		id: "install",

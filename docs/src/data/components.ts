@@ -55,7 +55,7 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "search-bar", label: "SearchBar", tier: "molecules" },
 	{ id: "secret-field", label: "SecretField", tier: "molecules" },
 	{ id: "section-card", label: "SectionCard", tier: "molecules" },
-	{ id: "sparkline", label: "Sparkline", tier: "molecules" },
+	{ id: "sparkline", label: "Sparkline", tier: "charts" },
 	{ id: "stat-card", label: "StatCard", tier: "molecules" },
 	{ id: "status-badge", label: "StatusBadge", tier: "molecules" },
 	{ id: "stepper", label: "Stepper", tier: "molecules" },
