@@ -1,8 +1,8 @@
 import {
 	ActivityFeed,
 	ActivityItem,
-	AdminShell,
 	AppHeader,
+	AppShell,
 	Avatar,
 	AvatarFallback,
 	Badge,
@@ -204,7 +204,7 @@ function TopBar() {
 export default function App() {
 	const [active, setActive] = useState("dashboard");
 	return (
-		<AdminShell
+		<AppShell
 			className="min-h-[640px]"
 			sidebar={({ expanded, setExpanded }) => (
 				<AthenaSidebar
@@ -342,6 +342,6 @@ export default function App() {
 				<Badge variant="secondary">employee</Badge>
 				<Badge variant="secondary">customer</Badge>
 			</div>
-		</AdminShell>
+		</AppShell>
 	);
 }

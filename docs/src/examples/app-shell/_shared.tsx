@@ -14,10 +14,10 @@ import {
 import { Fragment } from "react";
 
 /**
- * Shared sidebar used by every AdminShell example. Visually matches the
+ * Shared sidebar used by every AppShell example. Visually matches the
  * canvas Sidebar organism — bg-sidebar surface, sidebar-foreground/accent
  * tokens, rounded menu buttons, group labels, tooltips on the collapsed rail
- * — but is a self-contained `<aside>` so AdminShell's slot semantics work
+ * — but is a self-contained `<aside>` so AppShell's slot semantics work
  * without an outer SidebarProvider.
  */
 

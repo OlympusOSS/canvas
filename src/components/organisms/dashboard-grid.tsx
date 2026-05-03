@@ -230,15 +230,12 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 					preventCollision={false}
 				>
 					{items.map((item) => (
-						<div
-							key={item.i}
-							className="group/dashboard-grid-item flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow"
-						>
+						<div key={item.i} className="group/dashboard-grid-item flex flex-col overflow-hidden">
 							{editing && (
 								<div
 									role="button"
 									tabIndex={0}
-									className="dashboard-grid-handle flex h-7 shrink-0 cursor-grab items-center justify-center border-b border-border bg-muted/30 text-muted-foreground active:cursor-grabbing"
+									className="dashboard-grid-handle flex h-7 shrink-0 cursor-grab items-center justify-center rounded-t-xl border-b border-border bg-muted/30 text-muted-foreground active:cursor-grabbing"
 									aria-label={`Drag ${item.i}`}
 								>
 									<GripVertical className="h-3.5 w-3.5" />

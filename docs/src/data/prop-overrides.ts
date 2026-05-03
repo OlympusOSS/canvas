@@ -787,11 +787,19 @@ export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = 
 			},
 		},
 	},
-	"templates/admin-shell": {
-		AdminShell: {
+	"templates/app-shell": {
+		AppShell: {
 			defaultSidebarExpanded: {
 				description: "Initial state of the sidebar when no preference is persisted.",
 				defaultValue: "true",
+			},
+			sidebar: {
+				description:
+					"Sidebar content. Renders as a fixed column on md+ and an overlay drawer on mobile. Pass a node or a function receiving `{ expanded, setExpanded, closeMobile }`.",
+			},
+			header: {
+				description:
+					"Optional header rendered above the scrollable main area. Pass a node or a function receiving `{ onMobileMenuToggle }` to wire a hamburger button.",
 			},
 		},
 	},

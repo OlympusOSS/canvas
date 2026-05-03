@@ -116,8 +116,8 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "world-heat-map", label: "WorldHeatMap", tier: "charts" },
 
 	// templates
-	{ id: "admin-shell", label: "AdminShell", tier: "templates" },
 	{ id: "app-header", label: "AppHeader", tier: "templates" },
+	{ id: "app-shell", label: "AppShell", tier: "templates" },
 	{ id: "auth-layout", label: "AuthLayout", tier: "templates" },
 	{ id: "auth-shell", label: "AuthShell", tier: "templates" },
 	{ id: "wizard-shell", label: "WizardShell", tier: "templates" },

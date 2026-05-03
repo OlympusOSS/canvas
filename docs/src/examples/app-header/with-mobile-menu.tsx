@@ -30,7 +30,7 @@ export default function App() {
 				user={<UserAvatarChip name="AO" collapsed />}
 			/>
 			<div className="p-6 text-sm text-muted-foreground">
-				The hamburger renders only on viewports below `md`. Connect it to AdminShell's
+				The hamburger renders only on viewports below `md`. Connect it to AppShell's
 				`onMobileMenuToggle`.
 			</div>
 		</div>

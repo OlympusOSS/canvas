@@ -14,7 +14,7 @@ exports[`DashboardGrid > matches snapshot in view mode 1`] = `
         class="react-grid-item"
       >
         <div
-          class="group/dashboard-grid-item flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow"
+          class="group/dashboard-grid-item flex flex-col overflow-hidden"
         >
           <div
             class="flex-1 overflow-hidden"
@@ -29,7 +29,7 @@ exports[`DashboardGrid > matches snapshot in view mode 1`] = `
         class="react-grid-item"
       >
         <div
-          class="group/dashboard-grid-item flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow"
+          class="group/dashboard-grid-item flex flex-col overflow-hidden"
         >
           <div
             class="flex-1 overflow-hidden"
@@ -44,7 +44,7 @@ exports[`DashboardGrid > matches snapshot in view mode 1`] = `
         class="react-grid-item"
       >
         <div
-          class="group/dashboard-grid-item flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow"
+          class="group/dashboard-grid-item flex flex-col overflow-hidden"
         >
           <div
             class="flex-1 overflow-hidden"
