@@ -10,7 +10,6 @@ import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
 import {
 	ActionBar,
-	AppShell,
 	AuthShell,
 	Button,
 	Card,
@@ -175,18 +174,6 @@ describe("accessibility — no axe violations", () => {
 						<Input id="u" />
 					</form>
 				</AuthShell>
-			</ThemeProvider>,
-		);
-		expect(await axe(container, config)).toHaveNoViolations();
-	});
-
-	it("AppShell", async () => {
-		// AppShell renders its own <main>; children should not nest another.
-		const { container } = render(
-			<ThemeProvider defaultTheme="light">
-				<AppShell sidebar={<nav aria-label="Primary">Sidebar</nav>} header={<div>Header</div>}>
-					<div>Main content</div>
-				</AppShell>
 			</ThemeProvider>,
 		);
 		expect(await axe(container, config)).toHaveNoViolations();
