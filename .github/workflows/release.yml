@@ -89,6 +89,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Push release tags
+        if: steps.has_changesets.outputs.count != '0'
+        run: git push --tags
+
   # Docs build + Pages deploy. Runs after the release job so that the canvas
   # version baked into the bundle (via __CANVAS_VERSION__ in docs/vite.config.ts)
   # always matches the version that was just published. Single-source-of-truth:
