@@ -63,9 +63,9 @@
 		"ignore": ["react", "react-dom"]
 	},
 	{
-		"name": "Shells (AdminShell + WizardShell + AuthShell)",
+		"name": "Shells (AppShell + WizardShell + AuthShell)",
 		"path": "src/index.ts",
-		"import": "{ AdminShell, WizardShell, AuthShell }",
+		"import": "{ AppShell, WizardShell, AuthShell }",
 		"limit": "200 KB",
 		"gzip": true,
 		"ignore": ["react", "react-dom"]
