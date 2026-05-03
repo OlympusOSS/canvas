@@ -29,13 +29,7 @@ const BOTTOM_NAV: NavItem[] = [
 	{ to: "/changelog", label: "Changelog" },
 ];
 
-const TIERS: Array<keyof typeof TIER_META> = [
-	"atoms",
-	"molecules",
-	"organisms",
-	"charts",
-	"templates",
-];
+const TIERS: Array<keyof typeof TIER_META> = ["atoms", "molecules", "organisms", "charts"];
 
 const STORAGE_KEY = "canvas-docs:nav-open";
 
@@ -132,7 +126,6 @@ function TierDot({ tier }: { tier: keyof typeof TIER_META }) {
 		molecules: "bg-[hsl(var(--brand-via))]",
 		organisms: "bg-[hsl(var(--brand-to))]",
 		charts: "bg-purple-500/60",
-		templates: "bg-foreground/60",
 	};
 	return <span className={`h-1.5 w-1.5 rounded-full ${map[tier]}`} aria-hidden />;
 }
@@ -175,7 +168,6 @@ const DEFAULT_OPEN = {
 	molecules: false,
 	organisms: false,
 	charts: false,
-	templates: false,
 } as const;
 
 type OpenState = typeof DEFAULT_OPEN;
