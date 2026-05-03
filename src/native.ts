@@ -17,7 +17,6 @@ export type { LoadingStateProps } from "./components/molecules/loading-state";
 export type { SearchBarProps } from "./components/molecules/search-bar";
 export type { StatusBadgeProps } from "./components/molecules/status-badge";
 export type { DataTableColumn, DataTableProps } from "./components/organisms/data-table";
-export type { AuthLayoutProps } from "./components/templates/auth-layout";
 // Design tokens (shared with web)
 export { colors, hslToString, hslToVar } from "./tokens/colors";
 export { defaultRadius, radius, spacing } from "./tokens/spacing";

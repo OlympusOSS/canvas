@@ -63,15 +63,11 @@ export function Principles() {
 						Stateful surfaces with their own context, controlled/uncontrolled API, and ARIA
 						contracts. Examples: Sidebar, DataTable, Form, Dialog, Command.
 					</Rule>
-					<Rule title="Templates">
-						Page-level scaffolding. Slots-only — no business logic. Examples: AuthShell,
-						WizardShell, WizardShell.
-					</Rule>
 				</div>
 				<p className="rounded-md bg-muted/40 p-3 text-xs text-muted-foreground">
 					<strong className="text-foreground">When in doubt, demote one tier.</strong> A "molecule"
-					with state probably wants to be an organism. A "template" with conditional logic probably
-					wants to be a page in the consuming app.
+					with state probably wants to be an organism. Pages compose primitives directly — no
+					template tier.
 				</p>
 			</section>
 

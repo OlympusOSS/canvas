@@ -10,7 +10,6 @@ import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
 import {
 	ActionBar,
-	AuthShell,
 	Button,
 	Card,
 	CardContent,
@@ -30,8 +29,6 @@ import {
 	StatusBadge,
 	Stepper,
 	type StepperStep,
-	ThemeProvider,
-	WizardShell,
 } from "../src/index";
 
 // jsdom doesn't do color contrast — skip that rule everywhere.
@@ -161,35 +158,6 @@ describe("accessibility — no axe violations", () => {
 			<ErrorBoundary>
 				<p>Healthy content</p>
 			</ErrorBoundary>,
-		);
-		expect(await axe(container, config)).toHaveNoViolations();
-	});
-
-	it("AuthShell", async () => {
-		const { container } = render(
-			<ThemeProvider defaultTheme="light">
-				<AuthShell title="Sign in">
-					<form>
-						<Label htmlFor="u">Username</Label>
-						<Input id="u" />
-					</form>
-				</AuthShell>
-			</ThemeProvider>,
-		);
-		expect(await axe(container, config)).toHaveNoViolations();
-	});
-
-	it("WizardShell", async () => {
-		const steps: StepperStep[] = [
-			{ id: "a", label: "Welcome", status: "complete" },
-			{ id: "b", label: "Domain", status: "active" },
-		];
-		const { container } = render(
-			<ThemeProvider defaultTheme="light">
-				<WizardShell steps={steps} activeStep="b">
-					<p>Step body</p>
-				</WizardShell>
-			</ThemeProvider>,
 		);
 		expect(await axe(container, config)).toHaveNoViolations();
 	});

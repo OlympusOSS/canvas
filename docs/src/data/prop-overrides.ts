@@ -787,27 +787,4 @@ export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = 
 			},
 		},
 	},
-	"templates/auth-layout": {
-		AuthLayout: {
-			title: { description: "Headline shown above the form area." },
-			description: { description: "Supporting copy under the title." },
-			footer: {
-				description: "Footer node — typically a `<Link>` to switch flow (e.g. sign-up ↔ sign-in).",
-			},
-		},
-	},
-	"templates/auth-shell": {
-		AuthShell: {
-			title: { description: "Headline shown above the form area." },
-			subtitle: { description: "Supporting copy under the title." },
-		},
-	},
-	"templates/wizard-shell": {
-		WizardShell: {
-			onStepChange: {
-				description:
-					"Fires with the next step's index when the user navigates between steps. Use to persist progress.",
-			},
-		},
-	},
 };

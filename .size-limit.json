@@ -63,14 +63,6 @@
 		"ignore": ["react", "react-dom"]
 	},
 	{
-		"name": "Shells (WizardShell + AuthShell)",
-		"path": "src/index.ts",
-		"import": "{ WizardShell, AuthShell }",
-		"limit": "200 KB",
-		"gzip": true,
-		"ignore": ["react", "react-dom"]
-	},
-	{
 		"name": "SchemaForm (without RJSF peer dep)",
 		"path": "src/index.ts",
 		"import": "{ SchemaForm }",
