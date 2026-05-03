@@ -10,7 +10,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
 	ActionBar,
-	AuthLayout,
 	Button,
 	Calendar,
 	Card,
@@ -276,29 +275,6 @@ describe("Card — CardFooter variant", () => {
 			</Card>,
 		);
 		expect(container.textContent).toContain("footer-content");
-	});
-});
-
-describe("AuthLayout (deprecated)", () => {
-	it("renders a card-wrapped children container with title+description+footer", () => {
-		render(
-			<AuthLayout title="Login" description="Enter your credentials" footer={<span>fin</span>}>
-				<p>form</p>
-			</AuthLayout>,
-		);
-		expect(screen.getByText("Login")).toBeInTheDocument();
-		expect(screen.getByText("Enter your credentials")).toBeInTheDocument();
-		expect(screen.getByText("form")).toBeInTheDocument();
-		expect(screen.getByText("fin")).toBeInTheDocument();
-	});
-
-	it("renders without title/description/footer", () => {
-		const { container } = render(
-			<AuthLayout>
-				<p>just form</p>
-			</AuthLayout>,
-		);
-		expect(container.textContent).toContain("just form");
 	});
 });
 

@@ -4,7 +4,7 @@ export interface ComponentManifestEntry {
 	/** Display name. */
 	label: string;
 	/** Tier folder. */
-	tier: "atoms" | "molecules" | "organisms" | "templates" | "charts";
+	tier: "atoms" | "molecules" | "organisms" | "charts";
 }
 
 export const COMPONENTS: ComponentManifestEntry[] = [
@@ -114,12 +114,6 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "sunburst-chart", label: "SunburstChart", tier: "charts" },
 	{ id: "treemap", label: "Treemap", tier: "charts" },
 	{ id: "world-heat-map", label: "WorldHeatMap", tier: "charts" },
-
-	// templates
-	{ id: "app-header", label: "AppHeader", tier: "templates" },
-	{ id: "auth-layout", label: "AuthLayout", tier: "templates" },
-	{ id: "auth-shell", label: "AuthShell", tier: "templates" },
-	{ id: "wizard-shell", label: "WizardShell", tier: "templates" },
 ];
 
 export const TIER_META: Record<
@@ -129,7 +123,6 @@ export const TIER_META: Record<
 	atoms: { label: "Atoms", description: "Primitive wrappers" },
 	molecules: { label: "Molecules", description: "Compositions of atoms" },
 	organisms: { label: "Organisms", description: "Stateful surfaces" },
-	templates: { label: "Templates", description: "Page-level scaffolding" },
 	charts: { label: "Charts", description: "Theme-aware Recharts wrappers" },
 };
 

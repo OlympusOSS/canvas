@@ -531,17 +531,6 @@ export {
 	type ThemeProviderProps,
 	useTheme,
 } from "./components/organisms/theme-provider";
-export { AppHeader, type AppHeaderProps } from "./components/templates/app-header";
-/* ────────────────────────────────────────────────────────────────
-   TEMPLATES — page-level scaffolding.
-   Can import: tokens/, lib/utils, atoms/, molecules/, organisms/.
-   ──────────────────────────────────────────────────────────────── */
-export { AuthLayout, type AuthLayoutProps } from "./components/templates/auth-layout";
-export { AuthShell, type AuthShellProps } from "./components/templates/auth-shell";
-export {
-	WizardShell,
-	type WizardShellProps,
-} from "./components/templates/wizard-shell";
 // Hooks
 export { useIsMobile } from "./hooks/use-mobile";
 export {
