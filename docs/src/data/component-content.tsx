@@ -1066,14 +1066,16 @@ import appHeaderDefaultSource from "../examples/app-header/default?raw";
 import appHeaderMinimalSource from "../examples/app-header/minimal?raw";
 import appHeaderWithMobileMenuSource from "../examples/app-header/with-mobile-menu?raw";
 
-// admin-shell
-const AdminShellDefault = lazy(() => import("../examples/admin-shell/default"));
-const AdminShellSidebarCollapsed = lazy(() => import("../examples/admin-shell/sidebar-collapsed"));
-const AdminShellWithBreadcrumbs = lazy(() => import("../examples/admin-shell/with-breadcrumbs"));
+// app-shell
+const AppShellDefault = lazy(() => import("../examples/app-shell/default"));
+const AppShellMinimal = lazy(() => import("../examples/app-shell/minimal"));
+const AppShellSidebarCollapsed = lazy(() => import("../examples/app-shell/sidebar-collapsed"));
+const AppShellWithBreadcrumbs = lazy(() => import("../examples/app-shell/with-breadcrumbs"));
 
-import adminShellDefaultSource from "../examples/admin-shell/default?raw";
-import adminShellSidebarCollapsedSource from "../examples/admin-shell/sidebar-collapsed?raw";
-import adminShellWithBreadcrumbsSource from "../examples/admin-shell/with-breadcrumbs?raw";
+import appShellDefaultSource from "../examples/app-shell/default?raw";
+import appShellMinimalSource from "../examples/app-shell/minimal?raw";
+import appShellSidebarCollapsedSource from "../examples/app-shell/sidebar-collapsed?raw";
+import appShellWithBreadcrumbsSource from "../examples/app-shell/with-breadcrumbs?raw";
 
 // auth-shell
 const AuthShellDefault = lazy(() => import("../examples/auth-shell/default"));
@@ -5053,43 +5055,50 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 			{
 				id: "with-mobile-menu",
 				title: "With mobile menu",
-				description: "Hamburger trigger for AdminShell's mobile drawer.",
+				description: "Hamburger trigger for AppShell's mobile drawer.",
 				render: () => <AppHeaderWithMobileMenu />,
 				source: appHeaderWithMobileMenuSource,
 				filename: "AppHeader.tsx",
 			},
 		],
 	},
-	"admin-shell": {
-		id: "admin-shell",
+	"app-shell": {
+		id: "app-shell",
 		tier: "templates",
-		displayName: "AdminShell",
-		propsSource: "templates/admin-shell",
-		importLine: `import { AdminShell } from "@olympusoss/canvas";`,
+		displayName: "AppShell",
+		propsSource: "templates/app-shell",
+		importLine: `import { AppShell } from "@olympusoss/canvas";`,
 		overview:
-			"Two-column admin layout with collapsible sidebar (renders as a fixed left column on md+, drawer on mobile). Pass any sidebar element — atoms-level `Sidebar` or your own.",
+			"Two-column app layout primitive: collapsible sidebar (fixed left column on md+, drawer on mobile) + optional header + arbitrary children. Compose with the canvas `Sidebar` organism + `DashboardGrid` for a dashboard route.",
 		tokens: ["--sidebar", "--background", "--border"],
 		examples: [
 			{
 				id: "default",
 				title: "Default",
-				render: () => <AdminShellDefault />,
-				source: adminShellDefaultSource,
-				filename: "AdminShell.tsx",
+				render: () => <AppShellDefault />,
+				source: appShellDefaultSource,
+				filename: "AppShell.tsx",
+			},
+			{
+				id: "minimal",
+				title: "Minimal",
+				render: () => <AppShellMinimal />,
+				source: appShellMinimalSource,
+				filename: "AppShell.tsx",
 			},
 			{
 				id: "sidebar-collapsed",
 				title: "Sidebar collapsed",
-				render: () => <AdminShellSidebarCollapsed />,
-				source: adminShellSidebarCollapsedSource,
-				filename: "AdminShell.tsx",
+				render: () => <AppShellSidebarCollapsed />,
+				source: appShellSidebarCollapsedSource,
+				filename: "AppShell.tsx",
 			},
 			{
 				id: "with-breadcrumbs",
 				title: "With breadcrumbs",
-				render: () => <AdminShellWithBreadcrumbs />,
-				source: adminShellWithBreadcrumbsSource,
-				filename: "AdminShell.tsx",
+				render: () => <AppShellWithBreadcrumbs />,
+				source: appShellWithBreadcrumbsSource,
+				filename: "AppShell.tsx",
 			},
 		],
 	},

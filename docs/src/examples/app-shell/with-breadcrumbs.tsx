@@ -1,4 +1,4 @@
-import { AdminShell, Button, Icon, PageHeader } from "@olympusoss/canvas";
+import { AppShell, Button, Icon, PageHeader } from "@olympusoss/canvas";
 import { useState } from "react";
 
 import { AthenaSidebar } from "./_shared";
@@ -6,7 +6,7 @@ import { AthenaSidebar } from "./_shared";
 export default function App() {
 	const [active, setActive] = useState("settings");
 	return (
-		<AdminShell
+		<AppShell
 			className="min-h-[420px]"
 			sidebar={({ expanded, setExpanded }) => (
 				<AthenaSidebar
@@ -32,6 +32,6 @@ export default function App() {
 					</Button>
 				}
 			/>
-		</AdminShell>
+		</AppShell>
 	);
 }

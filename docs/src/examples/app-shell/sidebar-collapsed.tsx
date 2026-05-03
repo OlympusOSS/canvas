@@ -1,4 +1,4 @@
-import { AdminShell } from "@olympusoss/canvas";
+import { AppShell } from "@olympusoss/canvas";
 import { useState } from "react";
 
 import { AthenaSidebar } from "./_shared";
@@ -6,7 +6,7 @@ import { AthenaSidebar } from "./_shared";
 export default function App() {
 	const [active, setActive] = useState("dashboard");
 	return (
-		<AdminShell
+		<AppShell
 			className="min-h-[420px]"
 			defaultSidebarExpanded={false}
 			sidebar={({ expanded, setExpanded }) => (
@@ -23,6 +23,6 @@ export default function App() {
 				on icon hover and matches the canvas Sidebar organism's surface tokens (`bg-sidebar`,
 				`bg-sidebar-accent`).
 			</div>
-		</AdminShell>
+		</AppShell>
 	);
 }

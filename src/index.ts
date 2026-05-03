@@ -531,8 +531,8 @@ export {
 	type ThemeProviderProps,
 	useTheme,
 } from "./components/organisms/theme-provider";
-export { AdminShell, type AdminShellProps } from "./components/templates/admin-shell";
 export { AppHeader, type AppHeaderProps } from "./components/templates/app-header";
+export { AppShell, type AppShellProps } from "./components/templates/app-shell";
 /* ────────────────────────────────────────────────────────────────
    TEMPLATES — page-level scaffolding.
    Can import: tokens/, lib/utils, atoms/, molecules/, organisms/.

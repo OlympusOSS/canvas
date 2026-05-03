@@ -10,7 +10,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
 	ActionBar,
-	AdminShell,
+	AppShell,
 	AuthLayout,
 	Button,
 	Calendar,
@@ -237,7 +237,7 @@ describe("Stepper — icon variants", () => {
 	});
 });
 
-describe("AdminShell — mobile sidebar expanded=true branch", () => {
+describe("AppShell — mobile sidebar expanded=true branch", () => {
 	it("passes expanded=true to the function sidebar when rendered in the mobile drawer", () => {
 		const sidebar = vi.fn(() => <div data-testid="sb" />);
 		const headerFn = ({ onMobileMenuToggle }: { onMobileMenuToggle: () => void }) => (
@@ -246,9 +246,9 @@ describe("AdminShell — mobile sidebar expanded=true branch", () => {
 			</button>
 		);
 		render(
-			<AdminShell sidebar={sidebar} header={headerFn} defaultSidebarExpanded={false}>
+			<AppShell sidebar={sidebar} header={headerFn} defaultSidebarExpanded={false}>
 				<p>x</p>
-			</AdminShell>,
+			</AppShell>,
 		);
 		sidebar.mockClear();
 		// Open the mobile drawer — the mobile branch calls the sidebar fn with expanded=true

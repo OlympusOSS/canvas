@@ -1,14 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { AdminShell } from "../src/index";
+import { AppShell } from "../src/index";
 
-describe("AdminShell", () => {
+describe("AppShell", () => {
 	it("renders the sidebar and the main content", () => {
 		render(
-			<AdminShell sidebar={<div data-testid="sidebar">sidebar</div>}>
+			<AppShell sidebar={<div data-testid="sidebar">sidebar</div>}>
 				<p>main content</p>
-			</AdminShell>,
+			</AppShell>,
 		);
 		expect(screen.getByTestId("sidebar")).toBeInTheDocument();
 		expect(screen.getByText("main content")).toBeInTheDocument();
@@ -16,9 +16,9 @@ describe("AdminShell", () => {
 
 	it("renders the header when provided", () => {
 		render(
-			<AdminShell sidebar={<div>s</div>} header={<header data-testid="header">top</header>}>
+			<AppShell sidebar={<div>s</div>} header={<header data-testid="header">top</header>}>
 				<p>m</p>
-			</AdminShell>,
+			</AppShell>,
 		);
 		expect(screen.getByTestId("header")).toBeInTheDocument();
 	});
@@ -30,9 +30,9 @@ describe("AdminShell", () => {
 			</button>
 		));
 		render(
-			<AdminShell sidebar={<div>s</div>} header={header}>
+			<AppShell sidebar={<div>s</div>} header={header}>
 				<p>m</p>
-			</AdminShell>,
+			</AppShell>,
 		);
 		expect(header).toHaveBeenCalledWith(
 			expect.objectContaining({ onMobileMenuToggle: expect.any(Function) }),
@@ -47,16 +47,13 @@ describe("AdminShell", () => {
 			</button>
 		);
 		render(
-			<AdminShell sidebar={<div data-testid="sidebar">s</div>} header={headerFn}>
+			<AppShell sidebar={<div data-testid="sidebar">s</div>} header={headerFn}>
 				<p>m</p>
-			</AdminShell>,
+			</AppShell>,
 		);
-		// Initially no overlay
 		expect(screen.queryByLabelText("Close sidebar")).not.toBeInTheDocument();
-		// Click menu toggle to open
 		fireEvent.click(screen.getByTestId("menu-toggle"));
 		expect(screen.getByLabelText("Close sidebar")).toBeInTheDocument();
-		// Click overlay to close
 		fireEvent.click(screen.getByLabelText("Close sidebar"));
 		expect(screen.queryByLabelText("Close sidebar")).not.toBeInTheDocument();
 	});
@@ -64,9 +61,9 @@ describe("AdminShell", () => {
 	it("passes { expanded, setExpanded, closeMobile } to a function sidebar", () => {
 		const sidebar = vi.fn(() => <div data-testid="sb">sb</div>);
 		render(
-			<AdminShell sidebar={sidebar}>
+			<AppShell sidebar={sidebar}>
 				<p>m</p>
-			</AdminShell>,
+			</AppShell>,
 		);
 		expect(sidebar).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -80,27 +77,45 @@ describe("AdminShell", () => {
 	it("honors defaultSidebarExpanded=false", () => {
 		const sidebar = vi.fn(() => <div>sb</div>);
 		render(
-			<AdminShell sidebar={sidebar} defaultSidebarExpanded={false}>
+			<AppShell sidebar={sidebar} defaultSidebarExpanded={false}>
 				<p>m</p>
-			</AdminShell>,
+			</AppShell>,
 		);
 		expect(sidebar).toHaveBeenCalledWith(expect.objectContaining({ expanded: false }));
 	});
 
-	it("applies expanded sidebar margin class by default", () => {
+	it("does not double-count sidebar width with a margin class on the main column", () => {
 		const { container } = render(
-			<AdminShell sidebar={<div>s</div>}>
+			<AppShell sidebar={<div>s</div>}>
 				<p>m</p>
-			</AdminShell>,
+			</AppShell>,
 		);
-		expect(container.querySelector(".md\\:ml-60")).toBeTruthy();
+		// Regression guard: the old admin-shell applied md:ml-60 to the main column
+		// in addition to using flex layout, which double-counted the sidebar width
+		// and produced ~240px of dead space. Flex now owns column widths.
+		const mainColumn = container.querySelector("main")?.parentElement;
+		expect(mainColumn).toBeTruthy();
+		expect(mainColumn?.className).not.toMatch(/(?:^|\s)(?:md:)?ml-\d/);
+		expect(mainColumn?.className).toContain("flex-1");
+	});
+
+	it("uses flex layout on the root container", () => {
+		const { container } = render(
+			<AppShell sidebar={<div>s</div>}>
+				<p>m</p>
+			</AppShell>,
+		);
+		const root = container.firstChild as HTMLElement;
+		expect(root.className).toContain("flex");
+		expect(root.className).toContain("h-screen");
+		expect(root.className).toContain("overflow-hidden");
 	});
 
 	it("matches snapshot", () => {
 		const { container } = render(
-			<AdminShell sidebar={<div>sidebar</div>} header={<header>top</header>}>
+			<AppShell sidebar={<div>sidebar</div>} header={<header>top</header>}>
 				<p>main</p>
-			</AdminShell>,
+			</AppShell>,
 		);
 		expect(container).toMatchSnapshot();
 	});

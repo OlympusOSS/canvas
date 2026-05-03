@@ -88,6 +88,8 @@ const EXPECTED_EXPORTS = [
 	"Toggle",
 	"ToggleGroup",
 	"Tooltip",
+	"AppShell",
+	"DashboardGrid",
 ];
 
 describe("canvas barrel", () => {

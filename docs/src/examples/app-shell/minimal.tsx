@@ -1,4 +1,4 @@
-import { AdminShell, Icon, PageHeader } from "@olympusoss/canvas";
+import { AppShell, Icon, PageHeader } from "@olympusoss/canvas";
 
 const MENU = [
 	{ label: "Dashboard", icon: "LayoutDashboard" as const },
@@ -9,7 +9,7 @@ const MENU = [
 
 export default function App() {
 	return (
-		<AdminShell
+		<AppShell
 			className="min-h-[420px]"
 			sidebar={
 				<aside className="flex h-full w-60 flex-col border-r border-border bg-card/30">
@@ -37,6 +37,6 @@ export default function App() {
 					))}
 				</div>
 			</div>
-		</AdminShell>
+		</AppShell>
 	);
 }

@@ -64,7 +64,7 @@ export function Principles() {
 						contracts. Examples: Sidebar, DataTable, Form, Dialog, Command.
 					</Rule>
 					<Rule title="Templates">
-						Page-level scaffolding. Slots-only — no business logic. Examples: AuthShell, AdminShell,
+						Page-level scaffolding. Slots-only — no business logic. Examples: AuthShell, AppShell,
 						WizardShell.
 					</Rule>
 				</div>
@@ -108,7 +108,7 @@ export function Principles() {
 					</Rule>
 					<Rule title="Tailwind 150ms default">
 						Most interactive states. <code className="font-mono">duration-300</code> reserved for
-						the AdminShell sidebar collapse and similarly load-bearing transitions.
+						the AppShell sidebar collapse and similarly load-bearing transitions.
 					</Rule>
 					<Rule title="Browser default easing">
 						No custom cubic-beziers except the orb drift loops in AnimatedBackground (8s / 10s / 12s

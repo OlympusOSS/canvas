@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AdminShell > matches snapshot 1`] = `
+exports[`AppShell > matches snapshot 1`] = `
 <div>
   <div
     class="flex h-screen overflow-hidden bg-background"
@@ -13,7 +13,7 @@ exports[`AdminShell > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="flex flex-1 flex-col overflow-hidden transition-all duration-300 md:ml-60"
+      class="flex flex-1 flex-col overflow-hidden"
     >
       <header>
         top

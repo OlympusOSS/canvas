@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 
-export interface AdminShellProps {
+export interface AppShellProps {
 	/**
 	 * Sidebar content. Rendered on md+ in a fixed left column and in an
 	 * overlay drawer on mobile.
@@ -19,23 +19,17 @@ export interface AdminShellProps {
 	/** Optional header rendered above the scrollable main area. */
 	header?: React.ReactNode | ((ctx: { onMobileMenuToggle: () => void }) => React.ReactNode);
 	children: React.ReactNode;
-	/** Width class for expanded sidebar. Default `"md:ml-60"` (60 × 0.25rem = 15rem). */
-	expandedSidebarClass?: string;
-	/** Width class for collapsed sidebar. Default `"md:ml-14"`. */
-	collapsedSidebarClass?: string;
 	defaultSidebarExpanded?: boolean;
 	className?: string;
 }
 
-export function AdminShell({
+export function AppShell({
 	sidebar,
 	header,
 	children,
-	expandedSidebarClass = "md:ml-60",
-	collapsedSidebarClass = "md:ml-14",
 	defaultSidebarExpanded = true,
 	className,
-}: AdminShellProps) {
+}: AppShellProps) {
 	const [expanded, setExpanded] = React.useState(defaultSidebarExpanded);
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -72,12 +66,7 @@ export function AdminShell({
 			)}
 
 			{/* Main column */}
-			<div
-				className={cn(
-					"flex flex-1 flex-col overflow-hidden transition-all duration-300",
-					expanded ? expandedSidebarClass : collapsedSidebarClass,
-				)}
-			>
+			<div className="flex flex-1 flex-col overflow-hidden">
 				{header !== undefined &&
 					(typeof header === "function" ? header({ onMobileMenuToggle: toggleMobile }) : header)}
 				<main className="flex-1 overflow-y-auto">
@@ -88,4 +77,4 @@ export function AdminShell({
 	);
 }
 
-AdminShell.displayName = "AdminShell";
+AppShell.displayName = "AppShell";
