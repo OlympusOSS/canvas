@@ -1,13 +1,9 @@
 name: Deploy docs to GitHub Pages
 
+# Production docs deploys are driven by the Release workflow so the version
+# baked into the bundle always matches the version that was just published.
+# This workflow is kept for manual rebuilds via workflow_dispatch only.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "src/**"
-      - "docs/**"
-      - "styles/**"
-      - ".github/workflows/docs.yml"
   workflow_dispatch:
 
 permissions:
