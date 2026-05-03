@@ -10,7 +10,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
 	ActionBar,
-	AppShell,
 	AuthLayout,
 	Button,
 	Calendar,
@@ -234,27 +233,6 @@ describe("Stepper — icon variants", () => {
 			/>,
 		);
 		expect(container.querySelector('[data-testid="node-icon"]')).not.toBeNull();
-	});
-});
-
-describe("AppShell — mobile sidebar expanded=true branch", () => {
-	it("passes expanded=true to the function sidebar when rendered in the mobile drawer", () => {
-		const sidebar = vi.fn(() => <div data-testid="sb" />);
-		const headerFn = ({ onMobileMenuToggle }: { onMobileMenuToggle: () => void }) => (
-			<button type="button" data-testid="toggle" onClick={onMobileMenuToggle}>
-				toggle
-			</button>
-		);
-		render(
-			<AppShell sidebar={sidebar} header={headerFn} defaultSidebarExpanded={false}>
-				<p>x</p>
-			</AppShell>,
-		);
-		sidebar.mockClear();
-		// Open the mobile drawer — the mobile branch calls the sidebar fn with expanded=true
-		fireEvent.click(screen.getByTestId("toggle"));
-		const mobileCall = sidebar.mock.calls.find((c) => (c[0] as { expanded: boolean }).expanded);
-		expect(mobileCall).toBeDefined();
 	});
 });
 

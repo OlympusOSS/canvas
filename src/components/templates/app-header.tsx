@@ -22,7 +22,7 @@ export interface AppHeaderProps extends React.HTMLAttributes<HTMLElement> {
 	user?: React.ReactNode;
 	/**
 	 * Mobile menu trigger slot — rendered before search on small viewports.
-	 * Typically a hamburger Button that calls AppShell's `onMobileMenuToggle`.
+	 * Typically a hamburger Button that toggles the sidebar via canvas `SidebarTrigger`.
 	 */
 	mobileMenuTrigger?: React.ReactNode;
 	/**

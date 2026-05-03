@@ -117,7 +117,6 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 
 	// templates
 	{ id: "app-header", label: "AppHeader", tier: "templates" },
-	{ id: "app-shell", label: "AppShell", tier: "templates" },
 	{ id: "auth-layout", label: "AuthLayout", tier: "templates" },
 	{ id: "auth-shell", label: "AuthShell", tier: "templates" },
 	{ id: "wizard-shell", label: "WizardShell", tier: "templates" },

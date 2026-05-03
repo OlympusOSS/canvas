@@ -1066,17 +1066,6 @@ import appHeaderDefaultSource from "../examples/app-header/default?raw";
 import appHeaderMinimalSource from "../examples/app-header/minimal?raw";
 import appHeaderWithMobileMenuSource from "../examples/app-header/with-mobile-menu?raw";
 
-// app-shell
-const AppShellDefault = lazy(() => import("../examples/app-shell/default"));
-const AppShellMinimal = lazy(() => import("../examples/app-shell/minimal"));
-const AppShellSidebarCollapsed = lazy(() => import("../examples/app-shell/sidebar-collapsed"));
-const AppShellWithBreadcrumbs = lazy(() => import("../examples/app-shell/with-breadcrumbs"));
-
-import appShellDefaultSource from "../examples/app-shell/default?raw";
-import appShellMinimalSource from "../examples/app-shell/minimal?raw";
-import appShellSidebarCollapsedSource from "../examples/app-shell/sidebar-collapsed?raw";
-import appShellWithBreadcrumbsSource from "../examples/app-shell/with-breadcrumbs?raw";
-
 // auth-shell
 const AuthShellDefault = lazy(() => import("../examples/auth-shell/default"));
 const AuthShellSignup = lazy(() => import("../examples/auth-shell/signup"));
@@ -5055,50 +5044,10 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 			{
 				id: "with-mobile-menu",
 				title: "With mobile menu",
-				description: "Hamburger trigger for AppShell's mobile drawer.",
+				description: "Hamburger trigger for the mobile sidebar drawer (use with `SidebarTrigger`).",
 				render: () => <AppHeaderWithMobileMenu />,
 				source: appHeaderWithMobileMenuSource,
 				filename: "AppHeader.tsx",
-			},
-		],
-	},
-	"app-shell": {
-		id: "app-shell",
-		tier: "templates",
-		displayName: "AppShell",
-		propsSource: "templates/app-shell",
-		importLine: `import { AppShell } from "@olympusoss/canvas";`,
-		overview:
-			"Two-column app layout primitive: collapsible sidebar (fixed left column on md+, drawer on mobile) + optional header + arbitrary children. Compose with the canvas `Sidebar` organism + `DashboardGrid` for a dashboard route.",
-		tokens: ["--sidebar", "--background", "--border"],
-		examples: [
-			{
-				id: "default",
-				title: "Default",
-				render: () => <AppShellDefault />,
-				source: appShellDefaultSource,
-				filename: "AppShell.tsx",
-			},
-			{
-				id: "minimal",
-				title: "Minimal",
-				render: () => <AppShellMinimal />,
-				source: appShellMinimalSource,
-				filename: "AppShell.tsx",
-			},
-			{
-				id: "sidebar-collapsed",
-				title: "Sidebar collapsed",
-				render: () => <AppShellSidebarCollapsed />,
-				source: appShellSidebarCollapsedSource,
-				filename: "AppShell.tsx",
-			},
-			{
-				id: "with-breadcrumbs",
-				title: "With breadcrumbs",
-				render: () => <AppShellWithBreadcrumbs />,
-				source: appShellWithBreadcrumbsSource,
-				filename: "AppShell.tsx",
 			},
 		],
 	},

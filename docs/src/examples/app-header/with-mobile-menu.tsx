@@ -30,8 +30,8 @@ export default function App() {
 				user={<UserAvatarChip name="AO" collapsed />}
 			/>
 			<div className="p-6 text-sm text-muted-foreground">
-				The hamburger renders only on viewports below `md`. Connect it to AppShell's
-				`onMobileMenuToggle`.
+				The hamburger renders only on viewports below `md`. Wire it up via canvas `SidebarTrigger`
+				so it toggles the `SidebarProvider`'s mobile drawer.
 			</div>
 		</div>
 	);
