@@ -7,7 +7,12 @@ import GridLayout from "react-grid-layout";
 
 import { cn } from "../../lib/utils";
 
-const ResponsiveGridLayout = GridLayout.WidthProvider(GridLayout.Responsive);
+// We bypass `WidthProvider` and feed `width` manually via our own
+// ResizeObserver. WidthProvider defaults its initial width to 1280px and
+// updates only on `window.resize`, which never fires for grids inside
+// iframes, modals, or any other container that resizes independently of the
+// window. The ResizeObserver below fires correctly in all those contexts.
+const ResponsiveGridLayout = GridLayout.Responsive;
 
 /* ---------- Types ---------- */
 
@@ -164,7 +169,7 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 			rowHeight = 80,
 			cols,
 			breakpoints,
-			margin = [16, 16],
+			margin = [16, 8],
 			emptyState,
 			className,
 			...props
@@ -173,6 +178,44 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 	) => {
 		const resolvedCols = { ...DEFAULT_COLS, ...cols };
 		const resolvedBreakpoints = { ...DEFAULT_BREAKPOINTS, ...breakpoints };
+
+		// Track the wrapper's width via ResizeObserver and pass it explicitly to
+		// react-grid-layout's Responsive component. See the `ResponsiveGridLayout`
+		// comment above for why we don't use WidthProvider.
+		//
+		// `useLayoutEffect` measures synchronously after DOM mount but before
+		// paint, so the first paint already has the correct width in real
+		// browsers (no flicker). In SSR / jsdom (no real layout), clientWidth
+		// is 0 — the fallback below kicks in.
+		const wrapperRef = React.useRef<HTMLDivElement | null>(null);
+		const [measuredWidth, setMeasuredWidth] = React.useState<number | undefined>(undefined);
+		const useIsoLayoutEffect =
+			typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+		useIsoLayoutEffect(() => {
+			const el = wrapperRef.current;
+			if (el && el.clientWidth > 0) setMeasuredWidth(el.clientWidth);
+		}, []);
+		React.useEffect(() => {
+			const el = wrapperRef.current;
+			if (!el || typeof ResizeObserver === "undefined") return;
+			const obs = new ResizeObserver((entries) => {
+				const w = entries[0]?.contentRect.width ?? el.clientWidth;
+				if (w > 0) setMeasuredWidth(w);
+			});
+			obs.observe(el);
+			return () => obs.disconnect();
+		}, []);
+
+		// Merge the forwarded ref with our internal wrapperRef so callers still
+		// get their ref set, while we keep a handle for ResizeObserver.
+		const setMergedRef = React.useCallback(
+			(node: HTMLDivElement | null) => {
+				wrapperRef.current = node;
+				if (typeof ref === "function") ref(node);
+				else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+			},
+			[ref],
+		);
 
 		// Memoise the lib-shape layout so identical input doesn't churn react-grid-layout.
 		const libLayouts = React.useMemo<Layouts>(() => {
@@ -199,7 +242,7 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 		if (items.length === 0 && emptyState !== undefined) {
 			return (
 				<div
-					ref={ref}
+					ref={setMergedRef}
 					className={cn("w-full", className)}
 					data-dashboard-grid-editing={editing ? "true" : "false"}
 					{...props}
@@ -211,12 +254,17 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 
 		return (
 			<div
-				ref={ref}
+				ref={setMergedRef}
 				className={cn("w-full", className)}
 				data-dashboard-grid-editing={editing ? "true" : "false"}
 				{...props}
 			>
 				<ResponsiveGridLayout
+					// Fallback width (1024) is used only when there's no real layout
+					// to measure (SSR, jsdom, first paint in some edge cases). In
+					// real browsers `useLayoutEffect` sets the actual width before
+					// first paint.
+					width={measuredWidth ?? 1024}
 					layouts={libLayouts}
 					cols={resolvedCols}
 					breakpoints={resolvedBreakpoints}

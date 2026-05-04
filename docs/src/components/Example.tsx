@@ -25,7 +25,7 @@ const VIEWPORT_WIDTH: Record<Viewport, string> = {
 // content exactly without leaving an empty band at the bottom that would
 // reveal the example body's tint through the iframe.
 const MIN_FRAME_HEIGHT = 1;
-const MAX_FRAME_HEIGHT = 720;
+const MAX_FRAME_HEIGHT = 1400;
 
 interface ExampleProps {
 	title: string;
