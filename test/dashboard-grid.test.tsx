@@ -364,6 +364,66 @@ describe("DashboardGrid", () => {
 		expect(lay.xxs.every((it) => it.x === 0 && it.w === 1)).toBe(true);
 	});
 
+	it("seeds initial measured width from clientWidth when the wrapper has layout (real browser path)", () => {
+		// jsdom returns 0 for clientWidth without real layout. Patch the getter on
+		// HTMLElement.prototype so the useLayoutEffect's `clientWidth > 0` branch fires.
+		const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "clientWidth");
+		Object.defineProperty(HTMLElement.prototype, "clientWidth", {
+			configurable: true,
+			get() {
+				return 1100;
+			},
+		});
+		try {
+			expect(() =>
+				render(<DashboardGrid items={ITEMS} renderItem={(item) => <div>{item.i}</div>} />),
+			).not.toThrow();
+		} finally {
+			if (original) Object.defineProperty(HTMLElement.prototype, "clientWidth", original);
+			else delete (HTMLElement.prototype as unknown as { clientWidth?: number }).clientWidth;
+		}
+	});
+
+	it("skips the ResizeObserver subscription when ResizeObserver is undefined (SSR-style)", () => {
+		const stash = (globalThis as unknown as { ResizeObserver?: typeof ResizeObserver })
+			.ResizeObserver;
+		(globalThis as unknown as { ResizeObserver?: typeof ResizeObserver }).ResizeObserver =
+			undefined;
+		try {
+			expect(() =>
+				render(<DashboardGrid items={ITEMS} renderItem={(item) => <div>{item.i}</div>} />),
+			).not.toThrow();
+		} finally {
+			(globalThis as unknown as { ResizeObserver?: typeof ResizeObserver }).ResizeObserver = stash;
+		}
+	});
+
+	it("falls back to currentLayout when allLayouts is missing (defensive)", () => {
+		const onItemsChange = vi.fn();
+		render(
+			<DashboardGrid
+				items={ITEMS}
+				editing
+				onItemsChange={onItemsChange}
+				renderItem={(item) => <div>{item.i}</div>}
+			/>,
+		);
+		// Some lib versions might fire onLayoutChange without the second arg — exercise
+		// the `allLayouts?.lg ?? currentLayout` fallback path.
+		act(() => {
+			const next = [
+				{ i: "stats", x: 0, y: 9, w: 12, h: 2 },
+				{ i: "activity", x: 0, y: 2, w: 6, h: 4 },
+				{ i: "chart", x: 6, y: 2, w: 6, h: 4 },
+			];
+			capturedOnLayoutChange?.(next, undefined as unknown as Record<string, unknown>);
+		});
+		expect(onItemsChange).toHaveBeenCalledTimes(1);
+		expect(
+			(onItemsChange.mock.calls[0][0] as DashboardItem[]).find((it) => it.i === "stats")?.y,
+		).toBe(9);
+	});
+
 	it("uses allLayouts.lg (not currentLayout) for the merge so sm/xs drags don't poison lg-coords", () => {
 		const onItemsChange = vi.fn();
 		render(
