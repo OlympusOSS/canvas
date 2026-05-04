@@ -254,25 +254,29 @@ export function Example({
 					<h3 className="text-sm font-semibold text-foreground">{title}</h3>
 					{description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}
 				</div>
-				<ToggleGroup
-					type="single"
-					value={viewport}
-					onValueChange={(v) => v && setViewport(v as Viewport)}
-					size="sm"
-					variant="outline"
-					className="shrink-0"
-					aria-label="Preview viewport"
-				>
-					<ToggleGroupItem value="desktop" aria-label="Desktop">
-						<Icon name="Monitor" className="h-3.5 w-3.5" />
-					</ToggleGroupItem>
-					<ToggleGroupItem value="tablet" aria-label="Tablet">
-						<Icon name="Tablet" className="h-3.5 w-3.5" />
-					</ToggleGroupItem>
-					<ToggleGroupItem value="mobile" aria-label="Mobile">
-						<Icon name="Smartphone" className="h-3.5 w-3.5" />
-					</ToggleGroupItem>
-				</ToggleGroup>
+				<div className="flex shrink-0 items-center gap-2">
+					<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+						{VIEWPORT_WIDTH[viewport]}
+					</span>
+					<ToggleGroup
+						type="single"
+						value={viewport}
+						onValueChange={(v) => v && setViewport(v as Viewport)}
+						size="sm"
+						variant="outline"
+						aria-label="Preview viewport"
+					>
+						<ToggleGroupItem value="desktop" aria-label="Desktop">
+							<Icon name="Monitor" className="h-3.5 w-3.5" />
+						</ToggleGroupItem>
+						<ToggleGroupItem value="tablet" aria-label="Tablet">
+							<Icon name="Tablet" className="h-3.5 w-3.5" />
+						</ToggleGroupItem>
+						<ToggleGroupItem value="mobile" aria-label="Mobile">
+							<Icon name="Smartphone" className="h-3.5 w-3.5" />
+						</ToggleGroupItem>
+					</ToggleGroup>
+				</div>
 			</header>
 			<div className="overflow-x-auto bg-muted/20">
 				{/* Example body shrinks with the viewport toggle. Desktop = the docs
