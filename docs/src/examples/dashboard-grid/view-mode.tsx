@@ -1,5 +1,6 @@
 import {
 	ActivityHeatmap,
+	Button,
 	DashboardGrid,
 	type DashboardItem,
 	Gauge,
@@ -140,6 +141,29 @@ function renderItem(item: DashboardItem) {
 }
 
 export default function App() {
-	const [items] = useState<DashboardItem[]>(ITEMS);
-	return <DashboardGrid items={items} renderItem={renderItem} rowHeight={70} cols={{ md: 12 }} />;
+	const [items, setItems] = useState<DashboardItem[]>(ITEMS);
+	const [editing, setEditing] = useState(false);
+	return (
+		<div className="flex flex-col gap-3">
+			<div className="flex items-center justify-between">
+				<p className="text-[15px] font-semibold">Dashboard</p>
+				<Button
+					variant={editing ? "default" : "outline"}
+					size="sm"
+					onClick={() => setEditing((v) => !v)}
+				>
+					<Icon name={editing ? "Check" : "Pencil"} />
+					{editing ? "Done editing" : "Edit dashboard"}
+				</Button>
+			</div>
+			<DashboardGrid
+				items={items}
+				editing={editing}
+				onItemsChange={setItems}
+				renderItem={renderItem}
+				rowHeight={70}
+				cols={{ md: 12 }}
+			/>
+		</div>
+	);
 }
