@@ -12,13 +12,27 @@ import Frame, { FrameContextConsumer } from "react-frame-component";
 import canvasRuntimeCssUrl from "../../../styles/canvas.css?url";
 import { DocsCodeBlock } from "./DocsCodeBlock";
 
-type Viewport = "desktop" | "tablet" | "mobile";
+type Viewport = "lg" | "md" | "sm" | "xs" | "xxs";
 
+// Each viewport hits one of the 5 canvas breakpoints. The width is chosen
+// to comfortably sit inside that breakpoint (not on its edge).
 const VIEWPORT_WIDTH: Record<Viewport, string> = {
-	desktop: "1024px", // Fixed desktop viewport so Tailwind `md:` etc. behave like a real desktop.
-	tablet: "768px",
-	mobile: "390px",
+	lg: "1280px",
+	md: "1024px",
+	sm: "800px",
+	xs: "600px",
+	xxs: "360px",
 };
+
+const VIEWPORT_LABEL: Record<Viewport, string> = {
+	lg: "lg ≥ 1200px",
+	md: "md ≥ 996px",
+	sm: "sm ≥ 768px",
+	xs: "xs ≥ 480px",
+	xxs: "xxs < 480px",
+};
+
+const VIEWPORTS: Viewport[] = ["lg", "md", "sm", "xs", "xxs"];
 
 // Iframe height is driven entirely by the rendered content (measured via
 // ResizeObserver on the React mount root). MIN is 1 so the iframe fits its
@@ -245,7 +259,7 @@ export function Example({
 	children,
 }: ExampleProps) {
 	const [open, setOpen] = useState(false);
-	const [viewport, setViewport] = useState<Viewport>("desktop");
+	const [viewport, setViewport] = useState<Viewport>("lg");
 
 	return (
 		<section className="overflow-hidden rounded-xl border border-border bg-card/30">
@@ -256,7 +270,7 @@ export function Example({
 				</div>
 				<div className="flex shrink-0 items-center gap-2">
 					<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-						{VIEWPORT_WIDTH[viewport]}
+						{VIEWPORT_LABEL[viewport]}
 					</span>
 					<ToggleGroup
 						type="single"
@@ -266,15 +280,16 @@ export function Example({
 						variant="outline"
 						aria-label="Preview viewport"
 					>
-						<ToggleGroupItem value="desktop" aria-label="Desktop">
-							<Icon name="Monitor" className="h-3.5 w-3.5" />
-						</ToggleGroupItem>
-						<ToggleGroupItem value="tablet" aria-label="Tablet">
-							<Icon name="Tablet" className="h-3.5 w-3.5" />
-						</ToggleGroupItem>
-						<ToggleGroupItem value="mobile" aria-label="Mobile">
-							<Icon name="Smartphone" className="h-3.5 w-3.5" />
-						</ToggleGroupItem>
+						{VIEWPORTS.map((v) => (
+							<ToggleGroupItem
+								key={v}
+								value={v}
+								aria-label={VIEWPORT_LABEL[v]}
+								className="px-2 font-mono text-[11px]"
+							>
+								{v}
+							</ToggleGroupItem>
+						))}
 					</ToggleGroup>
 				</div>
 			</header>
@@ -283,7 +298,7 @@ export function Example({
 				    column (which we widened to 1400px max-w in Layout.tsx so 1024px
 				    fits with room for the right TOC); tablet/mobile shrink the whole
 				    card to the chosen breakpoint width. */}
-				<div className="flex justify-center p-4">
+				<div className="flex justify-start p-4">
 					<PreviewFrame viewport={viewport}>{children}</PreviewFrame>
 				</div>
 			</div>
