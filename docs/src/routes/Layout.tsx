@@ -350,7 +350,7 @@ export function Layout() {
 			</aside>
 
 			<main className="flex-1 overflow-y-auto scrollbar-thin">
-				<div className="mx-auto max-w-[1400px] px-8 py-10">
+				<div className="w-full px-8 py-10">
 					<Outlet />
 				</div>
 			</main>

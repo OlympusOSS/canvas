@@ -29,7 +29,7 @@ export default function App() {
 	const [items, setItems] = useState<DashboardItem[]>(INITIAL);
 	const [editing, setEditing] = useState(true);
 	return (
-		<div className="flex flex-col gap-3 p-4">
+		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
 				<p className="text-[15px] font-semibold">Dashboard</p>
 				<Button

@@ -7,32 +7,48 @@ import {
 	ToggleGroup,
 	ToggleGroupItem,
 } from "@olympusoss/canvas";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import Frame, { FrameContextConsumer } from "react-frame-component";
 import canvasRuntimeCssUrl from "../../../styles/canvas.css?url";
 import { DocsCodeBlock } from "./DocsCodeBlock";
 
 type Viewport = "lg" | "md" | "sm" | "xs" | "xxs";
 
-// Each viewport hits one of the 5 canvas breakpoints. The width is chosen
-// to comfortably sit inside that breakpoint (not on its edge).
+// `lg` fills the full example area (the breakpoint is open-ended at the top, so
+// the truthful preview is "whatever width the consumer's lg layout actually
+// gets"). The other tiers use a fixed width that comfortably sits inside the
+// breakpoint band so authors can preview each tier deterministically.
 const VIEWPORT_WIDTH: Record<Viewport, string> = {
-	lg: "1280px",
+	lg: "100%",
 	md: "1024px",
 	sm: "800px",
 	xs: "600px",
 	xxs: "360px",
 };
 
+// Column counts mirror the canvas grid defaults (DashboardGrid, etc.) so authors
+// can map each breakpoint back to how many columns their layout will get.
 const VIEWPORT_LABEL: Record<Viewport, string> = {
-	lg: "lg ≥ 1200px",
-	md: "md ≥ 996px",
-	sm: "sm ≥ 768px",
-	xs: "xs ≥ 480px",
-	xxs: "xxs < 480px",
+	lg: "lg ≥ 1200px (12col)",
+	md: "md ≥ 996px (8col)",
+	sm: "sm ≥ 768px (4col)",
+	xs: "xs ≥ 480px (2col)",
+	xxs: "xxs < 480px (1col)",
 };
 
 const VIEWPORTS: Viewport[] = ["lg", "md", "sm", "xs", "xxs"];
+
+// Mirrors canvas's responsive breakpoints (lg ≥ 1200, md ≥ 996, sm ≥ 768,
+// xs ≥ 480, xxs < 480) so the toggle highlight reflects which tier the
+// iframe's actual width currently lands in — keeps the docs honest when the
+// browser is resized below the lg threshold while `lg` (100%) is selected.
+function widthToBreakpoint(width: number): Viewport {
+	if (width >= 1200) return "lg";
+	if (width >= 996) return "md";
+	if (width >= 768) return "sm";
+	if (width >= 480) return "xs";
+	return "xxs";
+}
 
 // Iframe height is driven entirely by the rendered content (measured via
 // ResizeObserver on the React mount root). MIN is 1 so the iframe fits its
@@ -163,15 +179,32 @@ function useIframeDragRelay(frameDoc: Document | undefined) {
 
 interface PreviewFrameProps {
 	viewport: Viewport;
+	onWidthChange: (width: number) => void;
 	children: ReactNode;
 }
 
-function PreviewFrame({ viewport, children }: PreviewFrameProps) {
+function PreviewFrame({ viewport, onWidthChange, children }: PreviewFrameProps) {
 	const [height, setHeight] = useState(MIN_FRAME_HEIGHT);
+	const wrapperRef = useRef<HTMLDivElement | null>(null);
 	const initialContent = `<!DOCTYPE html><html style="overflow:hidden;"><head><link rel="stylesheet" href="${canvasRuntimeCssUrl}"></head><body style="margin:0;background:transparent;"><div id="frame-root"></div></body></html>`;
+
+	// Report the wrapper's actual rendered width up so the toggle can reflect
+	// which canvas breakpoint it lands in — matters for `lg` (100%) which
+	// changes as the user resizes the browser.
+	useEffect(() => {
+		const el = wrapperRef.current;
+		if (!el) return;
+		const report = () => onWidthChange(el.clientWidth);
+		report();
+		if (typeof ResizeObserver === "undefined") return;
+		const obs = new ResizeObserver(report);
+		obs.observe(el);
+		return () => obs.disconnect();
+	}, [onWidthChange]);
 
 	return (
 		<div
+			ref={wrapperRef}
 			// The viewport width sits on a wrapping div so the iframe inside it
 			// can't be shrunk by flex layout — Tailwind's `md:` breakpoint then
 			// reflects the desktop/tablet/mobile choice instead of the parent column.
@@ -259,7 +292,15 @@ export function Example({
 	children,
 }: ExampleProps) {
 	const [open, setOpen] = useState(false);
-	const [viewport, setViewport] = useState<Viewport>("lg");
+	// `selectedViewport` drives the iframe width via VIEWPORT_WIDTH (it's what the
+	// user clicked). `actualWidth` is the iframe's real rendered width as measured
+	// by ResizeObserver — for `lg` (100%) this changes when the browser resizes.
+	// The toggle highlight + label both reflect the breakpoint derived from
+	// actualWidth so the docs stay honest about which tier the iframe is in.
+	const [selectedViewport, setSelectedViewport] = useState<Viewport>("lg");
+	const [actualWidth, setActualWidth] = useState<number | undefined>(undefined);
+	const activeBreakpoint =
+		actualWidth !== undefined ? widthToBreakpoint(actualWidth) : selectedViewport;
 
 	return (
 		<section className="overflow-hidden rounded-xl border border-border bg-card/30">
@@ -270,12 +311,12 @@ export function Example({
 				</div>
 				<div className="flex shrink-0 items-center gap-2">
 					<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-						{VIEWPORT_LABEL[viewport]}
+						{VIEWPORT_LABEL[activeBreakpoint]}
 					</span>
 					<ToggleGroup
 						type="single"
-						value={viewport}
-						onValueChange={(v) => v && setViewport(v as Viewport)}
+						value={activeBreakpoint}
+						onValueChange={(v) => v && setSelectedViewport(v as Viewport)}
 						size="sm"
 						variant="outline"
 						aria-label="Preview viewport"
@@ -299,7 +340,9 @@ export function Example({
 				    fits with room for the right TOC); tablet/mobile shrink the whole
 				    card to the chosen breakpoint width. */}
 				<div className="flex justify-start p-4">
-					<PreviewFrame viewport={viewport}>{children}</PreviewFrame>
+					<PreviewFrame viewport={selectedViewport} onWidthChange={setActualWidth}>
+						{children}
+					</PreviewFrame>
 				</div>
 			</div>
 			<Collapsible open={open} onOpenChange={setOpen}>
