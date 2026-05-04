@@ -224,11 +224,17 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 		// is 0 — the fallback below kicks in.
 		const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 		const [measuredWidth, setMeasuredWidth] = React.useState<number | undefined>(undefined);
+		// SSR-safe: useLayoutEffect warns when called in node — fall back to useEffect.
+		// jsdom always defines `window`, so the SSR branch is unreachable in tests.
+		/* v8 ignore start */
 		const useIsoLayoutEffect =
 			typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+		/* v8 ignore stop */
 		useIsoLayoutEffect(() => {
 			const el = wrapperRef.current;
-			if (el && el.clientWidth > 0) setMeasuredWidth(el.clientWidth);
+			/* v8 ignore next — `el` is always set after mount; defensive guard */
+			if (!el) return;
+			if (el.clientWidth > 0) setMeasuredWidth(el.clientWidth);
 		}, []);
 		React.useEffect(() => {
 			const el = wrapperRef.current;
