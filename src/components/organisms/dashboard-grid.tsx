@@ -56,7 +56,8 @@ export interface DashboardGridProps extends Omit<React.HTMLAttributes<HTMLDivEle
 	cols?: Partial<Record<DashboardGridBreakpoint, number>>;
 	/** Pixel breakpoint widths. Default react-grid-layout's standard set. */
 	breakpoints?: Partial<Record<DashboardGridBreakpoint, number>>;
-	/** Horizontal margin between items, in pixels. Default `[16, 16]` (`[x, y]`). */
+	/** Gutter between items in pixels (`[x, y]`). Default `[16, 16]` — kept even on both axes
+	 * so rows and columns share the same spacing. */
 	margin?: [number, number];
 	/** Rendered when `items.length === 0`. */
 	emptyState?: React.ReactNode;
@@ -115,6 +116,27 @@ export function isSameLayout(prev: DashboardItem[], next: DashboardItem[]): bool
 	});
 }
 
+/** @internal Exported for unit testing only. Scales a single item's `x` and `w`
+ * proportionally from one breakpoint's column count to another. Preserves `y`,
+ * `h`, and all constraint fields untouched.
+ *
+ * Rounding rules:
+ *   - `w`: `Math.round(w * ratio)`, clamped to `[1, toCols]`. Items never become
+ *     zero-width and never exceed the target column count.
+ *   - `x`: `Math.floor(x * ratio)`, clamped to `[0, toCols - 1]`. Items always
+ *     start at a valid column. RGL's vertical compactor handles any wraps that
+ *     result.
+ */
+export function scaleItem(item: DashboardItem, fromCols: number, toCols: number): DashboardItem {
+	if (fromCols === toCols) return item;
+	const ratio = toCols / fromCols;
+	return {
+		...item,
+		x: Math.min(Math.max(0, toCols - 1), Math.max(0, Math.floor(item.x * ratio))),
+		w: Math.max(1, Math.min(toCols, Math.round(item.w * ratio))),
+	};
+}
+
 /** @internal Exported for unit testing only. */
 export function mergeLibLayout(prev: DashboardItem[], next: Layout[]): DashboardItem[] {
 	const byKey = new Map(prev.map((p) => [p.i, p]));
@@ -151,6 +173,19 @@ export function mergeLibLayout(prev: DashboardItem[], next: Layout[]): Dashboard
  * grid auto-packs collisions and adapts column count to viewport via the
  * `breakpoints` map.
  *
+ * `items` is consumed in **lg-coords** (the `cols.lg` column count, default 12).
+ * Per-breakpoint layouts are derived automatically by scaling each item's `x`
+ * and `w` proportionally to the target breakpoint's column count via
+ * `scaleItem`. This is the documented `react-grid-layout` pattern — each
+ * breakpoint needs its own layout array, not a single layout fanned out
+ * (fanning produces the cascading staircase bug at smaller breakpoints because
+ * RGL clamps `w` but preserves `x`).
+ *
+ * **Edit at lg.** Drags performed at smaller breakpoints update only that
+ * breakpoint's layout (per RGL); the canonical lg layout doesn't reflect those
+ * edits, so they revert when the viewport resizes back to lg. Persist your
+ * customize-mode UX at the lg breakpoint.
+ *
  * Consumers must import the lib's stylesheet once at app entry:
  *
  *     import "@olympusoss/canvas/styles/dashboard-grid.css";
@@ -169,7 +204,7 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 			rowHeight = 80,
 			cols,
 			breakpoints,
-			margin = [16, 8],
+			margin = [16, 16],
 			emptyState,
 			className,
 			...props
@@ -217,22 +252,35 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 			[ref],
 		);
 
-		// Memoise the lib-shape layout so identical input doesn't churn react-grid-layout.
-		const libLayouts = React.useMemo<Layouts>(() => {
-			const single = toLibLayout(items);
-			return {
-				lg: single,
-				md: single,
-				sm: single,
-				xs: single,
-				xxs: single,
-			};
-		}, [items]);
+		// Generate one layout PER breakpoint by scaling each item's `x` and `w`
+		// proportionally to that breakpoint's column count. Treats `lg` as the
+		// canonical source — `items` is consumed as `lg`-coords. Anything else is
+		// derived. This is the documented react-grid-layout pattern (their own
+		// demos hand-roll per-breakpoint layouts) — fanning a single layout into
+		// every breakpoint causes RGL to clamp `w` to `cols`, leaving wide items
+		// stacked diagonally with their original `x` offsets ("staircase" bug).
+		const lgCols = resolvedCols.lg;
+		const libLayouts = React.useMemo<Layouts>(
+			() => ({
+				lg: toLibLayout(items),
+				md: toLibLayout(items.map((it) => scaleItem(it, lgCols, resolvedCols.md))),
+				sm: toLibLayout(items.map((it) => scaleItem(it, lgCols, resolvedCols.sm))),
+				xs: toLibLayout(items.map((it) => scaleItem(it, lgCols, resolvedCols.xs))),
+				xxs: toLibLayout(items.map((it) => scaleItem(it, lgCols, resolvedCols.xxs))),
+			}),
+			[items, lgCols, resolvedCols.md, resolvedCols.sm, resolvedCols.xs, resolvedCols.xxs],
+		);
 
 		const handleLayoutChange = React.useCallback(
-			(currentLayout: Layout[]) => {
+			(currentLayout: Layout[], allLayouts: Layouts) => {
 				if (!onItemsChange) return;
-				const next = mergeLibLayout(items, currentLayout);
+				// Merge from `allLayouts.lg` so we always feed lg-coord items back into
+				// state — even when the user is interacting at a smaller breakpoint, the
+				// canonical `items` shape stays in lg-coords. (Caveat: drags performed
+				// at sm/xs/xxs only edit that breakpoint's layout; the lg layout doesn't
+				// reflect those edits — drag at lg for the persisted change.)
+				const lgLayout = allLayouts?.lg ?? currentLayout;
+				const next = mergeLibLayout(items, lgLayout);
 				if (isSameLayout(items, next)) return;
 				onItemsChange(next);
 			},
@@ -289,7 +337,13 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 									<GripVertical className="h-3.5 w-3.5" />
 								</div>
 							)}
-							<div className="flex-1 overflow-hidden">{renderItem(item)}</div>
+							{/* The inner wrapper forces ANY direct child of the rendered widget to
+							    fill the cell (`*:h-full *:w-full`). This is the grid's job, not the
+							    widget's — consumers shouldn't have to add `h-full` to every card just
+							    to make rows align. */}
+							<div className="min-h-0 flex-1 overflow-hidden *:h-full *:w-full">
+								{renderItem(item)}
+							</div>
 						</div>
 					))}
 				</ResponsiveGridLayout>

@@ -271,7 +271,9 @@ function TOC({ sections }: TOCProps) {
 
 	return (
 		<aside className="hidden w-44 shrink-0 lg:block">
-			<div className="sticky top-10">
+			{/* Inner positioned `fixed` to the viewport's right edge so the TOC sits flush
+			    against the window regardless of the column's padding/centering. */}
+			<div className="fixed right-4 top-10 w-44">
 				<p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/70">
 					On this page
 				</p>

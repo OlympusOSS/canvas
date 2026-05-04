@@ -15,8 +15,8 @@ on:
 
 permissions:
   contents: write
-  packages: write
   pages: write
+  # id-token: write enables npm provenance attestations on publish.
   id-token: write
 
 concurrency:
@@ -76,18 +76,23 @@ jobs:
             git push origin HEAD:main
           fi
 
-      - name: Authenticate npm
+      - name: Authenticate npm (npmjs.org)
         if: steps.has_changesets.outputs.count != '0'
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
-          echo "@olympusoss:registry=https://npm.pkg.github.com" >> .npmrc
+          # Auth against the public npmjs.org registry. Package name is
+          # `@olympusoss/canvas` so the scope must be a real org on npmjs.org
+          # with publish access for the token's owner.
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+          echo "@olympusoss:registry=https://registry.npmjs.org" >> .npmrc
 
-      - name: Publish to GitHub Packages
+      - name: Publish to npmjs.org
         if: steps.has_changesets.outputs.count != '0'
         run: bun run release
         env:
+          # `bun run release` → `changeset publish` → reads NODE_AUTH_TOKEN.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push release tags
         if: steps.has_changesets.outputs.count != '0'
