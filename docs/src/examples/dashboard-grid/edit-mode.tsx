@@ -46,7 +46,6 @@ export default function App() {
 				editing={editing}
 				onItemsChange={setItems}
 				rowHeight={80}
-				cols={{ md: 12 }}
 				renderItem={(item) => {
 					const p = PRESETS[item.i];
 					return (
