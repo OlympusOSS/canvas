@@ -332,24 +332,22 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 					preventCollision={false}
 				>
 					{items.map((item) => (
-						<div key={item.i} className="group/dashboard-grid-item flex flex-col overflow-hidden">
+						<div key={item.i} className="group/dashboard-grid-item relative h-full overflow-hidden">
+							{/* Inner wrapper forces the rendered widget to fill the cell —
+							    consumers shouldn't have to add `h-full` to every card just to
+							    make rows align. Kept separate from the drag handle so the
+							    `*:h-full *:w-full` rule doesn't blow up the absolute handle. */}
+							<div className="h-full w-full *:h-full *:w-full">{renderItem(item)}</div>
 							{editing && (
 								<div
 									role="button"
 									tabIndex={0}
-									className="dashboard-grid-handle flex h-7 shrink-0 cursor-grab items-center justify-center rounded-t-xl border-b border-border bg-muted/30 text-muted-foreground active:cursor-grabbing"
+									className="dashboard-grid-handle absolute right-2 top-2 z-10 flex h-6 w-6 cursor-grab items-center justify-center rounded-md border border-border bg-background/80 text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-accent hover:text-foreground active:cursor-grabbing"
 									aria-label={`Drag ${item.i}`}
 								>
 									<GripVertical className="h-3.5 w-3.5" />
 								</div>
 							)}
-							{/* The inner wrapper forces ANY direct child of the rendered widget to
-							    fill the cell (`*:h-full *:w-full`). This is the grid's job, not the
-							    widget's — consumers shouldn't have to add `h-full` to every card just
-							    to make rows align. */}
-							<div className="min-h-0 flex-1 overflow-hidden *:h-full *:w-full">
-								{renderItem(item)}
-							</div>
 						</div>
 					))}
 				</ResponsiveGridLayout>
