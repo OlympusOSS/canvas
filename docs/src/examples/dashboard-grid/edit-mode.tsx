@@ -1,4 +1,11 @@
-import { Button, DashboardGrid, type DashboardItem, Icon, StatCard } from "@olympusoss/canvas";
+import {
+	Button,
+	DashboardGrid,
+	type DashboardItem,
+	Icon,
+	PageHeader,
+	StatCard,
+} from "@olympusoss/canvas";
 import { useState } from "react";
 
 const INITIAL: DashboardItem[] = [
@@ -30,17 +37,19 @@ export default function App() {
 	const [editing, setEditing] = useState(true);
 	return (
 		<div className="flex flex-col gap-3">
-			<div className="flex items-center justify-between">
-				<p className="text-[15px] font-semibold">Dashboard</p>
-				<Button
-					variant={editing ? "default" : "outline"}
-					size="sm"
-					onClick={() => setEditing((v) => !v)}
-				>
-					<Icon name={editing ? "Check" : "Pencil"} />
-					{editing ? "Done editing" : "Edit dashboard"}
-				</Button>
-			</div>
+			<PageHeader
+				title="Dashboard"
+				actions={
+					<Button
+						variant={editing ? "default" : "outline"}
+						size="sm"
+						onClick={() => setEditing((v) => !v)}
+					>
+						<Icon name={editing ? "Check" : "Pencil"} />
+						{editing ? "Done editing" : "Edit dashboard"}
+					</Button>
+				}
+			/>
 			<DashboardGrid
 				items={items}
 				editing={editing}

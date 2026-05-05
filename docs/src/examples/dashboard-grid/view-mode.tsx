@@ -6,6 +6,7 @@ import {
 	Gauge,
 	Icon,
 	LabeledBarList,
+	PageHeader,
 	SectionCard,
 	ServiceHealthList,
 	StackedBar,
@@ -145,17 +146,19 @@ export default function App() {
 	const [editing, setEditing] = useState(false);
 	return (
 		<div className="flex flex-col gap-3">
-			<div className="flex items-center justify-between">
-				<p className="text-[15px] font-semibold">Dashboard</p>
-				<Button
-					variant={editing ? "default" : "outline"}
-					size="sm"
-					onClick={() => setEditing((v) => !v)}
-				>
-					<Icon name={editing ? "Check" : "Pencil"} />
-					{editing ? "Done editing" : "Edit dashboard"}
-				</Button>
-			</div>
+			<PageHeader
+				title="Dashboard"
+				actions={
+					<Button
+						variant={editing ? "default" : "outline"}
+						size="sm"
+						onClick={() => setEditing((v) => !v)}
+					>
+						<Icon name={editing ? "Check" : "Pencil"} />
+						{editing ? "Done editing" : "Edit dashboard"}
+					</Button>
+				}
+			/>
 			<DashboardGrid
 				items={items}
 				editing={editing}
