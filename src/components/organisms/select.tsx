@@ -265,7 +265,12 @@ const SelectItem = React.forwardRef<React.ElementRef<typeof SelectPrimitive.Item
 					<Check className="h-4 w-4" />
 				</SelectPrimitive.ItemIndicator>
 			</span>
-			<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+			<SelectPrimitive.ItemText>
+				{/* Wrap children in a flex row so an inline icon + label compose
+				 * horizontally instead of stacking — Tailwind's preflight makes
+				 * <svg> block-level, which would otherwise push the text below. */}
+				<span className="flex items-center gap-2">{children}</span>
+			</SelectPrimitive.ItemText>
 		</SelectPrimitive.Item>
 	),
 );
