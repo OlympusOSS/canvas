@@ -15,7 +15,7 @@ const buttonVariants = cva(
 					"border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
 				secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
 				ghost: "hover:bg-accent hover:text-accent-foreground",
-				link: "text-primary underline-offset-4 hover:underline",
+				link: "text-primary hover:text-primary/70",
 			},
 			size: {
 				default: "h-9 px-4 py-2",
@@ -37,7 +37,8 @@ export interface ButtonProps
 	/**
 	 * Visual emphasis preset. `default` is the primary action, `destructive`
 	 * is for irreversible actions, `outline` and `secondary` are quieter,
-	 * `ghost` is borderless, `link` looks like body-text underlined.
+	 * `ghost` is borderless, `link` looks like body-text with a soft
+	 * color shift on hover (no underline).
 	 * @default "default"
 	 */
 	variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
