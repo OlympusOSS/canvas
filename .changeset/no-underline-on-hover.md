@@ -2,11 +2,11 @@
 "@olympusoss/canvas": patch
 ---
 
-Tweak: Replace legacy "underline on hover" with a softer color-shift hover across every link surface in the design system.
+Tweak: Replace legacy "underline on hover" with a brand-color hover across every link surface in the design system.
 
-- `Button` `variant="link"` — drop `underline-offset-4 hover:underline`; hover now fades text from `text-primary` → `text-primary/70`.
-- `AccordionTrigger` — drop `hover:underline`; hover now shifts to `text-foreground/70` (kept `transition-colors`).
-- Prose anchors (`PROSE_CANVAS_CLASSES`, used by `RichTextEditor` + `MarkdownEditor` preview) — drop the always-on underline + `decoration-*` shift; anchors now stay `text-brand` and fade to `text-brand/70` on hover.
+- `Button` `variant="link"` — drop `underline-offset-4 hover:underline`; hover now shifts text from `text-primary` → `text-brand` (canvas blue).
+- `AccordionTrigger` — drop `hover:underline`; hover now shifts to `text-foreground/70` (toggle, not link — uses muted-fade not brand).
+- Prose anchors (`PROSE_CANVAS_CLASSES`, used by `RichTextEditor` + `MarkdownEditor` preview) — drop the always-on underline + `decoration-*` shift; anchors stay `text-brand` and fade to `text-brand/80` on hover.
 
 Already-correct surfaces (`NavBar`, `Breadcrumb`, `PageHeader` breadcrumbs) used color-shift only — no change.
 
