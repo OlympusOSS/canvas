@@ -4,6 +4,7 @@ import * as ContextMenuPrimitive from "@radix-ui/react-context-menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
 import * as React from "react";
 
+import { usePortalContainer } from "../../lib/portal-container";
 import { cn } from "../../lib/utils";
 
 export interface ContextMenuProps extends React.ComponentProps<typeof ContextMenuPrimitive.Root> {
@@ -154,18 +155,21 @@ export interface ContextMenuContentProps
 const ContextMenuContent = React.forwardRef<
 	React.ElementRef<typeof ContextMenuPrimitive.Content>,
 	ContextMenuContentProps
->(({ className, ...props }, ref) => (
-	<ContextMenuPrimitive.Portal>
-		<ContextMenuPrimitive.Content
-			ref={ref}
-			className={cn(
-				"z-50 max-h-[var(--radix-context-menu-content-available-height)] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[var(--radix-context-menu-content-transform-origin)]",
-				className,
-			)}
-			{...props}
-		/>
-	</ContextMenuPrimitive.Portal>
-));
+>(({ className, ...props }, ref) => {
+	const container = usePortalContainer();
+	return (
+		<ContextMenuPrimitive.Portal container={container ?? undefined}>
+			<ContextMenuPrimitive.Content
+				ref={ref}
+				className={cn(
+					"z-50 max-h-[var(--radix-context-menu-content-available-height)] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[var(--radix-context-menu-content-transform-origin)]",
+					className,
+				)}
+				{...props}
+			/>
+		</ContextMenuPrimitive.Portal>
+	);
+});
 ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName;
 
 export interface ContextMenuItemProps
