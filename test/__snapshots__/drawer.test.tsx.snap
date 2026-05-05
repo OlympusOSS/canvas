@@ -4,7 +4,7 @@ exports[`Drawer > matches snapshot when open 1`] = `
 <div
   aria-describedby="radix-_r_b_"
   aria-labelledby="radix-_r_a_"
-  class="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background"
+  class="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-border bg-background"
   data-state="open"
   data-vaul-animate="true"
   data-vaul-custom-container="false"
