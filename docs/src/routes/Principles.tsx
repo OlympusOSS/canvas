@@ -66,8 +66,8 @@ export function Principles() {
 				</div>
 				<p className="rounded-md bg-muted/40 p-3 text-xs text-muted-foreground">
 					<strong className="text-foreground">When in doubt, demote one tier.</strong> A "molecule"
-					with state probably wants to be an organism. Pages compose primitives directly — no
-					template tier.
+					with state probably wants to be an organism. Pages compose primitives directly — Canvas
+					doesn't ship layout templates.
 				</p>
 			</section>
 

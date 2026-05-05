@@ -12,15 +12,17 @@ Every component lives in one of four tiers.
 |---|---|---|---|
 | **Atom** | `src/components/atoms/` | Single interactive or display primitive. Zero composition. Imports only tokens + utils + React. | `Button`, `Input`, `Label`, `Icon`, `Badge`, `Avatar`, `FlexBox`, `Section` |
 | **Molecule** | `src/components/molecules/` | Composes atoms into a meaningful UI unit. No app-state model. | `SearchBar`, `StatusBadge`, `EmptyState`, `LoadingState`, `Card` family, `PageHeader`, `ActionBar`, `SectionCard`, `SecretField`, `Stepper`, `StatCard`, `AnimatedBackground` |
-| **Organism** | `src/components/organisms/` | Owns interactive state (open/close, selection, form), or composes multiple molecules into a reusable surface. | `DataTable`, `Dialog`, `Sidebar`, `Command`, `Form`, `ThemeProvider`, `ErrorBoundary`, `Toaster` |
-| **Template** | `src/components/templates/` | Page-level scaffolding. Owns layout regions and composition slots. | `AuthShell`, `AdminShell`, `WizardShell` |
+| **Organism** | `src/components/organisms/` | Owns interactive state (open/close, selection, form), or composes multiple molecules into a reusable surface. | `DataTable`, `DashboardGrid`, `Dialog`, `Sidebar`, `Command`, `Form`, `ThemeProvider`, `ErrorBoundary`, `Toaster` |
+| **Chart** | `src/components/charts/` | Theme-aware chart components and small data-visualisation primitives. Composes Recharts plus Canvas tokens. | `Sparkline`, `Gauge`, `ActivityHeatmap`, `LabeledBarList`, `ServiceHealthList`, `StackedBar`, `WorldHeatMap` |
+
+> Page-level layout templates (`AuthShell`, `AdminShell`, `WizardShell`) were tried and removed. They over-prescribed how consumers wired their app shells (sidebar widths, header structure, drawer behavior) and consistently caused friction. Compose `Sidebar` + `SidebarInset` + your own flexbox shell directly instead — see [`MIGRATION.md`](./MIGRATION.md) for the upgrade snippet.
 
 ### Classification decision tree
 
 1. **Does it have zero composition (just wraps one element)?** → Atom.
 2. **Does it compose atoms but hold no significant state?** → Molecule.
 3. **Does it own interactive state OR compose molecules into a surface?** → Organism.
-4. **Is it a page-level layout with slots?** → Template.
+4. **Is it a chart / data-viz primitive?** → Chart.
 
 When in doubt, **demote one tier**. It's cheaper to promote later than to demote.
 
@@ -32,7 +34,7 @@ Each tier can only import from tiers strictly below it, plus `tokens/` and `lib/
 atoms/*     ← tokens/, lib/utils, React
 molecules/* ← atoms/, tokens/, lib/utils, React
 organisms/* ← molecules/, atoms/, tokens/, lib/utils, React
-templates/* ← organisms/, molecules/, atoms/, tokens/, lib/utils, React
+charts/*    ← atoms/, tokens/, lib/utils, React (charts may also import Recharts directly)
 ```
 
 An atom importing from `../molecules/` is a smell. If you find yourself wanting
@@ -60,7 +62,7 @@ audit at a glance:
 // atoms:     can import tokens/, lib/utils; nothing else in canvas/.
 // molecules: can import tokens/, lib/utils, atoms/.
 // organisms: can import tokens/, lib/utils, atoms/, molecules/.
-// templates: can import tokens/, lib/utils, atoms/, molecules/, organisms/.
+// charts:    can import tokens/, lib/utils, atoms/, plus Recharts directly.
 ```
 
 - One component family per file. `card.tsx` exports `Card`, `CardHeader`, …
@@ -72,13 +74,15 @@ audit at a glance:
 
 ## Adding a new component
 
-1. Classify it (atoms/molecules/organisms/templates).
-2. Create `src/components/{tier}/{kebab-case-name}.tsx`.
+1. Classify it (atoms/molecules/organisms/charts).
+2. Create `src/components/{tier}/{kebab-case-name}.tsx` (charts use a barrel: re-export from `src/components/charts/index.ts`).
 3. Write the component. Respect the import rules above.
 4. Export it from `src/index.ts` in the tier's section (alphabetical within the tier).
 5. If it has a type that's safe for React Native (no DOM), also re-export the
    type from `src/native.ts`.
-6. Write tests in `test/` if Canvas has test coverage for that tier.
+6. Write tests in `test/` (Canvas enforces 100% coverage per file in CI).
+7. Add a docs example: append an entry to `docs/src/data/components.ts` and drop
+   a `.tsx` in `docs/src/examples/{component}/` for each example variant.
 
 ## When to add vs. leave in the app
 

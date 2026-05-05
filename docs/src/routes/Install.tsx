@@ -23,46 +23,40 @@ export function Page() {
 	return <Button>Hello, Canvas</Button>;
 }`;
 
-const NPMRC = `@olympusoss:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=\${GITHUB_TOKEN}`;
-
 export function Install() {
 	return (
 		<div className="space-y-10">
 			<header className="space-y-3">
 				<h1 className="text-3xl font-bold tracking-tight text-foreground">Installation</h1>
 				<p className="max-w-2xl text-muted-foreground">
-					Wire Canvas into a React 19 + Tailwind v4 app — Next.js, Vite, Remix, anything.
+					Wire Canvas into a React 19 + Tailwind v4 app — Next.js, Vite, Remix, anything. Canvas
+					ships from <code className="font-mono">@olympusoss/canvas</code> on the public npm
+					registry — no auth setup needed.
 				</p>
 			</header>
 
 			<section className="space-y-4">
 				<header>
 					<h2 className="text-xl font-semibold tracking-tight text-foreground">
-						1 · Authenticate to GitHub Packages
-					</h2>
-					<p className="mt-1 text-sm text-muted-foreground">
-						Canvas ships via GitHub Packages, not npm. Add an{" "}
-						<code className="font-mono">.npmrc</code> at your project root with a personal access
-						token that has <code className="font-mono">read:packages</code>.
-					</p>
-				</header>
-				<DocsCodeBlock code={NPMRC} language="bash" filename=".npmrc" />
-			</section>
-
-			<section className="space-y-4">
-				<header>
-					<h2 className="text-xl font-semibold tracking-tight text-foreground">
-						2 · Add the package
+						1 · Install the package
 					</h2>
 				</header>
 				<PackageInstallTabs pkg="@olympusoss/canvas" />
+				<p className="text-xs text-muted-foreground">
+					Peer deps: <code className="font-mono">react@&gt;=18</code>,{" "}
+					<code className="font-mono">react-dom@&gt;=18</code>. Optional peers (only required if you
+					use the related components):{" "}
+					<code className="font-mono">@rjsf/core / @rjsf/utils / @rjsf/validator-ajv8</code> for{" "}
+					<code className="font-mono">SchemaForm</code>,{" "}
+					<code className="font-mono">libphonenumber-js</code> for{" "}
+					<code className="font-mono">PhoneInput</code>.
+				</p>
 			</section>
 
 			<section className="space-y-4">
 				<header>
 					<h2 className="text-xl font-semibold tracking-tight text-foreground">
-						3 · Wire Tailwind v4 + tokens
+						2 · Wire Tailwind v4 + tokens
 					</h2>
 					<p className="mt-1 text-sm text-muted-foreground">
 						In your global stylesheet (e.g. <code className="font-mono">app/globals.css</code>),
@@ -73,17 +67,17 @@ export function Install() {
 				<DocsCodeBlock code={TOKENS_CSS_IMPORT} language="css" filename="globals.css" />
 				<p className="text-xs text-muted-foreground">
 					This file ships <code className="font-mono">--background</code>,{" "}
-					<code className="font-mono">--foreground</code>,
+					<code className="font-mono">--foreground</code>,{" "}
 					<code className="font-mono">--primary</code>, … plus the{" "}
-					<code className="font-mono">@keyframes orb-float-1/2</code>
-					used by <code className="font-mono">AnimatedBackground</code>.
+					<code className="font-mono">@keyframes orb-float-1/2</code> used by{" "}
+					<code className="font-mono">AnimatedBackground</code>.
 				</p>
 			</section>
 
 			<section className="space-y-4">
 				<header>
 					<h2 className="text-xl font-semibold tracking-tight text-foreground">
-						4 · Mount the ThemeProvider
+						3 · Mount the ThemeProvider
 					</h2>
 					<p className="mt-1 text-sm text-muted-foreground">
 						Required for dark/light theming. SSR-safe, localStorage-backed, exposes{" "}
@@ -96,7 +90,7 @@ export function Install() {
 			<section className="space-y-4">
 				<header>
 					<h2 className="text-xl font-semibold tracking-tight text-foreground">
-						5 · Render your first component
+						4 · Render your first component
 					</h2>
 				</header>
 				<DocsCodeBlock code={FIRST_COMPONENT} language="tsx" filename="page.tsx" />
