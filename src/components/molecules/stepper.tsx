@@ -65,7 +65,7 @@ export function Stepper({ steps, orientation = "vertical", onStepClick, classNam
 						>
 							<span
 								className={cn(
-									"flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs",
+									"flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-xs",
 									styles.dot,
 								)}
 							>
