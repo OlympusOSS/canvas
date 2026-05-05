@@ -74,6 +74,13 @@ jobs:
             echo "No version changes to commit."
           else
             git commit -m "chore: version packages [skip ci]"
+            # Rebase the bump commit onto latest main before pushing. With the
+            # workflow_run trigger we check out `head_sha` (the SHA CI ran on),
+            # which can be stale by the time Release runs — main may have
+            # advanced via subsequent pushes. Without this, the push is
+            # rejected as non-fast-forward.
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
 
