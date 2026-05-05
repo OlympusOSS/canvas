@@ -36,9 +36,9 @@ export default function App() {
 	const [items, setItems] = useState<DashboardItem[]>(INITIAL);
 	const [editing, setEditing] = useState(true);
 	return (
-		<div className="flex flex-col gap-3">
+		<div className="flex flex-col">
 			<PageHeader
-				className="px-4"
+				className="mb-0 px-4 pt-4"
 				title="Dashboard"
 				icon={<Icon name="LayoutDashboard" size={22} />}
 				actions={
