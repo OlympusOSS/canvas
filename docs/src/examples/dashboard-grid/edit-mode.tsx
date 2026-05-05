@@ -38,6 +38,7 @@ export default function App() {
 	return (
 		<div className="flex flex-col gap-3">
 			<PageHeader
+				className="px-4"
 				title="Dashboard"
 				icon={<Icon name="LayoutDashboard" size={22} />}
 				actions={
