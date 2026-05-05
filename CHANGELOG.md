@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.25
+
+### Patch Changes
+
+- e9da0b1: Add `README.md` to the published package so the npm package page shows install instructions, quick start, and a link to the docs site instead of "This package does not have a README."
+
 ## 2.6.24
 
 ### Patch Changes
