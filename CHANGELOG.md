@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.27
+
+### Patch Changes
+
+- 97027dd: Fix: bind every component that uses `border` to the `border-border` token explicitly. The base `* { border-color: hsl(var(--border)) }` rule from `tokens.css` was supposed to set the default, but Tailwind v4's `border` utility produced `currentColor` borders in some render contexts (notably iframes), making the borders render as bright white in dark mode. Affects: `Badge`, `Card`, `Alert`, `Stepper`, `ButtonGroupText`, `Popover`, `HoverCard`, `DropdownMenu` (content + sub), `Menubar` (root + content + sub), `ContextMenu` (content + sub), `NavigationMenuViewport`, `Drawer`, `DataTable` wrapper, `SelectContent`. `AlertDialog`/`Dialog` content was already fixed in the previous patch.
+- dacfc6a: Fix: `AlertDialog` and `Dialog` footer buttons now stay vertically aligned in horizontal layout. The previous behavior left a stray `mt-2` on `AlertDialogCancel` when the `sm:mt-0` reset didn't fire (e.g. when the dialog renders inside a constrained iframe context), pushing Cancel 8px below the action button. Footer layout now uses `gap-2 sm:items-center sm:justify-end` (matching the canvas-canonical `ActionBar` pattern) and `AlertDialogCancel` no longer carries a hand-rolled margin. Consumers with custom `mt-*` overrides on `AlertDialogCancel` can drop them.
+- 8258aa6: Fix: `AlertDialogContent` and `DialogContent` now have unconditional `rounded-lg` corners. The previous `sm:rounded-lg` only fired at viewport ≥640px and was unreliable in iframe / portal contexts where the `sm:` breakpoint didn't match — the dialog rendered with sharp square corners instead of the rounded modal style. Same `sm:`-reliability lesson as the previous footer alignment fix.
+
 ## 2.6.26
 
 ### Patch Changes
