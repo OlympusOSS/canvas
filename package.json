@@ -1,6 +1,6 @@
 {
 	"name": "@olympusoss/canvas",
-	"version": "2.6.25",
+	"version": "2.6.26",
 	"type": "module",
 	"main": "./src/index.ts",
 	"types": "./src/index.ts",
