@@ -345,7 +345,7 @@ export function Layout() {
 	return (
 		<div className="flex h-screen bg-background">
 			<aside className="w-60 shrink-0 border-r border-sidebar-border bg-sidebar">
-				<div className="flex h-full flex-col overflow-y-auto scrollbar-thin px-4 py-5">
+				<div className="flex h-full flex-col overflow-y-auto scrollbar-thin px-4 py-5 [contain:layout]">
 					<div className="flex items-start justify-between gap-2 px-2">
 						<NavLink to="/" className="group flex items-center gap-2.5">
 							<div className="relative h-7 w-7 shrink-0">
