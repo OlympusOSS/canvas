@@ -152,7 +152,7 @@ export function Home() {
 							A taste of every tier
 						</h2>
 						<p className="text-sm text-muted-foreground">
-							Live components imported from <Mono>../src</Mono>. Click into any tier.
+							Live components imported from <Mono>@olympusoss/canvas</Mono>. Click into any tier.
 						</p>
 					</div>
 					<Link
