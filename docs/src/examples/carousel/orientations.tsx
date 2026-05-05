@@ -26,7 +26,7 @@ export default function App() {
 					<CarouselNext />
 				</Carousel>
 				<Carousel orientation="vertical" className="w-32">
-					<CarouselContent className="h-48">
+					<CarouselContent className="h-24">
 						{items.map((n) => (
 							<CarouselItem key={n}>
 								<div className="grid h-24 place-content-center rounded-md border border-border bg-muted/30 text-2xl">

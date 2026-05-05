@@ -23,8 +23,8 @@ export const PROSE_CANVAS_CLASSES = [
 	"[&_em]:italic",
 	"[&_u]:underline [&_u]:underline-offset-2",
 	"[&_s]:line-through",
-	// links
-	"[&_a]:text-brand [&_a]:underline [&_a]:underline-offset-4 [&_a]:decoration-brand/40 hover:[&_a]:decoration-brand",
+	// links — color-shift on hover (no underline) for a more modern feel
+	"[&_a]:text-brand [&_a]:transition-colors hover:[&_a]:text-brand/70",
 	// code
 	"[&_code]:rounded [&_code]:bg-muted [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.85em] [&_code]:text-foreground",
 	"[&_pre]:rounded-md [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted/50 [&_pre]:p-3 [&_pre]:my-3 [&_pre]:overflow-x-auto",
