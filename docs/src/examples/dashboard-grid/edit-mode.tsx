@@ -39,14 +39,16 @@ export default function App() {
 		<div className="flex flex-col gap-3">
 			<PageHeader
 				title="Dashboard"
+				icon={<Icon name="LayoutDashboard" size={22} />}
 				actions={
 					<Button
 						variant={editing ? "default" : "outline"}
-						size="sm"
+						size="icon"
+						aria-label={editing ? "Done editing" : "Edit dashboard"}
+						title={editing ? "Done editing" : "Edit dashboard"}
 						onClick={() => setEditing((v) => !v)}
 					>
 						<Icon name={editing ? "Check" : "Pencil"} />
-						{editing ? "Done editing" : "Edit dashboard"}
 					</Button>
 				}
 			/>
