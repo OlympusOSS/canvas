@@ -5,6 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { X } from "lucide-react";
 import * as React from "react";
 
+import { usePortalContainer } from "../../lib/portal-container";
 import { cn } from "../../lib/utils";
 
 export interface SheetProps extends React.ComponentProps<typeof SheetPrimitive.Root> {
@@ -158,18 +159,25 @@ export interface SheetContentProps
 const SheetContent = React.forwardRef<
 	React.ElementRef<typeof SheetPrimitive.Content>,
 	SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-	<SheetPortal>
-		<SheetOverlay />
-		<SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
-			<SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-				<X className="h-4 w-4" />
-				<span className="sr-only">Close</span>
-			</SheetPrimitive.Close>
-			{children}
-		</SheetPrimitive.Content>
-	</SheetPortal>
-));
+>(({ side = "right", className, children, ...props }, ref) => {
+	const container = usePortalContainer();
+	return (
+		<SheetPortal container={container ?? undefined}>
+			<SheetOverlay />
+			<SheetPrimitive.Content
+				ref={ref}
+				className={cn(sheetVariants({ side }), className)}
+				{...props}
+			>
+				<SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+					<X className="h-4 w-4" />
+					<span className="sr-only">Close</span>
+				</SheetPrimitive.Close>
+				{children}
+			</SheetPrimitive.Content>
+		</SheetPortal>
+	);
+});
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 export interface SheetHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
