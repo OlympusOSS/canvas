@@ -1,6 +1,6 @@
 "use client";
 
-import { GripVertical } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
 import * as React from "react";
 import type { Layout, Layouts } from "react-grid-layout";
 import GridLayout from "react-grid-layout";
@@ -339,14 +339,25 @@ export const DashboardGrid = React.forwardRef<HTMLDivElement, DashboardGridProps
 							    `*:h-full *:w-full` rule doesn't blow up the absolute handle. */}
 							<div className="h-full w-full *:h-full *:w-full">{renderItem(item)}</div>
 							{editing && (
-								<div
-									role="button"
-									tabIndex={0}
-									className="dashboard-grid-handle absolute right-2 top-2 z-10 flex h-6 w-6 cursor-grab items-center justify-center rounded-md border border-border bg-background/80 text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-accent hover:text-foreground active:cursor-grabbing"
-									aria-label={`Drag ${item.i}`}
-								>
-									<GripVertical className="h-3.5 w-3.5" />
-								</div>
+								<>
+									<div
+										role="button"
+										tabIndex={0}
+										className="dashboard-grid-handle absolute right-2 top-2 z-10 flex h-6 w-6 cursor-grab items-center justify-center rounded-md border border-border bg-background/80 text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-accent hover:text-foreground active:cursor-grabbing"
+										aria-label={`Drag ${item.i}`}
+									>
+										<GripVertical className="h-3.5 w-3.5" />
+									</div>
+									<button
+										type="button"
+										onClick={() => onItemsChange?.(items.filter((it) => it.i !== item.i))}
+										className="absolute bottom-2 left-1/2 z-10 flex h-7 -translate-x-1/2 items-center gap-1.5 rounded-md border border-border bg-background/80 px-2.5 text-xs font-medium text-destructive shadow-sm backdrop-blur-sm transition-colors hover:bg-destructive hover:text-destructive-foreground"
+										aria-label={`Remove ${item.i}`}
+									>
+										<Trash2 className="h-3.5 w-3.5" />
+										Remove
+									</button>
+								</>
 							)}
 						</div>
 					))}
