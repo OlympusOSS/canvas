@@ -4,6 +4,8 @@ import {
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
+	XAxis,
+	YAxis,
 } from "@olympusoss/canvas";
 
 const data = [
@@ -19,13 +21,25 @@ export default function App() {
 	return (
 		<div className="w-full max-w-2xl p-4">
 			<ChartContainer config={{}} className="h-[260px]">
-				<AreaChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
+				<AreaChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
 					<defs>
 						<linearGradient id="usersFillDefault" x1="0" y1="0" x2="0" y2="1">
 							<stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity={0.7} />
 							<stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity={0.05} />
 						</linearGradient>
 					</defs>
+					<XAxis
+						dataKey="month"
+						tickLine={false}
+						axisLine={false}
+						tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+					/>
+					<YAxis
+						tickLine={false}
+						axisLine={false}
+						tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+						width={40}
+					/>
 					<ChartTooltip content={<ChartTooltipContent />} />
 					<Area
 						dataKey="users"
