@@ -48,8 +48,8 @@ export default function App() {
 				<ActivityHeatmap
 					data={DATA}
 					colorVar="chart-2"
-					cellHeight={10}
-					gap={2}
+					cellHeight={14}
+					gap={3}
 					cellRadius={2}
 					rowLabels={ROW_LABELS}
 					colLabels={COL_LABELS}
