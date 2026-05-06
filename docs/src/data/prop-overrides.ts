@@ -37,6 +37,41 @@ export interface ExtraPropEntry {
 }
 
 export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
+	"charts/service-health-list": {
+		ServiceHealthList: [
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the outer wrapper via `cn()`.",
+			},
+			{
+				name: "id",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					"DOM `id` for the wrapper — useful when an `aria-labelledby` references the list.",
+			},
+			{
+				name: "role",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					'Override the wrapper\'s ARIA role. Set when the list participates in a more specific landmark (e.g. `role="status"` for a live-updating health panel).',
+			},
+			{
+				name: "aria-label",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					'Accessible label for the whole list — e.g. `"Production service health"`. Pair with `role="status"` for screen-reader announcements when items change.',
+			},
+		],
+	},
 	"charts/stacked-bar": {
 		StackedBar: [
 			{
@@ -650,6 +685,18 @@ export const COMPONENT_DESCRIPTIONS: Record<string, Record<string, string>> = {}
 
 /** sourceId (e.g. `atoms/button`) → component displayName → prop name → override. */
 export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = {
+	"charts/service-health-list": {
+		ServiceHealthList: {
+			items: {
+				description:
+					'Array of `{ name: string; status: "healthy" | "degraded" | "down"; meta?: ReactNode[] }`. `name` is the row label and React key, `status` drives the dot colour (and the pulse-+-glow halo on `"healthy"`), and `meta` is an optional list of right-aligned monospace cells (latency, uptime, region, etc.).',
+			},
+			caption: {
+				description:
+					"Optional caption rendered below the list — typically a short timestamp or context line (e.g. `Last 5 minutes`, `Updated 24s ago`).",
+			},
+		},
+	},
 	"charts/world-heat-map": {
 		WorldHeatMap: {
 			points: {
