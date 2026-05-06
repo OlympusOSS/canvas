@@ -170,6 +170,119 @@ export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
 		],
 	},
 	"charts/chart-types": {
+		FunnelChart: [
+			{
+				name: "children",
+				required: true,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					"Recharts subcomponents that compose the chart. Typical children: one or more `<Funnel data dataKey>` for each series, `<ChartTooltip>`, optionally `<LabelList>` rendered inside `<Funnel>` for stage labels.",
+			},
+			{
+				name: "data",
+				required: false,
+				type: "Array<Record<string, any>>",
+				defaultValue: null,
+				description:
+					"Optional chart-level data. Usually omitted for funnels — data lives on each `<Funnel data=…>` so multiple funnels can stack with different stages.",
+			},
+			{
+				name: "margin",
+				required: false,
+				type: "{ top?: number; right?: number; bottom?: number; left?: number }",
+				defaultValue: "{ top: 5, right: 5, bottom: 5, left: 5 }",
+				description:
+					'Padding inside the chart between the funnel and the container edges. Bump `right` when `<LabelList position="right">` overflows.',
+			},
+			{
+				name: "syncId",
+				required: false,
+				type: "string | number",
+				defaultValue: null,
+				description:
+					"Cross-chart hover sync identifier. All charts that share the same `syncId` highlight matching stages together.",
+			},
+			{
+				name: "syncMethod",
+				required: false,
+				type: '"index" | "value" | (ticks, data) => number',
+				defaultValue: '"index"',
+				description: "How `syncId` matches points across charts.",
+			},
+			{
+				name: "throttleDelay",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description: "Throttle (ms) for `onMouseMove` events. Bump on dense funnels.",
+			},
+			{
+				name: "defaultShowTooltip",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Show the tooltip on initial render before any pointer event.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the chart area is clicked. Receives the chart state and event.",
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters the chart area.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves the chart area.",
+			},
+			{
+				name: "onMouseMove",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires on every pointer move inside the chart. Pair with `throttleDelay`.",
+			},
+			{
+				name: "width",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel width — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "height",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel height — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the root `<svg>` wrapper.",
+			},
+			{
+				name: "style",
+				required: false,
+				type: "CSSProperties",
+				defaultValue: null,
+				description: "Inline style applied to the root `<svg>` wrapper.",
+			},
+		],
 		LineChart: [
 			{
 				name: "data",
