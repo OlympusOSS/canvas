@@ -4,5 +4,7 @@
 
 Docs:
 
-- Example iframes now show a vertical scrollbar when content exceeds the iframe height (capped at `MAX_FRAME_HEIGHT` = 1400px). Previously the iframe forced `overflow: hidden` on `<html>`, so anything taller than the cap was silently clipped — most visible on the Icon Catalog example which renders ~2400px of grid. Switched to `overflow-y: auto` (themed via `tokens.css`) and kept `overflow-x: hidden` so the iframe doesn't double-scroll horizontally with the parent docs column.
-- Icon page: `Catalog` example moved to the top of the Examples list so the searchable index appears right after the Import section.
+- Example iframes now show a vertical scrollbar **only** when content flows past the bottom of the iframe. Two fixes stacked:
+  - `<html>` overflow `hidden` → `auto` so content taller than `MAX_FRAME_HEIGHT` (1400px) gets a themed scrollbar instead of being silently clipped.
+  - `box-sizing: content-box` on the iframe so the 2px of border doesn't subtract from the inner viewport. Tailwind's preflight applies `box-sizing: border-box` globally, which made `height: 200px` resolve to a 198px viewport and triggered a phantom scrollbar on every example whose content was sized to match the iframe.
+- `Icon` page: `Catalog` example moved to the top of the Examples list so the searchable index appears right after the Import section.
