@@ -36,7 +36,146 @@ export interface ExtraPropEntry {
 	description: string;
 }
 
-export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {};
+export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
+	"charts/chart-types": {
+		Treemap: [
+			{
+				name: "data",
+				required: true,
+				type: "Array<{ name?: string; size?: number; fill?: string; children?: ... }>",
+				defaultValue: null,
+				description:
+					"Tree of data nodes. Each leaf becomes a cell; nested `children` create hierarchy levels. Recharts does NOT auto-aggregate — every node needs an explicit `size` (or whatever `dataKey` resolves to).",
+			},
+			{
+				name: "dataKey",
+				required: true,
+				type: "string",
+				defaultValue: null,
+				description: "Field on each datum that determines the cell's area (proportional to value).",
+			},
+			{
+				name: "nameKey",
+				required: false,
+				type: "string",
+				defaultValue: '"name"',
+				description: "Field used for the cell's display name and tooltip label.",
+			},
+			{
+				name: "type",
+				required: false,
+				type: '"flat" | "nest"',
+				defaultValue: '"flat"',
+				description:
+					"`flat` lays every leaf in one layer; `nest` recursively stacks parent rectangles around their children for hierarchical data.",
+			},
+			{
+				name: "aspectRatio",
+				required: false,
+				type: "number",
+				defaultValue: "0.5 * (1 + Math.sqrt(5))",
+				description:
+					"Target width-to-height ratio for each cell. Tune up for wider tiles, down for taller ones.",
+			},
+			{
+				name: "fill",
+				required: false,
+				type: "string",
+				defaultValue: '"#fff"',
+				description:
+					"Fallback cell fill when a datum has no `fill` field. Pass a canvas chart token (e.g. `hsl(var(--chart-1))`) for theme-aware colours.",
+			},
+			{
+				name: "stroke",
+				required: false,
+				type: "string",
+				defaultValue: '"#000"',
+				description:
+					"Cell-border colour. Use `transparent` for borderless cells, or `hsl(var(--background))` to render thin gaps that match the page surface.",
+			},
+			{
+				name: "content",
+				required: false,
+				type: "ReactElement | ((props) => ReactElement)",
+				defaultValue: null,
+				description:
+					"Custom cell renderer. Receives `{ x, y, width, height, name, depth, index, payload, ... }`. Use this to draw bespoke labels, gradients, or icons inside each cell.",
+			},
+			{
+				name: "isAnimationActive",
+				required: false,
+				type: "boolean",
+				defaultValue: "true",
+				description: "Whether to animate cell sizing on initial render and data changes.",
+			},
+			{
+				name: "animationBegin",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description: "Delay before the entry animation starts (ms).",
+			},
+			{
+				name: "animationDuration",
+				required: false,
+				type: "number",
+				defaultValue: "1500",
+				description: "Length of the entry animation (ms).",
+			},
+			{
+				name: "animationEasing",
+				required: false,
+				type: '"ease" | "ease-in" | "ease-out" | "ease-in-out" | "linear"',
+				defaultValue: '"ease"',
+				description: "Easing function for the entry animation.",
+			},
+			{
+				name: "onAnimationStart",
+				required: false,
+				type: "() => void",
+				defaultValue: null,
+				description: "Fires when the entry animation begins.",
+			},
+			{
+				name: "onAnimationEnd",
+				required: false,
+				type: "() => void",
+				defaultValue: null,
+				description: "Fires when the entry animation finishes.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(node, index, event) => void",
+				defaultValue: null,
+				description:
+					"Fires when a cell is clicked. Receives the underlying datum, index, and event.",
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(node, index, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters a cell.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(node, index, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves a cell.",
+			},
+			{
+				name: "children",
+				required: false,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					"Recharts subcomponents — typically `<ChartTooltip>` (paired with `<ChartTooltipContent>`) for hover tooltips.",
+			},
+		],
+	},
+};
 
 /**
  * Component-level descriptions. Used by `<PropsTable>` when a component has
