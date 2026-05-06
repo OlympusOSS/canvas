@@ -108,6 +108,167 @@ export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
 		],
 	},
 	"charts/chart-types": {
+		LineChart: [
+			{
+				name: "data",
+				required: true,
+				type: "Array<Record<string, any>>",
+				defaultValue: null,
+				description:
+					"Row data — one entry per X-axis tick. Each `<Line dataKey>` child reads its own field on every row to plot a series.",
+			},
+			{
+				name: "children",
+				required: true,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					"Recharts subcomponents that compose the chart. Typical children: `<CartesianGrid>`, `<XAxis dataKey=…>`, `<YAxis>`, one or more `<Line dataKey=…>` for each series, `<ChartTooltip>`, optionally `<ChartLegend>`, `<Brush>`, `<ReferenceLine>`.",
+			},
+			{
+				name: "margin",
+				required: false,
+				type: "{ top?: number; right?: number; bottom?: number; left?: number }",
+				defaultValue: "{ top: 5, right: 5, bottom: 5, left: 5 }",
+				description:
+					"Padding inside the chart between the axes and the container edges. Bump `left`/`bottom` when axis labels need more room.",
+			},
+			{
+				name: "layout",
+				required: false,
+				type: '"horizontal" | "vertical"',
+				defaultValue: '"horizontal"',
+				description:
+					"Axis orientation. `horizontal` = X is the category axis (default time-series). `vertical` swaps the axes — useful for ranked rows.",
+			},
+			{
+				name: "stackOffset",
+				required: false,
+				type: '"expand" | "none" | "wiggle" | "silhouette" | "sign"',
+				defaultValue: '"none"',
+				description:
+					"Stack-mode for stacked lines. `expand` normalises to 0–1 (percentage stack); `silhouette`/`wiggle` are the streamgraph variants. Most line charts leave this at `none`.",
+			},
+			{
+				name: "syncId",
+				required: false,
+				type: "string | number",
+				defaultValue: null,
+				description:
+					"Cross-chart hover sync identifier. All charts that share the same `syncId` highlight matching ticks together — useful for stacking a line and a bar chart on the same dashboard.",
+			},
+			{
+				name: "syncMethod",
+				required: false,
+				type: '"index" | "value" | (ticks, data) => number',
+				defaultValue: '"index"',
+				description:
+					"How `syncId` matches points across charts. `index` syncs by row position; `value` matches by axis value.",
+			},
+			{
+				name: "throttleDelay",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description:
+					"Throttle (ms) for `onMouseMove` events. Bump to 16+ on dense lines with thousands of points to smooth pointer tracking.",
+			},
+			{
+				name: "defaultShowTooltip",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Show the tooltip on initial render before any pointer event.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description:
+					"Fires when the chart area is clicked. Receives the chart state (active payload, coords, etc.) and the original event.",
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters the chart area.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves the chart area.",
+			},
+			{
+				name: "onMouseMove",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description:
+					"Fires on every pointer move over the chart. Pair with `throttleDelay` on dense lines.",
+			},
+			{
+				name: "onMouseDown",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires on pointer-down inside the chart.",
+			},
+			{
+				name: "onMouseUp",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires on pointer-up inside the chart.",
+			},
+			{
+				name: "onDoubleClick",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the chart area is double-clicked.",
+			},
+			{
+				name: "onContextMenu",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires on right-click inside the chart.",
+			},
+			{
+				name: "width",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel width — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "height",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel height — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the root `<svg>` wrapper.",
+			},
+			{
+				name: "style",
+				required: false,
+				type: "CSSProperties",
+				defaultValue: null,
+				description: "Inline style applied to the root `<svg>` wrapper.",
+			},
+		],
 		PieChart: [
 			{
 				name: "children",
