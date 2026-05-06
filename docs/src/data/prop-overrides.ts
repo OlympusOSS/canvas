@@ -37,6 +37,68 @@ export interface ExtraPropEntry {
 }
 
 export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
+	"charts/gauge": {
+		Gauge: [
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the outer wrapper via `cn()`.",
+			},
+			{
+				name: "id",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					"DOM `id` for the wrapper — useful when an `aria-labelledby` references the gauge.",
+			},
+			{
+				name: "style",
+				required: false,
+				type: "CSSProperties",
+				defaultValue: null,
+				description:
+					"Inline style merged onto the wrapper. Useful for one-off positioning; prefer `className` for theme-aware styling.",
+			},
+		],
+	},
+	"charts/labeled-bar-list": {
+		LabeledBarList: [
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the outer wrapper via `cn()`.",
+			},
+			{
+				name: "id",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					"DOM `id` for the wrapper — useful when an `aria-labelledby` references the list.",
+			},
+			{
+				name: "role",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					'Override the wrapper\'s ARIA role. Set when the list participates in a more specific landmark (e.g. `role="img"` paired with `aria-label`, or `role="status"` for live-updating top-N panels).',
+			},
+			{
+				name: "aria-label",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					'Accessible label for the whole list — e.g. `"Top regions by sign-ins"`. Each row\'s bar is `aria-hidden` so the label conveys the meaning to assistive tech.',
+			},
+		],
+	},
 	"charts/service-health-list": {
 		ServiceHealthList: [
 			{
@@ -1277,6 +1339,69 @@ export const COMPONENT_DESCRIPTIONS: Record<string, Record<string, string>> = {}
 
 /** sourceId (e.g. `atoms/button`) → component displayName → prop name → override. */
 export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = {
+	"charts/gauge": {
+		Gauge: {
+			value: {
+				description:
+					"Percentage to fill (`0`–`100`). Values outside the range are clamped, so passing `120` shows a full ring and `-5` shows an empty ring.",
+			},
+			size: {
+				description:
+					"Pixel diameter (width = height) of the ring. Bump for hero KPI cards, shrink for inline summaries.",
+				defaultValue: "160",
+			},
+			strokeWidth: {
+				description:
+					"Pixel thickness of the ring. Pair larger `size` with proportionally larger `strokeWidth` so the ring doesn't look spindly.",
+				defaultValue: "14",
+			},
+			colorVar: {
+				description:
+					"CSS variable name (without the leading `--`) used for the filled arc — e.g. `chart-1`, `stat-success`, `stat-destructive`. The unfilled track is always `--muted`.",
+				defaultValue: '"chart-1"',
+			},
+			valueLabel: {
+				description:
+					'Override the centred value text. Defaults to `"{rounded value}%"`. Pass any node — e.g. `<span>97<small>/100</small></span>` — for richer compositions.',
+			},
+			caption: {
+				description:
+					"Small uppercase caption rendered below the centre value (e.g. `Adoption`, `Healthy`). Optional.",
+			},
+			"aria-label": {
+				description:
+					'Accessible label describing what the gauge measures. The component already exposes `role="meter"` and `aria-valuenow`/`min`/`max`; this fills in the *what*.',
+				defaultValue: '"Gauge"',
+			},
+		},
+	},
+	"charts/labeled-bar-list": {
+		LabeledBarList: {
+			items: {
+				description:
+					"Array of `{ label: ReactNode; value: number; leading?: ReactNode }`. `label` shows on the left and is the React key, `value` drives the bar fill (scaled against the largest value in the list — pass raw counts), and the optional `leading` slot renders a flag, avatar, or `<Icon />` to the left of the label.",
+			},
+			colorVar: {
+				description:
+					"CSS variable name (without the leading `--`) used for the bar fill — e.g. `chart-2`, `stat-success`. Applies to every row.",
+				defaultValue: '"chart-1"',
+			},
+			valueFormatter: {
+				description:
+					"Format the right-aligned value cell. Default is `Number.prototype.toLocaleString()` so 1000 reads as `1,000`. Pass `(v) => `${v}%`` for percentages.",
+				defaultValue: "(v) => v.toLocaleString()",
+			},
+			barHeight: {
+				description:
+					"Pixel height of each row's bar track. Bump for chunkier bars on dense dashboards.",
+				defaultValue: "4",
+			},
+			caption: {
+				description:
+					"Optional caption rendered below the list — typically a short context line (e.g. `Last 24 hours`, `Source: Grafana`).",
+			},
+		},
+	},
 	"charts/service-health-list": {
 		ServiceHealthList: {
 			items: {
