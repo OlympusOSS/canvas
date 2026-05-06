@@ -37,6 +37,41 @@ export interface ExtraPropEntry {
 }
 
 export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
+	"charts/stacked-bar": {
+		StackedBar: [
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the outer wrapper via `cn()`.",
+			},
+			{
+				name: "id",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					"DOM `id` for the wrapper — useful when an `aria-labelledby` references the bar.",
+			},
+			{
+				name: "role",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					'Override the wrapper\'s ARIA role. The inner bar already carries `role="presentation"`; set this on the outer when the whole component participates in a more specific landmark (e.g. `role="img"` with `aria-label`).',
+			},
+			{
+				name: "aria-label",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					"Accessible label for the whole bar — important when the visual order of segments carries meaning.",
+			},
+		],
+	},
 	"charts/chart-types": {
 		Sankey: [
 			{
@@ -615,6 +650,37 @@ export const COMPONENT_DESCRIPTIONS: Record<string, Record<string, string>> = {}
 
 /** sourceId (e.g. `atoms/button`) → component displayName → prop name → override. */
 export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = {
+	"charts/stacked-bar": {
+		StackedBar: {
+			segments: {
+				description:
+					"Array of `{ label: string; value: number; colorVar?: string }`. `label` is shown in the legend and as a key, `value` is sized proportionally to its share of the total (raw counts or pre-computed percentages both work), and the optional `colorVar` overrides the segment fill (CSS variable name without the leading `--`, e.g. `chart-2`).",
+			},
+			defaultColorVar: {
+				description:
+					"Fallback CSS variable name for segments that omit `colorVar`. Pass without the leading `--` (e.g. `chart-1`, `stat-success`).",
+				defaultValue: '"chart-1"',
+			},
+			height: {
+				description: "Pixel height of the bar pill.",
+				defaultValue: "10",
+			},
+			showLegend: {
+				description:
+					"Render the swatch legend below the bar. Disable for compact embedded layouts.",
+				defaultValue: "true",
+			},
+			valueFormatter: {
+				description:
+					"Format each segment's value in the legend. Default appends `%` — use `(v) => v.toLocaleString()` for raw counts.",
+				defaultValue: "(v) => `${v}%`",
+			},
+			caption: {
+				description:
+					"Optional caption rendered below the legend. Typically a short timestamp or context line (e.g. `Last 1 hour`).",
+			},
+		},
+	},
 	"molecules/action-bar": {
 		ActionBar: {
 			primaryAction: {
