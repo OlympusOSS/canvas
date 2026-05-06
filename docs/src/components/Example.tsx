@@ -186,7 +186,12 @@ interface PreviewFrameProps {
 function PreviewFrame({ viewport, onWidthChange, children }: PreviewFrameProps) {
 	const [height, setHeight] = useState(MIN_FRAME_HEIGHT);
 	const wrapperRef = useRef<HTMLDivElement | null>(null);
-	const initialContent = `<!DOCTYPE html><html style="overflow:hidden;"><head><link rel="stylesheet" href="${canvasRuntimeCssUrl}"></head><body style="margin:0;background:transparent;"><div id="frame-root"></div></body></html>`;
+	// `overflow-y: auto` so a themed vertical scrollbar appears when example
+	// content exceeds MAX_FRAME_HEIGHT (otherwise content > 1400px would be
+	// silently clipped). `overflow-x: hidden` keeps the horizontal axis fixed
+	// so the iframe doesn't double-scroll horizontally with the parent docs
+	// column at narrow viewports.
+	const initialContent = `<!DOCTYPE html><html style="overflow-y:auto;overflow-x:hidden;"><head><link rel="stylesheet" href="${canvasRuntimeCssUrl}"></head><body style="margin:0;background:transparent;"><div id="frame-root"></div></body></html>`;
 
 	// Report the wrapper's actual rendered width up so the toggle can reflect
 	// which canvas breakpoint it lands in — matters for `lg` (100%) which
