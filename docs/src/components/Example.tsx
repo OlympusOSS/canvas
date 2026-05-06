@@ -232,6 +232,13 @@ function PreviewFrame({ viewport, onWidthChange, children }: PreviewFrameProps) 
 					borderRadius: 8,
 					background: "transparent",
 					display: "block",
+					// `content-box` so `height` sizes the iframe's inner viewport
+					// (not the border-box). Tailwind's preflight applies
+					// `box-sizing: border-box` globally, which on the iframe would
+					// subtract the 2px of borders from the inner viewport — causing
+					// content sized to match `height` (e.g. 200px) to overflow by
+					// 2px and trigger an unnecessary vertical scrollbar.
+					boxSizing: "content-box",
 				}}
 			>
 				<FrameContextConsumer>
