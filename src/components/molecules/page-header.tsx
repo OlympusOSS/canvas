@@ -44,11 +44,11 @@ export function PageHeader({
 							<span key={crumb.label} className="flex items-center gap-1">
 								{crumb.href ? (
 									LinkComp ? (
-										<LinkComp href={crumb.href} className="hover:text-foreground transition-colors">
+										<LinkComp href={crumb.href} className="hover:text-brand transition-colors">
 											{crumb.label}
 										</LinkComp>
 									) : (
-										<a href={crumb.href} className="hover:text-foreground transition-colors">
+										<a href={crumb.href} className="hover:text-brand transition-colors">
 											{crumb.label}
 										</a>
 									)

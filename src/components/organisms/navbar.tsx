@@ -47,7 +47,7 @@ const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
 								<LinkEl
 									key={link.href}
 									href={link.href}
-									className="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground"
+									className="text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-brand"
 									{...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
 								>
 									{link.label}
@@ -79,7 +79,7 @@ const NavBar = React.forwardRef<HTMLElement, NavBarProps>(
 										key={link.href}
 										href={link.href}
 										onClick={() => setMobileOpen(false)}
-										className="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-foreground"
+										className="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-brand"
 										{...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
 									>
 										{link.label}
