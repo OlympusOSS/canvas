@@ -108,6 +108,324 @@ export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
 		],
 	},
 	"charts/chart-types": {
+		RadarChart: [
+			{
+				name: "data",
+				required: true,
+				type: "Array<Record<string, any>>",
+				defaultValue: null,
+				description:
+					"Row data — one entry per axis spoke. The field referenced by `<PolarAngleAxis dataKey>` becomes the spoke label, and each `<Radar dataKey>` reads its own field on every row to plot the polygon.",
+			},
+			{
+				name: "children",
+				required: true,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					"Recharts subcomponents that compose the chart. Typical children: `<PolarGrid>`, `<PolarAngleAxis dataKey=…>`, optionally `<PolarRadiusAxis>`, one or more `<Radar dataKey=…>` for each series, `<ChartTooltip>`, `<ChartLegend>`.",
+			},
+			{
+				name: "innerRadius",
+				required: false,
+				type: "number | string",
+				defaultValue: "0",
+				description:
+					"Radius of the centre hole. Numbers are pixels; strings are percentages of the chart's smaller dimension. Bump for radar layouts that mask the centre (e.g. score sweet-spots).",
+			},
+			{
+				name: "outerRadius",
+				required: false,
+				type: "number | string",
+				defaultValue: '"80%"',
+				description:
+					"Outermost ring radius. Numbers are pixels; strings are percentages of the chart's smaller dimension.",
+			},
+			{
+				name: "startAngle",
+				required: false,
+				type: "number",
+				defaultValue: "90",
+				description:
+					"Angle (degrees) where the first spoke sits. Default puts the first spoke at 12 o'clock; tune to rotate the chart.",
+			},
+			{
+				name: "endAngle",
+				required: false,
+				type: "number",
+				defaultValue: "-270",
+				description:
+					"Angle (degrees) where the last spoke ends. Default sweeps a full 360° clockwise from `startAngle`.",
+			},
+			{
+				name: "cx",
+				required: false,
+				type: "number | string",
+				defaultValue: '"50%"',
+				description:
+					"X coordinate of the chart's centre. Numbers are pixels; strings are percentages.",
+			},
+			{
+				name: "cy",
+				required: false,
+				type: "number | string",
+				defaultValue: '"50%"',
+				description:
+					"Y coordinate of the chart's centre. Numbers are pixels; strings are percentages.",
+			},
+			{
+				name: "margin",
+				required: false,
+				type: "{ top?: number; right?: number; bottom?: number; left?: number }",
+				defaultValue: "{ top: 5, right: 5, bottom: 5, left: 5 }",
+				description:
+					"Padding inside the chart between the polygon and the container edges. Bump when long spoke labels overflow.",
+			},
+			{
+				name: "syncId",
+				required: false,
+				type: "string | number",
+				defaultValue: null,
+				description:
+					"Cross-chart hover sync identifier. All charts that share the same `syncId` highlight matching spokes together.",
+			},
+			{
+				name: "syncMethod",
+				required: false,
+				type: '"index" | "value" | (ticks, data) => number',
+				defaultValue: '"index"',
+				description: "How `syncId` matches points across charts.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the chart area is clicked. Receives the chart state and event.",
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters the chart area.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves the chart area.",
+			},
+			{
+				name: "onMouseMove",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description:
+					"Fires on every pointer move inside the chart. Pair with `throttleDelay` on dense radars.",
+			},
+			{
+				name: "throttleDelay",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description:
+					"Throttle (ms) for `onMouseMove` events. Bump to 16+ on radars with many series for smoother pointer tracking.",
+			},
+			{
+				name: "width",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel width — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "height",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel height — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the root `<svg>` wrapper.",
+			},
+			{
+				name: "style",
+				required: false,
+				type: "CSSProperties",
+				defaultValue: null,
+				description: "Inline style applied to the root `<svg>` wrapper.",
+			},
+		],
+		RadialBarChart: [
+			{
+				name: "data",
+				required: true,
+				type: "Array<Record<string, any>>",
+				defaultValue: null,
+				description:
+					"Row data — one entry per concentric ring. Each row's `dataKey` field (defined on the inner `<RadialBar>`) drives that ring's arc length. Pass `fill` per row for per-ring colours.",
+			},
+			{
+				name: "children",
+				required: true,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					"Recharts subcomponents that compose the chart. At minimum a `<RadialBar dataKey=…>` for the rings; commonly `<ChartTooltip>`, `<ChartLegend>`, and `<PolarAngleAxis>` for circular tick marks.",
+			},
+			{
+				name: "innerRadius",
+				required: false,
+				type: "number | string",
+				defaultValue: '"30%"',
+				description:
+					"Radius of the centre hole. Numbers are pixels; strings are percentages of the chart's smaller dimension. Bump to ~40–50% for thicker doughnut layouts.",
+			},
+			{
+				name: "outerRadius",
+				required: false,
+				type: "number | string",
+				defaultValue: '"80%"',
+				description:
+					"Outermost ring radius. Numbers are pixels; strings are percentages of the chart's smaller dimension.",
+			},
+			{
+				name: "startAngle",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description:
+					"Angle (degrees) where the rings begin sweeping. Pair with `endAngle` for partial layouts — e.g. `startAngle={90} endAngle={-270}` starts at 12 o'clock and sweeps clockwise.",
+			},
+			{
+				name: "endAngle",
+				required: false,
+				type: "number",
+				defaultValue: "360",
+				description: "Angle (degrees) where the rings end. See `startAngle`.",
+			},
+			{
+				name: "cx",
+				required: false,
+				type: "number | string",
+				defaultValue: '"50%"',
+				description:
+					"X coordinate of the chart's centre. Numbers are pixels; strings are percentages.",
+			},
+			{
+				name: "cy",
+				required: false,
+				type: "number | string",
+				defaultValue: '"50%"',
+				description:
+					"Y coordinate of the chart's centre. Numbers are pixels; strings are percentages.",
+			},
+			{
+				name: "barSize",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel thickness of each ring. When omitted, rings auto-size to fill the available radial space; set explicitly for consistent ring widths regardless of data length.",
+			},
+			{
+				name: "barCategoryGap",
+				required: false,
+				type: "number | string",
+				defaultValue: '"10%"',
+				description:
+					"Gap between rings. Numbers are pixels; strings are percentages of the available band.",
+			},
+			{
+				name: "barGap",
+				required: false,
+				type: "number | string",
+				defaultValue: "4",
+				description:
+					"Gap between bars when multiple `<RadialBar>` series share the same ring. Pixels (number) or percentages (string).",
+			},
+			{
+				name: "margin",
+				required: false,
+				type: "{ top?: number; right?: number; bottom?: number; left?: number }",
+				defaultValue: "{ top: 5, right: 5, bottom: 5, left: 5 }",
+				description: "Padding inside the chart between the rings and the container edges.",
+			},
+			{
+				name: "syncId",
+				required: false,
+				type: "string | number",
+				defaultValue: null,
+				description:
+					"Cross-chart hover sync identifier. All charts that share the same `syncId` highlight matching rows together.",
+			},
+			{
+				name: "syncMethod",
+				required: false,
+				type: '"index" | "value" | (ticks, data) => number',
+				defaultValue: '"index"',
+				description: "How `syncId` matches points across charts.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the chart area is clicked. Receives the chart state and event.",
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters the chart area.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves the chart area.",
+			},
+			{
+				name: "width",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel width — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "height",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel height — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the root `<svg>` wrapper.",
+			},
+			{
+				name: "style",
+				required: false,
+				type: "CSSProperties",
+				defaultValue: null,
+				description: "Inline style applied to the root `<svg>` wrapper.",
+			},
+		],
 		Sankey: [
 			{
 				name: "data",
