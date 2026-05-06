@@ -18,8 +18,16 @@ exports[`Drawer > matches snapshot when open 1`] = `
   tabindex="-1"
 >
   <div
-    class="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted"
-  />
+    aria-hidden="true"
+    class="mx-auto mt-4 !h-2 !w-[100px] rounded-full bg-muted"
+    data-vaul-drawer-visible="true"
+    data-vaul-handle=""
+  >
+    <span
+      aria-hidden="true"
+      data-vaul-handle-hitarea=""
+    />
+  </div>
   <div
     class="grid gap-1.5 p-4 text-center sm:text-left"
   >
