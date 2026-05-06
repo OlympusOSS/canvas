@@ -9,9 +9,26 @@ describe("ActivityHeatmap", () => {
 		[0.25, 0.75, 0.1],
 	];
 
+	// The grid itself is no longer `firstElementChild` of the root — that's now a
+	// flex container holding the optional row-labels column + the grid wrapper.
+	// Helper to dig out the grid (the deepest div that holds one child per row).
+	function findGrid(container: HTMLElement): HTMLElement {
+		const cells = container.querySelectorAll("[data-cell]");
+		// Walk up from the first cell until we hit the row-of-rows container.
+		const cell = cells[0];
+		if (!cell) {
+			// empty grid case — root → flex → flex-1 → grid
+			const flex = container.firstElementChild as HTMLElement;
+			const inner = flex?.firstElementChild as HTMLElement;
+			return inner?.firstElementChild as HTMLElement;
+		}
+		const rowDiv = cell.parentElement as HTMLElement;
+		return rowDiv.parentElement as HTMLElement;
+	}
+
 	it("renders one row container per row of data", () => {
 		const { container } = render(<ActivityHeatmap data={DATA} />);
-		const grid = container.firstElementChild as HTMLElement;
+		const grid = findGrid(container);
 		expect(grid.children.length).toBe(2);
 	});
 
@@ -69,8 +86,71 @@ describe("ActivityHeatmap", () => {
 
 	it("renders an empty grid when data is empty", () => {
 		const { container } = render(<ActivityHeatmap data={[]} />);
-		const grid = container.firstElementChild as HTMLElement;
-		expect(grid.children.length).toBe(0);
+		// No cells rendered.
+		expect(container.querySelectorAll("[data-cell]").length).toBe(0);
+	});
+
+	it("renders rowLabels when provided, one per row", () => {
+		const { container, getByText } = render(<ActivityHeatmap data={DATA} rowLabels={["A", "B"]} />);
+		expect(getByText("A")).toBeInTheDocument();
+		expect(getByText("B")).toBeInTheDocument();
+		// Plus the grid still renders the right number of cells.
+		expect(container.querySelectorAll("[data-cell]").length).toBe(6);
+	});
+
+	it("renders blank rowLabels for nullish entries (alignment preserved)", () => {
+		// rowLabels has 1 real label + 1 nullish entry; both row slots still render
+		// (so the labels-column row count matches the grid row count).
+		const { container, getByText } = render(
+			<ActivityHeatmap data={DATA} rowLabels={["Mon", undefined as unknown as string]} />,
+		);
+		expect(getByText("Mon")).toBeInTheDocument();
+		// Two row-label slots render even though one is nullish.
+		const labelColumn = container.querySelector('[aria-hidden="true"]') as HTMLElement;
+		expect(labelColumn?.children.length).toBe(2);
+	});
+
+	it("does not render rowLabels column when array is empty", () => {
+		const { queryByText } = render(<ActivityHeatmap data={DATA} rowLabels={[]} />);
+		// Empty array → no labels column at all.
+		expect(queryByText(/^[A-Z]$/)).toBeNull();
+	});
+
+	it("renders colLabels when provided, blanking empty entries", () => {
+		const { getByText, queryByText } = render(
+			<ActivityHeatmap data={DATA} colLabels={["X", "", "Z"]} />,
+		);
+		expect(getByText("X")).toBeInTheDocument();
+		expect(getByText("Z")).toBeInTheDocument();
+		// "" / null entries don't render visible text, but the cell still exists in the DOM.
+		expect(queryByText("Y")).toBeNull();
+	});
+
+	it("renders the legend with default labels when legend={true}", () => {
+		const { getByText } = render(<ActivityHeatmap data={DATA} legend />);
+		expect(getByText("Fewer")).toBeInTheDocument();
+		expect(getByText("More")).toBeInTheDocument();
+	});
+
+	it("renders the legend with overridden labels when legend is an object", () => {
+		const { getByText } = render(
+			<ActivityHeatmap data={DATA} legend={{ fromLabel: "Low", toLabel: "High" }} />,
+		);
+		expect(getByText("Low")).toBeInTheDocument();
+		expect(getByText("High")).toBeInTheDocument();
+	});
+
+	it("partially overrides legend labels (one side default, other custom)", () => {
+		const { getByText } = render(<ActivityHeatmap data={DATA} legend={{ toLabel: "High" }} />);
+		// fromLabel falls back to "Fewer", toLabel uses the override.
+		expect(getByText("Fewer")).toBeInTheDocument();
+		expect(getByText("High")).toBeInTheDocument();
+	});
+
+	it("does not render the legend by default (legend=false)", () => {
+		const { queryByText } = render(<ActivityHeatmap data={DATA} />);
+		expect(queryByText("Fewer")).toBeNull();
+		expect(queryByText("More")).toBeNull();
 	});
 
 	it("matches snapshot", () => {

@@ -27,6 +27,26 @@ export interface ActivityHeatmapProps extends React.HTMLAttributes<HTMLDivElemen
 	 * string. Returns nothing → no title set.
 	 */
 	cellTitle?: (row: number, col: number, value: number) => string | undefined;
+	/**
+	 * Optional left-side row labels (Y-axis). When provided, must align with
+	 * `data.length`. Empty / nullish entries render as blank cells so the
+	 * label column stays aligned with the grid.
+	 */
+	rowLabels?: React.ReactNode[];
+	/**
+	 * Optional bottom-side column labels (X-axis). When provided, must align
+	 * with `data[0].length`. Pass empty strings (or `null`) for indices you
+	 * want to leave blank — useful for sparse hour ticks (e.g. only label
+	 * 0/6/12/18/23 across a 24-column matrix).
+	 */
+	colLabels?: React.ReactNode[];
+	/**
+	 * Show a "Fewer ↔ More" gradient legend below the grid. Pass `true` for
+	 * the default labels, or an object to override one or both ends. The
+	 * gradient mirrors the cell-opacity ramp (`0.08` → `0.93`).
+	 * @default false
+	 */
+	legend?: boolean | { fromLabel?: React.ReactNode; toLabel?: React.ReactNode };
 }
 
 /**
@@ -34,6 +54,10 @@ export interface ActivityHeatmapProps extends React.HTMLAttributes<HTMLDivElemen
  * matrices (token issuance, sign-in concentration, queue depth) where a full
  * chart would be overkill. Rendering is a flat `display: grid` — no canvas, no
  * SVG, fully interactive via hover titles.
+ *
+ * Optionally renders row labels on the left, sparse column labels below, and a
+ * `Fewer ↔ More` gradient legend — toggle each with `rowLabels` / `colLabels` /
+ * `legend` props.
  */
 export const ActivityHeatmap = React.forwardRef<HTMLDivElement, ActivityHeatmapProps>(
 	(
@@ -44,51 +68,110 @@ export const ActivityHeatmap = React.forwardRef<HTMLDivElement, ActivityHeatmapP
 			gap = 2,
 			cellRadius = 3,
 			cellTitle,
+			rowLabels,
+			colLabels,
+			legend = false,
 			className,
 			...props
 		},
 		ref,
 	) => {
 		const cols = data[0]?.length ?? 0;
+		const legendObj = typeof legend === "object" ? legend : null;
+		const fromLabel = legendObj?.fromLabel ?? "Fewer";
+		const toLabel = legendObj?.toLabel ?? "More";
+		const showLegend = legend !== false;
+
 		return (
-			<div
-				ref={ref}
-				className={cn("w-full", className)}
-				style={{
-					display: "grid",
-					gridTemplateRows: `repeat(${data.length}, ${cellHeight}px)`,
-					gap,
-				}}
-				{...props}
-			>
-				{data.map((row, r) => (
-					<div
-						key={`r-${r}`}
-						style={{
-							display: "grid",
-							gridTemplateColumns: `repeat(${cols}, 1fr)`,
-							gap,
-						}}
-					>
-						{row.map((raw, c) => {
-							const v = Math.max(0, Math.min(1, raw));
-							const opacity = 0.08 + v * 0.85;
-							const title = cellTitle?.(r, c, v);
-							return (
+			<div ref={ref} className={cn("w-full", className)} {...props}>
+				<div className="flex gap-2">
+					{rowLabels && rowLabels.length > 0 && (
+						<div
+							className="grid text-[10px] tabular-nums text-muted-foreground"
+							style={{
+								gridTemplateRows: `repeat(${data.length}, ${cellHeight}px)`,
+								rowGap: gap,
+							}}
+							aria-hidden
+						>
+							{Array.from({ length: data.length }, (_, i) => (
+								<span key={`row-label-${i}`} className="flex items-center leading-none">
+									{rowLabels[i] ?? ""}
+								</span>
+							))}
+						</div>
+					)}
+					<div className="flex-1">
+						<div
+							style={{
+								display: "grid",
+								gridTemplateRows: `repeat(${data.length}, ${cellHeight}px)`,
+								gap,
+							}}
+						>
+							{data.map((row, r) => (
 								<div
-									key={`c-${r}-${c}`}
-									data-cell=""
-									title={title}
-									aria-hidden
+									key={`r-${r}`}
 									style={{
-										borderRadius: cellRadius,
-										background: `hsl(var(--${colorVar}) / ${opacity})`,
+										display: "grid",
+										gridTemplateColumns: `repeat(${cols}, 1fr)`,
+										gap,
 									}}
-								/>
-							);
-						})}
+								>
+									{row.map((raw, c) => {
+										const v = Math.max(0, Math.min(1, raw));
+										const opacity = 0.08 + v * 0.85;
+										const title = cellTitle?.(r, c, v);
+										return (
+											<div
+												key={`c-${r}-${c}`}
+												data-cell=""
+												title={title}
+												aria-hidden
+												style={{
+													borderRadius: cellRadius,
+													background: `hsl(var(--${colorVar}) / ${opacity})`,
+												}}
+											/>
+										);
+									})}
+								</div>
+							))}
+						</div>
+						{colLabels && colLabels.length > 0 && (
+							<div
+								className="mt-2 grid text-[10px] tabular-nums text-muted-foreground"
+								style={{
+									gridTemplateColumns: `repeat(${cols}, 1fr)`,
+									columnGap: gap,
+								}}
+							>
+								{Array.from({ length: cols }, (_, i) => {
+									const label = colLabels[i];
+									const empty = label === undefined || label === null || label === "";
+									return (
+										<span key={`col-label-${i}`} className="text-center" aria-hidden={empty}>
+											{empty ? "" : label}
+										</span>
+									);
+								})}
+							</div>
+						)}
 					</div>
-				))}
+				</div>
+				{showLegend && (
+					<div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+						<span>{fromLabel}</span>
+						<div
+							className="h-2 flex-1 rounded-full"
+							style={{
+								background: `linear-gradient(90deg, hsl(var(--${colorVar}) / 0.08) 0%, hsl(var(--${colorVar}) / 0.93) 100%)`,
+							}}
+							aria-hidden
+						/>
+						<span>{toLabel}</span>
+					</div>
+				)}
 			</div>
 		);
 	},
