@@ -14,7 +14,7 @@ export default function App() {
 	return (
 		<div className="w-full max-w-2xl p-4">
 			<ChartContainer config={{}} className="h-[300px]">
-				<Treemap data={data} dataKey="size" nameKey="name" stroke="hsl(var(--background))">
+				<Treemap data={data} dataKey="size" nameKey="name" stroke="transparent">
 					<ChartTooltip content={<ChartTooltipContent hideLabel />} />
 				</Treemap>
 			</ChartContainer>
