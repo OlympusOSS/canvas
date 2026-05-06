@@ -1,5 +1,141 @@
 # Changelog
 
+## 2.7.0
+
+### Minor Changes
+
+- f1cda7f: `DashboardGrid` now renders a "Remove" button at the bottom-center of each widget when `editing` is true. Clicking it filters the item out of the controlled list and fires `onItemsChange`. Pairs with the existing top-right drag handle to give consumers a complete customize-mode UX (reorder + resize + delete) without writing per-widget chrome.
+
+### Patch Changes
+
+- a3a0f09: Docs: `ActivityHeatmap` props reference expanded.
+
+  - `data` description spells out the row-major shape `data[row][col]`, the `[0, 1]` value range with clamping behaviour, and the jagged-array caveat.
+  - `colorVar` description pins the rendering formula (`hsl(var(--{colorVar}) / opacity)`) and the linear opacity ramp from `0.08` → `0.93`, plus suggests `stat-success`/`stat-destructive` for semantic heatmaps.
+  - `cellHeight` / `gap` / `cellRadius` / `cellTitle` get tighter behavioural hints.
+  - Adds inherited HTML attrs (`className`, `id`, `role`, `aria-label`) — calls out that cells are `aria-hidden`, so `role="img"` + `aria-label` is required when the heatmap conveys meaning.
+
+- cf03104: Tweak: Extend the brand-color hover convention to every text-link-style surface in the design system.
+
+  - `AccordionTrigger` — hover now shifts to `text-brand` (was `text-foreground/70`).
+  - `BreadcrumbLink` — hover now shifts to `text-brand` (was `text-foreground`).
+  - `PageHeader` breadcrumbs (LinkComp + plain `<a>` paths) — hover now `text-brand` (was `text-foreground`).
+  - `NavBar` desktop links — hover now `text-brand` (was `text-foreground`).
+  - `NavBar` mobile links — hover now `text-brand` while keeping the existing `bg-accent` row-hover.
+
+  Variant-specific hovers on solid buttons (default/destructive/secondary/outline/ghost), tab triggers, sidebar/dropdown row items, etc. are unchanged — those still use their `bg-accent` / variant-specific shifts to keep destructive/primary cues distinct.
+
+- 474b05f: Docs: Fix the side-by-side carousel orientations example.
+
+  - Wrapper gap: `gap-12` → `gap-20` (was 48px, now 80px). The horizontal carousel's `CarouselNext` button overhangs `-right-12` (48px), so `gap-12` left exactly 0px clearance — making the buttons appear to touch the vertical carousel.
+  - Vertical carousel width: `w-32` → `w-48` (128px → 192px) so the card no longer feels cramped next to the 256px horizontal one.
+  - Vertical `CarouselContent` height: `h-24` → `h-28` (96px → 112px). The carousel's inner flex container uses `-mt-4` to compensate for slides' `pt-4`, which made the viewport auto-fit at `inner_h - 16`. With a 96px card and `h-24` (96px) on the content, the viewport ended up at 80px and clipped the card's bottom 16px. `h-28` ensures the viewport renders at 96px, fully showing the card.
+
+- d26df33: Docs: Full prop references for `BarChart` (26 props), `ComposedChart` (26 props), and `AreaChart` (22 props). All three were Recharts `CategoricalChart` passthroughs in `chart-types`, so react-docgen returned empty prop lists.
+
+  Each entry covers the same shape: required `data` + `children` (with chart-specific child guidance — `<Bar>` + `stackId` for stacked bars, mixed `<Bar>`/`<Line>`/`<Area>`/`<Scatter>` for ComposedChart, `<defs><linearGradient>` for theme-aware AreaChart fills), layout (`margin`, `layout`, `stackOffset`, `reverseStackOrder`), Bar-only props (`barCategoryGap`, `barGap`, `barSize`, `maxBarSize`) on BarChart and ComposedChart, sync (`syncId`, `syncMethod`), `throttleDelay`, `defaultShowTooltip`, the full chart-level pointer-event surface (`onClick`, `onMouseEnter`/`Leave`/`Move`/`Down`/`Up`, `onDoubleClick`, `onContextMenu`), and root wrapper props (`width`, `height`, `className`, `style`).
+
+- 0c4daf2: Docs: Fix the component manifest so each entry sits in its tier and tiers are alphabetical.
+
+  - `Sparkline` was filed under molecules (with `tier: "charts"`) — it now sits in the charts section, alphabetised between `ServiceHealthList` and `StackedBar`. The Charts tier index now lists 19 components in clean alphabetical order.
+  - `BrandMark` (atoms) moved up between `Badge` and `Button`.
+  - Organisms `Toaster` (id: `sonner`, label `Toaster`) moved to the end of the tier so it sorts after `Tabs` and `ThemeProvider` by label.
+
+  No component code or routes changed — manifest order only.
+
+- 55028e4: Tweak: Refine the `--destructive` (and matching `--stat-destructive`) token to a warmer, more vibrant coral-red — replacing the previous flat pinkish red.
+
+  - Light: `hsl(0 84.2% 60.2%)` (`#ef4444`) → `hsl(4 78% 50%)` (`#df341d`) — warm, deep, authoritative
+  - Dark: `hsl(0 70% 45%)` (`#c33b3b`) → `hsl(4 88% 62%)` (`#f15238`) — warm coral, vibrant on dark surfaces
+
+  Cascades to every error/danger surface (Form errors, AlertDialog destructive action, destructive Button, Badge, Alert, Stepper error step, StatCard `destructive` variant, Textarea `border-destructive`, etc.). White foreground text still passes WCAG AA against the new background.
+
+- fb8be62: Fix: Drawer now opens correctly inside iframe / portal-container contexts, and clicking the visual handle cycles snap points.
+
+  - `Drawer` (Vaul `Root`) now reads from `usePortalContainer()` and forwards a `container` prop to Vaul. Without this, Vaul portaled into the parent document's `body` instead of the iframe's, so the drawer mounted offscreen and appeared unresponsive in docs/Storybook iframes. Existing consumers can still override by passing `container` explicitly.
+  - The pill at the top of `DrawerContent` is now `DrawerPrimitive.Handle` instead of a plain `<div>`. Vaul's `Handle` cycles through `snapPoints` on click — previously the visual-only div did nothing when clicked. Also exported as `DrawerHandle` for consumers who want to compose the handle manually.
+
+- 51f112e: Docs: Fix the `ErrorBoundary` custom-fallback example so the Retry button visibly recovers.
+
+  The previous example wrapped a `Crashy` component that always threw on every render — clicking Retry correctly reset the boundary, but the child re-threw immediately, so the user saw the same fallback and assumed Retry was broken. Updated to mirror the default example: `Crashy` accepts `shouldThrow`, parent state controls it, and Retry both flips that state and resets the boundary so the success branch can render.
+
+  The `ErrorBoundary` component itself was correct — only the example needed fixing.
+
+- 6c09200: Docs: Full prop reference for `FunnelChart` (15 props). Like the other Recharts chart-types passthroughs, react-docgen returned an empty list. Hand-authored entries cover required `children` (typical: `<Funnel>` + `<ChartTooltip>`, optional `<LabelList>` for stage labels), optional `data`, layout (`margin`, `syncId`, `syncMethod`), pointer events + `throttleDelay`, `defaultShowTooltip`, and root wrapper props. Notes that data lives on each `<Funnel data=…>` child rather than on the chart wrapper.
+- d6cae2d: Docs: Add a "Catalog" example to the `Icon` page that lists every Lucide icon canvas re-exports. Searchable input filters the 1,695-name `iconNames` set live (case-insensitive substring match, deferred so typing stays smooth); rendered grid shows the first 240 matches at any time. Each tile is a button that copies the icon name to clipboard on click — drops the friction of jumping out to the Lucide site to find a name.
+- ded8380: Docs:
+
+  - Example iframes now show a vertical scrollbar **only** when content flows past the bottom of the iframe. Two fixes stacked:
+    - `<html>` overflow `hidden` → `auto` so content taller than `MAX_FRAME_HEIGHT` (1400px) gets a themed scrollbar instead of being silently clipped.
+    - `box-sizing: content-box` on the iframe so the 2px of border doesn't subtract from the inner viewport. Tailwind's preflight applies `box-sizing: border-box` globally, which made `height: 200px` resolve to a 198px viewport and triggered a phantom scrollbar on every example whose content was sized to match the iframe.
+  - `Icon` page: `Catalog` example moved to the top of the Examples list so the searchable index appears right after the Import section.
+
+- 18bd285: Docs: Expanded prop references for `LabeledBarList` (9 props) and `Gauge` (10 props).
+
+  - `LabeledBarList` — `items` description spells out the per-row shape `{ label: ReactNode; value: number; leading?: ReactNode }` (with the `leading` slot for flags/avatars/icons). Other prop descriptions tightened with concrete defaults (`valueFormatter` shows the `(v) => `${v}%``percentage alternate;`colorVar`lists`chart-N`/`stat-success` examples). Adds inherited HTML attrs (`className`, `id`, `role`, `aria-label`).
+  - `Gauge` — every documented prop tightened with usage hints (`value` clamping behaviour; `colorVar` lists semantic options like `stat-success`/`stat-destructive`; `aria-label` notes that `role="meter"` + `aria-valuenow`/`min`/`max` are already wired). Adds inherited `className`, `id`, `style`.
+
+- 0388af6: Docs: Full prop reference for `LineChart` (21 props). Hand-authored entries cover required `data` and `children` (typical: `<CartesianGrid>`, `<XAxis>`, `<YAxis>`, `<Line>`, `<ChartTooltip>`, optional `<Brush>` / `<ReferenceLine>`), layout (`margin`, `layout`, `stackOffset` for stacked / streamgraph variants), `syncId`/`syncMethod`/`throttleDelay`/`defaultShowTooltip`, the full chart-level pointer-event surface (`onClick`, `onMouseEnter`/`Leave`/`Move`/`Down`/`Up`, `onDoubleClick`, `onContextMenu`), and root wrapper props (`width`, `height`, `className`, `style`).
+- e2d8c4c: Tweak: Replace legacy "underline on hover" with a brand-color hover across every link surface in the design system.
+
+  - `Button` `variant="link"` — drop `underline-offset-4 hover:underline`; hover now shifts text from `text-primary` → `text-brand` (canvas blue).
+  - `AccordionTrigger` — drop `hover:underline`; hover now shifts to `text-foreground/70` (toggle, not link — uses muted-fade not brand).
+  - Prose anchors (`PROSE_CANVAS_CLASSES`, used by `RichTextEditor` + `MarkdownEditor` preview) — drop the always-on underline + `decoration-*` shift; anchors stay `text-brand` and fade to `text-brand/80` on hover.
+
+  Already-correct surfaces (`NavBar`, `Breadcrumb`, `PageHeader` breadcrumbs) used color-shift only — no change.
+
+  Fix: Tighten the vertical-orientation `Carousel` prev/next buttons. They were positioned at `-top-12` / `-bottom-12` (16px gap from viewport edge). Combined with a viewport that's typically taller than a single slide, the buttons looked detached from the visible card. Now `-top-10` / `-bottom-10` (8px gap). Horizontal orientation unchanged.
+
+- b717545: Docs: Full prop reference for `PieChart` (15 props). Like the other Recharts passthroughs in `chart-types`, react-docgen returned an empty list. Hand-authored entries cover `children` (typical: `<Pie>`, `<ChartTooltip>`, `<ChartLegend>`; nested rings via stacked `<Pie>` siblings), optional `data`, layout (`margin`, `syncId`, `syncMethod`), pointer events (`onClick`, `onMouseEnter`/`Leave`/`Move`, `throttleDelay`), `defaultShowTooltip`, and `width`/`height`/`className`/`style`. Notes that data lives on each `<Pie data=…>` child, not on the chart wrapper.
+- 7903a0f: Fix: every Radix-based portal in canvas now respects `<PortalContainerProvider>`. Previously only `Select` honored the context — `ContextMenu`, `DropdownMenu`, `Popover`, `Menubar`, `Tooltip`, `Dialog`, `AlertDialog`, and `Sheet` all portaled to `document.body` regardless of context. Inside iframes / shadow DOM / scoped containers (e.g. canvas's own docs preview), positioning-based menus (ContextMenu, DropdownMenu, Popover, Menubar, Tooltip) opened at the wrong viewport coordinates. They now portal into whatever container the nearest `PortalContainerProvider` provides — falls back to `document.body` when no provider is in scope.
+- 86ec584: Docs: Full prop references for `RadialBarChart` (21 props) and `RadarChart` (20 props). Both are passthroughs of Recharts categorical-chart primitives and returned empty prop lists from react-docgen.
+
+  - `RadialBarChart`: data composition (`data`, `children`), polar layout (`innerRadius`, `outerRadius`, `startAngle`, `endAngle`, `cx`, `cy` — `startAngle={90} endAngle={-270}` 12-o'clock-clockwise pattern called out), ring sizing (`barSize`, `barCategoryGap`, `barGap`), `margin`/`syncId`/`syncMethod`, pointer events, and `width`/`height`/`className`/`style`.
+  - `RadarChart`: same shape minus the bar-only props — adds `onMouseMove` and `throttleDelay`, default `startAngle={90}` / `endAngle={-270}` documented with the typical "first spoke at 12 o'clock" convention.
+
+- b2f4a43: Fix: `Resizable` (vertical orientation + sizing) was broken after the `react-resizable-panels` v4 upgrade. Two unrelated regressions stacked under "Top/Bottom doesn't work":
+
+  1. **Wrong CSS attribute selector.** The wrapper styled vertical layouts off `data-[panel-group-direction=vertical]` — that attribute existed in v3 but was removed in v4. v4 only emits `aria-orientation` (and only on `Separator`). Group flex direction is now decided in JS from the `orientation` prop; separator dimension styles now key off `aria-[orientation=horizontal]` (separator inside a vertical group).
+
+  2. **`className` height was ignored.** v4 forces inline `height: 100%; width: 100%` on the panel group, which overrides any `className="h-32"` consumers passed directly to `<ResizablePanelGroup>`. Now the group is wrapped internally in a sizing div — `className` lands on the wrapper, the library's `Group` fills 100%. Existing usage compiles unchanged.
+
+  Bonus: docs `orientations` and `nested-panels` examples bumped to `h-48` / `h-64` so consumers can see the panels actually drag.
+
+- 63c6624: Fix: `SelectItem` now wraps its children in a `flex items-center gap-2` row so inline icons compose horizontally with their label instead of stacking. Tailwind's preflight makes `<svg>` block-level, which previously pushed the label below the icon in both the dropdown items and the trigger's selected-value display. Affects any consumer rendering `<SelectItem><Icon name="…" /> Label</SelectItem>`.
+- e437155: Docs: In the `ServiceHealthList` "All systems normal" example, change the in-card label to "All systems nominal" and prefix it with a pulsing, glowing green dot (`animate-ping` ring + solid `--stat-success` core with a soft drop-shadow). Section heading is unchanged.
+- d285c9a: Docs: `ServiceHealthList` props reference expanded.
+
+  - `items` description spells out the per-row shape `{ name: string; status: "healthy" | "degraded" | "down"; meta?: ReactNode[] }` instead of leaving consumers to chase the `ServiceHealthItem` type. Calls out that the pulse-+-glow halo only fires on `"healthy"`.
+  - `caption` description gains concrete examples (`Last 5 minutes`, `Updated 24s ago`).
+  - Adds the inherited HTML attributes (`className`, `id`, `role`, `aria-label`) that come from `extends React.HTMLAttributes<HTMLDivElement>` and react-docgen can't surface. The `aria-label`/`role="status"` pairing is documented for live-updating health panels.
+
+- 79fc2be: Tweak: `ServiceHealthList` healthy-status dots now pulse and glow.
+
+  - Healthy rows render an `animate-ping` ring around the dot plus a soft drop-shadow halo (in addition to the existing 3px outline). Degraded / down dots stay static so the pulse is reserved for the "everything's alive" signal.
+  - Docs `all-healthy` example: the in-card label is now "All systems nominal" (heading text only — no extra dot beside it; the per-service pulse carries the signal).
+
+- 44a1d5b: Docs: `StackedBar` props page expanded.
+
+  - `segments` description now spells out the per-segment shape `{ label, value, colorVar? }` instead of just showing the bare `StackedBarSegment[]` type.
+  - Other prop descriptions tightened with concrete default-formatting examples (e.g. `valueFormatter` shows the `toLocaleString()` alternate for raw counts) and usage hints.
+  - Added inherited HTML attributes that come from `extends React.HTMLAttributes<HTMLDivElement>` and react-docgen can't surface: `className`, `id`, `role`, `aria-label`.
+
+- 1f23654: Docs: Full prop references for `SunburstChart`, `ScatterChart`, and `Sankey`. All three were passthroughs of Recharts primitives, so react-docgen returned empty prop lists and the pages rendered the "no documented props" fallback.
+
+  - `SunburstChart` (19 props): `data`, `dataKey`, `padding`, `ringPadding`, `innerRadius`, `outerRadius`, `cx`, `cy`, `startAngle`, `endAngle`, `fill`, `stroke`, `textOptions`, `onClick`, `onMouseEnter`, `onMouseLeave`, `width`, `height`, `children`. Notes call out the `startAngle`/`endAngle` half-circle pattern and the `letterSpacing` cast inside `textOptions`.
+  - `ScatterChart` (19 props): `children`, `data`, `margin`, `layout`, `syncId`, `syncMethod`, `throttleDelay`, `defaultShowTooltip`, `width`, `height`, `style`, plus the chart-level pointer events. Notes clarify that scatter data lives on each `<Scatter>` child rather than on the chart wrapper.
+  - `Sankey` (17 props): `data`, `nameKey`, `dataKey`, `nodePadding`, `nodeWidth`, `linkCurvature`, `iterations`, `node`, `link`, `sort`, `margin`, `onClick`, `onMouseEnter`, `onMouseLeave`, `width`, `height`, `children`. Includes the `(element, type, event)` event callback shape and the `node`/`link` styling vs custom-renderer dual API.
+
+- ec48e6a: Add globally-themed scrollbars in `tokens.css`. Every overflow-scroll element across canvas (and any consumer app loading the canvas tokens stylesheet) now renders thin, rounded scrollbars tinted with the `--muted-foreground` token at 30% / 45% / 60% opacity for idle / hover / active. Replaces stark OS-default scrollbars (chunky on Win/Linux, mismatched in dark mode) with a subtle treatment that matches the rest of the canvas surface chrome. Firefox uses `scrollbar-color`; WebKit (Chrome/Safari) uses `::-webkit-scrollbar` pseudo-elements. Radix `ScrollArea` continues to render its own custom scrollbar for explicit-scrollbar use cases.
+- 1c6ce92: Docs: `Treemap` default example now uses a custom cell renderer for cleaner text — white semibold name + smaller muted value, both with a soft drop-shadow for readability on any palette colour. Labels and values automatically hide on cells too small to fit them, so nothing clips on small slices.
+- 0262e72: Docs: `Treemap` default example uses `stroke="transparent"` so adjacent cells touch directly instead of being separated by a 1px background-coloured stroke. Cleaner, more modern look.
+- d7c804a: Docs: `Treemap` props page goes from "Treemap takes no documented props beyond the standard HTML attributes" to a full 18-row reference. Because canvas re-exports `RechartsPrimitive.Treemap` directly, react-docgen returned an empty prop list — added explicit entries via `EXTRA_PROPS["charts/chart-types"].Treemap` covering data shape (`data`, `dataKey`, `nameKey`, `type`, `aspectRatio`), styling (`fill`, `stroke`, `content`), animation (`isAnimationActive`, `animationBegin`, `animationDuration`, `animationEasing`, `onAnimationStart`, `onAnimationEnd`), interaction (`onClick`, `onMouseEnter`, `onMouseLeave`), and `children`.
+- 222cce1: Docs: `WorldHeatMap` props reference fleshed out.
+
+  - DEFAULT column now populates for every prop (`"100%"`, `[20, 0]`, `3`, `"auto"`, `false`, `"hsl(var(--chart-1))"`, `[4, 20]`, `true`) — previously empty because the source's JSDoc embedded defaults inline in the description text rather than as `@default` tags.
+  - `points` description spells out the `{ lat, lng, label, count }` shape inline so consumers don't have to chase the `WorldHeatMapPoint` type.
+  - Behaviour hints expanded (e.g. `zoom` calls out `0` = whole world / `3` = continent / `5–7` = country; `markerRadiusRange` notes the log-scale).
+
 ## 2.6.28
 
 ### Patch Changes
