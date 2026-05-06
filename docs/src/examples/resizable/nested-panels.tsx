@@ -2,10 +2,10 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@olympusos
 
 export default function App() {
 	return (
-		<div className="flex min-h-[260px] items-center justify-center p-8">
+		<div className="flex min-h-[340px] items-center justify-center p-8">
 			<ResizablePanelGroup
 				orientation="horizontal"
-				className="h-48 max-w-xl rounded-lg border border-border"
+				className="h-64 max-w-xl rounded-lg border border-border"
 			>
 				<ResizablePanel defaultSize={30} className="grid place-content-center text-sm">
 					Sidebar
