@@ -11,7 +11,7 @@ const items = [1, 2, 3, 4];
 export default function App() {
 	return (
 		<div className="flex min-h-[280px] items-center justify-center p-14">
-			<div className="flex items-start gap-12">
+			<div className="flex items-start gap-20">
 				<Carousel className="w-64">
 					<CarouselContent>
 						{items.map((n) => (
@@ -25,7 +25,7 @@ export default function App() {
 					<CarouselPrevious />
 					<CarouselNext />
 				</Carousel>
-				<Carousel orientation="vertical" className="w-32">
+				<Carousel orientation="vertical" className="w-48">
 					<CarouselContent className="h-24">
 						{items.map((n) => (
 							<CarouselItem key={n}>
