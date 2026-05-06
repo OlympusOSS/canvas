@@ -1,7 +1,6 @@
 import {
 	Area,
 	AreaChart,
-	CartesianGrid,
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
@@ -10,6 +9,8 @@ import {
 	XAxis,
 	YAxis,
 } from "@olympusoss/canvas";
+
+import { axisProps } from "./_shared";
 
 const data = [
 	{ day: "Mon", paid: 32, organic: 18, referral: 12 },
@@ -21,19 +22,38 @@ const data = [
 	{ day: "Sun", paid: 18, organic: 38, referral: 19 },
 ];
 
+const STROKE = "hsl(var(--chart-2))";
+
 export default function App() {
 	return (
 		<div className="w-full max-w-2xl p-4">
 			<ChartContainer config={{}} className="h-[280px]">
-				<AreaChart data={data}>
-					<CartesianGrid />
-					<XAxis dataKey="day" />
-					<YAxis />
+				<AreaChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
+					<XAxis dataKey="day" {...axisProps} />
+					<YAxis {...axisProps} width={40} />
 					<ChartTooltip content={<ChartTooltipContent />} />
 					<ChartLegend content={<ChartLegendContent />} />
-					<Area dataKey="paid" stackId="a" />
-					<Area dataKey="organic" stackId="a" />
-					<Area dataKey="referral" stackId="a" />
+					<Area
+						dataKey="paid"
+						stackId="a"
+						type="monotone"
+						stroke={STROKE}
+						fill="hsl(var(--chart-2) / 0.7)"
+					/>
+					<Area
+						dataKey="organic"
+						stackId="a"
+						type="monotone"
+						stroke={STROKE}
+						fill="hsl(var(--chart-2) / 0.45)"
+					/>
+					<Area
+						dataKey="referral"
+						stackId="a"
+						type="monotone"
+						stroke={STROKE}
+						fill="hsl(var(--chart-2) / 0.2)"
+					/>
 				</AreaChart>
 			</ChartContainer>
 		</div>
