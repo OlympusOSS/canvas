@@ -3,14 +3,23 @@
 import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 
+import { usePortalContainer } from "../../lib/portal-container";
 import { cn } from "../../lib/utils";
 
 const Drawer = ({
 	shouldScaleBackground = true,
+	container,
 	...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
-	<DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
-);
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) => {
+	const fallbackContainer = usePortalContainer();
+	return (
+		<DrawerPrimitive.Root
+			shouldScaleBackground={shouldScaleBackground}
+			container={container ?? fallbackContainer ?? undefined}
+			{...props}
+		/>
+	);
+};
 Drawer.displayName = "Drawer";
 
 const DrawerTrigger = DrawerPrimitive.Trigger;
@@ -31,6 +40,18 @@ const DrawerOverlay = React.forwardRef<
 ));
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
+const DrawerHandle = React.forwardRef<
+	React.ElementRef<typeof DrawerPrimitive.Handle>,
+	React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Handle>
+>(({ className, ...props }, ref) => (
+	<DrawerPrimitive.Handle
+		ref={ref}
+		className={cn("mx-auto mt-4 !h-2 !w-[100px] rounded-full bg-muted", className)}
+		{...props}
+	/>
+));
+DrawerHandle.displayName = "DrawerHandle";
+
 const DrawerContent = React.forwardRef<
 	React.ElementRef<typeof DrawerPrimitive.Content>,
 	React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
@@ -45,7 +66,7 @@ const DrawerContent = React.forwardRef<
 			)}
 			{...props}
 		>
-			<div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+			<DrawerHandle />
 			{children}
 		</DrawerPrimitive.Content>
 	</DrawerPortal>
@@ -92,6 +113,7 @@ export {
 	DrawerContent,
 	DrawerDescription,
 	DrawerFooter,
+	DrawerHandle,
 	DrawerHeader,
 	DrawerOverlay,
 	DrawerPortal,
