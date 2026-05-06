@@ -116,6 +116,43 @@ describe("DashboardGrid", () => {
 		expect(container.firstElementChild?.getAttribute("data-dashboard-grid-editing")).toBe("true");
 	});
 
+	it("renders one Remove button per item in edit mode and removes on click", () => {
+		const onItemsChange = vi.fn();
+		const { container } = render(
+			<DashboardGrid
+				items={ITEMS}
+				editing
+				onItemsChange={onItemsChange}
+				renderItem={(item) => <div>{item.i}</div>}
+			/>,
+		);
+		const removeButtons = container.querySelectorAll<HTMLButtonElement>(
+			'button[aria-label^="Remove "]',
+		);
+		expect(removeButtons.length).toBe(ITEMS.length);
+		// Click the second remove button → onItemsChange fires with that item filtered out.
+		act(() => {
+			removeButtons[1].click();
+		});
+		expect(onItemsChange).toHaveBeenCalledTimes(1);
+		const next = onItemsChange.mock.calls[0][0] as DashboardItem[];
+		expect(next.map((it) => it.i)).toEqual(ITEMS.filter((_, i) => i !== 1).map((it) => it.i));
+	});
+
+	it("renders the Remove button without onItemsChange wired (no-op click)", () => {
+		const { container } = render(
+			<DashboardGrid items={ITEMS} editing renderItem={(item) => <div>{item.i}</div>} />,
+		);
+		const removeButtons = container.querySelectorAll<HTMLButtonElement>(
+			'button[aria-label^="Remove "]',
+		);
+		expect(removeButtons.length).toBe(ITEMS.length);
+		// Clicking with no handler attached must not throw.
+		act(() => {
+			removeButtons[0].click();
+		});
+	});
+
 	it("renders the empty state when items is empty AND emptyState prop is provided", () => {
 		const { getByTestId, container } = render(
 			<DashboardGrid
