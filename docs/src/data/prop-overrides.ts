@@ -650,6 +650,68 @@ export const COMPONENT_DESCRIPTIONS: Record<string, Record<string, string>> = {}
 
 /** sourceId (e.g. `atoms/button`) → component displayName → prop name → override. */
 export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = {
+	"charts/world-heat-map": {
+		WorldHeatMap: {
+			points: {
+				description:
+					"Array of `{ lat: number; lng: number; label: string; count: number }`. `lat`/`lng` place the marker, `label` shows in the tooltip (e.g. `Munich, DE`), and `count` drives the marker radius (log-scaled into `markerRadiusRange`). Pass `[]` to render the empty-state overlay.",
+			},
+			height: {
+				description:
+					'Container height. Numbers are interpreted as pixels; strings pass through (e.g. `"320px"`, `"50vh"`).',
+				defaultValue: '"100%"',
+			},
+			center: {
+				description:
+					"Initial map centre as `[lat, lng]`. Defaults to a roughly equator-centred view.",
+				defaultValue: "[20, 0]",
+			},
+			zoom: {
+				description:
+					"Initial Leaflet zoom level. `0` shows the whole world; `3` shows a continent; bump to ~5–7 for country-level views.",
+				defaultValue: "3",
+			},
+			tileTheme: {
+				description:
+					'Basemap tile theme. `"auto"` follows canvas\'s `useTheme()`; force `"dark"` or `"light"` to lock the map regardless of app theme.',
+				defaultValue: '"auto"',
+			},
+			showControls: {
+				description:
+					"Show Leaflet's built-in zoom + attribution controls. Off by default for a cleaner dashboard look.",
+				defaultValue: "false",
+			},
+			markerColor: {
+				description:
+					"Marker fill — any CSS colour. Pass a canvas chart token like `hsl(var(--chart-1))` for theme-aware markers.",
+				defaultValue: '"hsl(var(--chart-1))"',
+			},
+			markerRadiusRange: {
+				description:
+					"`[min, max]` marker radius in pixels. Marker sizes are log-scaled across this range based on each point's `count`, so wide value distributions still read well.",
+				defaultValue: "[4, 20]",
+			},
+			onMarkerClick: {
+				description:
+					"Fires when a marker is clicked, with the underlying point datum. Use to drive a side panel or detail dialog.",
+			},
+			showLegend: {
+				description: 'Show the "Fewer / More" gradient legend overlay in the bottom-left corner.',
+				defaultValue: "true",
+			},
+			title: {
+				description:
+					"Optional title rendered as a small chip in the top-left corner. Useful when several maps stack on a dashboard.",
+			},
+			emptyState: {
+				description:
+					'Override the default empty-state node ("No geographic data available" card) shown when `points` is empty.',
+			},
+			className: {
+				description: "Tailwind / CSS class names merged onto the outer `.world-heat-map` wrapper.",
+			},
+		},
+	},
 	"charts/stacked-bar": {
 		StackedBar: {
 			segments: {
