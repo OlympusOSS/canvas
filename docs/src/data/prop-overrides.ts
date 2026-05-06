@@ -38,6 +38,432 @@ export interface ExtraPropEntry {
 
 export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
 	"charts/chart-types": {
+		Sankey: [
+			{
+				name: "data",
+				required: true,
+				type: "{ nodes: Array<{ name: string }>; links: Array<{ source: number; target: number; value: number }> }",
+				defaultValue: null,
+				description:
+					"Flow definition. `nodes` are the points; `links` connect node indices and carry a `value` that drives flow thickness. `source`/`target` are positional indices into `nodes`.",
+			},
+			{
+				name: "nameKey",
+				required: false,
+				type: "string | (datum) => string",
+				defaultValue: '"name"',
+				description: "Field on each node used as the display name in tooltips and labels.",
+			},
+			{
+				name: "dataKey",
+				required: false,
+				type: "string | (datum) => number",
+				defaultValue: '"value"',
+				description: "Field on each link that drives the flow's thickness.",
+			},
+			{
+				name: "nodePadding",
+				required: false,
+				type: "number",
+				defaultValue: "8",
+				description:
+					"Vertical pixel gap between sibling nodes in the same column. Bump for breathing room when columns are crowded.",
+			},
+			{
+				name: "nodeWidth",
+				required: false,
+				type: "number",
+				defaultValue: "10",
+				description:
+					"Pixel width of the node rectangles. Wider nodes read better on dense diagrams.",
+			},
+			{
+				name: "linkCurvature",
+				required: false,
+				type: "number",
+				defaultValue: "0.5",
+				description:
+					"Curvature factor for the connecting paths. `0` is straight lines, `1` is fully bowed; `0.5`–`0.7` reads as a smooth flow.",
+			},
+			{
+				name: "iterations",
+				required: false,
+				type: "number",
+				defaultValue: "32",
+				description:
+					"Layout iterations the algorithm runs to minimise crossings. Bump (e.g. 64) for cleaner layouts on dense graphs at the cost of a longer initial render.",
+			},
+			{
+				name: "node",
+				required: false,
+				type: "RectangleProps | ReactElement | ((props) => ReactElement)",
+				defaultValue: null,
+				description:
+					"Node styling or custom renderer. Pass an object (`{ fill, stroke, fillOpacity }`) for simple per-node theming, or a function for full control over the SVG node element.",
+			},
+			{
+				name: "link",
+				required: false,
+				type: "SVGPathProps | ReactElement | ((props) => ReactElement)",
+				defaultValue: null,
+				description:
+					"Link styling or custom renderer. Pass `{ stroke, strokeOpacity }` for simple flows; supply a function for gradient links or per-link colour mapping.",
+			},
+			{
+				name: "sort",
+				required: false,
+				type: "boolean",
+				defaultValue: "true",
+				description:
+					"Whether to reorder nodes within each column to minimise link crossings. Disable to preserve input order.",
+			},
+			{
+				name: "margin",
+				required: false,
+				type: "{ top?: number; right?: number; bottom?: number; left?: number }",
+				defaultValue: "{ top: 5, right: 5, bottom: 5, left: 5 }",
+				description:
+					"Padding inside the chart between the diagram and the container edges. Bump if node labels overflow the SVG box.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(element, type, event) => void",
+				defaultValue: null,
+				description:
+					'Fires when a node or link is clicked. `type` is `"node"` or `"link"` so a single handler can branch on the element kind.',
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(element, type, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters a node or link. Same shape as `onClick`.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(element, type, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves a node or link. Same shape as `onClick`.",
+			},
+			{
+				name: "width",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel width — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "height",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel height — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "children",
+				required: false,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					"Recharts subcomponents — typically `<ChartTooltip>` (paired with `<ChartTooltipContent>`) for hover tooltips.",
+			},
+		],
+		ScatterChart: [
+			{
+				name: "children",
+				required: true,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					'Recharts subcomponents that compose the chart. Typical children: `<CartesianGrid>`, `<XAxis type="number">`, `<YAxis type="number">`, one or more `<Scatter data=…>` for each series, `<ChartTooltip>`, optionally `<ZAxis>` for bubble sizing.',
+			},
+			{
+				name: "data",
+				required: false,
+				type: "Array<Record<string, any>>",
+				defaultValue: null,
+				description:
+					"Optional chart-level data. Usually omitted for scatter — provide per-series `data` on each `<Scatter>` child instead so multiple series can co-exist.",
+			},
+			{
+				name: "margin",
+				required: false,
+				type: "{ top?: number; right?: number; bottom?: number; left?: number }",
+				defaultValue: "{ top: 5, right: 5, bottom: 5, left: 5 }",
+				description:
+					"Padding inside the chart between the axes and the container edges. Bump `left`/`bottom` when axis labels need more room.",
+			},
+			{
+				name: "layout",
+				required: false,
+				type: '"horizontal" | "vertical" | "centric" | "radial"',
+				defaultValue: '"horizontal"',
+				description:
+					"Axis orientation. `horizontal` = numeric Y vs numeric X (default scatter). `vertical` swaps the axes for time-on-Y layouts.",
+			},
+			{
+				name: "syncId",
+				required: false,
+				type: "string | number",
+				defaultValue: null,
+				description:
+					"Cross-chart hover sync identifier. All charts that share the same `syncId` highlight matching points together — useful for stacking a scatter and a line chart on the same dashboard.",
+			},
+			{
+				name: "syncMethod",
+				required: false,
+				type: '"index" | "value" | (ticks, data) => number',
+				defaultValue: '"index"',
+				description:
+					"How `syncId` matches points across charts. `index` syncs by row position; `value` matches by axis value; pass a function for custom logic.",
+			},
+			{
+				name: "throttleDelay",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description:
+					"Throttle (ms) for `onMouseMove` events. Bump to 16+ on dense scatters with thousands of points to smooth pointer tracking.",
+			},
+			{
+				name: "defaultShowTooltip",
+				required: false,
+				type: "boolean",
+				defaultValue: "false",
+				description: "Show the tooltip on initial render before any pointer event.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description:
+					"Fires when the chart area is clicked. Receives the chart state (active payload, coords, etc.) and the original event.",
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters the chart area.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves the chart area.",
+			},
+			{
+				name: "onMouseMove",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description:
+					"Fires on every pointer move over the chart. Pair with `throttleDelay` on dense scatters.",
+			},
+			{
+				name: "onMouseDown",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires on pointer-down inside the chart.",
+			},
+			{
+				name: "onMouseUp",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires on pointer-up inside the chart.",
+			},
+			{
+				name: "onDoubleClick",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires when the chart area is double-clicked.",
+			},
+			{
+				name: "onContextMenu",
+				required: false,
+				type: "(state, event) => void",
+				defaultValue: null,
+				description: "Fires on right-click inside the chart.",
+			},
+			{
+				name: "width",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel width — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "height",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel height — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "style",
+				required: false,
+				type: "CSSProperties",
+				defaultValue: null,
+				description: "Inline style applied to the root `<svg>` wrapper.",
+			},
+		],
+		SunburstChart: [
+			{
+				name: "data",
+				required: true,
+				type: "{ name: string; value?: number; fill?: string; children?: SunburstData[] }",
+				defaultValue: null,
+				description:
+					"Root node of the hierarchy. Recharts does NOT auto-aggregate, so every node — including parents — needs an explicit `value`. Per-node `fill` controls the sector colour; pass canvas chart tokens (`hsl(var(--chart-N))`) plus `/ 0.55` opacity for outer rings to keep depth readable without colour noise.",
+			},
+			{
+				name: "dataKey",
+				required: false,
+				type: "string",
+				defaultValue: '"value"',
+				description: "Field on each node that drives the sector's angular sweep.",
+			},
+			{
+				name: "padding",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description: "Angular gap (degrees) between sibling sectors. `0` for solid rings.",
+			},
+			{
+				name: "ringPadding",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description: "Pixel gap between concentric rings (between depth levels).",
+			},
+			{
+				name: "innerRadius",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Radius of the centre hole (px). `0` for a solid pie-style sunburst; non-zero for a doughnut-style centre.",
+			},
+			{
+				name: "outerRadius",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Outermost ring radius (px). When omitted, fills the available space inside the container.",
+			},
+			{
+				name: "cx",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description: "X coordinate of the chart's centre (px). Defaults to the container midpoint.",
+			},
+			{
+				name: "cy",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description: "Y coordinate of the chart's centre (px). Defaults to the container midpoint.",
+			},
+			{
+				name: "startAngle",
+				required: false,
+				type: "number",
+				defaultValue: "0",
+				description:
+					"Angle (degrees) where the chart begins. Combine with `endAngle` for half-circle / quarter-circle layouts (e.g. `startAngle={180}` + `endAngle={0}`).",
+			},
+			{
+				name: "endAngle",
+				required: false,
+				type: "number",
+				defaultValue: "360",
+				description:
+					"Angle (degrees) where the chart ends. See `startAngle` for partial sunbursts.",
+			},
+			{
+				name: "fill",
+				required: false,
+				type: "string",
+				defaultValue: '"#333"',
+				description:
+					"Fallback sector fill when a node has no `fill` field. Pass `hsl(var(--chart-N))` for theme-aware colours.",
+			},
+			{
+				name: "stroke",
+				required: false,
+				type: "string",
+				defaultValue: '"#fff"',
+				description:
+					'Sector-border colour. Pass `""` (empty string) or `transparent` for borderless rings — Recharts default is white which reads as gaps in dark mode.',
+			},
+			{
+				name: "textOptions",
+				required: false,
+				type: "{ fontFamily?: string; fontWeight?: string; paintOrder?: string; stroke?: string; fill?: string; fontSize?: string; pointerEvents?: string }",
+				defaultValue: null,
+				description:
+					"Styling for the sector value labels rendered on each ring. Set `fill` and `stroke` to canvas tokens for theme-aware text. The underlying `<text>` element also honours `letterSpacing` via TS `as any` cast.",
+			},
+			{
+				name: "onClick",
+				required: false,
+				type: "(node) => void",
+				defaultValue: null,
+				description: "Fires when a sector is clicked. Receives the underlying datum.",
+			},
+			{
+				name: "onMouseEnter",
+				required: false,
+				type: "(node, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer enters a sector.",
+			},
+			{
+				name: "onMouseLeave",
+				required: false,
+				type: "(node, event) => void",
+				defaultValue: null,
+				description: "Fires when the pointer leaves a sector.",
+			},
+			{
+				name: "width",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel width — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "height",
+				required: false,
+				type: "number",
+				defaultValue: null,
+				description:
+					"Pixel height — usually omitted when wrapped in `<ChartContainer>` so the chart fills its parent.",
+			},
+			{
+				name: "children",
+				required: false,
+				type: "ReactNode",
+				defaultValue: null,
+				description:
+					"Recharts subcomponents — typically `<ChartTooltip>` (paired with `<ChartTooltipContent>`) for hover tooltips.",
+			},
+		],
 		Treemap: [
 			{
 				name: "data",
