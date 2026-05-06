@@ -37,6 +37,41 @@ export interface ExtraPropEntry {
 }
 
 export const EXTRA_PROPS: Record<string, Record<string, ExtraPropEntry[]>> = {
+	"charts/activity-heatmap": {
+		ActivityHeatmap: [
+			{
+				name: "className",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description: "Tailwind / CSS class names merged onto the outer wrapper via `cn()`.",
+			},
+			{
+				name: "id",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					"DOM `id` for the wrapper — useful when an `aria-labelledby` references the heatmap.",
+			},
+			{
+				name: "role",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					'Override the wrapper\'s ARIA role. Cells are `aria-hidden`, so set `role="img"` paired with `aria-label` when the heatmap conveys meaning to assistive tech.',
+			},
+			{
+				name: "aria-label",
+				required: false,
+				type: "string",
+				defaultValue: null,
+				description:
+					'Accessible label describing what the heatmap shows — e.g. `"Sign-ins by day-of-week and hour"`. Required when `role="img"` is set.',
+			},
+		],
+	},
 	"charts/gauge": {
 		Gauge: [
 			{
@@ -2009,6 +2044,36 @@ export const COMPONENT_DESCRIPTIONS: Record<string, Record<string, string>> = {}
 
 /** sourceId (e.g. `atoms/button`) → component displayName → prop name → override. */
 export const PROP_OVERRIDES: Record<string, Record<string, PropsOverrideMap>> = {
+	"charts/activity-heatmap": {
+		ActivityHeatmap: {
+			data: {
+				description:
+					"2D array of cell values in row-major order (`data[row][col]`). Each entry is a number in `[0, 1]` — `0` paints the lowest tint, `1` paints the highest. Values outside the range are clamped on render. Grid dimensions come from `data.length` × `data[0].length`; pass jagged arrays only if short rows are acceptable.",
+			},
+			colorVar: {
+				description:
+					"CSS variable name (without the leading `--`) used for the cell hue. Cells render as `hsl(var(--{colorVar}) / opacity)` where opacity scales linearly from `0.08` (value `0`) to `0.93` (value `1`). Try `chart-1`/`chart-2` for the default palette or `stat-success`/`stat-destructive` for semantic heatmaps.",
+				defaultValue: '"chart-1"',
+			},
+			cellHeight: {
+				description: "Pixel height of each cell row. Bump for chunkier dashboard tiles.",
+				defaultValue: "14",
+			},
+			gap: {
+				description:
+					"Pixel gap between cells. Set to `0` for an unbroken matrix; bump to 3–4 for grid-style separation.",
+				defaultValue: "2",
+			},
+			cellRadius: {
+				description: "Pixel border-radius on each cell. Set to `0` for sharp grid corners.",
+				defaultValue: "3",
+			},
+			cellTitle: {
+				description:
+					"Receives `(rowIndex, colIndex, value)` and returns the browser tooltip string for that cell (rendered via the native `title` attribute). Return `undefined` to skip the title for a particular cell.",
+			},
+		},
+	},
 	"charts/gauge": {
 		Gauge: {
 			value: {
