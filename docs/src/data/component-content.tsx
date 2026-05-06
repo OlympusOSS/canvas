@@ -1368,6 +1368,15 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 		tokens: [],
 		examples: [
 			{
+				id: "catalog",
+				title: "Catalog",
+				description:
+					"Searchable index of every Lucide icon canvas re-exports. Click any tile to copy its `name` to your clipboard. Use the `iconNames` export to enumerate them in code.",
+				render: () => <IconCatalog />,
+				source: iconCatalogSource,
+				filename: "Icon.tsx",
+			},
+			{
 				id: "default",
 				title: "Default",
 				render: () => <IconDefault />,
@@ -1380,15 +1389,6 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				description: "Size in pixels — 12, 16 (default), 20, 24, 32, 48.",
 				render: () => <IconSizes />,
 				source: iconSizesSource,
-				filename: "Icon.tsx",
-			},
-			{
-				id: "catalog",
-				title: "Catalog",
-				description:
-					"Searchable index of every Lucide icon canvas re-exports. Click any tile to copy its `name` to your clipboard. Use the `iconNames` export to enumerate them in code.",
-				render: () => <IconCatalog />,
-				source: iconCatalogSource,
 				filename: "Icon.tsx",
 			},
 		],
