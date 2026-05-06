@@ -104,9 +104,11 @@ import flexBoxJustificationSource from "../examples/flex-box/justification?raw";
 import flexBoxWrapSource from "../examples/flex-box/wrap?raw";
 
 // icon
+const IconCatalog = lazy(() => import("../examples/icon/catalog"));
 const IconDefault = lazy(() => import("../examples/icon/default"));
 const IconSizes = lazy(() => import("../examples/icon/sizes"));
 
+import iconCatalogSource from "../examples/icon/catalog?raw";
 import iconDefaultSource from "../examples/icon/default?raw";
 import iconSizesSource from "../examples/icon/sizes?raw";
 
@@ -1378,6 +1380,15 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				description: "Size in pixels — 12, 16 (default), 20, 24, 32, 48.",
 				render: () => <IconSizes />,
 				source: iconSizesSource,
+				filename: "Icon.tsx",
+			},
+			{
+				id: "catalog",
+				title: "Catalog",
+				description:
+					"Searchable index of every Lucide icon canvas re-exports. Click any tile to copy its `name` to your clipboard. Use the `iconNames` export to enumerate them in code.",
+				render: () => <IconCatalog />,
+				source: iconCatalogSource,
 				filename: "Icon.tsx",
 			},
 		],
