@@ -2,7 +2,11 @@ import { ActivityHeatmap } from "@olympusoss/canvas";
 
 const DAYS = 7;
 const HOURS = 24;
-const LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const ROW_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const HOUR_TICKS = new Set([0, 6, 12, 18, 23]);
+const COL_LABELS = Array.from({ length: HOURS }, (_, h) =>
+	HOUR_TICKS.has(h) ? (h === 0 ? "0h" : `${h}h`) : "",
+);
 
 const DATA: number[][] = Array.from({ length: DAYS }, (_, d) => {
 	const isWeekend = d >= 5;
@@ -15,23 +19,21 @@ const DATA: number[][] = Array.from({ length: DAYS }, (_, d) => {
 
 export default function App() {
 	return (
-		<div className="flex min-h-[260px] items-center justify-center p-8">
+		<div className="flex min-h-[280px] items-center justify-center p-8">
 			<div className="w-full max-w-2xl rounded-xl border border-border bg-card p-5">
-				<p className="mb-3 text-[15px] font-semibold">Sign-ins · last 7 days</p>
-				<div className="flex gap-2">
-					<div className="flex flex-col justify-around py-0.5 text-[10px] text-muted-foreground">
-						{LABELS.map((l) => (
-							<span key={l}>{l}</span>
-						))}
-					</div>
-					<div className="flex-1">
-						<ActivityHeatmap
-							data={DATA}
-							colorVar="chart-3"
-							cellTitle={(r, c, v) => `${LABELS[r]} ${c}:00 — ${Math.round(v * 100)} sign-ins`}
-						/>
-					</div>
+				<div className="mb-3 flex items-center justify-between">
+					<p className="text-[15px] font-semibold">Sign-ins · last 7 days</p>
+					<span className="text-xs text-muted-foreground">per hour</span>
 				</div>
+				<ActivityHeatmap
+					data={DATA}
+					colorVar="chart-3"
+					cellHeight={18}
+					rowLabels={ROW_LABELS}
+					colLabels={COL_LABELS}
+					legend
+					cellTitle={(r, c, v) => `${ROW_LABELS[r]} ${c}:00 — ${Math.round(v * 100)} sign-ins`}
+				/>
 			</div>
 		</div>
 	);

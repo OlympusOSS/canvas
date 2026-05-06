@@ -12,12 +12,49 @@ const DATA: number[][] = Array.from({ length: ROWS }, (_, r) =>
 	}),
 );
 
+// Sparse weekday labels — only Mon / Wed / Fri (GitHub's pattern).
+const ROW_LABELS = ["Mon", "", "Wed", "", "Fri", "", ""];
+
+// Sparse month labels along the 52-week strip — label the first week
+// each month sits in (Jan ≈ 0, Feb ≈ 4, …, Dec ≈ 48).
+const MONTH_STARTS = [0, 4, 8, 13, 17, 22, 26, 30, 35, 39, 43, 48];
+const MONTH_NAMES = [
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec",
+];
+const COL_LABELS = Array.from({ length: COLS }, (_, c) => {
+	const monthIdx = MONTH_STARTS.indexOf(c);
+	return monthIdx === -1 ? "" : MONTH_NAMES[monthIdx];
+});
+
 export default function App() {
 	return (
-		<div className="flex min-h-[200px] items-center justify-center p-8">
+		<div className="flex min-h-[220px] items-center justify-center p-8">
 			<div className="w-full max-w-3xl rounded-xl border border-border bg-card p-5">
-				<p className="mb-3 text-[15px] font-semibold">Yearly contributions</p>
-				<ActivityHeatmap data={DATA} colorVar="chart-2" cellHeight={10} gap={2} cellRadius={2} />
+				<div className="mb-3 flex items-center justify-between">
+					<p className="text-[15px] font-semibold">Yearly contributions</p>
+					<span className="text-xs text-muted-foreground">last 52 weeks</span>
+				</div>
+				<ActivityHeatmap
+					data={DATA}
+					colorVar="chart-2"
+					cellHeight={10}
+					gap={2}
+					cellRadius={2}
+					rowLabels={ROW_LABELS}
+					colLabels={COL_LABELS}
+					legend
+				/>
 			</div>
 		</div>
 	);
