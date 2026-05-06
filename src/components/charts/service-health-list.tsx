@@ -41,17 +41,29 @@ export const ServiceHealthList = React.forwardRef<HTMLDivElement, ServiceHealthL
 				<ul className="flex flex-col gap-2.5">
 					{items.map((item) => {
 						const hsl = DOT_TOKENS[item.status];
+						const isHealthy = item.status === "healthy";
 						return (
 							<li key={item.name} className="flex items-center gap-2.5 text-[13px]">
-								<span
-									role="img"
-									className="size-2 shrink-0 rounded-full"
-									style={{
-										background: `hsl(${hsl})`,
-										boxShadow: `0 0 0 3px hsl(${hsl} / 0.18)`,
-									}}
-									aria-label={`Status: ${item.status}`}
-								/>
+								<span className="relative flex size-2 shrink-0">
+									{isHealthy && (
+										<span
+											aria-hidden
+											className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+											style={{ background: `hsl(${hsl})` }}
+										/>
+									)}
+									<span
+										role="img"
+										aria-label={`Status: ${item.status}`}
+										className="relative inline-flex size-2 rounded-full"
+										style={{
+											background: `hsl(${hsl})`,
+											boxShadow: isHealthy
+												? `0 0 6px hsl(${hsl}), 0 0 0 3px hsl(${hsl} / 0.18)`
+												: `0 0 0 3px hsl(${hsl} / 0.18)`,
+										}}
+									/>
+								</span>
 								<span className="flex-1 font-medium">{item.name}</span>
 								{item.meta?.map((cell, i) => (
 									<span
