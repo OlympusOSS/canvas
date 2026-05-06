@@ -12,11 +12,20 @@ exports[`ServiceHealthList > matches snapshot 1`] = `
         class="flex items-center gap-2.5 text-[13px]"
       >
         <span
-          aria-label="Status: healthy"
-          class="size-2 shrink-0 rounded-full"
-          role="img"
-          style="background: rgb(34, 195, 96); box-shadow: 0 0 0 3px hsl(143 70% 45% / 0.18);"
-        />
+          class="relative flex size-2 shrink-0"
+        >
+          <span
+            aria-hidden="true"
+            class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+            style="background: rgb(34, 195, 96);"
+          />
+          <span
+            aria-label="Status: healthy"
+            class="relative inline-flex size-2 rounded-full"
+            role="img"
+            style="background: rgb(34, 195, 96); box-shadow: 0 0 6px hsl(143 70% 45%), 0 0 0 3px hsl(143 70% 45% / 0.18);"
+          />
+        </span>
         <span
           class="flex-1 font-medium"
         >
@@ -37,11 +46,15 @@ exports[`ServiceHealthList > matches snapshot 1`] = `
         class="flex items-center gap-2.5 text-[13px]"
       >
         <span
-          aria-label="Status: degraded"
-          class="size-2 shrink-0 rounded-full"
-          role="img"
-          style="background: rgb(245, 159, 10); box-shadow: 0 0 0 3px hsl(38 92% 50% / 0.18);"
-        />
+          class="relative flex size-2 shrink-0"
+        >
+          <span
+            aria-label="Status: degraded"
+            class="relative inline-flex size-2 rounded-full"
+            role="img"
+            style="background: rgb(245, 159, 10); box-shadow: 0 0 0 3px hsl(38 92% 50% / 0.18);"
+          />
+        </span>
         <span
           class="flex-1 font-medium"
         >
@@ -62,11 +75,15 @@ exports[`ServiceHealthList > matches snapshot 1`] = `
         class="flex items-center gap-2.5 text-[13px]"
       >
         <span
-          aria-label="Status: down"
-          class="size-2 shrink-0 rounded-full"
-          role="img"
-          style="background: rgb(235, 71, 71); box-shadow: 0 0 0 3px hsl(0 80% 60% / 0.18);"
-        />
+          class="relative flex size-2 shrink-0"
+        >
+          <span
+            aria-label="Status: down"
+            class="relative inline-flex size-2 rounded-full"
+            role="img"
+            style="background: rgb(235, 71, 71); box-shadow: 0 0 0 3px hsl(0 80% 60% / 0.18);"
+          />
+        </span>
         <span
           class="flex-1 font-medium"
         >
