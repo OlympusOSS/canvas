@@ -1,10 +1,8 @@
-// Shared axis-prop boilerplate for ComposedChart examples — mirrors the
-// matching helper at docs/src/examples/area-chart/_shared.tsx.
+// Shared axis-prop boilerplate — `<ChartContainer>` themes axis + tick lines
+// via CSS, so the helper now only sets the tick font + colour.
 
 export const AXIS_TICK = { fill: "hsl(var(--muted-foreground))", fontSize: 12 } as const;
 
 export const axisProps = {
-	tickLine: false,
-	axisLine: false,
 	tick: AXIS_TICK,
 } as const;

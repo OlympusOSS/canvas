@@ -8,11 +8,11 @@ import {
 } from "@olympusoss/canvas";
 
 const data = [
-	{ stage: "Visitors", count: 12_400, fill: "hsl(var(--chart-1))" },
-	{ stage: "Sign-ups", count: 5_120, fill: "hsl(var(--chart-2))" },
-	{ stage: "Activated", count: 2_180, fill: "hsl(var(--chart-3))" },
-	{ stage: "Subscribed", count: 740, fill: "hsl(var(--chart-4))" },
-	{ stage: "Renewed", count: 318, fill: "hsl(var(--chart-5))" },
+	{ stage: "Visitors", count: 12_400 },
+	{ stage: "Sign-ups", count: 5_120 },
+	{ stage: "Activated", count: 2_180 },
+	{ stage: "Subscribed", count: 740 },
+	{ stage: "Renewed", count: 318 },
 ];
 
 export default function App() {
