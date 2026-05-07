@@ -25,9 +25,9 @@ export default function App() {
 				<Sankey
 					data={data}
 					nodePadding={28}
-					linkCurvature={0.55}
+					linkCurvature={0.6}
 					iterations={64}
-					link={{ stroke: "hsl(var(--chart-1))", strokeOpacity: 0.4 }}
+					link={{ stroke: "hsl(var(--chart-1))", strokeOpacity: 0.3 }}
 					node={{ fill: "hsl(var(--chart-2))" }}
 				>
 					<ChartTooltip content={<ChartTooltipContent hideLabel />} />
