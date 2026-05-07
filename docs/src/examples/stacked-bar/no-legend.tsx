@@ -1,9 +1,9 @@
 import { StackedBar } from "@olympusoss/canvas";
 
 const SEGMENTS = [
-	{ label: "Healthy", value: 78, colorVar: "chart-2" },
-	{ label: "Degraded", value: 14, colorVar: "chart-5" },
-	{ label: "Down", value: 8, colorVar: "chart-4" },
+	{ label: "Healthy", value: 78, colorVar: "stat-success" },
+	{ label: "Degraded", value: 14, colorVar: "stat-amber" },
+	{ label: "Down", value: 8, colorVar: "stat-destructive" },
 ];
 
 export default function App() {
