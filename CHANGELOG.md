@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.8.6
+
+### Patch Changes
+
+- 65f3aa1: Docs: `ComposedChart` examples redesigned (Phase 12 of the 14-chart redesign).
+
+  - Adds `composed-chart/_shared.tsx` with the canonical `axisProps` helper.
+  - `default.tsx`: drops grid, uses `axisProps`. Each series gets its own hue — Area revenue → `chart-1` with gradient fill; Bar expenses → `chart-2` solid + `radius={[4,4,0,0]}`; Line margin → `chart-5` stroke `2` with `dot={r:3}`.
+  - `dual-axis.tsx`: drops grid, `axisProps` on left + right axes. Bar visitors → `chart-1`; Line conversion → `chart-5` (warm orange = secondary metric).
+
+- ea4269f: Docs: `PieChart` examples redesigned with explicit `<ChartCell>` per slice (Phase 10 of the 14-chart redesign).
+
+  - `default.tsx` (4 plan tiers) → `chart-1` → `chart-4` walk.
+  - `donut.tsx` (4 traffic sources) → `chart-2` → `chart-5` walk (different starting hue from `default.tsx` so the two pie examples read distinct).
+  - `half-pie.tsx` (3-status mix) → `--stat-success` / `--stat-amber` / `--stat-destructive`. Status data carries meaning that chart-N rotation throws away.
+  - `with-labels.tsx` (5 browsers) → full `chart-1` → `chart-5` walk; LabelList stays.
+
+  Adds the parallel `_shared.tsx` for symmetry with the other chart families.
+
+- 084dbf8: Docs: `RadarChart` examples redesigned (Phase 11 of the 14-chart redesign).
+
+  - Adds `radar-chart/_shared.tsx` exporting `polarAxisProps` (axis line off, muted tick text) and `POLAR_GRID_PROPS` (`stroke=--border`, `gridType="polygon"` — quieter, polygonal spider web).
+  - `default.tsx` → single radar in `chart-4` (purple) with `0.35` fill opacity. Distinct from LineChart's `chart-5` and ScatterChart's `chart-1`.
+  - `multi-series.tsx` → `you` in `chart-1` (blue), `peer` in `chart-3` (red-pink). Each at `0.25` fill opacity so overlap reads cleanly.
+
 ## 2.8.5
 
 ### Patch Changes
