@@ -1,5 +1,4 @@
 import {
-	CartesianGrid,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
@@ -9,6 +8,8 @@ import {
 	YAxis,
 	ZAxis,
 } from "@olympusoss/canvas";
+
+import { axisProps } from "./_shared";
 
 const data = [
 	{ revenue: 12, retention: 62, customers: 80 },
@@ -23,13 +24,20 @@ export default function App() {
 	return (
 		<div className="w-full max-w-2xl p-4">
 			<ChartContainer config={{}} className="h-[300px]">
-				<ScatterChart>
-					<CartesianGrid />
-					<XAxis type="number" dataKey="revenue" name="Revenue" unit="K" />
-					<YAxis type="number" dataKey="retention" name="Retention" unit="%" domain={[40, 100]} />
+				<ScatterChart margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
+					<XAxis type="number" dataKey="revenue" name="Revenue" unit="K" {...axisProps} />
+					<YAxis
+						type="number"
+						dataKey="retention"
+						name="Retention"
+						unit="%"
+						domain={[40, 100]}
+						{...axisProps}
+						width={40}
+					/>
 					<ZAxis type="number" dataKey="customers" range={[60, 600]} name="Customers" />
 					<ChartTooltip content={<ChartTooltipContent />} cursor={{ strokeDasharray: "3 3" }} />
-					<Scatter data={data} />
+					<Scatter data={data} fill="hsl(var(--chart-3))" />
 				</ScatterChart>
 			</ChartContainer>
 		</div>
