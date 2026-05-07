@@ -1,5 +1,34 @@
 # Changelog
 
+## 2.8.5
+
+### Patch Changes
+
+- a1a3e65: Docs: `LineChart` examples redesigned to match SunburstChart visual quality (Phase 9 of the 14-chart redesign).
+
+  Adds `docs/src/examples/line-chart/_shared.tsx` with the canonical `axisProps` helper. All six examples drop `<CartesianGrid>` and use `axisProps`. Per-page palette diversification:
+
+  - `default.tsx` → `chart-5` (warm orange — deliberately not blue, distinct from AreaChart Default).
+  - `curve-types.tsx` → linear `chart-1`, monotone `chart-2`, step `chart-3` (lets consumers map curve type to colour).
+  - `multi-series.tsx` → desktop `chart-3`, mobile `chart-4`, tablet `chart-5`.
+  - `time-series.tsx` → `chart-3`, `dot={false}` for the dense 30-day series.
+  - `with-brush.tsx` → `chart-1`. Brush keeps `--brand`.
+  - `with-reference.tsx` → line `chart-2`, ReferenceLine restyled with `--stat-destructive` + `strokeDasharray="4 4"` so the SLO threshold reads as an alert line.
+
+  All series get `strokeWidth={2}` and `dot={{ r: 3 }}` (or `false` on dense data) for consistent visual treatment.
+
+- 6aef904: Docs: `ScatterChart` examples redesigned to match SunburstChart visual quality (Phase 3 of the 14-chart redesign).
+
+  - Adds `docs/src/examples/scatter-chart/_shared.tsx` with the canonical `axisProps` helper.
+  - All three examples (`default`, `bubble`, `multi-series`) drop `<CartesianGrid>` and use `axisProps` for hidden axis lines + muted tick text.
+  - Diversified palette across the page: default → `chart-1` (blue), bubble → `chart-3` (purple), multi-series → `chart-2` + `chart-4` (green + orange-pink). Avoids the "all blue" rotation Recharts defaults to.
+
+- 260ed95: Docs: `StackedBar` examples switched to canvas semantic status tokens where the data carries status meaning (Phase 6 of the 14-chart redesign).
+
+  - `no-legend.tsx`: Healthy / Degraded / Down → `--stat-success` / `--stat-amber` / `--stat-destructive`. Reads as a real ops bar.
+  - `raw-counts.tsx`: 200 OK / 4xx / 5xx → semantic stat tokens; 3xx redirects keep `chart-1` since they're not an alert state.
+  - `default.tsx` left unchanged — its sign-in-method palette is intentionally diverse.
+
 ## 2.8.4
 
 ### Patch Changes
