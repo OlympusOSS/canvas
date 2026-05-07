@@ -1,5 +1,4 @@
 import {
-	CartesianGrid,
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
@@ -10,6 +9,8 @@ import {
 	XAxis,
 	YAxis,
 } from "@olympusoss/canvas";
+
+import { axisProps } from "./_shared";
 
 const data = [
 	{ x: 1, linear: 12, monotone: 12, step: 12 },
@@ -24,15 +25,32 @@ export default function App() {
 	return (
 		<div className="w-full max-w-2xl p-4">
 			<ChartContainer config={{}} className="h-[280px]">
-				<LineChart data={data}>
-					<CartesianGrid />
-					<XAxis dataKey="x" />
-					<YAxis />
+				<LineChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
+					<XAxis dataKey="x" {...axisProps} />
+					<YAxis {...axisProps} width={40} />
 					<ChartTooltip content={<ChartTooltipContent />} />
 					<ChartLegend content={<ChartLegendContent />} />
-					<Line type="linear" dataKey="linear" />
-					<Line type="monotone" dataKey="monotone" />
-					<Line type="step" dataKey="step" />
+					<Line
+						type="linear"
+						dataKey="linear"
+						stroke="hsl(var(--chart-1))"
+						strokeWidth={2}
+						dot={{ r: 3 }}
+					/>
+					<Line
+						type="monotone"
+						dataKey="monotone"
+						stroke="hsl(var(--chart-2))"
+						strokeWidth={2}
+						dot={{ r: 3 }}
+					/>
+					<Line
+						type="step"
+						dataKey="step"
+						stroke="hsl(var(--chart-3))"
+						strokeWidth={2}
+						dot={{ r: 3 }}
+					/>
 				</LineChart>
 			</ChartContainer>
 		</div>
