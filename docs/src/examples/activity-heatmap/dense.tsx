@@ -12,9 +12,6 @@ const DATA: number[][] = Array.from({ length: ROWS }, (_, r) =>
 	}),
 );
 
-// Sparse weekday labels — only Mon / Wed / Fri (GitHub's pattern).
-const ROW_LABELS = ["Mon", "", "Wed", "", "Fri", "", ""];
-
 // Sparse month labels along the 52-week strip — label the first week
 // each month sits in (Jan ≈ 0, Feb ≈ 4, …, Dec ≈ 48).
 const MONTH_STARTS = [0, 4, 8, 13, 17, 22, 26, 30, 35, 39, 43, 48];
@@ -51,7 +48,6 @@ export default function App() {
 					cellHeight={14}
 					gap={3}
 					cellRadius={2}
-					rowLabels={ROW_LABELS}
 					colLabels={COL_LABELS}
 					legend
 				/>

@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 
+const DEFAULT_WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
+
 export interface ActivityHeatmapProps extends React.HTMLAttributes<HTMLDivElement> {
 	/**
 	 * Cell values in row-major order. Each entry is a number in `[0, 1]`
@@ -81,11 +83,16 @@ export const ActivityHeatmap = React.forwardRef<HTMLDivElement, ActivityHeatmapP
 		const fromLabel = legendObj?.fromLabel ?? "Fewer";
 		const toLabel = legendObj?.toLabel ?? "More";
 		const showLegend = legend !== false;
+		// 7-row grids default to weekday labels (Mon–Sun) — covers the common
+		// GitHub-style yearly contribution pattern without each consumer
+		// re-declaring the array.
+		const resolvedRowLabels =
+			rowLabels ?? (data.length === 7 ? DEFAULT_WEEKDAY_LABELS.slice() : undefined);
 
 		return (
 			<div ref={ref} className={cn("w-full", className)} {...props}>
 				<div className="flex gap-2">
-					{rowLabels && rowLabels.length > 0 && (
+					{resolvedRowLabels && resolvedRowLabels.length > 0 && (
 						<div
 							className="grid text-[10px] tabular-nums text-muted-foreground"
 							style={{
@@ -96,7 +103,7 @@ export const ActivityHeatmap = React.forwardRef<HTMLDivElement, ActivityHeatmapP
 						>
 							{Array.from({ length: data.length }, (_, i) => (
 								<span key={`row-label-${i}`} className="flex items-center leading-none">
-									{rowLabels[i] ?? ""}
+									{resolvedRowLabels[i] ?? ""}
 								</span>
 							))}
 						</div>

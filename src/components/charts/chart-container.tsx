@@ -29,6 +29,36 @@ const PALETTE_TARGETS = new Set<unknown>([
 
 const PALETTE_SIZE = 5;
 
+function nextColour(counter: { i: number }) {
+	const idx = counter.i++ % PALETTE_SIZE;
+	return `hsl(var(--chart-${idx + 1}))`;
+}
+
+/**
+ * Walk a Pie's `<Cell>` children and inject per-cell palette fills when none
+ * is set, so each slice gets a distinct hue without requiring the consumer to
+ * write `<Cell fill={...} />` for every entry.
+ */
+function paintPieCells(children: React.ReactNode, counter: { i: number }): React.ReactNode {
+	return React.Children.map(children, (child) => {
+		if (!React.isValidElement(child)) return child;
+		const cellProps = child.props as { fill?: unknown };
+		if (child.type === RechartsPrimitive.Cell && cellProps.fill === undefined) {
+			return React.cloneElement(child, { fill: nextColour(counter) } as Partial<typeof cellProps>);
+		}
+		return child;
+	});
+}
+
+/**
+ * Inject per-row `fill` on Funnel data when the consumer didn't supply one.
+ * Recharts Funnel reads each datum's `fill` to colour the stage, so we map
+ * the array and assign palette colours in order.
+ */
+function paintFunnelData<T extends { fill?: unknown }>(data: T[], counter: { i: number }): T[] {
+	return data.map((row) => (row.fill === undefined ? { ...row, fill: nextColour(counter) } : row));
+}
+
 /**
  * Recursively walk the children, cloning any data primitive that's missing
  * `fill`/`stroke` and injecting an `hsl(var(--chart-N))` default. Counter is
@@ -37,12 +67,41 @@ const PALETTE_SIZE = 5;
 function applyPalette(children: React.ReactNode, counter: { i: number }): React.ReactNode {
 	return React.Children.map(children, (child) => {
 		if (!React.isValidElement(child)) return child;
-		const props = child.props as { fill?: unknown; stroke?: unknown; children?: React.ReactNode };
+		const props = child.props as {
+			fill?: unknown;
+			stroke?: unknown;
+			children?: React.ReactNode;
+			data?: unknown;
+			label?: unknown;
+		};
+
+		// Pie: walk Cell children and assign per-slice palette colours so each
+		// slice is distinct. Also default `label={true}` so slices render their
+		// data-key value at the perimeter without needing a `<LabelList>`.
+		if (child.type === RechartsPrimitive.Pie) {
+			const next: Record<string, unknown> = {};
+			if (props.children !== undefined) {
+				next.children = paintPieCells(props.children, counter);
+			} else if (props.fill === undefined && props.stroke === undefined) {
+				const colour = nextColour(counter);
+				next.fill = colour;
+				next.stroke = colour;
+			}
+			if (props.label === undefined) next.label = true;
+			return React.cloneElement(child, next as Partial<typeof props>);
+		}
+
+		// Funnel: distribute palette colours across the data array (Recharts
+		// reads `fill` from each datum, not from the <Funnel> element).
+		if (child.type === RechartsPrimitive.Funnel && Array.isArray(props.data)) {
+			return React.cloneElement(child, {
+				data: paintFunnelData(props.data as { fill?: unknown }[], counter),
+			} as Partial<typeof props>);
+		}
 
 		if (PALETTE_TARGETS.has(child.type)) {
 			if (props.fill === undefined && props.stroke === undefined) {
-				const idx = counter.i++ % PALETTE_SIZE;
-				const colour = `hsl(var(--chart-${idx + 1}))`;
+				const colour = nextColour(counter);
 				// Pie/Radar/Area also benefit from a matching stroke; the
 				// component decides which one applies (Bar reads fill, Line
 				// reads stroke, etc.).
@@ -115,7 +174,7 @@ const ChartContainer = React.forwardRef<
 				data-chart={chartId}
 				ref={ref}
 				className={cn(
-					"flex aspect-video w-full justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+					"flex aspect-video w-full justify-center text-xs [&_.recharts-cartesian-axis-line]:stroke-border [&_.recharts-cartesian-axis-tick-line]:stroke-transparent [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
 					className,
 				)}
 				{...props}
