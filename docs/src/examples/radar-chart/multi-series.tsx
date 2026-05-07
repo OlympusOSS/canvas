@@ -10,6 +10,8 @@ import {
 	RadarChart,
 } from "@olympusoss/canvas";
 
+import { POLAR_GRID_PROPS, polarAxisProps } from "./_shared";
+
 const data = [
 	{ skill: "Speed", you: 78, peer: 64 },
 	{ skill: "Power", you: 84, peer: 72 },
@@ -24,12 +26,22 @@ export default function App() {
 		<div className="w-full max-w-md p-4">
 			<ChartContainer config={{}} className="h-[300px]">
 				<RadarChart data={data}>
-					<PolarGrid />
-					<PolarAngleAxis dataKey="skill" />
+					<PolarGrid {...POLAR_GRID_PROPS} />
+					<PolarAngleAxis dataKey="skill" {...polarAxisProps} />
 					<ChartTooltip content={<ChartTooltipContent />} />
 					<ChartLegend content={<ChartLegendContent />} />
-					<Radar dataKey="you" />
-					<Radar dataKey="peer" />
+					<Radar
+						dataKey="you"
+						stroke="hsl(var(--chart-1))"
+						fill="hsl(var(--chart-1) / 0.25)"
+						strokeWidth={2}
+					/>
+					<Radar
+						dataKey="peer"
+						stroke="hsl(var(--chart-3))"
+						fill="hsl(var(--chart-3) / 0.25)"
+						strokeWidth={2}
+					/>
 				</RadarChart>
 			</ChartContainer>
 		</div>
