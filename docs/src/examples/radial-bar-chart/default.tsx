@@ -1,4 +1,5 @@
 import {
+	ChartCell,
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
@@ -30,7 +31,13 @@ export default function App() {
 				>
 					<ChartTooltip content={<ChartTooltipContent />} />
 					<ChartLegend content={<ChartLegendContent />} />
-					<RadialBar dataKey="progress" background />
+					<RadialBar dataKey="progress" background cornerRadius={6}>
+						<ChartCell fill="hsl(var(--chart-1))" />
+						<ChartCell fill="hsl(var(--chart-2))" />
+						<ChartCell fill="hsl(var(--chart-3))" />
+						<ChartCell fill="hsl(var(--chart-4))" />
+						<ChartCell fill="hsl(var(--chart-5))" />
+					</RadialBar>
 				</RadialBarChart>
 			</ChartContainer>
 		</div>
