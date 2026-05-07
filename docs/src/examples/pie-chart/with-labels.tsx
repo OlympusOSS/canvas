@@ -1,4 +1,5 @@
 import {
+	ChartCell,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
@@ -30,6 +31,11 @@ export default function App() {
 							`${entry.browser} ${entry.share}%`
 						}
 					>
+						<ChartCell fill="hsl(var(--chart-1))" />
+						<ChartCell fill="hsl(var(--chart-2))" />
+						<ChartCell fill="hsl(var(--chart-3))" />
+						<ChartCell fill="hsl(var(--chart-4))" />
+						<ChartCell fill="hsl(var(--chart-5))" />
 						<LabelList dataKey="browser" className="fill-foreground" fontSize={11} />
 					</Pie>
 				</PieChart>

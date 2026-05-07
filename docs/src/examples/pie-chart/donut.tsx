@@ -1,4 +1,5 @@
 import {
+	ChartCell,
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
@@ -22,7 +23,12 @@ export default function App() {
 				<PieChart>
 					<ChartTooltip content={<ChartTooltipContent hideLabel />} />
 					<ChartLegend content={<ChartLegendContent />} />
-					<Pie data={data} dataKey="visits" nameKey="source" innerRadius={56} outerRadius={92} />
+					<Pie data={data} dataKey="visits" nameKey="source" innerRadius={56} outerRadius={92}>
+						<ChartCell fill="hsl(var(--chart-2))" />
+						<ChartCell fill="hsl(var(--chart-3))" />
+						<ChartCell fill="hsl(var(--chart-4))" />
+						<ChartCell fill="hsl(var(--chart-5))" />
+					</Pie>
 				</PieChart>
 			</ChartContainer>
 		</div>

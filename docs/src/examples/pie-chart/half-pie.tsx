@@ -1,4 +1,5 @@
 import {
+	ChartCell,
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
@@ -30,7 +31,11 @@ export default function App() {
 						innerRadius={70}
 						outerRadius={120}
 						cy="80%"
-					/>
+					>
+						<ChartCell fill="hsl(var(--stat-success))" />
+						<ChartCell fill="hsl(var(--stat-amber))" />
+						<ChartCell fill="hsl(var(--stat-destructive))" />
+					</Pie>
 				</PieChart>
 			</ChartContainer>
 		</div>
