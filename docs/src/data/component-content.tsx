@@ -318,7 +318,9 @@ import cardWithImageSource from "../examples/card/with-image?raw";
 const CodeBlockDefault = lazy(() => import("../examples/code-block/default"));
 const CodeBlockLanguages = lazy(() => import("../examples/code-block/languages"));
 const CodeBlockWithoutCopy = lazy(() => import("../examples/code-block/without-copy"));
+const CodeBlockDarkTheme = lazy(() => import("../examples/code-block/dark-theme"));
 
+import codeBlockDarkThemeSource from "../examples/code-block/dark-theme?raw";
 import codeBlockDefaultSource from "../examples/code-block/default?raw";
 import codeBlockLanguagesSource from "../examples/code-block/languages?raw";
 import codeBlockWithoutCopySource from "../examples/code-block/without-copy?raw";
@@ -360,6 +362,15 @@ const InputOTPPasswordPattern = lazy(() => import("../examples/input-otp/passwor
 import inputOTPDefaultSource from "../examples/input-otp/default?raw";
 import inputOTPPasswordPatternSource from "../examples/input-otp/password-pattern?raw";
 import inputOTPWithSeparatorSource from "../examples/input-otp/with-separator?raw";
+
+// launcher-card
+const LauncherCardDefault = lazy(() => import("../examples/launcher-card/default"));
+const LauncherCardTones = lazy(() => import("../examples/launcher-card/tones"));
+const LauncherCardWithFooter = lazy(() => import("../examples/launcher-card/with-footer"));
+
+import launcherCardDefaultSource from "../examples/launcher-card/default?raw";
+import launcherCardTonesSource from "../examples/launcher-card/tones?raw";
+import launcherCardWithFooterSource from "../examples/launcher-card/with-footer?raw";
 
 // loading-state
 const LoadingStateDefault = lazy(() => import("../examples/loading-state/default"));
@@ -492,6 +503,13 @@ import tableDefaultSource from "../examples/table/default?raw";
 import tableWithCaptionSource from "../examples/table/with-caption?raw";
 import tableWithFooterSource from "../examples/table/with-footer?raw";
 import tableWithRowSelectionSource from "../examples/table/with-row-selection?raw";
+
+// terminal
+const TerminalDefault = lazy(() => import("../examples/terminal/default"));
+const TerminalHighlighted = lazy(() => import("../examples/terminal/highlighted"));
+
+import terminalDefaultSource from "../examples/terminal/default?raw";
+import terminalHighlightedSource from "../examples/terminal/highlighted?raw";
 
 // toggle-group
 const ToggleGroupDefault = lazy(() => import("../examples/toggle-group/default"));
@@ -2199,6 +2217,14 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				source: codeBlockWithoutCopySource,
 				filename: "CodeBlock.tsx",
 			},
+			{
+				id: "dark-theme",
+				title: "Dark theme",
+				description: '`theme="dark"` switches to the terminal-style palette.',
+				render: () => <CodeBlockDarkTheme />,
+				source: codeBlockDarkThemeSource,
+				filename: "CodeBlock.tsx",
+			},
 		],
 	},
 	"empty-state": {
@@ -2337,6 +2363,42 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				render: () => <InputOTPPasswordPattern />,
 				source: inputOTPPasswordPatternSource,
 				filename: "InputOTP.tsx",
+			},
+		],
+	},
+	"launcher-card": {
+		id: "launcher-card",
+		tier: "molecules",
+		displayName: "LauncherCard",
+		propsSource: "molecules/launcher-card",
+		importLine: `import { LauncherCard } from "@olympusoss/canvas";`,
+		overview:
+			"Tone-driven launcher tile with a badge, title, description, and footer slot. Set `href` to make the whole card a hover-lifted link.",
+		tokens: ["--card", "--border", "--muted-foreground", "--primary"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <LauncherCardDefault />,
+				source: launcherCardDefaultSource,
+				filename: "LauncherCard.tsx",
+			},
+			{
+				id: "tones",
+				title: "Tones",
+				description:
+					"Built-in tones — `default`, `indigo`, `violet`, `slate` — colour the badge background, foreground, and hover ring.",
+				render: () => <LauncherCardTones />,
+				source: launcherCardTonesSource,
+				filename: "LauncherCard.tsx",
+			},
+			{
+				id: "with-footer",
+				title: "With footer CTA",
+				description: "Compose any footer content via `children` — typically an arrow CTA.",
+				render: () => <LauncherCardWithFooter />,
+				source: launcherCardWithFooterSource,
+				filename: "LauncherCard.tsx",
 			},
 		],
 	},
@@ -2805,6 +2867,34 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				render: () => <TableWithRowSelection />,
 				source: tableWithRowSelectionSource,
 				filename: "Table.tsx",
+			},
+		],
+	},
+	terminal: {
+		id: "terminal",
+		tier: "molecules",
+		displayName: "Terminal",
+		propsSource: "molecules/terminal",
+		importLine: `import { Terminal } from "@olympusoss/canvas";`,
+		overview:
+			"Dark mac-window-chrome panel for marketing moments — traffic-light dots, optional title in the chrome strip, and a `<pre>` body for output or commands.",
+		tokens: ["--border"],
+		examples: [
+			{
+				id: "default",
+				title: "Default",
+				render: () => <TerminalDefault />,
+				source: terminalDefaultSource,
+				filename: "Terminal.tsx",
+			},
+			{
+				id: "highlighted",
+				title: "Inline highlights",
+				description:
+					"Compose `<span style={{ color }}>` segments inside children to colour individual tokens (e.g. status text or values).",
+				render: () => <TerminalHighlighted />,
+				source: terminalHighlightedSource,
+				filename: "Terminal.tsx",
 			},
 		],
 	},

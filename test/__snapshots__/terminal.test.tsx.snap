@@ -1,0 +1,46 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Terminal > matches snapshot 1`] = `
+<div>
+  <div
+    class="overflow-hidden rounded-xl border border-border shadow-[0_30px_60px_-20px_rgb(0_0_0/0.35)]"
+    style="background: rgb(10, 10, 11);"
+  >
+    <div
+      class="flex items-center gap-1.5 px-3"
+      style="height: 32px; background: rgb(20, 20, 23); border-bottom: 1px solid rgb(34, 34, 34);"
+    >
+      <span
+        aria-hidden="true"
+        class="inline-block h-2.5 w-2.5 rounded-full"
+        style="background: rgb(255, 95, 87);"
+      />
+      <span
+        aria-hidden="true"
+        class="inline-block h-2.5 w-2.5 rounded-full"
+        style="background: rgb(254, 188, 46);"
+      />
+      <span
+        aria-hidden="true"
+        class="inline-block h-2.5 w-2.5 rounded-full"
+        style="background: rgb(40, 200, 64);"
+      />
+      <span
+        class="ml-2.5 font-mono text-[11px]"
+        style="color: rgb(107, 114, 128);"
+      >
+        ~/Olympus · octl
+      </span>
+    </div>
+    <pre
+      class="m-0 overflow-x-auto p-5 font-mono text-[12.5px] leading-[1.7]"
+      style="color: rgb(228, 228, 231);"
+    >
+      $ npm install -g @olympusoss/octl
+      
+
+      $ octl
+    </pre>
+  </div>
+</div>
+`;
