@@ -110,6 +110,16 @@ describe("ActivityHeatmap", () => {
 		expect(labelColumn?.children.length).toBe(2);
 	});
 
+	it("defaults rowLabels to weekday names when data has exactly 7 rows", () => {
+		// The 7-row branch in activity-heatmap: when rowLabels is omitted and
+		// the dataset has the GitHub-style yearly-contribution shape, the
+		// component slots in Mon..Sun automatically.
+		const SEVEN_ROWS = Array.from({ length: 7 }, () => [0.1, 0.5, 0.9]);
+		const { getByText } = render(<ActivityHeatmap data={SEVEN_ROWS} />);
+		expect(getByText("Mon")).toBeInTheDocument();
+		expect(getByText("Sun")).toBeInTheDocument();
+	});
+
 	it("does not render rowLabels column when array is empty", () => {
 		const { queryByText } = render(<ActivityHeatmap data={DATA} rowLabels={[]} />);
 		// Empty array → no labels column at all.
