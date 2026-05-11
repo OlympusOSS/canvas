@@ -41,8 +41,31 @@ describe("CodeBlock", () => {
 		});
 	});
 
+	it("uses bg-muted by default (light theme)", () => {
+		const { container } = render(<CodeBlock code="x" />);
+		expect(container.firstChild).toHaveClass("bg-muted");
+	});
+
+	it("applies the dark theme background when theme='dark'", () => {
+		const { container } = render(<CodeBlock code="x" theme="dark" />);
+		const root = container.firstChild as HTMLElement;
+		expect(root).not.toHaveClass("bg-muted");
+		expect(root.style.background).toBe("rgb(10, 10, 11)");
+	});
+
+	it("renders the dark theme pre with the light text color", () => {
+		const { container } = render(<CodeBlock code="x" language="ts" theme="dark" />);
+		const pre = container.querySelector("pre") as HTMLElement;
+		expect(pre.style.color).toBe("rgb(228, 228, 231)");
+	});
+
 	it("matches snapshot", () => {
 		const { container } = render(<CodeBlock code="x" language="tsx" />);
+		expect(container).toMatchSnapshot();
+	});
+
+	it("matches dark theme snapshot", () => {
+		const { container } = render(<CodeBlock code="x" language="app/auth.ts" theme="dark" />);
 		expect(container).toMatchSnapshot();
 	});
 });

@@ -190,6 +190,11 @@ export {
 	InputOTPSlot,
 } from "./components/molecules/input-otp";
 export {
+	LauncherCard,
+	type LauncherCardProps,
+	type LauncherCardTone,
+} from "./components/molecules/launcher-card";
+export {
 	LoadingState,
 	type LoadingStateProps,
 } from "./components/molecules/loading-state";
@@ -260,6 +265,7 @@ export {
 	TableHeader,
 	TableRow,
 } from "./components/molecules/table";
+export { Terminal, type TerminalProps } from "./components/molecules/terminal";
 export { ToggleGroup, ToggleGroupItem } from "./components/molecules/toggle-group";
 export {
 	Tooltip,
