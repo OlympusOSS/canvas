@@ -52,9 +52,23 @@ describe("NavBar", () => {
 		expect(screen.queryByLabelText("Open menu")).not.toBeInTheDocument();
 	});
 
-	it("renders non-sticky navbar without spacer", () => {
+	it("renders non-sticky navbar without sticky positioning", () => {
 		const { container } = render(<NavBar sticky={false} links={links} />);
 		const nav = container.querySelector("nav");
+		expect(nav?.className).not.toContain("fixed");
+		expect(nav?.className).not.toContain("sticky");
+	});
+
+	it("renders sticky navbar with position:sticky + translucent backdrop", () => {
+		// Default sticky=true. The bar uses `position: sticky` + `top: 0` so the
+		// content body scrolls under it through the translucent backdrop-blur.
+		const { container } = render(<NavBar links={links} />);
+		const nav = container.querySelector("nav");
+		expect(nav?.className).toContain("sticky");
+		expect(nav?.className).toContain("top-0");
+		expect(nav?.className).toContain("bg-background/80");
+		expect(nav?.className).toContain("backdrop-blur");
+		// And no fixed-positioning spacer left behind.
 		expect(nav?.className).not.toContain("fixed");
 	});
 
