@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.9.0
+
+### Minor Changes
+
+- e528738: Charts: visual affordances now ship as component-level defaults rather than example-level boilerplate, so every consumer gets the polished look without copying snippets.
+
+  - `ChartContainer` themes the cartesian axis line (`hsl(var(--border))`) and hides the tick lines via CSS — Line / Bar / Area / Composed / Scatter charts now all render visible, themed X/Y axes by default.
+  - `ChartContainer`'s palette walker now (a) cycles palette colours across `<Pie>`'s `<Cell>` children when no fill is set, (b) defaults `<Pie label>` to `true` so each slice renders its value, and (c) distributes palette colours across `<Funnel>` data rows when none of them carry a `fill`. Consumers no longer need to write per-slice or per-stage fills to get a multi-hue chart.
+  - `ActivityHeatmap` now defaults `rowLabels` to `["Mon", … , "Sun"]` whenever the data has exactly 7 rows, covering the GitHub-style yearly-contribution layout out of the box.
+  - The `_shared.tsx` axis-prop helpers in the docs examples are simplified to just the tick font/colour, since the rest is handled by `ChartContainer`.
+
+- cd8280b: Add `LauncherCard` and `Terminal` molecules, and a `theme` prop on `CodeBlock`. Lifted from the OlympusOSS site so every Olympus surface can use the same tile / terminal / dark-code pattern.
+
+  - **`LauncherCard`** — tone-driven launcher tile (badge + title + description + footer slot). Built-in tones: `default` (uses `--primary`), `indigo`, `violet`, `slate`. Set `href` to make the whole card a hover-lifted link; mirrors `NavBar`'s `linkComponent` prop for Next.js routing.
+  - **`Terminal`** — dark macOS-style terminal panel with traffic-light chrome, optional title in the strip, and a `<pre>` body. Free-form `children` so consumers can drop inline `<span>` highlights for colour-coded status/values.
+  - **`CodeBlock` `theme="light" | "dark"`** — additive prop; default `"light"` keeps the existing `bg-muted` styling. `theme="dark"` switches to the terminal palette (`#0a0a0b` background, `#e4e4e7` text) for marketing surfaces. The `overflow-hidden` class is now applied in both themes so the rounded corners always clip the header border.
+
+### Patch Changes
+
+- 6274e63: Docs: `FunnelChart` example redesigned (Phase 13 of the 14-chart redesign).
+
+  - `default.tsx`: replaces the per-stage `chart-1..5` rainbow rotation with a single-hue opacity ramp on `chart-3` (`1.0` → `0.85` → `0.7` → `0.55` → `0.4`). The funnel decay now reads as a continuous tunnel, mirroring the SunburstChart depth-via-opacity pattern instead of competing hues per stage.
+
 ## 2.8.6
 
 ### Patch Changes
