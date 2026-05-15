@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.11.1
+
+### Patch Changes
+
+- 7cd64fe: Brand: update CHANGELOG copy from "OlympusOSS site" to "Olympus site". Visible
+  copy only — npm scope, repo URLs, and other operational identifiers are
+  unchanged.
+
 ## 2.11.0
 
 ### Minor Changes
