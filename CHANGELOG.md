@@ -36,7 +36,7 @@
   - `ActivityHeatmap` now defaults `rowLabels` to `["Mon", … , "Sun"]` whenever the data has exactly 7 rows, covering the GitHub-style yearly-contribution layout out of the box.
   - The `_shared.tsx` axis-prop helpers in the docs examples are simplified to just the tick font/colour, since the rest is handled by `ChartContainer`.
 
-- cd8280b: Add `LauncherCard` and `Terminal` molecules, and a `theme` prop on `CodeBlock`. Lifted from the OlympusOSS site so every Olympus surface can use the same tile / terminal / dark-code pattern.
+- cd8280b: Add `LauncherCard` and `Terminal` molecules, and a `theme` prop on `CodeBlock`. Lifted from the Olympus site so every Olympus surface can use the same tile / terminal / dark-code pattern.
 
   - **`LauncherCard`** — tone-driven launcher tile (badge + title + description + footer slot). Built-in tones: `default` (uses `--primary`), `indigo`, `violet`, `slate`. Set `href` to make the whole card a hover-lifted link; mirrors `NavBar`'s `linkComponent` prop for Next.js routing.
   - **`Terminal`** — dark macOS-style terminal panel with traffic-light chrome, optional title in the strip, and a `<pre>` body. Free-form `children` so consumers can drop inline `<span>` highlights for colour-coded status/values.
