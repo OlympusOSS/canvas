@@ -43,6 +43,11 @@ describe("Spinner", () => {
 		const { container } = render(<Spinner className="text-primary" />);
 		expect(container.querySelector("svg")?.className.baseVal || "").toContain("text-primary");
 	});
+
+	it("matches snapshot", () => {
+		const { container } = render(<Spinner />);
+		expect(container).toMatchSnapshot();
+	});
 });
 
 describe("PasswordInput", () => {
