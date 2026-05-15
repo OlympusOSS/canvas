@@ -11,11 +11,13 @@ Every component lives in one of four tiers.
 | Tier | Folder | What belongs | Examples |
 |---|---|---|---|
 | **Atom** | `src/components/atoms/` | Single interactive or display primitive. Zero composition. Imports only tokens + utils + React. | `Button`, `Input`, `Label`, `Icon`, `Badge`, `Avatar`, `FlexBox`, `Section` |
-| **Molecule** | `src/components/molecules/` | Composes atoms into a meaningful UI unit. No app-state model. | `SearchBar`, `StatusBadge`, `EmptyState`, `LoadingState`, `Card` family, `PageHeader`, `ActionBar`, `SectionCard`, `SecretField`, `Stepper`, `StatCard`, `AnimatedBackground` |
+| **Molecule** | `src/components/molecules/` | Composes atoms into a meaningful UI unit. No app-state model. | `SearchBar`, `StatusBadge`, `EmptyState`, `LoadingState`, `Card` family, `PageHeader`, `ActionBar`, `SectionCard`, `SecretField`, `Stepper`, `StatCard`, `AnimatedBackground`, `AuthShell`, `ClientBrand`, `PasswordInput`, `PasswordStrengthMeter`, `CountdownButton` |
 | **Organism** | `src/components/organisms/` | Owns interactive state (open/close, selection, form), or composes multiple molecules into a reusable surface. | `DataTable`, `DashboardGrid`, `Dialog`, `Sidebar`, `Command`, `Form`, `ThemeProvider`, `ErrorBoundary`, `Toaster` |
 | **Chart** | `src/components/charts/` | Theme-aware chart components and small data-visualisation primitives. Composes Recharts plus Canvas tokens. | `Sparkline`, `Gauge`, `ActivityHeatmap`, `LabeledBarList`, `ServiceHealthList`, `StackedBar`, `WorldHeatMap` |
 
-> Page-level layout templates (`AuthShell`, `AdminShell`, `WizardShell`) were tried and removed. They over-prescribed how consumers wired their app shells (sidebar widths, header structure, drawer behavior) and consistently caused friction. Compose `Sidebar` + `SidebarInset` + your own flexbox shell directly instead — see [`MIGRATION.md`](./MIGRATION.md) for the upgrade snippet.
+> Earlier multi-tier app shells (`AdminShell`, `WizardShell`) were tried and removed: they over-prescribed how consumers wired their app surfaces (sidebar widths, header structure, drawer behavior) and consistently caused friction. For full app surfaces with sidebars or multi-pane layouts, compose `Sidebar` + `SidebarInset` + your own flexbox shell directly. See [`MIGRATION.md`](./MIGRATION.md) for the upgrade snippet.
+>
+> `AuthShell` is the documented exception: auth flows are a constrained pattern (single centered card, brand header, optional footer) and every Olympus auth surface shares the same shape, so it lives in canvas as a slot-based molecule.
 
 ### Classification decision tree
 

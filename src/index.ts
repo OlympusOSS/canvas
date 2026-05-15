@@ -27,6 +27,7 @@ export { Section, type SectionProps } from "./components/atoms/section";
 export { Separator } from "./components/atoms/separator";
 export { Skeleton } from "./components/atoms/skeleton";
 export { Slider } from "./components/atoms/slider";
+export { Spinner, type SpinnerProps } from "./components/atoms/spinner";
 export { Switch } from "./components/atoms/switch";
 export { Textarea } from "./components/atoms/textarea";
 export { Toggle, toggleVariants } from "./components/atoms/toggle";
@@ -149,6 +150,10 @@ export {
 	type AnimatedBackgroundProps,
 } from "./components/molecules/animated-background";
 export {
+	AuthShell,
+	type AuthShellProps,
+} from "./components/molecules/auth-shell";
+export {
 	BrandLockup,
 	type BrandLockupProps,
 } from "./components/molecules/brand-lockup";
@@ -176,7 +181,15 @@ export {
 	CardHeader,
 	CardTitle,
 } from "./components/molecules/card";
+export {
+	ClientBrand,
+	type ClientBrandProps,
+} from "./components/molecules/client-brand";
 export { CodeBlock, type CodeBlockProps } from "./components/molecules/code-block";
+export {
+	CountdownButton,
+	type CountdownButtonProps,
+} from "./components/molecules/countdown-button";
 export { EmptyState, type EmptyStateProps } from "./components/molecules/empty-state";
 export { ErrorState, type ErrorStateProps } from "./components/molecules/error-state";
 export {
@@ -229,6 +242,17 @@ export {
 	PaginationNext,
 	PaginationPrevious,
 } from "./components/molecules/pagination";
+export {
+	PasswordInput,
+	type PasswordInputProps,
+} from "./components/molecules/password-input";
+export {
+	type PasswordStrength,
+	type PasswordStrengthLevel,
+	PasswordStrengthMeter,
+	type PasswordStrengthMeterProps,
+	scorePassword,
+} from "./components/molecules/password-strength-meter";
 export {
 	PhoneInput,
 	type PhoneInputProps,
