@@ -605,6 +605,15 @@ import labeledBarListDefaultSource from "../examples/labeled-bar-list/default?ra
 import labeledBarListNoLeadingSource from "../examples/labeled-bar-list/no-leading?raw";
 import labeledBarListStorageSource from "../examples/labeled-bar-list/storage?raw";
 
+// metric-breakdown
+const MetricBreakdownTokens = lazy(() => import("../examples/metric-breakdown/tokens"));
+const MetricBreakdownRequests = lazy(() => import("../examples/metric-breakdown/requests"));
+const MetricBreakdownMinimal = lazy(() => import("../examples/metric-breakdown/minimal"));
+
+import metricBreakdownMinimalSource from "../examples/metric-breakdown/minimal?raw";
+import metricBreakdownRequestsSource from "../examples/metric-breakdown/requests?raw";
+import metricBreakdownTokensSource from "../examples/metric-breakdown/tokens?raw";
+
 // service-health-list
 const ServiceHealthListDefault = lazy(() => import("../examples/service-health-list/default"));
 const ServiceHealthListAllHealthy = lazy(
@@ -3244,6 +3253,45 @@ export const COMPONENT_CONTENT: Record<string, ComponentContent> = {
 				render: () => <LabeledBarListStorage />,
 				source: labeledBarListStorageSource,
 				filename: "LabeledBarList.tsx",
+			},
+		],
+	},
+	"metric-breakdown": {
+		id: "metric-breakdown",
+		tier: "charts",
+		displayName: "MetricBreakdown",
+		propsSource: "charts/metric-breakdown",
+		importLine: `import { MetricBreakdown } from "@olympusoss/canvas";`,
+		overview:
+			"Multi-section metric card combining a headline value, a contextual rate, a trend sparkline, a per-category breakdown with delta arrows, and a chip row for recent issues. Useful for any throughput-style dashboard (token issuance, API request volume, job runs, sign-ups by source) where one metric needs decomposition by category, trend, and notable issues in a single card.",
+		tokens: ["--chart-1", "--muted", "--muted-foreground", "--border", "--card"],
+		examples: [
+			{
+				id: "tokens",
+				title: "OAuth2 token issuance",
+				description:
+					"The full layout: headline count + error rate, a 30-min sparkline, per-grant breakdown with deltas, and recent error-code chips.",
+				render: () => <MetricBreakdownTokens />,
+				source: metricBreakdownTokensSource,
+				filename: "MetricBreakdown.tsx",
+			},
+			{
+				id: "requests",
+				title: "API request volume",
+				description:
+					"Same shape applied to HTTP traffic: requests per minute broken down by method, with the top 4xx codes as chips. Demonstrates the identity-agnostic reusability.",
+				render: () => <MetricBreakdownRequests />,
+				source: metricBreakdownRequestsSource,
+				filename: "MetricBreakdown.tsx",
+			},
+			{
+				id: "minimal",
+				title: "Headline + breakdown only",
+				description:
+					"Omit `spark`, `rate`, and `chips` to render a tight breakdown card with just the headline number and category bars.",
+				render: () => <MetricBreakdownMinimal />,
+				source: metricBreakdownMinimalSource,
+				filename: "MetricBreakdown.tsx",
 			},
 		],
 	},

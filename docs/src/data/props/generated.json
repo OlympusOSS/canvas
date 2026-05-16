@@ -221,7 +221,7 @@
           "required": false,
           "type": "enum",
           "defaultValue": "\"default\"",
-          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text underlined."
+          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text with a soft\ncolor shift on hover (no underline)."
         },
         {
           "name": "size",
@@ -1197,6 +1197,36 @@
       ]
     }
   ],
+  "atoms/spinner": [
+    {
+      "displayName": "Spinner",
+      "description": "Inline loading indicator. Wraps `Loader2` from lucide-react with the\ncanvas `animate-spin` keyframe and an accessible label.\n\nUse inside buttons (`{loading ? <Spinner/> : 'Submit'}`), next to inline\nlabels, or anywhere a small spinning indicator is appropriate. For a\nfull-section loader with a message, use `LoadingState` (molecule).",
+      "file": "src/components/atoms/spinner.tsx",
+      "props": [
+        {
+          "name": "size",
+          "required": false,
+          "type": "number",
+          "defaultValue": "16",
+          "description": "Pixel size of the rendered SVG."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged via `cn()`."
+        },
+        {
+          "name": "label",
+          "required": false,
+          "type": "string",
+          "defaultValue": "Loading",
+          "description": "Accessible label announced by screen readers. Defaults to `\"Loading\"`.\nPass an empty string to mark as purely decorative when the surrounding\nlabel already announces the loading state."
+        }
+      ]
+    }
+  ],
   "atoms/switch": [
     {
       "displayName": "Switch",
@@ -1479,7 +1509,7 @@
   "charts/activity-heatmap": [
     {
       "displayName": "ActivityHeatmap",
-      "description": "CSS-grid heatmap of opacity-tinted cells. Useful for time-of-day × day-of-week\nmatrices (token issuance, sign-in concentration, queue depth) where a full\nchart would be overkill. Rendering is a flat `display: grid` — no canvas, no\nSVG, fully interactive via hover titles.",
+      "description": "CSS-grid heatmap of opacity-tinted cells. Useful for time-of-day × day-of-week\nmatrices (token issuance, sign-in concentration, queue depth) where a full\nchart would be overkill. Rendering is a flat `display: grid` — no canvas, no\nSVG, fully interactive via hover titles.\n\nOptionally renders row labels on the left, sparse column labels below, and a\n`Fewer ↔ More` gradient legend — toggle each with `rowLabels` / `colLabels` /\n`legend` props.",
       "file": "src/components/charts/activity-heatmap.tsx",
       "props": [
         {
@@ -1523,6 +1553,27 @@
           "type": "((row: number, col: number, value: number) => string)",
           "defaultValue": null,
           "description": "Render the cell `title` attribute (browser tooltip on hover) for each\ncoordinate. Receives `(rowIndex, colIndex, value)` and should return a\nstring. Returns nothing → no title set."
+        },
+        {
+          "name": "rowLabels",
+          "required": false,
+          "type": "ReactNode[]",
+          "defaultValue": null,
+          "description": "Optional left-side row labels (Y-axis). When provided, must align with\n`data.length`. Empty / nullish entries render as blank cells so the\nlabel column stays aligned with the grid."
+        },
+        {
+          "name": "colLabels",
+          "required": false,
+          "type": "ReactNode[]",
+          "defaultValue": null,
+          "description": "Optional bottom-side column labels (X-axis). When provided, must align\nwith `data[0].length`. Pass empty strings (or `null`) for indices you\nwant to leave blank — useful for sparse hour ticks (e.g. only label\n0/6/12/18/23 across a 24-column matrix)."
+        },
+        {
+          "name": "legend",
+          "required": false,
+          "type": "boolean | { fromLabel?: ReactNode; toLabel?: ReactNode; }",
+          "defaultValue": "false",
+          "description": "Show a \"Fewer ↔ More\" gradient legend below the grid. Pass `true` for\nthe default labels, or an object to override one or both ends. The\ngradient mirrors the cell-opacity ramp (`0.08` → `0.93`)."
         }
       ]
     }
@@ -13399,6 +13450,106 @@
       ]
     }
   ],
+  "charts/metric-breakdown": [
+    {
+      "displayName": "MetricBreakdown",
+      "description": "Multi-section metric card: a headline value with an optional rate, a small\ninline trend sparkline, a per-category breakdown with delta arrows, and a\ntrailing chip row for recent issues.\n\nDesigned for \"throughput-style\" dashboards (token issuance, API request\nvolume, job throughput, sign-ups by source): anywhere a single metric needs\nto be decomposed by category and contextualized by trend and notable issues\nin one card. Identity-agnostic; bring your own labels and color tokens.",
+      "file": "src/components/charts/metric-breakdown.tsx",
+      "props": [
+        {
+          "name": "value",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Primary metric value rendered as the headline number."
+        },
+        {
+          "name": "label",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Caption rendered below the headline value (uppercase muted)."
+        },
+        {
+          "name": "rate",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Secondary metric rendered top-right (e.g. an error rate)."
+        },
+        {
+          "name": "rateLabel",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Caption for the secondary metric (uppercase muted)."
+        },
+        {
+          "name": "rateTone",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "neutral",
+          "description": "Tone driving the secondary metric color. Default `neutral`."
+        },
+        {
+          "name": "spark",
+          "required": false,
+          "type": "number[]",
+          "defaultValue": null,
+          "description": "Sparkline data points. Rendered as an SVG line + area-fill ramp."
+        },
+        {
+          "name": "sparkUnit",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Unit suffix rendered next to the last value of the sparkline, e.g. `req/s`."
+        },
+        {
+          "name": "defaultColorVar",
+          "required": false,
+          "type": "string",
+          "defaultValue": "chart-1",
+          "description": "CSS variable name (without leading `--`) for the sparkline color. Default\n`chart-1`. Also used as the fallback for breakdown rows that omit `colorVar`."
+        },
+        {
+          "name": "sparkHeight",
+          "required": false,
+          "type": "number",
+          "defaultValue": "36",
+          "description": "Pixel height of the sparkline. Default `36`."
+        },
+        {
+          "name": "breakdown",
+          "required": false,
+          "type": "MetricBreakdownRow[]",
+          "defaultValue": null,
+          "description": "Category breakdown rows."
+        },
+        {
+          "name": "valueFormatter",
+          "required": false,
+          "type": "((value: number) => string)",
+          "defaultValue": "(v) => v.toLocaleString()",
+          "description": "Format breakdown row values. Default `toLocaleString`."
+        },
+        {
+          "name": "chips",
+          "required": false,
+          "type": "MetricBreakdownChip[]",
+          "defaultValue": null,
+          "description": "Trailing chip row (e.g. recent error codes)."
+        },
+        {
+          "name": "chipsLabel",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": "Errors",
+          "description": "Label rendered before the chip row (uppercase muted). Default `\"Errors\"`.\nPass `null` to hide."
+        }
+      ]
+    }
+  ],
   "charts/references": [
     {
       "displayName": "ReferenceArea",
@@ -13438,6 +13589,50 @@
           "type": "ReactNode",
           "defaultValue": null,
           "description": "Caption rendered below the list."
+        }
+      ]
+    }
+  ],
+  "charts/sparkline": [
+    {
+      "displayName": "Sparkline",
+      "description": "Pure-CSS mini bar chart for inline embedding in `<StatCard>` /\n`<SectionCard>`. Decorative — for live data, use a `<BarChart>` from the\ncharts tier with proper axes and tooltips.",
+      "file": "src/components/charts/sparkline.tsx",
+      "props": [
+        {
+          "name": "data",
+          "required": true,
+          "type": "number[]",
+          "defaultValue": null,
+          "description": "Values to plot. Each entry maps to a bar."
+        },
+        {
+          "name": "height",
+          "required": false,
+          "type": "number",
+          "defaultValue": "160",
+          "description": "Pixel height of the chart."
+        },
+        {
+          "name": "colorVar",
+          "required": false,
+          "type": "string",
+          "defaultValue": "chart-1",
+          "description": "CSS variable name (without leading `--`) used for the bar fill. Default\n`chart-1`. The variable should resolve to an HSL triplet for `hsl()`."
+        },
+        {
+          "name": "gap",
+          "required": false,
+          "type": "number",
+          "defaultValue": "4",
+          "description": "Pixel gap between bars."
+        },
+        {
+          "name": "caption",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Caption rendered below the bars."
         }
       ]
     }
@@ -13787,6 +13982,71 @@
           "type": "string",
           "defaultValue": null,
           "description": "Tailwind / CSS classes merged onto the root container via `cn()`.\nDefaults to `pointer-events-none fixed inset-0 overflow-hidden`."
+        }
+      ]
+    }
+  ],
+  "molecules/auth-shell": [
+    {
+      "displayName": "AuthShell",
+      "description": "Centered single-card layout for auth flows.\n\nRenders, top to bottom:\n  1. Brand slot (`brand`) above the card\n  2. Card with optional centred title + subtitle, then `children`\n  3. Optional footer line beneath the card\n\nLayout is intentionally narrow and prescriptive: this is the\nagreed-upon shape for every Olympus auth screen (login, register,\nrecovery, reset, verify, OTP, consent, logout, status). For app shells\nwith sidebars or multi-pane layouts, compose your own flex shell\ndirectly (see `Sidebar` + `SidebarInset`).",
+      "file": "src/components/molecules/auth-shell.tsx",
+      "props": [
+        {
+          "name": "brand",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Brand lockup rendered above the card. Compose a `ClientBrand` (or\nyour own component) and pass it in. Slot is left empty to keep this\nshell unaware of OAuth2 / Hydra specifics."
+        },
+        {
+          "name": "title",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Card title. Pairs with `subtitle`."
+        },
+        {
+          "name": "subtitle",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Optional one-line subtitle shown beneath `title`."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Card body content."
+        },
+        {
+          "name": "footer",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Optional footer line beneath the card (legal / privacy / support)."
+        },
+        {
+          "name": "width",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "default",
+          "description": "Card width preset. `default` = 408px (single-column flows like login,\nrecovery), `wide` = 460px (multi-step or denser flows like consent)."
+        },
+        {
+          "name": "flush",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Allow children to break the card frame (useful for full-bleed flow\npickers or media). When `false` the card content gets the standard\n`p-6` padding."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the outer wrapper via `cn()`."
         }
       ]
     }
@@ -14256,6 +14516,57 @@
       ]
     }
   ],
+  "molecules/client-brand": [
+    {
+      "displayName": "ClientBrand",
+      "description": "OAuth2 client lockup. Renders the requesting application's logo + name\nso users see \"you're signing in to [App]\", not the identity-provider\nplatform underneath.\n\nProvide `clientLogoUri` to render the client's logo image. Falls back to\na monogram tile when no URI is supplied or the image fails to load.\n\nDesigned for the brand slot of `AuthShell` / sign-in pages. Stays a thin\npresentation primitive: no client-registry lookups, no fetches. Pass the\nshaped data in from your auth backend.",
+      "file": "src/components/molecules/client-brand.tsx",
+      "props": [
+        {
+          "name": "clientName",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "OAuth2 client display name (e.g. \"Questrade\", \"Athena\")."
+        },
+        {
+          "name": "clientLogoUri",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Optional logo URI. Renders as an `<img>` next to the wordmark when\npresent. When absent, a tinted monogram tile is rendered using the\nfirst letter of `clientName`."
+        },
+        {
+          "name": "size",
+          "required": false,
+          "type": "number",
+          "defaultValue": "36",
+          "description": "Pixel size of the logo/monogram tile."
+        },
+        {
+          "name": "showWordmark",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "true",
+          "description": "Show the wordmark next to the logo."
+        },
+        {
+          "name": "monogramClassName",
+          "required": false,
+          "type": "string",
+          "defaultValue": "\"bg-foreground text-background\"",
+          "description": "Background colour applied to the monogram fallback tile. Honours\nTailwind classes or a raw CSS colour."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the root via `cn()`."
+        }
+      ]
+    }
+  ],
   "molecules/code-block": [
     {
       "displayName": "CodeBlock",
@@ -14282,6 +14593,134 @@
           "type": "boolean",
           "defaultValue": "true",
           "description": ""
+        },
+        {
+          "name": "theme",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "light",
+          "description": "`\"light\"` (default) renders against `bg-muted`; `\"dark\"` switches to a\nnear-black terminal palette (`#0a0a0b` background, `#e4e4e7` text) for\nuse on marketing surfaces."
+        }
+      ]
+    }
+  ],
+  "molecules/countdown-button": [
+    {
+      "displayName": "CountdownButton",
+      "description": "Button that locks out for a duration after mount or after `triggerKey`\nchanges. Renders countdown text while disabled.\n\nUse for \"resend code\" / \"resend email\" flows where the user shouldn't be\nable to spam the action. Triggering a new send from elsewhere should\nupdate `triggerKey` to restart the lockout.",
+      "file": "src/components/molecules/countdown-button.tsx",
+      "props": [
+        {
+          "name": "duration",
+          "required": false,
+          "type": "number",
+          "defaultValue": "30",
+          "description": "Seconds to wait before the button becomes clickable. The countdown\nstarts when the component mounts and resets every time `triggerKey`\nchanges."
+        },
+        {
+          "name": "triggerKey",
+          "required": false,
+          "type": "string | number",
+          "defaultValue": null,
+          "description": "Bump this value to restart the countdown (e.g. after a successful\nresend, set it to `Date.now()` so the button locks out again)."
+        },
+        {
+          "name": "onClick",
+          "required": false,
+          "type": "(() => void)",
+          "defaultValue": null,
+          "description": "Called when the button is clicked and the countdown has elapsed."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode | ((secondsLeft: number) => ReactNode)",
+          "defaultValue": null,
+          "description": "Render-prop for the button label. Receives `secondsLeft` (0 when\nready). Default renders `\"Resend\"` / `\"Resend in 23s\"`."
+        },
+        {
+          "name": "verb",
+          "required": false,
+          "type": "string",
+          "defaultValue": "Resend",
+          "description": "Action verb shown in the default label. Used as `${verb}` when ready\nand `${verb} in Ns` while counting down."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Tailwind / CSS classes merged onto the root element via `cn()`."
+        },
+        {
+          "name": "variant",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"default\"",
+          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text with a soft\ncolor shift on hover (no underline)."
+        },
+        {
+          "name": "size",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"default\"",
+          "description": "Height + horizontal padding preset. `sm` is 32px, `default` is 36px,\n`lg` is 40px, `icon` is square 36×36 for icon-only buttons (always\npair with `aria-label`)."
+        },
+        {
+          "name": "asChild",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Render as a Radix Slot — forwards className and behaviour onto the\nimmediate child element instead of rendering a wrapper `<button>`.\nCommon pattern for using a router `<Link>` while keeping the Button\nstyling."
+        },
+        {
+          "name": "type",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "\"button\"",
+          "description": "Native HTML button type. `submit` triggers parent form submission;\n`reset` resets parent form fields; `button` does neither."
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Form name when this button submits/resets a form (for forms with multiple buttons)."
+        },
+        {
+          "name": "value",
+          "required": false,
+          "type": "string | number | readonly string[]",
+          "defaultValue": null,
+          "description": "Form value sent with the form when this button is the submitter."
+        },
+        {
+          "name": "form",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "ID of the form this button belongs to, when the button sits outside\nthe `<form>` element."
+        },
+        {
+          "name": "tabIndex",
+          "required": false,
+          "type": "number",
+          "defaultValue": null,
+          "description": "Tab order. Default behaviour is one of native `<button>` tab focus."
+        },
+        {
+          "name": "aria-label",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Accessible label, required for icon-only buttons (`size=\"icon\"`)."
+        },
+        {
+          "name": "aria-describedby",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "ID of an element that describes the button's purpose."
         }
       ]
     }
@@ -14482,6 +14921,85 @@
           "name": "index",
           "required": true,
           "type": "number",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
+    }
+  ],
+  "molecules/launcher-card": [
+    {
+      "displayName": "LauncherCard",
+      "description": "",
+      "file": "src/components/molecules/launcher-card.tsx",
+      "props": [
+        {
+          "name": "badge",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Top-left identifier — typically a letter (`\"C\"`) or a small icon."
+        },
+        {
+          "name": "title",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "Card heading."
+        },
+        {
+          "name": "description",
+          "required": true,
+          "type": "string",
+          "defaultValue": null,
+          "description": "One-or-two sentence body copy below the title."
+        },
+        {
+          "name": "tone",
+          "required": false,
+          "type": "enum",
+          "defaultValue": "default",
+          "description": "Colour key for the badge background, foreground, and hover ring.\nDefaults to `\"default\"`, which uses the `--primary` token."
+        },
+        {
+          "name": "href",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "If set, the entire card becomes a link with a hover-lift effect.\nPair with `linkComponent` to route through a framework-specific Link\ncomponent (e.g. Next.js)."
+        },
+        {
+          "name": "target",
+          "required": false,
+          "type": "HTMLAttributeAnchorTarget",
+          "defaultValue": null,
+          "description": "`target` attribute applied when `href` is set. Defaults to `\"_self\"`."
+        },
+        {
+          "name": "rel",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": "`rel` attribute applied when `href` is set. Defaults to `\"noopener\"`\nwhen `target === \"_blank\"`."
+        },
+        {
+          "name": "linkComponent",
+          "required": false,
+          "type": "ElementType<any, keyof IntrinsicElements>",
+          "defaultValue": null,
+          "description": "Override the rendered link element when `href` is set\n(e.g. `Link` from `next/link`). Falls back to `<a>`."
+        },
+        {
+          "name": "children",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Footer slot. Typically a small CTA row (e.g. arrow link) or, when the\ncard is non-interactive, an inline status / detail block."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
           "defaultValue": null,
           "description": ""
         }
@@ -14922,6 +15440,51 @@
       ]
     }
   ],
+  "molecules/password-input": [
+    {
+      "displayName": "PasswordInput",
+      "description": "Password input with a show/hide eye toggle. Renders as an `Input` (atom)\nwith a `Button` (atom) absolutely positioned at the trailing edge.\n\nUse anywhere a password field is needed: login, registration, settings,\nreset flows.",
+      "file": "src/components/molecules/password-input.tsx",
+      "props": [
+        {
+          "name": "defaultVisible",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": "false",
+          "description": "Initial visibility state. Pair with `onVisibilityChange` for a\ncontrolled input."
+        },
+        {
+          "name": "visible",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": "Controlled visibility. Overrides `defaultVisible`."
+        },
+        {
+          "name": "onVisibilityChange",
+          "required": false,
+          "type": "((visible: boolean) => void)",
+          "defaultValue": null,
+          "description": "Fired when the user clicks the eye toggle."
+        },
+        {
+          "name": "toggleLabel",
+          "required": false,
+          "type": "string",
+          "defaultValue": "Toggle password visibility",
+          "description": "Accessible label on the eye toggle button."
+        }
+      ]
+    }
+  ],
+  "molecules/password-strength-meter": [
+    {
+      "displayName": "PasswordStrengthMeter",
+      "description": "Score a password 0-4 based on length + character variety. Returns the\nlevel plus a short label. Heuristic-only; for a true strength score use a\ndictionary-aware estimator like `@zxcvbn-ts/core` and map its score here.",
+      "file": "src/components/molecules/password-strength-meter.tsx",
+      "props": []
+    }
+  ],
   "molecules/phone-input": [
     {
       "displayName": "PhoneInput",
@@ -15220,50 +15783,6 @@
           "type": "string",
           "defaultValue": null,
           "description": ""
-        }
-      ]
-    }
-  ],
-  "molecules/sparkline": [
-    {
-      "displayName": "Sparkline",
-      "description": "Pure-CSS mini bar chart for inline embedding in `<StatCard>` /\n`<SectionCard>`. Decorative — for live data, use a `<BarChart>` from the\ncharts tier with proper axes and tooltips.",
-      "file": "src/components/molecules/sparkline.tsx",
-      "props": [
-        {
-          "name": "data",
-          "required": true,
-          "type": "number[]",
-          "defaultValue": null,
-          "description": "Values to plot. Each entry maps to a bar."
-        },
-        {
-          "name": "height",
-          "required": false,
-          "type": "number",
-          "defaultValue": "160",
-          "description": "Pixel height of the chart."
-        },
-        {
-          "name": "colorVar",
-          "required": false,
-          "type": "string",
-          "defaultValue": "chart-1",
-          "description": "CSS variable name (without leading `--`) used for the bar fill. Default\n`chart-1`. The variable should resolve to an HSL triplet for `hsl()`."
-        },
-        {
-          "name": "gap",
-          "required": false,
-          "type": "number",
-          "defaultValue": "4",
-          "description": "Pixel gap between bars."
-        },
-        {
-          "name": "caption",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Caption rendered below the bars."
         }
       ]
     }
@@ -15612,6 +16131,36 @@
       ]
     }
   ],
+  "molecules/terminal": [
+    {
+      "displayName": "Terminal",
+      "description": "",
+      "file": "src/components/molecules/terminal.tsx",
+      "props": [
+        {
+          "name": "title",
+          "required": false,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Optional label rendered in the macOS-style chrome strip, next to the\ntraffic-light dots. Typical use: a working directory + command\n(e.g. `~/Olympus · octl`)."
+        },
+        {
+          "name": "children",
+          "required": true,
+          "type": "ReactNode",
+          "defaultValue": null,
+          "description": "Terminal body. Renders inside a `<pre>` with mono font and 1.7 line\nheight. Free-form — drop plain text, ANSI-coloured `<span>`s, or any\ninline highlights you want."
+        },
+        {
+          "name": "className",
+          "required": false,
+          "type": "string",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
+    }
+  ],
   "molecules/toggle-group": [
     {
       "displayName": "ToggleGroup",
@@ -15827,7 +16376,7 @@
           "name": "sideOffset",
           "required": false,
           "type": "number",
-          "defaultValue": "4",
+          "defaultValue": "6",
           "description": "Distance in pixels between the trigger and the tooltip content."
         },
         {
@@ -16632,7 +17181,7 @@
           "required": false,
           "type": "enum",
           "defaultValue": "outline",
-          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text underlined."
+          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text with a soft\ncolor shift on hover (no underline)."
         },
         {
           "name": "size",
@@ -16737,7 +17286,7 @@
           "required": false,
           "type": "enum",
           "defaultValue": "outline",
-          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text underlined."
+          "description": "Visual emphasis preset. `default` is the primary action, `destructive`\nis for irreversible actions, `outline` and `secondary` are quieter,\n`ghost` is borderless, `link` looks like body-text with a soft\ncolor shift on hover (no underline)."
         },
         {
           "name": "size",
@@ -17687,7 +18236,7 @@
   "organisms/dashboard-grid": [
     {
       "displayName": "DashboardGrid",
-      "description": "Drag-to-reorder, drag-to-resize widget grid backed by `react-grid-layout`.\nFully controlled: pass `items` + `onItemsChange`. Toggle `editing` to gate\ndrag/resize affordances behind a customize-mode UX. The 12-col responsive\ngrid auto-packs collisions and adapts column count to viewport via the\n`breakpoints` map.\n\nConsumers must import the lib's stylesheet once at app entry:\n\n    import \"@olympusoss/canvas/styles/dashboard-grid.css\";\n\nThat sheet pulls in `react-grid-layout/css/styles.css` and\n`react-resizable/css/styles.css`, plus a small canvas-token override that\nrecolours the placeholder + resize handles.",
+      "description": "Drag-to-reorder, drag-to-resize widget grid backed by `react-grid-layout`.\nFully controlled: pass `items` + `onItemsChange`. Toggle `editing` to gate\ndrag/resize affordances behind a customize-mode UX. The 12-col responsive\ngrid auto-packs collisions and adapts column count to viewport via the\n`breakpoints` map.\n\n`items` is consumed in **lg-coords** (the `cols.lg` column count, default 12).\nPer-breakpoint layouts are derived automatically by scaling each item's `x`\nand `w` proportionally to the target breakpoint's column count via\n`scaleItem`. This is the documented `react-grid-layout` pattern — each\nbreakpoint needs its own layout array, not a single layout fanned out\n(fanning produces the cascading staircase bug at smaller breakpoints because\nRGL clamps `w` but preserves `x`).\n\n**Edit at lg.** Drags performed at smaller breakpoints update only that\nbreakpoint's layout (per RGL); the canonical lg layout doesn't reflect those\nedits, so they revert when the viewport resizes back to lg. Persist your\ncustomize-mode UX at the lg breakpoint.\n\nConsumers must import the lib's stylesheet once at app entry:\n\n    import \"@olympusoss/canvas/styles/dashboard-grid.css\";\n\nThat sheet pulls in `react-grid-layout/css/styles.css` and\n`react-resizable/css/styles.css`, plus a small canvas-token override that\nrecolours the placeholder + resize handles.",
       "file": "src/components/organisms/dashboard-grid.tsx",
       "props": [
         {
@@ -17744,7 +18293,7 @@
           "required": false,
           "type": "[number, number]",
           "defaultValue": "[16, 16]",
-          "description": "Horizontal margin between items, in pixels. Default `[16, 16]` (`[x, y]`)."
+          "description": "Gutter between items in pixels (`[x, y]`). Default `[16, 16]` — kept even on both axes\nso rows and columns share the same spacing."
         },
         {
           "name": "emptyState",
@@ -18473,6 +19022,20 @@
       "description": "",
       "file": "src/components/organisms/drawer.tsx",
       "props": []
+    },
+    {
+      "displayName": "DrawerHandle",
+      "description": "",
+      "file": "src/components/organisms/drawer.tsx",
+      "props": [
+        {
+          "name": "preventCycle",
+          "required": false,
+          "type": "boolean",
+          "defaultValue": null,
+          "description": ""
+        }
+      ]
     },
     {
       "displayName": "DrawerHeader",
@@ -20440,7 +21003,7 @@
           "required": false,
           "type": "boolean",
           "defaultValue": "true",
-          "description": ""
+          "description": "When `true` (default) the bar uses `position: sticky` + `top: 0` so it\nstays anchored to the top of its scroll container while page content\nscrolls underneath. The translucent background + `backdrop-blur` creates\na frosted-glass effect through which the scrolling content reads.\nSet `false` to render inline (e.g. for examples or non-sticky layouts)."
         },
         {
           "name": "linkComponent",
@@ -21012,7 +21575,7 @@
     },
     {
       "displayName": "ResizablePanelGroup",
-      "description": "",
+      "description": "`react-resizable-panels` v4 emits `data-group` on the panel group and forces\ninline `height: 100%; width: 100%`, which means a `className=\"h-32\"` passed\ndirectly to the group is ignored. The library expects the parent to size it.\n\nTo keep `<ResizablePanelGroup className=\"h-32\">` ergonomic for consumers, we\nwrap the library's `Group` in a sizing container — `className` lands on that\nwrapper, the inner `Group` then fills 100%.\n\nOrientation note: the library only emits `aria-orientation` on the\n`Separator` (and the separator's orientation is OPPOSITE the group's — a\nhorizontal group has vertical separators). So group flex direction is set\nhere in JS from the prop, while separator dimension styles key off\n`aria-orientation=horizontal` (separator inside a `vertical` group).",
       "file": "src/components/organisms/resizable.tsx",
       "props": [
         {
@@ -22855,261 +23418,6 @@
           "type": "boolean",
           "defaultValue": null,
           "description": "Skip DOM/storage side effects (useful for SSR/tests)."
-        }
-      ]
-    }
-  ],
-  "templates/admin-shell": [
-    {
-      "displayName": "AdminShell",
-      "description": "",
-      "file": "src/components/templates/admin-shell.tsx",
-      "props": [
-        {
-          "name": "sidebar",
-          "required": true,
-          "type": "ReactNode | ((ctx: { expanded: boolean; setExpanded: (v: boolean) => void; closeMobile: () => void; }) => ReactNode)",
-          "defaultValue": null,
-          "description": "Sidebar content. Rendered on md+ in a fixed left column and in an\noverlay drawer on mobile."
-        },
-        {
-          "name": "header",
-          "required": false,
-          "type": "ReactNode | ((ctx: { onMobileMenuToggle: () => void; }) => ReactNode)",
-          "defaultValue": null,
-          "description": "Optional header rendered above the scrollable main area."
-        },
-        {
-          "name": "expandedSidebarClass",
-          "required": false,
-          "type": "string",
-          "defaultValue": "md:ml-60",
-          "description": "Width class for expanded sidebar. Default `\"md:ml-60\"` (60 × 0.25rem = 15rem)."
-        },
-        {
-          "name": "collapsedSidebarClass",
-          "required": false,
-          "type": "string",
-          "defaultValue": "md:ml-14",
-          "description": "Width class for collapsed sidebar. Default `\"md:ml-14\"`."
-        },
-        {
-          "name": "defaultSidebarExpanded",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": "true",
-          "description": ""
-        },
-        {
-          "name": "className",
-          "required": false,
-          "type": "string",
-          "defaultValue": null,
-          "description": ""
-        }
-      ]
-    }
-  ],
-  "templates/app-header": [
-    {
-      "displayName": "AppHeader",
-      "description": "",
-      "file": "src/components/templates/app-header.tsx",
-      "props": [
-        {
-          "name": "search",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Search slot — typically a `<SearchBar>` constrained to a max width.\nRendered on the left, flex-grows to fill available space."
-        },
-        {
-          "name": "actions",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Actions slot — chrome buttons (theme toggle, bell, settings). Rendered\nright of the search, before the user chip."
-        },
-        {
-          "name": "user",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "User slot — typically a `<UserAvatarChip>` or `<DropdownMenu>`-wrapped\navatar. Rendered last on the right."
-        },
-        {
-          "name": "mobileMenuTrigger",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Mobile menu trigger slot — rendered before search on small viewports.\nTypically a hamburger Button that calls AdminShell's `onMobileMenuToggle`."
-        },
-        {
-          "name": "sticky",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": "true",
-          "description": "When true, sticks the header to the top with `bg-background` and a\nborder-bottom. Defaults to true — the typical admin pattern."
-        }
-      ]
-    }
-  ],
-  "templates/auth-layout": [
-    {
-      "displayName": "AuthLayout",
-      "description": "",
-      "file": "src/components/templates/auth-layout.tsx",
-      "props": [
-        {
-          "name": "title",
-          "required": false,
-          "type": "string",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
-          "name": "description",
-          "required": false,
-          "type": "string",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
-          "name": "footer",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": ""
-        }
-      ]
-    }
-  ],
-  "templates/auth-shell": [
-    {
-      "displayName": "AuthShell",
-      "description": "",
-      "file": "src/components/templates/auth-shell.tsx",
-      "props": [
-        {
-          "name": "brandHeader",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Brand header rendered above the card — typically your `<BrandMark>` or a\nLogo wrapper plus the title/subtitle. Pass `null` to hide."
-        },
-        {
-          "name": "title",
-          "required": false,
-          "type": "string",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
-          "name": "subtitle",
-          "required": false,
-          "type": "string",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
-          "name": "background",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Optional decorative background (e.g. animated gradient, gradient slot)."
-        },
-        {
-          "name": "footer",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Optional footer text below the card."
-        },
-        {
-          "name": "cardWidthClass",
-          "required": false,
-          "type": "string",
-          "defaultValue": "max-w-md",
-          "description": "Card width class. Default `\"max-w-md\"`."
-        }
-      ]
-    }
-  ],
-  "templates/wizard-shell": [
-    {
-      "displayName": "WizardShell",
-      "description": "",
-      "file": "src/components/templates/wizard-shell.tsx",
-      "props": [
-        {
-          "name": "steps",
-          "required": true,
-          "type": "StepperStep[]",
-          "defaultValue": null,
-          "description": "Step list shown in the left nav."
-        },
-        {
-          "name": "activeStep",
-          "required": true,
-          "type": "string",
-          "defaultValue": null,
-          "description": "Currently active step id."
-        },
-        {
-          "name": "onStepChange",
-          "required": false,
-          "type": "((id: string) => void)",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
-          "name": "sidebarHeader",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Optional header content inside the sidebar (logo, app name)."
-        },
-        {
-          "name": "sidebarFooter",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Optional extra nav content below the step list (links, destroy button)."
-        },
-        {
-          "name": "terminal",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Optional collapsible terminal panel shown at the bottom of the content\narea. When provided, a toggle bar is rendered."
-        },
-        {
-          "name": "defaultTerminalOpen",
-          "required": false,
-          "type": "boolean",
-          "defaultValue": "true",
-          "description": "Default terminal open state. Default `true`."
-        },
-        {
-          "name": "footer",
-          "required": false,
-          "type": "ReactNode",
-          "defaultValue": null,
-          "description": "Optional ActionBar slot pinned below main content."
-        },
-        {
-          "name": "className",
-          "required": false,
-          "type": "string",
-          "defaultValue": null,
-          "description": ""
-        },
-        {
-          "name": "shellClassName",
-          "required": false,
-          "type": "string",
-          "defaultValue": null,
-          "description": "Extra className for the outer flex row (e.g. \"mcp-shimmer\")."
         }
       ]
     }

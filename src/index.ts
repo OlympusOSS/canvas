@@ -102,6 +102,13 @@ export {
 	type LabeledBarListProps,
 } from "./components/charts/labeled-bar-list";
 export {
+	MetricBreakdown,
+	type MetricBreakdownChip,
+	type MetricBreakdownProps,
+	type MetricBreakdownRow,
+	type MetricBreakdownTone,
+} from "./components/charts/metric-breakdown";
+export {
 	ReferenceArea,
 	ReferenceDot,
 	ReferenceLine,
