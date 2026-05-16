@@ -105,6 +105,7 @@ export const COMPONENTS: ComponentManifestEntry[] = [
 	{ id: "gauge", label: "Gauge", tier: "charts" },
 	{ id: "labeled-bar-list", label: "LabeledBarList", tier: "charts" },
 	{ id: "line-chart", label: "LineChart", tier: "charts" },
+	{ id: "metric-breakdown", label: "MetricBreakdown", tier: "charts" },
 	{ id: "pie-chart", label: "PieChart", tier: "charts" },
 	{ id: "radar-chart", label: "RadarChart", tier: "charts" },
 	{ id: "radial-bar-chart", label: "RadialBarChart", tier: "charts" },
