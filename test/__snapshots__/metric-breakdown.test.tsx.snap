@@ -48,7 +48,7 @@ exports[`MetricBreakdown > matches snapshot 1`] = `
       >
         <defs>
           <lineargradient
-            id="_r_1_"
+            id="_r_3_"
             x1="0"
             x2="0"
             y1="0"
@@ -67,7 +67,7 @@ exports[`MetricBreakdown > matches snapshot 1`] = `
           </lineargradient>
         </defs>
         <polygon
-          fill="url(#_r_1_)"
+          fill="url(#_r_3_)"
           points="0,36 0,34 10,29.5 20,27.25 30,30.25 40,24.25 50,19 60,22 70,17.5 80,12.25 90,14.5 100,10.75 110,6.25 120,4 120,36"
         />
         <polyline

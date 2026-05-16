@@ -164,6 +164,73 @@ describe("MetricBreakdown", () => {
 		expect(fill.style.background).toContain("--chart-3");
 	});
 
+	it("handles a constant-value sparkline without dividing by zero", () => {
+		// All identical values → range fallback to 1.
+		const { container } = render(
+			<MetricBreakdown value={100} label="flat" spark={[7, 7, 7, 7, 7]} sparkUnit="rpm" />,
+		);
+		const polyline = container.querySelector("polyline");
+		expect(polyline).not.toBeNull();
+		// Every y-coord should be identical (range collapsed to 1; line is flat).
+		const ys = polyline!
+			.getAttribute("points")!
+			.split(" ")
+			.map((p) => p.split(",")[1]);
+		expect(new Set(ys).size).toBe(1);
+	});
+
+	it("renders a non-string sparkline unit (ReactNode) without crashing", () => {
+		const { getByTestId } = render(
+			<MetricBreakdown
+				value={100}
+				label="reqs"
+				spark={[1, 2, 3]}
+				sparkUnit={<strong data-testid="custom-unit">rpm</strong>}
+			/>,
+		);
+		expect(getByTestId("custom-unit")).toBeInTheDocument();
+	});
+
+	it("clamps breakdown bar widths when every row value is zero", () => {
+		const { container } = render(
+			<MetricBreakdown
+				value={0}
+				label="quiet"
+				breakdown={[
+					{ label: "a", value: 0 },
+					{ label: "b", value: 0 },
+				]}
+			/>,
+		);
+		// Sum=0 → fallback to 1 → bars render at 0% (not NaN%).
+		const fills = container.querySelectorAll(".rounded-full > div");
+		expect(fills.length).toBeGreaterThanOrEqual(2);
+		expect((fills[0] as HTMLElement).style.width).toBe("0%");
+		expect((fills[1] as HTMLElement).style.width).toBe("0%");
+	});
+
+	it("accepts a non-string breakdown row label (ReactNode)", () => {
+		const { getByTestId } = render(
+			<MetricBreakdown
+				value={100}
+				label="mixed"
+				breakdown={[{ label: <span data-testid="rich-label">authorization_code</span>, value: 50 }]}
+			/>,
+		);
+		expect(getByTestId("rich-label")).toBeInTheDocument();
+	});
+
+	it("accepts a non-string chip label (ReactNode)", () => {
+		const { getByTestId } = render(
+			<MetricBreakdown
+				value={100}
+				label="mixed"
+				chips={[{ label: <span data-testid="rich-chip">invalid_grant</span>, count: 3 }]}
+			/>,
+		);
+		expect(getByTestId("rich-chip")).toBeInTheDocument();
+	});
+
 	it("matches snapshot", () => {
 		const { container } = render(
 			<MetricBreakdown
