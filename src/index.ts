@@ -231,6 +231,10 @@ export {
 	type NumberBadgeProps,
 } from "./components/molecules/number-badge";
 export {
+	OrSeparator,
+	type OrSeparatorProps,
+} from "./components/molecules/or-separator";
+export {
 	PageHeader,
 	type PageHeaderBreadcrumb,
 	type PageHeaderProps,
@@ -274,6 +278,13 @@ export {
 	SectionCard,
 	type SectionCardProps,
 } from "./components/molecules/section-card";
+export {
+	SocialButton,
+	type SocialButtonProps,
+	SocialButtons,
+	type SocialButtonsProps,
+	type SocialProvider,
+} from "./components/molecules/social-buttons";
 export { StatCard, type StatCardProps } from "./components/molecules/stat-card";
 export {
 	StatusBadge,
