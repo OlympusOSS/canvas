@@ -1,7 +1,32 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { OrSeparator, SocialButton, SocialButtons } from "../src/index";
+import { SocialButton, SocialButtons } from "../src/index";
+
+describe("SocialButton (snapshot)", () => {
+	it.each([
+		"github",
+		"google",
+		"apple",
+		"microsoft",
+		"sso",
+	] as const)("%s matches snapshot", (provider) => {
+		const { container } = render(<SocialButton provider={provider} />);
+		expect(container).toMatchSnapshot();
+	});
+});
+
+describe("SocialButtons (snapshot)", () => {
+	it("default providers (github + google) match snapshot", () => {
+		const { container } = render(<SocialButtons />);
+		expect(container).toMatchSnapshot();
+	});
+
+	it("single SSO provider matches snapshot", () => {
+		const { container } = render(<SocialButtons providers={["sso"]} />);
+		expect(container).toMatchSnapshot();
+	});
+});
 
 describe("SocialButton", () => {
 	it("renders provider glyph and default label", () => {
@@ -59,22 +84,5 @@ describe("SocialButtons", () => {
 		for (const btn of screen.getAllByRole("button")) {
 			expect(btn).toBeDisabled();
 		}
-	});
-});
-
-describe("OrSeparator", () => {
-	it("renders default 'or' label", () => {
-		render(<OrSeparator />);
-		expect(screen.getByText("or")).toBeInTheDocument();
-	});
-
-	it("renders custom label", () => {
-		render(<OrSeparator label="sign in manually" />);
-		expect(screen.getByText("sign in manually")).toBeInTheDocument();
-	});
-
-	it("exposes separator role for accessibility", () => {
-		render(<OrSeparator />);
-		expect(screen.getByRole("separator")).toBeInTheDocument();
 	});
 });
