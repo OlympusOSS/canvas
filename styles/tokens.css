@@ -259,6 +259,32 @@
 	--color-stat-purple: hsl(var(--stat-purple));
 	--color-stat-destructive: hsl(var(--stat-destructive));
 	--color-stat-amber: hsl(var(--stat-amber));
+
+	/* ── Shadow scale (per handoff canvas.css) ──────────────────
+	 * Two base tones, both single-layer at the small end:
+	 *   - `2xs` / `xs` / `sm`: 0 1px 2px / 5% — inputs, outline /
+	 *     secondary buttons (matches handoff `.input` and
+	 *     `.btn-outline` / `.btn-secondary`).
+	 *   - DEFAULT (`shadow`): 0 1px 3px / 8% — cards and primary /
+	 *     destructive buttons (matches handoff `.card`,
+	 *     `.btn-default`, `.btn-destructive`).
+	 *   - `md` / `lg` / `xl`: two-layer stacks softened to 8% / 6%
+	 *     opacity so popovers, dialogs, and drawers sit on the same
+	 *     depth ramp as cards instead of feeling heavier (Tailwind
+	 *     defaults use 10%).
+	 *   - `inner`: keeps Tailwind default (no handoff override).
+	 *
+	 * Overriding the @theme tokens propagates through every Canvas
+	 * component class (`shadow-sm`, `shadow-md`, etc.) without
+	 * touching component sources.
+	 */
+	--shadow-2xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
+	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.06);
+	--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.06);
 }
 
 @keyframes orb-float-1 {
