@@ -55,7 +55,7 @@
 		 * flagged in PR. */
 		--chart-6: 173 70% 42%;
 
-		/* ── Sidebar — neutral shadcn zinc per Athena handoff ──────── */
+		/* ── Sidebar (neutral shadcn zinc per Athena handoff) ────── */
 		--sidebar-background: 0 0% 98%;
 		--sidebar-foreground: 240 5.3% 26.1%;
 		--sidebar-primary: 240 5.9% 10%;
@@ -87,7 +87,7 @@
 	}
 
 	.dark {
-		/* ── Base palette (dark) — shadcn neutral zinc per Athena handoff ──
+		/* ── Base palette (dark): shadcn neutral zinc per Athena handoff ──
 		 * Flat shadcn defaults (hue 240, no elevation tiering). Cards sit at
 		 * the same lightness as the body; the visible separation comes from
 		 * `--border` (240 3.7% 15.9%). The previous "tiered elevation"
@@ -131,7 +131,7 @@
 		--chart-5: 340 75% 55%;
 		--chart-6: 173 70% 50%;
 
-		/* Sidebar — neutral shadcn zinc per Athena handoff */
+		/* Sidebar (neutral shadcn zinc per Athena handoff) */
 		--sidebar-background: 240 5.9% 10%;
 		--sidebar-foreground: 240 4.8% 95.9%;
 		--sidebar-primary: 224.3 76.3% 48%;
