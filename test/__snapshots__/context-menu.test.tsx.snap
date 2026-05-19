@@ -8,6 +8,7 @@ exports[`ContextMenu > matches snapshot when the menu is open 1`] = `
   data-orientation="vertical"
   data-radix-menu-content=""
   data-side="right"
+  data-slot="context-menu-content"
   data-state="open"
   dir="ltr"
   role="menu"

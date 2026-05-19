@@ -72,7 +72,9 @@
 	/* ──────────────────────────────────────────────────────────────
 	 * Frosted-pane mixin. Same translucent fill, blur, and refractive
 	 * highlight on every load-bearing surface so the whole layout
-	 * reads as one stack of glass panes.
+	 * reads as one stack of glass panes. Includes cards, chrome,
+	 * dialogs, dropdown panels, popovers, tooltips, alerts, calendar,
+	 * terminal, menubar, navigation-menu, tabs list.
 	 * ──────────────────────────────────────────────────────────── */
 	html[data-surface="glass"] [data-slot="card"],
 	html[data-surface="glass"] [data-slot="sidebar"],
@@ -81,7 +83,24 @@
 	html[data-surface="glass"] [data-slot="empty-state"],
 	html[data-surface="glass"] [data-slot="popover-content"],
 	html[data-surface="glass"] [data-slot="sheet-content"],
-	html[data-surface="glass"] [data-slot="drawer-content"] {
+	html[data-surface="glass"] [data-slot="drawer-content"],
+	html[data-surface="glass"] [data-slot="alert"],
+	html[data-surface="glass"] [data-slot="alert-dialog-content"],
+	html[data-surface="glass"] [data-slot="dialog-content"],
+	html[data-surface="glass"] [data-slot="dropdown-menu-content"],
+	html[data-surface="glass"] [data-slot="dropdown-menu-sub-content"],
+	html[data-surface="glass"] [data-slot="context-menu-content"],
+	html[data-surface="glass"] [data-slot="context-menu-sub-content"],
+	html[data-surface="glass"] [data-slot="hover-card-content"],
+	html[data-surface="glass"] [data-slot="select-content"],
+	html[data-surface="glass"] [data-slot="menubar"],
+	html[data-surface="glass"] [data-slot="menubar-content"],
+	html[data-surface="glass"] [data-slot="menubar-sub-content"],
+	html[data-surface="glass"] [data-slot="navigation-menu-viewport"],
+	html[data-surface="glass"] [data-slot="tooltip-content"],
+	html[data-surface="glass"] [data-slot="command"],
+	html[data-surface="glass"] [data-slot="calendar"],
+	html[data-surface="glass"] [data-slot="terminal"] {
 		background: hsl(var(--glass-tint) / var(--glass-tint-alpha));
 		backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
@@ -117,21 +136,42 @@
 		background: hsl(var(--glass-border) / var(--glass-border-alpha));
 	}
 
-	/* Inputs, kbd, codeblock — frosted to match. Less blur than full panes
-	 * so dense form rows stay readable. */
+	/* Inputs, kbd, codeblock, tabs list — frosted to match. Less blur
+	 * than full panes so dense form rows stay readable. */
 	html[data-surface="glass"] [data-slot="input"],
-	html[data-surface="glass"] [data-slot="code-block"] {
+	html[data-surface="glass"] [data-slot="code-block"],
+	html[data-surface="glass"] [data-slot="tabs-list"] {
 		background: hsl(var(--glass-tint) / 0.35);
 		border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
 		backdrop-filter: blur(8px);
 		-webkit-backdrop-filter: blur(8px);
 	}
 
-	/* Popovers/sheets/drawers — slightly more opaque so the content stays
-	 * legible against the body aurora. */
+	/* Accordion items use only a bottom border — re-tint that border so it
+	 * tracks the glass palette instead of the solid border token. */
+	html[data-surface="glass"] [data-slot="accordion-item"] {
+		border-bottom-color: hsl(var(--glass-border) / var(--glass-border-alpha));
+	}
+
+	/* Popovers / sheets / drawers / dialog-like panels — slightly more
+	 * opaque so the content stays legible against the body aurora.
+	 * Overrides the base translucent fill from the frosted-pane block. */
 	html[data-surface="glass"] [data-slot="popover-content"],
 	html[data-surface="glass"] [data-slot="sheet-content"],
-	html[data-surface="glass"] [data-slot="drawer-content"] {
+	html[data-surface="glass"] [data-slot="drawer-content"],
+	html[data-surface="glass"] [data-slot="alert-dialog-content"],
+	html[data-surface="glass"] [data-slot="dialog-content"],
+	html[data-surface="glass"] [data-slot="dropdown-menu-content"],
+	html[data-surface="glass"] [data-slot="dropdown-menu-sub-content"],
+	html[data-surface="glass"] [data-slot="context-menu-content"],
+	html[data-surface="glass"] [data-slot="context-menu-sub-content"],
+	html[data-surface="glass"] [data-slot="hover-card-content"],
+	html[data-surface="glass"] [data-slot="select-content"],
+	html[data-surface="glass"] [data-slot="menubar-content"],
+	html[data-surface="glass"] [data-slot="menubar-sub-content"],
+	html[data-surface="glass"] [data-slot="navigation-menu-viewport"],
+	html[data-surface="glass"] [data-slot="tooltip-content"],
+	html[data-surface="glass"] [data-slot="command"] {
 		background: hsl(var(--glass-tint) / 0.85);
 	}
 }

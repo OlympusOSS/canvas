@@ -8,6 +8,7 @@ exports[`Accordion > matches snapshot 1`] = `
     <div
       class="border-b"
       data-orientation="vertical"
+      data-slot="accordion-item"
       data-state="open"
     >
       <h3
@@ -64,6 +65,7 @@ exports[`Accordion > matches snapshot 1`] = `
     <div
       class="border-b"
       data-orientation="vertical"
+      data-slot="accordion-item"
       data-state="closed"
     >
       <h3

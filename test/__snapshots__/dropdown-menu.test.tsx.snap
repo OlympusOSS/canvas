@@ -9,6 +9,7 @@ exports[`DropdownMenu > matches snapshot of the opened menu 1`] = `
   data-orientation="vertical"
   data-radix-menu-content=""
   data-side="bottom"
+  data-slot="dropdown-menu-content"
   data-state="open"
   dir="ltr"
   id="radix-_r_o_"

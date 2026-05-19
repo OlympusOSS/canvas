@@ -4,6 +4,7 @@ exports[`Terminal > matches snapshot 1`] = `
 <div>
   <div
     class="overflow-hidden rounded-xl border border-border shadow-[0_30px_60px_-20px_rgb(0_0_0/0.35)]"
+    data-slot="terminal"
     style="background: rgb(10, 10, 11);"
   >
     <div

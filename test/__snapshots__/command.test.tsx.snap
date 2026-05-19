@@ -5,6 +5,7 @@ exports[`Command > matches snapshot 1`] = `
   <div
     class="flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground"
     cmdk-root=""
+    data-slot="command"
     tabindex="-1"
   >
     <label

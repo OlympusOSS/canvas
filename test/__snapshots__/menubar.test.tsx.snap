@@ -10,6 +10,7 @@ exports[`Menubar > matches snapshot of the opened menubar 1`] = `
   data-radix-menu-content=""
   data-radix-menubar-content=""
   data-side="bottom"
+  data-slot="menubar-content"
   data-state="open"
   dir="ltr"
   id="radix-_r_o_"
