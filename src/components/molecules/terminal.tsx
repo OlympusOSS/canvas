@@ -23,6 +23,7 @@ const Terminal = React.forwardRef<HTMLDivElement, TerminalProps>(
 	({ title, children, className, ...props }, ref) => (
 		<div
 			ref={ref}
+			data-slot="terminal"
 			className={cn(
 				"overflow-hidden rounded-xl border border-border shadow-[0_30px_60px_-20px_rgb(0_0_0/0.35)]",
 				className,

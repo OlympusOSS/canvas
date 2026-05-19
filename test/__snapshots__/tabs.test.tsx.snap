@@ -10,6 +10,7 @@ exports[`Tabs > matches snapshot 1`] = `
       aria-orientation="horizontal"
       class="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground"
       data-orientation="horizontal"
+      data-slot="tabs-list"
       role="tablist"
       style="outline: none;"
       tabindex="0"
