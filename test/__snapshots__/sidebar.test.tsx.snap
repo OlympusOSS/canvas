@@ -22,6 +22,7 @@ exports[`Sidebar > matches snapshot of a minimal sidebar 1`] = `
         <div
           class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
           data-sidebar="sidebar"
+          data-slot="sidebar"
         >
           <div
             class="relative overflow-hidden flex min-h-0 flex-1 flex-col"

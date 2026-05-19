@@ -209,6 +209,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
 		if (collapsible === "none") {
 			return (
 				<div
+					data-slot="sidebar"
 					className={cn(
 						"flex h-full w-[var(--sidebar-width)] flex-col bg-sidebar text-sidebar-foreground",
 						className,
@@ -281,6 +282,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
 				>
 					<div
 						data-sidebar="sidebar"
+						data-slot="sidebar"
 						className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
 					>
 						{children}

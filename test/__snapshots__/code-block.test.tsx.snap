@@ -4,6 +4,7 @@ exports[`CodeBlock > matches dark theme snapshot 1`] = `
 <div>
   <div
     class="relative overflow-hidden rounded-md border border-border"
+    data-slot="code-block"
     style="background: rgb(10, 10, 11);"
   >
     <div
@@ -64,6 +65,7 @@ exports[`CodeBlock > matches snapshot 1`] = `
 <div>
   <div
     class="relative overflow-hidden rounded-md bg-muted"
+    data-slot="code-block"
   >
     <div
       class="flex items-center justify-between px-4 py-2 border-b"
