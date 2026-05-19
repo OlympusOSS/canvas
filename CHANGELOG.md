@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.19.1
+
+### Patch Changes
+
+- b3b22f5: chore: retry npm publish (2.19.0 hit transient E404)
+
 ## 2.19.0
 
 ### Minor Changes
