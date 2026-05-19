@@ -1,19 +1,14 @@
 /* ---------- Canvas tokens — single source of truth ----------
  *
- * Surface elevation (dark mode):
- *   L0  body background     `--background`         deepest
- *   L1  sidebar chrome      `--sidebar-background` subtle lift, distinct hue
- *   L2  cards + popovers    `--card` / `--popover` clearly elevated
- *   L3  inside-card chips   `--muted` / `--secondary` / `--accent` topmost
+ * The values mirror the Athena design handoff's `colors_and_type.css`
+ * (shadcn zinc, neutral hue 240). Both light and dark modes use flat
+ * surfaces: body, cards, popovers all share the same lightness within
+ * each mode and are differentiated by `--border` instead of tonal lift.
  *
- * In light mode the canonical shadcn convention keeps body and cards both
- * pure white — surfaces are differentiated by borders + 1px shadow rather
- * than tone. That's intentional.
- *
- * Dual-form sidebar declaration (load-bearing — do NOT remove either form):
- *   - Raw HSL triplets like `--sidebar-background: 230 25% 97%` are consumed
+ * Dual-form sidebar declaration (load-bearing, do NOT remove either form):
+ *   - Raw HSL triplets like `--sidebar-background: 0 0% 98%` are consumed
  *     by `hsl(var(--…))` patterns inside component CSS / inline styles.
- *   - Resolved `hsl()` forms like `--sidebar: hsl(230 25% 97%)` feed Tailwind
+ *   - Resolved `hsl()` forms like `--sidebar: hsl(0 0% 98%)` feed Tailwind
  *     v4's `@theme inline { --color-sidebar: var(--sidebar) }` mapping so
  *     `bg-sidebar` / `text-sidebar-foreground` utilities resolve.
  *
@@ -39,7 +34,7 @@
 		--muted-foreground: 240 3.8% 46.1%;
 		--accent: 240 4.8% 95.9%;
 		--accent-foreground: 240 5.9% 10%;
-		--destructive: 4 78% 50%;
+		--destructive: 0 84.2% 60.2%;
 		--destructive-foreground: 0 0% 98%;
 		--brand: 213 94% 68%;
 		--brand-foreground: 0 0% 100%;
@@ -60,14 +55,14 @@
 		 * flagged in PR. */
 		--chart-6: 173 70% 42%;
 
-		/* ── Sidebar — blue-tinted gray (hue 230) per handoff ──────── */
-		--sidebar-background: 230 25% 97%;
-		--sidebar-foreground: 230 15% 40%;
-		--sidebar-primary: 230 45% 25%;
+		/* ── Sidebar — neutral shadcn zinc per Athena handoff ──────── */
+		--sidebar-background: 0 0% 98%;
+		--sidebar-foreground: 240 5.3% 26.1%;
+		--sidebar-primary: 240 5.9% 10%;
 		--sidebar-primary-foreground: 0 0% 98%;
-		--sidebar-accent: 230 40% 92%;
-		--sidebar-accent-foreground: 230 45% 25%;
-		--sidebar-border: 230 20% 90%;
+		--sidebar-accent: 240 4.8% 95.9%;
+		--sidebar-accent-foreground: 240 5.9% 10%;
+		--sidebar-border: 220 13% 91%;
 		--sidebar-ring: 217.2 91.2% 59.8%;
 
 		/* ── StatCard variant tokens ───────────────────────────────── *
@@ -92,44 +87,43 @@
 	}
 
 	.dark {
-		/* ── Base palette (dark) — tiered elevation ─────────────────
-		 * L0: body  L1: sidebar  L2: card/popover  L3: muted/secondary/accent
-		 * All tiers share hue 225 (slight blue-cool) and step lightness
-		 * by ~4-6% so surfaces visually lift above the body. */
+		/* ── Base palette (dark) — shadcn neutral zinc per Athena handoff ──
+		 * Flat shadcn defaults (hue 240, no elevation tiering). Cards sit at
+		 * the same lightness as the body; the visible separation comes from
+		 * `--border` (240 3.7% 15.9%). The previous "tiered elevation"
+		 * design (hue 225, lifted surfaces) was Canvas-only and has been
+		 * removed in favour of the handoff palette so every consumer
+		 * inherits the same design system. */
 
-		/* L0 — deepest body */
-		--background: 225 24% 6%;
-		--foreground: 220 14% 92%;
+		--background: 240 10% 3.9%;
+		--foreground: 0 0% 98%;
 
-		/* L2 — cards & popovers (clearly lifted above body) */
-		--card: 225 18% 13%;
-		--card-foreground: 220 14% 92%;
-		--popover: 225 18% 13%;
-		--popover-foreground: 220 14% 92%;
+		--card: 240 10% 3.9%;
+		--card-foreground: 0 0% 98%;
+		--popover: 240 10% 3.9%;
+		--popover-foreground: 0 0% 98%;
 
-		/* Primary action — keep light text on dark accent */
-		--primary: 220 14% 95%;
-		--primary-foreground: 225 24% 6%;
+		--primary: 0 0% 98%;
+		--primary-foreground: 240 5.9% 10%;
 
-		/* L3 — chips/inputs/hover surfaces inside cards */
-		--secondary: 225 14% 19%;
-		--secondary-foreground: 220 14% 92%;
-		--muted: 225 14% 19%;
-		--muted-foreground: 225 9% 64%;
-		--accent: 225 14% 22%;
-		--accent-foreground: 220 14% 92%;
+		--secondary: 240 3.7% 15.9%;
+		--secondary-foreground: 0 0% 98%;
+		--muted: 240 3.7% 15.9%;
+		--muted-foreground: 240 5% 64.9%;
+		--accent: 240 3.7% 15.9%;
+		--accent-foreground: 0 0% 98%;
 
-		--destructive: 4 88% 62%;
+		--destructive: 0 62.8% 30.6%;
 		--destructive-foreground: 0 0% 98%;
 		--brand: 213 94% 68%;
 		--brand-foreground: 0 0% 100%;
 
-		/* Borders — visible but subtle separation */
-		--border: 225 14% 22%;
-		--input: 225 14% 22%;
-		--ring: 217 91% 60%;
+		--border: 240 3.7% 15.9%;
+		--input: 240 3.7% 15.9%;
+		--ring: 240 4.9% 83.9%;
 
-		/* Chart palette */
+		/* Chart palette (Canvas-specific; handoff dashboard uses --primary
+		 * for bar fills rather than --chart-1, so these stay as-is). */
 		--chart-1: 220 70% 50%;
 		--chart-2: 160 60% 45%;
 		--chart-3: 30 80% 55%;
@@ -137,14 +131,14 @@
 		--chart-5: 340 75% 55%;
 		--chart-6: 173 70% 50%;
 
-		/* L1 — sidebar (between body and cards, distinct hue 225) */
-		--sidebar-background: 225 16% 10%;
-		--sidebar-foreground: 220 14% 80%;
-		--sidebar-primary: 217 91% 65%;
+		/* Sidebar — neutral shadcn zinc per Athena handoff */
+		--sidebar-background: 240 5.9% 10%;
+		--sidebar-foreground: 240 4.8% 95.9%;
+		--sidebar-primary: 224.3 76.3% 48%;
 		--sidebar-primary-foreground: 0 0% 100%;
-		--sidebar-accent: 225 22% 16%;
-		--sidebar-accent-foreground: 220 14% 92%;
-		--sidebar-border: 225 14% 18%;
+		--sidebar-accent: 240 3.7% 15.9%;
+		--sidebar-accent-foreground: 240 4.8% 95.9%;
+		--sidebar-border: 240 3.7% 15.9%;
 		--sidebar-ring: 217.2 91.2% 59.8%;
 
 		/* StatCard variants — same hex; 10% tint reads on dark via opacity */
@@ -211,24 +205,24 @@
  * mapping. They mirror the raw HSL triplets above; keep the two in sync.
  */
 :root {
-	--sidebar: hsl(230 25% 97%);
-	--sidebar-foreground: hsl(230 15% 40%);
-	--sidebar-primary: hsl(230 45% 25%);
+	--sidebar: hsl(0 0% 98%);
+	--sidebar-foreground: hsl(240 5.3% 26.1%);
+	--sidebar-primary: hsl(240 5.9% 10%);
 	--sidebar-primary-foreground: hsl(0 0% 98%);
-	--sidebar-accent: hsl(230 40% 92%);
-	--sidebar-accent-foreground: hsl(230 45% 25%);
-	--sidebar-border: hsl(230 20% 90%);
+	--sidebar-accent: hsl(240 4.8% 95.9%);
+	--sidebar-accent-foreground: hsl(240 5.9% 10%);
+	--sidebar-border: hsl(220 13% 91%);
 	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
 .dark {
-	--sidebar: hsl(225 16% 10%);
-	--sidebar-foreground: hsl(220 14% 80%);
-	--sidebar-primary: hsl(217 91% 65%);
+	--sidebar: hsl(240 5.9% 10%);
+	--sidebar-foreground: hsl(240 4.8% 95.9%);
+	--sidebar-primary: hsl(224.3 76.3% 48%);
 	--sidebar-primary-foreground: hsl(0 0% 100%);
-	--sidebar-accent: hsl(225 22% 16%);
-	--sidebar-accent-foreground: hsl(220 14% 92%);
-	--sidebar-border: hsl(225 14% 18%);
+	--sidebar-accent: hsl(240 3.7% 15.9%);
+	--sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+	--sidebar-border: hsl(240 3.7% 15.9%);
 	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
