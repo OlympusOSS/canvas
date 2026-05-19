@@ -7,6 +7,7 @@ exports[`DataTable > matches snapshot with 3 rows + 2 columns 1`] = `
   >
     <div
       class="rounded-md border border-border"
+      data-slot="data-table"
     >
       <div
         class="relative w-full overflow-auto"

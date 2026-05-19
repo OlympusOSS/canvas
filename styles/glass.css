@@ -1,0 +1,137 @@
+/* ---------- Glass surface mode ----------
+ *
+ * Activated by `html[data-surface="glass"]`. The conceit: an aurora-tinted
+ * backdrop shows through every chrome surface (sidebar, topbar, cards,
+ * tables) via `backdrop-filter: blur(...)`. Surfaces become tinted glass,
+ * with a low-alpha card color so the page palette bleeds through, plus a
+ * 1-px inner highlight on the top edge to suggest a refractive lip.
+ * Borders drop to white/black at low alpha so the layout reads as layered
+ * panes rather than rectangles drawn on flat paint.
+ *
+ * Two palettes:
+ *   - Light: pastel peach + sky + lavender washes on near-white
+ *   - Dark : deep indigo + violet + teal washes on near-black
+ *
+ * Surfaces opt in via `data-slot` attributes already present on Canvas
+ * components (`card`, `sidebar`, `data-table`, `input`, `popover-content`,
+ * `sheet-content`, `drawer-content`, `empty-state`, `code-block`). Consumer
+ * apps activate the mode by toggling the `data-surface` attribute on
+ * `<html>` (e.g. `document.documentElement.dataset.surface = "glass"`).
+ *
+ * Mirrors the Athena design handoff's `app.css` glass block; do not
+ * tighten these values without checking against the handoff bundle.
+ */
+
+@layer base {
+	html[data-surface="glass"] {
+		--glass-tint: 0 0% 100%; /* card tint base */
+		--glass-tint-alpha: 0.55;
+		--glass-border: 0 0% 100%;
+		--glass-border-alpha: 0.45;
+		--glass-highlight: 0 0% 100%;
+		--glass-highlight-alpha: 0.55;
+		--glass-shadow: 220 30% 20%;
+		--glass-blur: 18px;
+		--glass-saturate: 140%;
+	}
+
+	html[data-surface="glass"].dark {
+		--glass-tint: 222 22% 18%;
+		--glass-tint-alpha: 0.55;
+		--glass-border: 0 0% 100%;
+		--glass-border-alpha: 0.1;
+		--glass-highlight: 0 0% 100%;
+		--glass-highlight-alpha: 0.1;
+		--glass-shadow: 222 60% 4%;
+	}
+
+	/* ──────────────────────────────────────────────────────────────
+	 * Aurora backdrop — three soft radial washes anchored to body so
+	 * they remain stable across route changes and ignore the inner
+	 * shell's flat fill. The surfaces above are translucent so this
+	 * is what users actually see "through" the glass.
+	 * ──────────────────────────────────────────────────────────── */
+	html[data-surface="glass"] body {
+		background:
+			radial-gradient(60% 50% at 12% 10%, hsl(28 100% 80% / 0.55), transparent 60%),
+			radial-gradient(55% 55% at 88% 8%, hsl(210 100% 78% / 0.55), transparent 60%),
+			radial-gradient(70% 60% at 50% 100%, hsl(270 90% 82% / 0.45), transparent 65%),
+			hsl(220 30% 97%);
+		background-attachment: fixed;
+	}
+
+	html[data-surface="glass"].dark body {
+		background:
+			radial-gradient(55% 50% at 10% 8%, hsl(245 90% 60% / 0.4), transparent 60%),
+			radial-gradient(50% 55% at 92% 12%, hsl(280 85% 55% / 0.35), transparent 60%),
+			radial-gradient(70% 60% at 50% 100%, hsl(190 90% 45% / 0.28), transparent 70%),
+			hsl(222 30% 6%);
+		background-attachment: fixed;
+	}
+
+	/* ──────────────────────────────────────────────────────────────
+	 * Frosted-pane mixin. Same translucent fill, blur, and refractive
+	 * highlight on every load-bearing surface so the whole layout
+	 * reads as one stack of glass panes.
+	 * ──────────────────────────────────────────────────────────── */
+	html[data-surface="glass"] [data-slot="card"],
+	html[data-surface="glass"] [data-slot="sidebar"],
+	html[data-surface="glass"] [data-slot="topbar"],
+	html[data-surface="glass"] [data-slot="data-table"],
+	html[data-surface="glass"] [data-slot="empty-state"],
+	html[data-surface="glass"] [data-slot="popover-content"],
+	html[data-surface="glass"] [data-slot="sheet-content"],
+	html[data-surface="glass"] [data-slot="drawer-content"] {
+		background: hsl(var(--glass-tint) / var(--glass-tint-alpha));
+		backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+		border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
+		box-shadow:
+			inset 0 1px 0 hsl(var(--glass-highlight) / var(--glass-highlight-alpha)),
+			0 1px 2px hsl(var(--glass-shadow) / 0.06),
+			0 8px 24px -12px hsl(var(--glass-shadow) / 0.18);
+	}
+
+	/* Sidebar and topbar take a slightly less-opaque tint so they
+	 * read as chrome rather than content cards. */
+	html[data-surface="glass"] [data-slot="sidebar"],
+	html[data-surface="glass"] [data-slot="topbar"] {
+		background: hsl(var(--glass-tint) / calc(var(--glass-tint-alpha) - 0.1));
+		border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
+	}
+
+	/* DataTable internal rules — header tint, row separators, hover. */
+	html[data-surface="glass"] [data-slot="data-table"] thead tr {
+		background: hsl(var(--glass-highlight) / 0.1);
+		border-bottom: 1px solid hsl(var(--glass-border) / var(--glass-border-alpha));
+	}
+	html[data-surface="glass"] [data-slot="data-table"] tbody tr {
+		border-bottom: 1px solid hsl(var(--glass-border) / calc(var(--glass-border-alpha) - 0.2));
+	}
+	html[data-surface="glass"] [data-slot="data-table"] tbody tr:hover {
+		background: hsl(var(--glass-highlight) / 0.1);
+	}
+
+	/* SectionCard divider matches the border tone. */
+	html[data-surface="glass"] [data-slot="card"] [data-slot="card-divider"] {
+		background: hsl(var(--glass-border) / var(--glass-border-alpha));
+	}
+
+	/* Inputs, kbd, codeblock — frosted to match. Less blur than full panes
+	 * so dense form rows stay readable. */
+	html[data-surface="glass"] [data-slot="input"],
+	html[data-surface="glass"] [data-slot="code-block"] {
+		background: hsl(var(--glass-tint) / 0.35);
+		border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
+
+	/* Popovers/sheets/drawers — slightly more opaque so the content stays
+	 * legible against the body aurora. */
+	html[data-surface="glass"] [data-slot="popover-content"],
+	html[data-surface="glass"] [data-slot="sheet-content"],
+	html[data-surface="glass"] [data-slot="drawer-content"] {
+		background: hsl(var(--glass-tint) / 0.85);
+	}
+}

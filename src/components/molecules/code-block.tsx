@@ -32,6 +32,7 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
 		return (
 			<div
 				ref={ref}
+				data-slot="code-block"
 				className={cn(
 					"relative overflow-hidden rounded-md",
 					isDark ? "border border-border" : "bg-muted",

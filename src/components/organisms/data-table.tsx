@@ -237,7 +237,7 @@ function DataTable<TData>({
 				</div>
 			)}
 
-			<div className="rounded-md border border-border">
+			<div data-slot="data-table" className="rounded-md border border-border">
 				<Table>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (

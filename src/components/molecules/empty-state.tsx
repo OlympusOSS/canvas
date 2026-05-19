@@ -28,6 +28,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
 		return (
 			<div
 				ref={ref}
+				data-slot="empty-state"
 				className={cn(
 					"flex flex-col items-center justify-center gap-3 py-12 text-muted-foreground",
 					className,

@@ -61,7 +61,7 @@ export function SectionCard({
 						</div>
 						{resolvedActions && <div className="flex items-center gap-2">{resolvedActions}</div>}
 					</CardHeader>
-					<div className="mx-5 mb-3.5 h-px bg-border" />
+					<div data-slot="card-divider" className="mx-5 mb-3.5 h-px bg-border" />
 				</>
 			)}
 			<CardContent className={cn(padding ? "px-5 pb-[18px] pt-0" : "p-0")}>

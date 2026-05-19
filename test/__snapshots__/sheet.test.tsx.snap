@@ -5,6 +5,7 @@ exports[`Sheet > matches snapshot when open 1`] = `
   aria-describedby="radix-_r_k_"
   aria-labelledby="radix-_r_j_"
   class="fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm"
+  data-slot="sheet-content"
   data-state="open"
   id="radix-_r_i_"
   role="dialog"

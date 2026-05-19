@@ -5,6 +5,7 @@ exports[`Drawer > matches snapshot when open 1`] = `
   aria-describedby="radix-_r_b_"
   aria-labelledby="radix-_r_a_"
   class="fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-border bg-background"
+  data-slot="drawer-content"
   data-state="open"
   data-vaul-animate="true"
   data-vaul-custom-container="false"
