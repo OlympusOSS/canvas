@@ -112,6 +112,16 @@ html[data-surface="glass"] [data-slot="topbar"] {
 	border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
 }
 
+/* SidebarInset (the main content column) is fully transparent in glass
+ * mode so the aurora gradient on <body> reads through unimpeded. No
+ * backdrop-filter is applied: the content area is a window onto the
+ * aurora, not a frosted pane. The Tailwind `bg-background` utility on
+ * the component is overridden here by the higher-specificity selector
+ * and the unlayered cascade of glass.css. */
+html[data-surface="glass"] [data-slot="sidebar-inset"] {
+	background: transparent;
+}
+
 /* DataTable internal rules */
 html[data-surface="glass"] [data-slot="data-table"] thead tr {
 	background: hsl(var(--glass-highlight) / 0.1);
