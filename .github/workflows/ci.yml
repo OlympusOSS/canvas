@@ -11,6 +11,7 @@ on:
       - 'vitest.config.*'
       - 'biome.json'
       - 'size-limit.config.*'
+      - '.changeset/**'
       - '.github/workflows/**'
   pull_request:
     branches: [main]
