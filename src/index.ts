@@ -94,6 +94,10 @@ export {
 	Sector,
 	Trapezoid,
 } from "./components/charts/details";
+export {
+	DotPulse,
+	type DotPulseProps,
+} from "./components/charts/dot-pulse";
 export { Gauge, type GaugeProps } from "./components/charts/gauge";
 export { CartesianGrid, PolarGrid } from "./components/charts/grids";
 export {
@@ -123,6 +127,10 @@ export {
 	Sparkline,
 	type SparklineProps,
 } from "./components/charts/sparkline";
+export {
+	SparklineArea,
+	type SparklineAreaProps,
+} from "./components/charts/sparkline-area";
 export {
 	StackedBar,
 	type StackedBarProps,

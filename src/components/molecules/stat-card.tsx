@@ -21,6 +21,8 @@ export interface StatCardProps {
 	 * `delta` as ReactNode to fully control rendering yourself.
 	 */
 	deltaArrow?: boolean;
+	/** Optional content rendered below the delta row (e.g. a sparkline or mini chart). */
+	children?: React.ReactNode;
 	className?: string;
 }
 
@@ -49,6 +51,7 @@ export function StatCard({
 	deltaTone = "up",
 	deltaCaption,
 	deltaArrow = true,
+	children,
 	className,
 }: StatCardProps) {
 	const showArrow = deltaArrow && typeof delta === "string" && deltaTone !== "neutral";
@@ -88,6 +91,7 @@ export function StatCard({
 						{deltaCaption != null && <span className="text-muted-foreground">{deltaCaption}</span>}
 					</div>
 				)}
+				{children != null && <div className="mt-3">{children}</div>}
 			</CardContent>
 		</Card>
 	);
