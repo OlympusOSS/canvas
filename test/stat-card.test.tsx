@@ -90,6 +90,26 @@ describe("StatCard", () => {
 		expect(deltaRow?.children.length).toBe(1);
 	});
 
+	it("renders children below the delta row", () => {
+		render(
+			<StatCard title="x" value="v" delta="+1%">
+				<div data-testid="mini-chart">chart content</div>
+			</StatCard>,
+		);
+		expect(screen.getByTestId("mini-chart")).toBeInTheDocument();
+		expect(screen.getByText("chart content")).toBeInTheDocument();
+		// children wrapper sits after the delta row
+		const wrapper = screen.getByTestId("mini-chart").parentElement;
+		expect(wrapper).toHaveClass("mt-3");
+	});
+
+	it("does not render children wrapper when children is omitted", () => {
+		const { container } = render(<StatCard title="x" value="v" delta="+1%" />);
+		const cardContent = container.querySelector("[class*='p-5']") as HTMLElement;
+		// Only the header row + delta row, no extra mt-3 wrapper for children
+		expect(cardContent.children.length).toBe(2);
+	});
+
 	it("matches snapshot", () => {
 		const { container } = render(
 			<StatCard title="Active users" value="1,234" colorVariant="blue" icon={<span>👤</span>} />,
