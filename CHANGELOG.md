@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.20.0
+
+### Minor Changes
+
+- 2655ff7: Add children prop to StatCard for embedding mini charts, plus two new chart primitives: SparklineArea (SVG area sparkline) and DotPulse (CSS severity indicator)
+
 ## 2.19.3
 
 ### Patch Changes
