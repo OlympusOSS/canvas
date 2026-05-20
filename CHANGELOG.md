@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.20.1
+
+### Patch Changes
+
+- a16095f: Trigger republish after NPM_TOKEN rotation (2.19.0 and 2.20.0 failed to publish with expired token)
+
 ## 2.20.0
 
 ### Minor Changes
