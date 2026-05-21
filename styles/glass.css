@@ -100,9 +100,17 @@ html[data-surface="glass"] [data-slot="terminal"] {
 	/* Whole-value var(): Lightning CSS strips backdrop-filter when var()
 	   appears *inside* a filter function (e.g. blur(var(--x))). A single
 	   top-level var() is preserved as an opaque custom-property substitution
-	   the browser resolves at runtime. */
+	   the browser resolves at runtime.
+
+	   Do NOT add an explicit -webkit-backdrop-filter here. When Lightning CSS
+	   sees both the prefixed and unprefixed declarations in the source, its
+	   deduplication logic drops the unprefixed one. Tailwind v4's utility
+	   layer then wins with `backdrop-filter: var(--tw-backdrop-blur, ) ...`
+	   which resolves to `none` (no --tw-backdrop-* vars are set on these
+	   elements). Keeping only the standard property lets Lightning CSS either
+	   preserve it as-is (modern targets) or auto-prefix it (older targets)
+	   without the dedup footgun. */
 	backdrop-filter: var(--glass-backdrop);
-	-webkit-backdrop-filter: var(--glass-backdrop);
 	border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
 	box-shadow:
 		inset 0 1px 0 hsl(var(--glass-highlight) / var(--glass-highlight-alpha)),
@@ -147,8 +155,9 @@ html[data-surface="glass"] [data-slot="code-block"],
 html[data-surface="glass"] [data-slot="tabs-list"] {
 	background: hsl(var(--glass-tint) / 0.35);
 	border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
+	/* See comment on the main frosted-pane block above for why
+	   -webkit-backdrop-filter is intentionally omitted. */
 	backdrop-filter: var(--glass-backdrop-subtle);
-	-webkit-backdrop-filter: var(--glass-backdrop-subtle);
 }
 
 html[data-surface="glass"] [data-slot="accordion-item"] {
