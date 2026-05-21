@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'src/**'
+      - 'styles/**'
       - 'test/**'
       - 'package.json'
       - 'bun.lock'
