@@ -97,8 +97,11 @@ html[data-surface="glass"] [data-slot="command"],
 html[data-surface="glass"] [data-slot="calendar"],
 html[data-surface="glass"] [data-slot="terminal"] {
 	background: hsl(var(--glass-tint) / var(--glass-tint-alpha));
-	backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-	-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+	/* Literal values: Lightning CSS (Turbopack/Next.js) silently strips
+	   backdrop-filter when var() appears inside filter functions like
+	   blur() or saturate(). These values are constant across themes. */
+	backdrop-filter: blur(18px) saturate(140%);
+	-webkit-backdrop-filter: blur(18px) saturate(140%);
 	border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
 	box-shadow:
 		inset 0 1px 0 hsl(var(--glass-highlight) / var(--glass-highlight-alpha)),
