@@ -33,8 +33,8 @@ html[data-surface="glass"] {
 	--glass-highlight: 0 0% 100%;
 	--glass-highlight-alpha: 0.55;
 	--glass-shadow: 220 30% 20%;
-	--glass-blur: 18px;
-	--glass-saturate: 140%;
+	--glass-backdrop: blur(18px) saturate(140%);
+	--glass-backdrop-subtle: blur(8px);
 }
 
 html[data-surface="glass"].dark {
@@ -97,8 +97,12 @@ html[data-surface="glass"] [data-slot="command"],
 html[data-surface="glass"] [data-slot="calendar"],
 html[data-surface="glass"] [data-slot="terminal"] {
 	background: hsl(var(--glass-tint) / var(--glass-tint-alpha));
-	backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-	-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+	/* Whole-value var(): Lightning CSS strips backdrop-filter when var()
+	   appears *inside* a filter function (e.g. blur(var(--x))). A single
+	   top-level var() is preserved as an opaque custom-property substitution
+	   the browser resolves at runtime. */
+	backdrop-filter: var(--glass-backdrop);
+	-webkit-backdrop-filter: var(--glass-backdrop);
 	border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
 	box-shadow:
 		inset 0 1px 0 hsl(var(--glass-highlight) / var(--glass-highlight-alpha)),
@@ -143,8 +147,8 @@ html[data-surface="glass"] [data-slot="code-block"],
 html[data-surface="glass"] [data-slot="tabs-list"] {
 	background: hsl(var(--glass-tint) / 0.35);
 	border-color: hsl(var(--glass-border) / var(--glass-border-alpha));
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: var(--glass-backdrop-subtle);
+	-webkit-backdrop-filter: var(--glass-backdrop-subtle);
 }
 
 html[data-surface="glass"] [data-slot="accordion-item"] {
