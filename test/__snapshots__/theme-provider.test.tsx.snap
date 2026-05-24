@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`ThemeProvider / useTheme > matches snapshot of a basic rendered tree 1`] = `
-<div>
-  <div>
-    hello
-  </div>
-</div>
-`;

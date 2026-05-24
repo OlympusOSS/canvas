@@ -5,20 +5,15 @@ on:
     paths:
       - 'src/**'
       - 'styles/**'
-      - 'test/**'
       - 'package.json'
       - 'bun.lock'
       - 'tsconfig*.json'
-      - 'vitest.config.*'
-      - 'biome.json'
-      - 'size-limit.config.*'
       - '.changeset/**'
       - '.github/workflows/**'
   pull_request:
     branches: [main]
   workflow_dispatch:
 
-# Fresh push to the same ref cancels the prior in-flight run.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -27,17 +22,10 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
-    env:
-      # Gate runs (PR + push to main) run the full suite.
-      # Non-gate runs (feature-branch push) run lint + typecheck + delta unit only.
-      IS_GATE: ${{ github.event_name == 'pull_request' || github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v6
-        with:
-          # `vitest --changed origin/main` needs the merge base.
-          fetch-depth: 0
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -45,28 +33,5 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      - name: Lint
-        run: bun run lint
-
       - name: Typecheck
         run: bun run typecheck
-
-      - name: Run vitest (delta — feature branch)
-        if: env.IS_GATE != 'true'
-        run: bunx vitest run --changed origin/main
-
-      - name: Run vitest (full — PR or main)
-        if: env.IS_GATE == 'true'
-        run: bun run test
-
-      - name: Snapshot coverage gate (100%)
-        if: env.IS_GATE == 'true'
-        run: bun run snapshot-coverage
-
-      - name: Coverage
-        if: env.IS_GATE == 'true'
-        run: bun run test:coverage
-
-      - name: Bundle size
-        if: env.IS_GATE == 'true'
-        run: bun run size

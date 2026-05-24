@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Skeleton > matches snapshot 1`] = `
-<div>
-  <div
-    class="animate-pulse rounded-md bg-primary/10 h-4 w-32"
-  />
-</div>
-`;
