@@ -19,8 +19,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  # id-token: write enables npm provenance attestations on publish.
   id-token: write
 
 concurrency:
@@ -47,9 +45,6 @@ jobs:
           bun-version: latest
 
       - run: bun install --frozen-lockfile
-
-      # Lint/typecheck/test/size deliberately omitted — the CI workflow we're
-      # gated on already ran them. Re-running here would just burn minutes.
 
       - name: Check for pending changesets
         id: has_changesets
