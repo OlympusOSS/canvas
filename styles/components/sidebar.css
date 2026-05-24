@@ -7,7 +7,7 @@
     width: 15rem;
     display: flex;
     flex-direction: column;
-    z-index: 40;
+    z-index: var(--z-sidebar);
     background-color: hsl(var(--sidebar-background));
     border-right: 1px solid hsl(var(--sidebar-border));
     transition-property: transform, width;

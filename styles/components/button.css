@@ -37,7 +37,7 @@
   .btn-default {
     background-color: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow: var(--shadow-xs);
   }
 
   .btn-default:hover {
@@ -48,7 +48,7 @@
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     border-color: hsl(var(--input));
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow: var(--shadow-xs);
   }
 
   .btn-outline:hover {
@@ -58,7 +58,7 @@
   .btn-secondary {
     background-color: hsl(var(--secondary));
     color: hsl(var(--secondary-foreground));
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow: var(--shadow-xs);
   }
 
   .btn-ghost {
@@ -73,7 +73,7 @@
   .btn-destructive {
     background-color: hsl(var(--destructive));
     color: hsl(var(--destructive-foreground));
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow: var(--shadow-xs);
   }
 
   .btn-link {
