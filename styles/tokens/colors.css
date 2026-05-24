@@ -47,6 +47,15 @@
     --color-success: hsl(143 70% 45%);
     --color-warning: hsl(38 92% 50%);
     --color-info: hsl(217 91% 60%);
+
+    --success-bg: 141 79% 85%;
+    --success-fg: 144 61% 20%;
+    --warning-bg: 48 96% 89%;
+    --warning-fg: 40 80% 27%;
+    --error-bg: 0 93% 94%;
+    --error-fg: 0 70% 35%;
+    --info-bg: 214 95% 93%;
+    --info-fg: 221 83% 53%;
   }
 
   .dark {
@@ -84,5 +93,14 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --success-bg: 149 50% 22%;
+    --success-fg: 142 70% 65%;
+    --warning-bg: 38 50% 20%;
+    --warning-fg: 43 90% 65%;
+    --error-bg: 0 50% 18%;
+    --error-fg: 0 80% 70%;
+    --info-bg: 217 50% 22%;
+    --info-fg: 217 90% 72%;
   }
 }
