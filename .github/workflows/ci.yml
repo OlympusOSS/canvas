@@ -8,6 +8,7 @@ on:
       - 'package.json'
       - 'bun.lock'
       - 'tsconfig*.json'
+      - 'scripts/**'
       - '.changeset/**'
       - '.github/workflows/**'
   pull_request:
@@ -57,3 +58,9 @@ jobs:
 
       - name: Verify package exports
         run: bun -e "import { cn, getTheme, token } from './src/index.ts'; console.log('JS exports OK')"
+
+      - name: Validate tokens
+        run: bun run validate-tokens
+
+      - name: Check CSS size budget
+        run: bun run check-size
