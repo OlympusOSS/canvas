@@ -23,6 +23,9 @@
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "validate-tokens": "bun scripts/validate-tokens.ts",
+    "check-size": "bun scripts/check-size.ts",
+    "check-duplicates": "bun scripts/check-duplicates.ts",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish"

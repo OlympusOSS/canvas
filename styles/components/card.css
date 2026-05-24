@@ -33,4 +33,26 @@
     color: hsl(var(--muted-foreground));
     margin-top: 0.25rem;
   }
+
+  .card-img {
+    display: block;
+    width: 100%;
+    border-top-left-radius: var(--radius-xl, 12px);
+    border-top-right-radius: var(--radius-xl, 12px);
+    object-fit: cover;
+  }
+
+  .card-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+
+  .card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
 }
