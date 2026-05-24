@@ -1,0 +1,14 @@
+@layer canvas.components {
+  .sep {
+    height: 1px;
+    background-color: hsl(var(--border));
+    border-width: 0;
+    margin: 0;
+  }
+
+  .sep-v {
+    width: 1px;
+    height: 100%;
+    background-color: hsl(var(--border));
+  }
+}
