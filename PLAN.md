@@ -50,9 +50,9 @@
 
 | # | Item | File(s) | Status | Notes |
 |---|------|---------|--------|-------|
-| 0.3.1 | Remove stale .size-limit.json (references v2 React components) | `.size-limit.json` | [ ] | References Button, Input, recharts, TipTap; all gone in v3 |
-| 0.3.2 | Remove stale v2 files (if any remain in tree) | various | [ ] | Audit for any leftover v2 artifacts |
-| 0.3.3 | Verify no v2 dependencies linger in lockfile | `bun.lock` | [ ] | Only @changesets/cli + typescript expected |
+| 0.3.1 | Remove stale .size-limit.json (references v2 React components) | `.size-limit.json` | [x] | Deleted in 75915df |
+| 0.3.2 | Remove stale v2 files (if any remain in tree) | various | [x] | 802 v2 files removed (docs/, biome.json, components.json, husky pre-commit, etc.) |
+| 0.3.3 | Verify no v2 dependencies linger in lockfile | `bun.lock` | [x] | Only @changesets/cli + typescript remain |
 
 ---
 

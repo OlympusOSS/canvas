@@ -35,3 +35,25 @@ jobs:
 
       - name: Typecheck
         run: bun run typecheck
+
+      - name: Verify CSS entry point resolves all imports
+        run: |
+          missing=0
+          while IFS= read -r line; do
+            file=$(echo "$line" | sed -n 's/.*@import "\(.*\)".*/\1/p')
+            if [ -n "$file" ]; then
+              resolved="styles/$file"
+              if [ ! -f "$resolved" ]; then
+                echo "Missing: $resolved (from styles/canvas.css)"
+                missing=$((missing + 1))
+              fi
+            fi
+          done < styles/canvas.css
+          if [ "$missing" -gt 0 ]; then
+            echo "ERROR: $missing CSS import(s) could not be resolved."
+            exit 1
+          fi
+          echo "All CSS imports resolve."
+
+      - name: Verify package exports
+        run: bun -e "import { cn, getTheme, token } from './src/index.ts'; console.log('JS exports OK')"
