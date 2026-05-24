@@ -42,9 +42,9 @@
 
 | # | Item | File(s) | Status | Notes |
 |---|------|---------|--------|-------|
-| 0.2.1 | CI workflow (lint, typecheck, test) | `.github/workflows/ci.yml` | [x] | Triggers on push to main |
-| 0.2.2 | Release workflow (changesets publish) | `.github/workflows/release.yml` | [x] | Automated via changesets |
-| 0.2.3 | Docs workflow | `.github/workflows/docs.yml` | [x] | |
+| 0.2.1 | CI workflow (typecheck, CSS import check, JS export check) | `.github/workflows/ci.yml` | [x] | Triggers on push to main; lint/test added in Phase 9 |
+| 0.2.2 | Release workflow (changesets publish) | `.github/workflows/release.yml` | [x] | Automated via changesets; gated on CI success |
+| 0.2.3 | Docs workflow | `.github/workflows/docs.yml` | N/A | Deleted; no docs site in v3 yet. Revisit in Phase 10. |
 
 ### 0.3 Cleanup
 
