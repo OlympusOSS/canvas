@@ -6,10 +6,10 @@ export default function Example(scope: ExampleScope) {
   const { Row, Chip } = scope;
   return (
 <Row snug wrap alignCenter>
-  <Chip>Neutral</Chip>
-  <Chip primary>Accent</Chip>
-  <Chip outline>Outline</Chip>
-  <Chip blue outline>Outline blue</Chip>
+  <Chip selectable outline defaultSelected>Design</Chip>
+  <Chip selectable outline>Engineering</Chip>
+  <Chip selectable outline>Product</Chip>
+  <Chip selectable outline>Marketing</Chip>
 </Row>
   );
 }
