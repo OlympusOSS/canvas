@@ -6,7 +6,7 @@ export default function Example(scope: ExampleScope) {
   const { Select } = scope;
   return (
 <Select
-  large
+  disabled
   label="Country"
   defaultValue="United States"
   options={["United States", "Canada", "Mexico", "United Kingdom"]}
