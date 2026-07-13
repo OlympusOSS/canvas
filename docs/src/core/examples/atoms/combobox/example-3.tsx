@@ -16,8 +16,8 @@ export default function Example(scope: ExampleScope) {
     "Rachel Chen"
   ]}
   label="Assigned to"
-  required
   placeholder="Search a person…"
+  disabled
 />
   );
 }
