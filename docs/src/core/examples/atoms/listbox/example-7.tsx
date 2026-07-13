@@ -6,8 +6,6 @@ export default function Example(scope: ExampleScope) {
   const { Listbox } = scope;
   return (
 <Listbox
-  narrow
-  bordered
   items={[
     { label: "Backend", selected: true },
     { label: "Frontend", selected: false },
@@ -15,6 +13,8 @@ export default function Example(scope: ExampleScope) {
     { label: "Platform", selected: false },
     { label: "Security", selected: false }
   ]}
+  bordered
+  disabled
 />
   );
 }
