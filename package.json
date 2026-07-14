@@ -108,7 +108,7 @@
     "lucide-static": "^1.24.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-native": "^0.85.3",
+    "react-native": "^0.86.0",
     "react-native-qrcode-svg": "^6.3.21",
     "react-native-svg": "^15",
     "react-native-web": "^0.21.2",
