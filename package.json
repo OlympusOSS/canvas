@@ -2,7 +2,7 @@
   "name": "@nannier/canvas",
   "version": "7.0.0",
   "description": "Universal React Native UI kit styled with Tailwind",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "homepage": "https://bnannier.github.io/canvas/",
   "repository": {
     "type": "git",
