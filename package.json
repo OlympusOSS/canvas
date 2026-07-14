@@ -103,7 +103,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "expo-blur": "~56.0.3",
-    "expo-glass-effect": "~56.0.4",
+    "expo-glass-effect": "~57.0.0",
     "happy-dom": "^20.10.6",
     "lucide-static": "^1.24.0",
     "react": "^19.2.7",
