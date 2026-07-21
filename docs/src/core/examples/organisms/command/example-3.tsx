@@ -5,15 +5,20 @@ import type { ExampleScope } from "../../../scope";
 export default function Example(scope: ExampleScope) {
   const { Command } = scope;
   return (
-<Command open defaultActive={0} groups={[
+<Command
+  defaultActive={0}
+  defaultQuery="file"
+  groups={[
     { heading: "Actions", items: [
       { label: "New File", icon: "file", shortcut: "Ctrl+N" },
+      { label: "Open File", icon: "folder", shortcut: "Ctrl+O" },
       { label: "Save", icon: "save", shortcut: "Ctrl+S" }
     ] },
     { heading: "Navigation", items: [
       { label: "Go to Dashboard", icon: "arrowRight" },
       { label: "Go to Settings", icon: "arrowRight" }
     ] }
-  ]} />
+  ]}
+/>
   );
 }
