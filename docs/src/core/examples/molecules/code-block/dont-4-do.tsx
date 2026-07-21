@@ -5,12 +5,9 @@ import type { ExampleScope } from "../../../scope";
 export default function Example(scope: ExampleScope) {
   const { CodeBlock } = scope;
   return (
-<CodeBlock
-  filename="theme.ts"
-  language="ts"
-  copy
-  code={`const theme = getTheme();
-setTheme(theme === "dark" ? "light" : "dark");`}
-/>
+<CodeBlock terminal tabs={[
+  { label: "npm", code: "npm install @nannier/canvas" },
+  { label: "bun", code: "bun add @nannier/canvas" },
+]} />
   );
 }

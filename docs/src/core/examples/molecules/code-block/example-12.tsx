@@ -6,11 +6,14 @@ export default function Example(scope: ExampleScope) {
   const { CodeBlock } = scope;
   return (
 <CodeBlock
-  filename="theme.ts"
-  language="ts"
-  copy
-  code={`const theme = getTheme();
-setTheme(theme === "dark" ? "light" : "dark");`}
+  compact
+  filename="canvas.config.json"
+  language="json"
+  code={`{
+  "theme": "system",
+  "surface": "glass",
+  "primary": "#6366f1"
+}`}
 />
   );
 }

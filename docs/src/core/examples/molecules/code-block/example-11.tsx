@@ -6,11 +6,9 @@ export default function Example(scope: ExampleScope) {
   const { CodeBlock } = scope;
   return (
 <CodeBlock
-  filename="theme.ts"
+  wrap
   language="ts"
-  copy
-  code={`const theme = getTheme();
-setTheme(theme === "dark" ? "light" : "dark");`}
+  code={`const message = "This is a very long line that would normally scroll horizontally, but wrap lets it soft-wrap onto the next line instead.";`}
 />
   );
 }

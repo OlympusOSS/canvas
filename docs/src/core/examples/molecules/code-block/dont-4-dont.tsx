@@ -3,14 +3,12 @@
 import type { ExampleScope } from "../../../scope";
 
 export default function Example(scope: ExampleScope) {
-  const { CodeBlock } = scope;
+  const { CodeBlock, Column } = scope;
   return (
-<CodeBlock
-  filename="theme.ts"
-  language="ts"
-  copy
-  code={`const theme = getTheme();
-setTheme(theme === "dark" ? "light" : "dark");`}
-/>
+<Column snug>
+  <CodeBlock terminal code="npm install @nannier/canvas" />
+  <CodeBlock terminal code="yarn add @nannier/canvas" />
+  <CodeBlock terminal code="bun add @nannier/canvas" />
+</Column>
   );
 }
