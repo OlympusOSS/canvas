@@ -3,13 +3,12 @@
 import type { ExampleScope } from "../../../scope";
 
 export default function Example(scope: ExampleScope) {
-  const { Badge, Card, BadgeGroup } = scope;
+  const { Badge, BadgeGroup } = scope;
   return (
-<Card padded>
-  <BadgeGroup>
-    <Badge outline>draft</Badge>
-    <Badge outline>internal</Badge>
-  </BadgeGroup>
-</Card>
+<BadgeGroup>
+  <Badge destructive>Revoked</Badge>
+  <Badge destructive>Banned</Badge>
+  <Badge secondary>marketing</Badge>
+</BadgeGroup>
   );
 }

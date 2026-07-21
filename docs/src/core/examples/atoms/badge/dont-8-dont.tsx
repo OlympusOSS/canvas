@@ -6,10 +6,9 @@ export default function Example(scope: ExampleScope) {
   const { View, Badge } = scope;
   return (
 <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 6 }}>
-  <Badge default>employee</Badge>
-  <Badge destructive>engineering</Badge>
-  <Badge default>remote</Badge>
-  <Badge destructive>active</Badge>
+  <Badge destructive>marketing</Badge>
+  <Badge destructive>finance</Badge>
+  <Badge destructive>legal</Badge>
 </View>
   );
 }
