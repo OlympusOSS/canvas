@@ -7,10 +7,13 @@ export default function Example(scope: ExampleScope) {
   return (
 <StackedList
   items={[
-    { name: "Kratos", detail: "Identity", badge: "Healthy", success: true },
-    { name: "Hydra", detail: "OAuth2", badge: "Degraded", warning: true },
-    { name: "Postgres", detail: "Database", badge: "Down", error: true },
+    { name: "Rachel Chen", detail: "Engineering Lead" },
+    { name: "Ada Lovelace", detail: "Staff Engineer" }
   ]}
+  card
+  title="Team members"
+  addAction="Add"
+  rowMenu
 />
   );
 }
