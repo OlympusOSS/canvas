@@ -5,8 +5,12 @@ import type { ExampleScope } from "../../../scope";
 export default function Example(scope: ExampleScope) {
   const { Collapsible } = scope;
   return (
-<Collapsible card title="Shipping details" defaultOpen>
-  Free 2-day shipping on orders over $50. Delivery in 3 to 5 business days otherwise.
+<Collapsible
+  title="Notifications"
+  description="Email, push, and digest frequency."
+  defaultOpen
+>
+  Choose which events reach your inbox and which stay in the app.
 </Collapsible>
   );
 }
