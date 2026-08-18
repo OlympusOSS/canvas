@@ -5,16 +5,10 @@ import type { ExampleScope } from "../../../scope";
 export default function Example(scope: ExampleScope) {
   const { AvatarMenu } = scope;
   return (
-<AvatarMenu
-  disabled
-  name="Ada Lovelace"
-  email="ada.lovelace@example.com"
-  src="/ada-lovelace.jpg"
-  items={[
+<AvatarMenu disabled name="Ada Lovelace" email="ada.lovelace@example.com" src="/ada-lovelace.jpg" items={[
     { label: "Profile", icon: "user" },
     { label: "Settings", icon: "settings", shortcut: "⌘," },
     { label: "Sign out", icon: "logOut", destructive: true, separatorBefore: true }
-  ]}
-/>
+  ]} />
   );
 }
