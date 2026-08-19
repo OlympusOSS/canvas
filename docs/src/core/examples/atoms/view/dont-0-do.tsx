@@ -3,11 +3,11 @@
 import type { ExampleScope } from "../../../scope";
 
 export default function Example(scope: ExampleScope) {
-  const { tokens, View, Typography, Row } = scope;
+  const { Icon, Typography, Row, Emblem } = scope;
   return (
 <Row cozy alignCenter>
-  <View style={{ width: 40, height: 40, borderRadius: 8, backgroundColor: tokens.primary }} />
-  <Typography semibold>Two Views in a row</Typography>
+  <Emblem primary><Icon shield /></Emblem>
+  <Typography semibold>Semantic arrangement</Typography>
 </Row>
   );
 }
