@@ -3,10 +3,8 @@
 import type { ExampleScope } from "../../../scope";
 
 export default function Example(scope: ExampleScope) {
-  const { Button, Icon, Tooltip } = scope;
+  const { Tooltip } = scope;
   return (
-<Tooltip label="Glass on" open top>
-  <Button ghost icon accessibilityLabel="Glass on" iconLeft={<Icon settings size={16} />} onPress={() => {}} />
-</Tooltip>
+<Tooltip label="Open settings" iconTrigger trigger="Hover me" top />
   );
 }
