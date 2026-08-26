@@ -6,14 +6,14 @@ export default function Example(scope: ExampleScope) {
   const { GeoMap } = scope;
   return (
 <GeoMap
-  title="Support tickets"
-  defaultSelected={1}
+  zoomable
+  title="Regional totals"
   style={{ maxWidth: 560 }}
   points={[
-    { label: "Toronto", lat: 43.6532, lng: -79.3832, count: 310 },
-    { label: "Dublin", lat: 53.3498, lng: -6.2603, count: 940 },
-    { label: "Cape Town", lat: -33.9249, lng: 18.4241, count: 220 },
-    { label: "Seoul", lat: 37.5665, lng: 126.978, count: 470 },
+    { label: "New York", lat: 40.7128, lng: -74.006, count: 6310 },
+    { label: "London", lat: 51.5072, lng: -0.1276, count: 5170 },
+    { label: "Tokyo", lat: 35.6895, lng: 139.6917, count: 3110 },
+    { label: "Sydney", lat: -33.8688, lng: 151.2093, count: 1260 },
   ]}
 />
   );
