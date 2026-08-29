@@ -7,15 +7,10 @@ export default function Example(scope: ExampleScope) {
   return (
 <Row between alignEnd wrap snug>
   <Column tight shrink>
-    <Typography h3>Dashboard</Typography>
-    <Typography small muted>
-      Identity platform overview. Each widget reports its own window, not one shared period.
-    </Typography>
+    <Typography h5>Sessions</Typography>
+    <Typography small muted>Every session Kratos is holding open, newest first.</Typography>
   </Column>
-  <Row snug alignCenter>
-    <Button outline small>Customize</Button>
-    <Button outline small>Export</Button>
-  </Row>
+  <Button primary small>Revoke all</Button>
 </Row>
   );
 }
